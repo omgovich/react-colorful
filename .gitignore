@@ -1,0 +1,17 @@
+# NPM
+npm-debug.log*
+node_modules/
+.npm
+/package-lock.json
+
+# IDEs
+.vscode/
+*.code-workspace
+
+# bundler
+dist/
+.cache
+
+# OSX
+.DS_Store
+.LSOverride

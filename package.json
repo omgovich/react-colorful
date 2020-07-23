@@ -1,0 +1,38 @@
+{
+  "name": "react-colorful",
+  "version": "0.0.1",
+  "description": "A tiny color picker component for modern React apps",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel examples/src/index.html --out-dir examples/dist --open",
+    "lint": "eslint src/**/*.js examples/src/**/*.js",
+    "build": "parcel build src/index.js --global react-colorful"
+  },
+  "repository": "omgovich/react-colorful",
+  "keywords": [
+    "react",
+    "color picker",
+    "react-component",
+    "colorpicker",
+    "tiny",
+    "color"
+  ],
+  "author": "Vlad Shilov <omgovich@ya.ru>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/omgovich/react-colorful/issues"
+  },
+  "homepage": "https://github.com/omgovich/react-colorful",
+  "peerDependencies": {
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.5.0",
+    "eslint-plugin-react": "^7.20.3",
+    "eslint-plugin-react-hooks": "^4.0.8",
+    "parcel-bundler": "^1.12.4",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
+  }
+}
