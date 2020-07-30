@@ -1,0 +1,70 @@
+.container {
+  position: relative;
+  width: 200px;
+  user-select: none;
+  cursor: default;
+}
+
+.saturation {
+  position: relative;
+  height: 160px;
+  border-bottom: 10px solid #000;
+  border-radius: 8px 8px 0 0;
+}
+
+.saturation:after,
+.saturation:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.saturation:before {
+  background: linear-gradient(to right, #fff, rgba(255, 255, 255, 0));
+}
+
+.saturation:after {
+  background: linear-gradient(to top, #000, rgba(0, 0, 0, 0));
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.05);
+}
+
+.hue {
+  position: relative;
+  height: 20px;
+  border-radius: 0 0 8px 8px;
+  background: linear-gradient(
+    to right,
+    #f00 0%,
+    #ff0 17%,
+    #0f0 33%,
+    #0ff 50%,
+    #00f 67%,
+    #f0f 83%,
+    #f00 100%
+  );
+}
+
+.interactive {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.pointer {
+  position: absolute;
+  z-index: 1;
+  width: 24px;
+  height: 24px;
+  transform: translate(-50%, -50%);
+  border: 2px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+  pointer-events: none;
+}

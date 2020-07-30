@@ -3,12 +3,22 @@
     "browser": true,
     "es6": true
   },
+  "parserOptions": {
+    "sourceType": "module"
+  },
+  "plugins": ["prettier", "react"],
   "extends": [
     "eslint:recommended",
+    "plugin:prettier/recommended",
     "plugin:react/recommended",
     "plugin:react-hooks/recommended"
   ],
-  "parserOptions": {
-    "sourceType": "module"
+  "rules": {
+    "prettier/prettier": "error"
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
   }
 }
