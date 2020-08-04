@@ -6,7 +6,7 @@
   "scripts": {
     "start": "parcel examples/src/index.html --out-dir examples/dist --open",
     "lint": "eslint src/**/*.js examples/src/**/*.js",
-    "build": "parcel build src/index.js --global react-colorful"
+    "build": "microbundle --entry src/index.js --output dist/index.js --name react-colorful --css-modules"
   },
   "repository": "omgovich/react-colorful",
   "keywords": [
@@ -33,6 +33,7 @@
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react": "^7.20.3",
     "eslint-plugin-react-hooks": "^4.0.8",
+    "microbundle": "^0.12.3",
     "parcel-bundler": "^1.12.4",
     "postcss-modules": "^3.2.0",
     "prettier": "2.0.5",
@@ -40,7 +41,6 @@
     "react-dom": "^16.8.0"
   },
   "dependencies": {
-    "body-scroll-lock": "^3.0.3",
     "tinycolor2": "^1.4.1"
   }
 }
