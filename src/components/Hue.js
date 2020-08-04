@@ -1,10 +1,9 @@
 import React, { useCallback } from "react";
-import PropTypes from "prop-types";
 import Interactive from "./Interactive";
-import { toHexString } from "../utils";
+import { toHexString, formatClassName } from "../utils";
 import styles from "../styles.css";
 
-const Hue = ({ hue, onChange }) => {
+const Hue = ({ className, hue, onChange }) => {
   const handleMove = useCallback(
     (interaction) => {
       // Hue measured in degrees of the color circle ranging from 0 to 360
@@ -19,18 +18,16 @@ const Hue = ({ hue, onChange }) => {
     backgroundColor: toHexString({ h: hue, s: 1, l: 0.5 }),
   };
 
+  const nodeClassName = formatClassName(["react-colorful__hue", styles.hue, className]);
+  const pointerClassName = formatClassName(["react-colorful__hue-pointer", styles.pointer]);
+
   return (
-    <div className={styles.hue}>
+    <div className={nodeClassName}>
       <Interactive onMove={handleMove}>
-        <div className={styles.pointer} style={pointerStyle} />
+        <div className={pointerClassName} style={pointerStyle} />
       </Interactive>
     </div>
   );
-};
-
-Hue.propTypes = {
-  hue: PropTypes.number.isRequired,
-  onChange: PropTypes.func.isRequired,
 };
 
 export default React.memo(Hue);

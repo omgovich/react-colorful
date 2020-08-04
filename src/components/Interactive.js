@@ -1,6 +1,4 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import PropTypes from "prop-types";
-// import { enableBodyScroll, disableBodyScroll } from "body-scroll-lock";
 import { limit } from "../utils";
 import styles from "../styles.css";
 
@@ -40,17 +38,12 @@ const Interactive = ({ children, onMove }) => {
 
   const toggleDocumentEvents = useCallback(
     (state) => {
-      const toggleEvent = state ? window.addEventListener : window.removeEventListener;
-      // const toggleScroll = state ? disableBodyScroll : enableBodyScroll;
-
       // add or remove additional pointer event listeners
+      const toggleEvent = state ? document.addEventListener : document.removeEventListener;
       toggleEvent("mousemove", handleMove);
       toggleEvent("touchmove", handleMove);
       toggleEvent("mouseup", handleMoveEnd);
       toggleEvent("touchend", handleMoveEnd);
-
-      // prevent window scrolling during dragging (for mobile devices mostly)
-      // toggleScroll(container.current);
     },
     [handleMove, handleMoveEnd]
   );
@@ -70,11 +63,6 @@ const Interactive = ({ children, onMove }) => {
       {children}
     </div>
   );
-};
-
-Interactive.propTypes = {
-  children: PropTypes.any,
-  onMove: PropTypes.func.isRequired,
 };
 
 export default React.memo(Interactive);
