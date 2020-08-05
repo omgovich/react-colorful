@@ -8,11 +8,13 @@
   "esmodule": "dist/index.esmodule.js",
   "umd:main": "dist/index.umd.js",
   "scripts": {
-    "start": "parcel examples/src/index.html --out-dir examples/dist --open",
     "lint": "eslint src/**/*.js examples/src/**/*.js",
-    "build": "microbundle --entry src/index.js --output dist/index.js --name react-colorful --css-modules",
     "size": "size-limit",
-    "test": "npm run size"
+    "test": "npm run size",
+    "build": "microbundle --entry src/index.js --output dist/index.js --name react-colorful --css-modules",
+    "start-demo": "parcel demo/src/index.html --out-dir demo/dist --open",
+    "build-demo": "del-cli 'demo/dist/*' && parcel build demo/src/index.html --out-dir demo/dist --public-url /react-colorful/",
+    "deploy-demo": "npm run build-demo && gh-pages -d demo/dist"
   },
   "size-limit": [
     {
@@ -38,18 +40,20 @@
   "bugs": {
     "url": "https://github.com/omgovich/react-colorful/issues"
   },
-  "homepage": "https://github.com/omgovich/react-colorful",
+  "homepage": "https://omgovich.github.io/react-colorful",
   "peerDependencies": {
     "react": "^16.8.0",
     "react-dom": "^16.8.0"
   },
   "devDependencies": {
     "@size-limit/preset-app": "^4.5.5",
+    "del-cli": "^3.0.1",
     "eslint": "^7.5.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react": "^7.20.3",
     "eslint-plugin-react-hooks": "^4.0.8",
+    "gh-pages": "^3.1.0",
     "microbundle": "^0.12.3",
     "parcel-bundler": "^1.12.4",
     "postcss-modules": "^3.2.0",
