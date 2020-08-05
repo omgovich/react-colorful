@@ -10,7 +10,7 @@
   "scripts": {
     "lint": "eslint src/**/*.js examples/src/**/*.js",
     "size": "size-limit",
-    "test": "npm run size",
+    "test": "uvu -r esm tests",
     "build": "microbundle --entry src/index.js --output dist/index.js --name react-colorful --css-modules",
     "start-demo": "parcel demo/src/index.html --out-dir demo/dist --open",
     "build-demo": "del-cli 'demo/dist/*' && parcel build demo/src/index.html --out-dir demo/dist --public-url /react-colorful/",
@@ -53,6 +53,7 @@
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react": "^7.20.3",
     "eslint-plugin-react-hooks": "^4.0.8",
+    "esm": "^3.2.25",
     "gh-pages": "^3.1.0",
     "microbundle": "^0.12.3",
     "parcel-bundler": "^1.12.4",
@@ -60,9 +61,10 @@
     "prettier": "2.0.5",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
-    "size-limit": "^4.5.5"
+    "size-limit": "^4.5.5",
+    "uvu": "^0.3.1"
   },
   "dependencies": {
-    "tinycolor2": "^1.4.1"
+    "color-fns": "^0.1.1"
   }
 }
