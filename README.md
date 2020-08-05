@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="examples/src/assets/design.png" width="224" height="230" alt="react-colorful" />
+  <img src="demo/src/assets/design.png" width="224" height="230" alt="react-colorful" />
 </div>
 <div align="center">
   <strong>react-colorful</strong> is a tiny color picker component for modern React apps.
