@@ -1,6 +1,6 @@
 {
   "name": "react-colorful",
-  "version": "0.0.91",
+  "version": "0.0.92",
   "description": "A tiny color picker component for modern React apps",
   "source": "src/index.js",
   "main": "dist/index.js",
@@ -36,7 +36,7 @@
     "color"
   ],
   "author": "Vlad Shilov <omgovich@ya.ru>",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/omgovich/react-colorful/issues"
   },
