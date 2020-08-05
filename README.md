@@ -1,0 +1,57 @@
+<div align="center">
+  <img src="examples/src/assets/design.png" width="224" height="230" alt="react-colorful" />
+</div>
+<div align="center">
+  <strong>react-colorful</strong> is a tiny color picker component for modern React apps.
+</div>
+
+## Features
+
+- **Small**: Just 1 KB (minified and gzipped). [Size Limit](https://github.com/ai/size-limit) controls the size.
+- **Fast**: Built with hooks and functional components only.
+- **Simple**: The interface is straight forward and easy to use.
+- **Mobile-friendly**: Works well on mobile devices and touch screens.
+
+## Install
+
+```
+npm install react-colorful --save
+```
+
+## Usage
+
+```js
+import ColorPicker from "react-colorful";
+import "react-colorful/dist/index.css";
+
+const YourComponent = () => {
+  const [color, setColor] = useState();
+  return <ColorPicker hex={color} onChange={setColor} />;
+};
+```
+
+## Overriding styles
+
+The easiest way to tweak react-colorful is to create another stylesheet to override the default styles.
+
+```css
+.react-colorful {
+  height: 250px;
+}
+.react-colorful__saturation {
+  bottom: 30px;
+  border-radius: 3px 3px 0 0;
+}
+.react-colorful__hue {
+  height: 30px;
+  border-radius: 0 0 3px 3px;
+}
+.react-colorful__saturation-pointer {
+  border-radius: 5px;
+}
+.react-colorful__hue-pointer {
+  border-radius: 2px;
+  width: 15px;
+  height: inherit;
+}
+```
