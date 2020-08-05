@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
-import tinycolor from "tinycolor2";
+import { isDark, hexToRgb } from "color-fns";
 import ColorPicker from "../../src";
 import styles from "./styles.css";
 
 const Demo = () => {
-  const [color, setColor] = useState("#C92281");
-
-  const textColor = tinycolor(color).isLight() ? "#111" : "#FFF";
+  const [color, setColor] = useState("#c92281");
+  const textColor = isDark(hexToRgb(color)) ? "#FFF" : "#000";
 
   return (
     <div className={styles.wrapper} style={{ color: textColor, backgroundColor: color }}>
