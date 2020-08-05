@@ -38,7 +38,7 @@ const ColorPicker = ({ className, hex, onChange }) => {
   return (
     <div className={nodeClassName}>
       <Saturation hsv={hsv} onChange={handleChange} />
-      <Hue hue={hsv.hue} onChange={handleChange} />
+      <Hue hue={hsv.h} onChange={handleChange} />
     </div>
   );
 };
