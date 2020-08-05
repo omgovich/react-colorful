@@ -67,6 +67,7 @@
     "uvu": "^0.3.1"
   },
   "dependencies": {
+    "@swiftcarrot/color-fns": "^3.1.1",
     "color-fns": "^0.1.1"
   }
 }

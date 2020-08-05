@@ -9,18 +9,18 @@ const Saturation = ({ className, hsv, onChange }) => {
       // Saturation and brightness always fit into [0, 100] range
       const saturation = interaction.left * 100;
       const brightness = 100 - interaction.top * 100;
-      onChange({ sat: saturation, val: brightness });
+      onChange({ s: saturation, v: brightness });
     },
     [onChange]
   );
 
   const containerStyle = {
-    backgroundColor: hsvToHex({ hue: hsv.hue, sat: 100, val: 100 }),
+    backgroundColor: hsvToHex({ h: hsv.h, s: 100, v: 100 }),
   };
 
   const pointerStyle = {
-    top: `${100 - hsv.val}%`,
-    left: `${hsv.sat}%`,
+    top: `${100 - hsv.v}%`,
+    left: `${hsv.s}%`,
     backgroundColor: hsvToHex(hsv),
   };
 
