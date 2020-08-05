@@ -1,17 +1,17 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Hue from "./Hue";
 import Saturation from "./Saturation";
-import { toHexString, toHsv, formatClassName } from "../utils";
+import { hsvToHex, hexToHsv, formatClassName } from "../utils";
 import styles from "../styles.css";
 
 const ColorPicker = ({ className, hex, onChange }) => {
   // Input and output formats are HEX (#AAAAAA),
   // but all internal calculations are based on HSV model
-  const [hsv, updateHsv] = useState(() => toHsv(hex));
+  const [hsv, updateHsv] = useState(() => hexToHsv(hex));
 
   // Convert updated HSV to HEX-format and send it to the parent component
   useEffect(() => {
-    onChange(toHexString(hsv));
+    onChange(hsvToHex(hsv));
   }, [hsv, onChange]);
 
   // Merge the current HSV color object with updated params.
