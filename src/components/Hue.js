@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import Interactive from "./Interactive";
-import { toHexString, formatClassName } from "../utils";
+import { hsvToHex, formatClassName } from "../utils";
 import styles from "../styles.css";
 
 const Hue = ({ className, hue, onChange }) => {
@@ -15,7 +15,7 @@ const Hue = ({ className, hue, onChange }) => {
   const pointerStyle = {
     top: "50%",
     left: `${(hue / 360) * 100}%`,
-    backgroundColor: toHexString({ hue, sat: 100, val: 100 }),
+    backgroundColor: hsvToHex({ hue, sat: 100, val: 100 }),
   };
 
   const nodeClassName = formatClassName(["react-colorful__hue", styles.hue, className]);

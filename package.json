@@ -9,7 +9,7 @@
   "umd:main": "dist/index.umd.js",
   "scripts": {
     "lint": "eslint src/**/*.js examples/src/**/*.js",
-    "size": "size-limit",
+    "size": "npm run build && size-limit",
     "test": "uvu -r esm tests",
     "build": "microbundle --entry src/index.js --output dist/index.js --name react-colorful --css-modules",
     "start-demo": "parcel demo/src/index.html --out-dir demo/dist --open",
@@ -18,7 +18,7 @@
   },
   "size-limit": [
     {
-      "path": "src/index.js",
+      "path": "dist/index.js",
       "limit": "1.5 KB"
     }
   ],

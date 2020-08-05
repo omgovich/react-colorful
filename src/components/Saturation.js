@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import Interactive from "./Interactive";
-import { toHexString, formatClassName } from "../utils";
+import { hsvToHex, formatClassName } from "../utils";
 import styles from "../styles.css";
 
 const Saturation = ({ className, hsv, onChange }) => {
@@ -15,13 +15,13 @@ const Saturation = ({ className, hsv, onChange }) => {
   );
 
   const containerStyle = {
-    backgroundColor: toHexString({ hue: hsv.hue, sat: 100, val: 100 }),
+    backgroundColor: hsvToHex({ hue: hsv.hue, sat: 100, val: 100 }),
   };
 
   const pointerStyle = {
     top: `${100 - hsv.val}%`,
     left: `${hsv.sat}%`,
-    backgroundColor: toHexString(hsv),
+    backgroundColor: hsvToHex(hsv),
   };
 
   const nodeClassName = formatClassName([
