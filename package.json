@@ -1,6 +1,6 @@
 {
   "name": "react-colorful",
-  "version": "0.0.1",
+  "version": "0.0.91",
   "description": "A tiny color picker component for modern React apps",
   "source": "src/index.js",
   "main": "dist/index.js",
@@ -19,6 +19,10 @@
       "path": "src/index.js",
       "limit": "1.5 KB"
     }
+  ],
+  "files": [
+    "dist",
+    "README.md"
   ],
   "repository": "omgovich/react-colorful",
   "keywords": [
