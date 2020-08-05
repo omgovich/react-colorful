@@ -2,12 +2,24 @@
   "name": "react-colorful",
   "version": "0.0.1",
   "description": "A tiny color picker component for modern React apps",
-  "main": "index.js",
+  "source": "src/index.js",
+  "main": "dist/index.js",
+  "module": "dist/index.module.js",
+  "esmodule": "dist/index.esmodule.js",
+  "umd:main": "dist/index.umd.js",
   "scripts": {
     "start": "parcel examples/src/index.html --out-dir examples/dist --open",
     "lint": "eslint src/**/*.js examples/src/**/*.js",
-    "build": "microbundle --entry src/index.js --output dist/index.js --name react-colorful --css-modules"
+    "build": "microbundle --entry src/index.js --output dist/index.js --name react-colorful --css-modules",
+    "size": "size-limit",
+    "test": "npm run size"
   },
+  "size-limit": [
+    {
+      "path": "src/index.js",
+      "limit": "1.5 KB"
+    }
+  ],
   "repository": "omgovich/react-colorful",
   "keywords": [
     "react",
@@ -28,6 +40,7 @@
     "react-dom": "^16.8.0"
   },
   "devDependencies": {
+    "@size-limit/preset-app": "^4.5.5",
     "eslint": "^7.5.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-prettier": "^3.1.4",
@@ -38,7 +51,8 @@
     "postcss-modules": "^3.2.0",
     "prettier": "2.0.5",
     "react": "^16.8.0",
-    "react-dom": "^16.8.0"
+    "react-dom": "^16.8.0",
+    "size-limit": "^4.5.5"
   },
   "dependencies": {
     "tinycolor2": "^1.4.1"
