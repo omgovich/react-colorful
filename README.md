@@ -5,16 +5,16 @@
 </div>
 
 <div align="center">
-  <strong>react-colorful</strong> is a tiny color picker component for modern React apps.
+  <a href="https://npmjs.org/package/react-colorful">
+    <img alt="npm" src="https://img.shields.io/npm/v/react-colorful.svg?labelColor=da248d&color=6ead0a" />
+  </a>
+  <a href="https://travis-ci.org/omgovich/react-colorful">
+    <img alt="CI" src="https://img.shields.io/travis/omgovich/react-colorful.svg?labelColor=da248d&color=6ead0a" />
+  </a>
 </div>
 
 <div align="center">
-  <a href="https://npmjs.org/package/react-colorful">
-    <img alt="npm" src="https://img.shields.io/npm/v/react-colorful.svg?labelColor=f733a3&color=6ead0a" />
-  </a>
-  <a href="https://travis-ci.org/omgovich/react-colorful">
-    <img alt="CI" src="https://img.shields.io/travis/omgovich/react-colorful.svg?labelColor=f733a3&color=6ead0a" />
-  </a>
+  <strong>react-colorful</strong> is a tiny color picker component for modern React apps.
 </div>
 
 ## Features
