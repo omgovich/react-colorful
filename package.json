@@ -25,6 +25,7 @@
   ],
   "files": [
     "dist",
+    "LICENSE",
     "README.md"
   ],
   "repository": "omgovich/react-colorful",
