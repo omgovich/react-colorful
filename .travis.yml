@@ -1,0 +1,8 @@
+language: node_js
+cache: npm
+node_js:
+  - node
+  - "10"
+script:
+  - npm run size
+  - npm run test
