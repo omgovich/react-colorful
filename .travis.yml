@@ -4,5 +4,6 @@ node_js:
   - node
   - "10"
 script:
+  - npm run lint
   - npm run size
   - npm run test
