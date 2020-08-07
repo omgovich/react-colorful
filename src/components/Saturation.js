@@ -1,6 +1,7 @@
 import React, { useCallback } from "react";
 import Interactive from "./Interactive";
-import { hsvToHex, formatClassName } from "../utils";
+import hsvToHex from "../utils/hsvToHex";
+import formatClassName from "../utils/formatClassName";
 import styles from "../styles.css";
 
 const Saturation = ({ className, hsv, onChange }) => {

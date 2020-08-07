@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import { limit } from "../utils";
 import styles from "../styles.css";
+
+const limit = (number, min = 0, max = 1) => Math.min(Math.max(min, number), max);
 
 const Interactive = ({ children, onMove }) => {
   const container = useRef();

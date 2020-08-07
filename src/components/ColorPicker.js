@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import Hue from "./Hue";
 import Saturation from "./Saturation";
-import { hsvToHex, hexToHsv, formatClassName } from "../utils";
+import formatClassName from "../utils/formatClassName";
+import hsvToHex from "../utils/hsvToHex";
+import hexToHsv from "../utils/hexToHsv";
 import styles from "../styles.css";
 
 const ColorPicker = ({ className, hex, onChange }) => {
