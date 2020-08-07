@@ -1,6 +1,7 @@
 import React, { useCallback } from "react";
 import Interactive from "./Interactive";
-import { hsvToHex, formatClassName } from "../utils";
+import formatClassName from "../utils/formatClassName";
+import hsvToHex from "../utils/hsvToHex";
 import styles from "../styles.css";
 
 const Hue = ({ className, hue, onChange }) => {
