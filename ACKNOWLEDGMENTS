@@ -1,5 +1,3 @@
 ## Acknowledgements
 
-**react-colorful** uses code from the following libraries:
-
-- [@swiftcarrot/color-fns](https://github.com/swiftcarrot/color-fns), MIT License
+- In order to reduce the bundle size and avoid tree-shaking problems, `hsvToRgb`, `rgbToHex`, `hexToRgb` and `rgbToHsv` methods were copied from [@swiftcarrot/color-fns](https://github.com/swiftcarrot/color-fns) (MIT License).
