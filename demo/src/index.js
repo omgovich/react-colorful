@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
-import { isDark, hexToRgb } from "color-fns";
 import ColorPicker from "../../src";
+import hexToRgb from "../../src/utils/hexToRgb";
 import styles from "./styles.css";
+
+// See http://www.w3.org/TR/AERT#color-contrast
+const getBrightness = ({ r, g, b }) => (r * 299 + g * 587 + b * 114) / 1000;
 
 const Demo = () => {
   const [color, setColor] = useState("#c92281");
-  const textColor = isDark(hexToRgb(color)) ? "#FFF" : "#000";
+  const textColor = getBrightness(hexToRgb(color)) < 128 ? "#FFF" : "#000";
 
   return (
     <div className={styles.wrapper} style={{ color: textColor, backgroundColor: color }}>
