@@ -49,6 +49,7 @@
   },
   "devDependencies": {
     "@size-limit/preset-app": "^4.5.5",
+    "color-fns": "^0.1.1",
     "del-cli": "^3.0.1",
     "eslint": "^7.5.0",
     "eslint-config-prettier": "^6.11.0",
@@ -67,7 +68,6 @@
     "uvu": "^0.3.1"
   },
   "dependencies": {
-    "@swiftcarrot/color-fns": "^3.1.1",
-    "color-fns": "^0.1.1"
+    "@swiftcarrot/color-fns": "^3.1.2"
   }
 }
