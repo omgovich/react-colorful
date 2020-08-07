@@ -11,7 +11,7 @@
     "lint": "eslint src/**/*.js examples/src/**/*.js",
     "size": "npm run build && size-limit",
     "test": "uvu -r esm tests",
-    "build": "microbundle --entry src/index.js --output dist/index.js --name react-colorful --css-modules",
+    "build": "microbundle --entry src/index.js --output dist/index.js --name react-colorful --css-modules --jsx React.createElement",
     "prepublish": "npm run build",
     "start-demo": "parcel demo/src/index.html --out-dir demo/dist --open",
     "build-demo": "del-cli 'demo/dist/*' && parcel build demo/src/index.html --out-dir demo/dist --public-url /react-colorful/",
