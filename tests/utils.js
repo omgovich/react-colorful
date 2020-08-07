@@ -1,6 +1,8 @@
 import { test } from "uvu";
 import { equal, is } from "uvu/assert";
-import { hexToHsv, hsvToHex, formatClassName } from "../src/utils.js";
+import hexToHsv from "../src/utils/hexToHsv.js";
+import hsvToHex from "../src/utils/hsvToHex.js";
+import formatClassName from "../src/utils/formatClassName.js";
 
 test("Converts HEX to HSV", () => {
   equal(hexToHsv("#ffffff"), { h: 0, s: 0, v: 100 });
