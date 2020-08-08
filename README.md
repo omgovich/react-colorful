@@ -11,6 +11,9 @@
   <a href="https://travis-ci.org/omgovich/react-colorful">
     <img alt="CI" src="https://img.shields.io/travis/omgovich/react-colorful.svg?labelColor=da248d&color=6ead0a" />
   </a>
+  <a href="https://npmjs.org/package/react-colorful">
+    <img alt="npm" src="https://img.shields.io/david/omgovich/react-colorful.svg?labelColor=da248d&color=6ead0a" />
+  </a>
 </div>
 
 <div align="center">
@@ -19,10 +22,11 @@
 
 ## Features
 
-- **Small**: Just 1 KB (minified and gzipped). [Size Limit](https://github.com/ai/size-limit) controls the size.
+- **Small**: Just 1,5 KB (minified and gzipped). [Size Limit](https://github.com/ai/size-limit) controls the size.
 - **Fast**: Built with hooks and functional components only.
 - **Simple**: The interface is straight forward and easy to use.
 - **Mobile-friendly**: Works well on mobile devices and touch screens.
+- **No dependencies**
 
 ## Install
 

@@ -4,6 +4,8 @@ import Saturation from "./Saturation";
 import formatClassName from "../utils/formatClassName";
 import hsvToHex from "../utils/hsvToHex";
 import hexToHsv from "../utils/hexToHsv";
+import equalHex from "../utils/equalHex";
+import equalHsv from "../utils/equalHsv";
 import styles from "../styles.css";
 
 const ColorPicker = ({ className, hex, onChange }) => {
@@ -13,20 +15,26 @@ const ColorPicker = ({ className, hex, onChange }) => {
 
   // By using this ref we're able to prevent extra updates
   // and the effects recursion during the color conversion
-  const sourceHexRef = useRef(hex);
+  const colorCache = useRef({ hex, hsv });
 
   // Update local HSV if `hex` property value is changed,
   // but only if it's not the same HEX-color that we just sent to the parent
   useEffect(() => {
-    if (hex !== sourceHexRef.current) updateHsv(hexToHsv(hex));
+    if (!equalHex(hex, colorCache.current.hex)) {
+      const newHsv = hexToHsv(hex);
+      colorCache.current = { hsv: newHsv, hex };
+      updateHsv(newHsv);
+    }
   }, [hex]);
 
-  // Convert updated HSV to HEX-format, send it to the parent component
-  // and save the new HEX-color to the ref to prevent an unnecessary update
+  // If HSV is changed, convert it to the HEX-format, send to the parent component
+  // and save the new HEX-color to the ref to prevent unnecessary updates
   useEffect(() => {
-    const newHex = hsvToHex(hsv);
-    sourceHexRef.current = newHex;
-    onChange(newHex);
+    if (!equalHsv(hsv, colorCache.current.hsv)) {
+      const newHex = hsvToHex(hsv);
+      colorCache.current = { hsv, hex: newHex };
+      onChange(newHex);
+    }
   }, [hsv, onChange]);
 
   // Merge the current HSV color object with updated params.
@@ -46,7 +54,7 @@ const ColorPicker = ({ className, hex, onChange }) => {
 };
 
 ColorPicker.defaultProps = {
-  hex: "#000000",
+  hex: "#ABC",
   onChange: () => {},
 };
 
