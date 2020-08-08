@@ -30,7 +30,7 @@ const ColorPicker = ({ className, hex, onChange }) => {
   }, [hsv, onChange]);
 
   // Merge the current HSV color object with updated params.
-  // For example, when a child component sends `hue` or `sat` only
+  // For example, when a child component sends `h` or `s` only
   const handleChange = useCallback((params) => {
     updateHsv((current) => Object.assign({}, current, params));
   }, []);
