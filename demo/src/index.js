@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import ReactDOM from "react-dom";
 import ColorPicker from "../../src";
 import hexToRgb from "../../src/utils/hexToRgb";
@@ -11,10 +11,15 @@ const Demo = () => {
   const [color, setColor] = useState("#c92281");
   const textColor = getBrightness(hexToRgb(color)) < 128 ? "#FFF" : "#000";
 
+  const handleChange = useCallback((color) => {
+    console.log("🎨", color);
+    setColor(color);
+  }, []);
+
   return (
     <div className={styles.wrapper} style={{ color: textColor, backgroundColor: color }}>
       <header className={styles.header}>
-        <ColorPicker className={styles.colorPicker} hex={color} onChange={setColor} />
+        <ColorPicker className={styles.colorPicker} hex={color} onChange={handleChange} />
         <div className={styles.headerContent}>
           <h1 className={styles.headerTitle}>React Colorful 🎨</h1>
           <h2 className={styles.headerDescription}>
