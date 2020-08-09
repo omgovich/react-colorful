@@ -84,11 +84,9 @@ The easiest way to tweak react-colorful is to create another stylesheet to overr
 
 ## Why react-colorful?
 
-Today each dependency drags more dependencies and increasing your project’s bundle size uncontrollably. But size is especially important when your package is intended to work in a browser.
+Today each dependency drags more dependencies and increasing your project’s bundle size uncontrollably. But size is especially important when your package is intended to work in a browser. **react-colorful** is a simple minimalist-friendly color picker React-component for those who care about their bundle size and client-side performance.
 
-**react-colorful** is a simple minimalist-friendly color picker React-component for those who care about their bundle size and client-side performance. The library's goal is to be the fastest and the smallest (in terms of the bundle size).
-
-To show you the difference we have performed a simple benchmark (using [size-limit](https://github.com/ai/size-limit)) against popular React color picker libraries:
+To show you the problem that **react-colorful** is trying to solve, we have performed a simple benchmark (using [size-limit](https://github.com/ai/size-limit)) against popular React color picker libraries:
 
 | Name                     | Size (minified) | Size (gzipped) | Dependencies |
 | ------------------------ | --------------- | -------------- | ------------ |
