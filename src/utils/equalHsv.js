@@ -1,9 +1,3 @@
-const equalHsv = (first, second) => {
-  for (let prop in first) {
-    if (first[prop] !== second[prop]) return false;
-  }
+import equalColorObjects from "./equalColorObjects";
 
-  return true;
-};
-
-export default equalHsv;
+export default equalColorObjects;
