@@ -33,8 +33,8 @@
 - **Mobile-friendly**: Works well on mobile devices and touch screens.
 - **No dependencies**
 
-
 ## Live demos
+
 - [Website](https://omgovich.github.io/react-colorful)
 - [CodeSandbox](https://codesandbox.io/s/react-colorful-demo-u5vwp)
 
@@ -81,3 +81,18 @@ The easiest way to tweak react-colorful is to create another stylesheet to overr
   height: inherit;
 }
 ```
+
+## Why react-colorful?
+
+Today each dependency drags more dependencies and increasing your project’s bundle size uncontrollably. But size is especially important when your package is intended to work in a browser.
+
+**react-colorful** is a simple minimalist-friendly color picker React-component for those who care about their bundle size and client-side performance. The library's goal is to be the fastest and the smallest (in terms of the bundle size).
+
+To show you the difference we have performed a simple benchmark (using [size-limit](https://github.com/ai/size-limit)) against popular React color picker libraries:
+
+| Name                     | Size (minified) | Size (gzipped) | Dependencies |
+| ------------------------ | --------------- | -------------- | ------------ |
+| react-colorful v1.2.1    | **4 KB**        | **1,5 KB**     | **0**        |
+| react-color v2.18.1      | 165 KB          | 40,6 KB        | 6            |
+| react-input-color v3.0.1 | 59 KB           | 19,1 KB        | 7            |
+| rc-color-picker v1.2.6   | 117 KB          | 32,4 KB        | 5            |
