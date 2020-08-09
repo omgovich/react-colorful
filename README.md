@@ -79,9 +79,9 @@ The easiest way to tweak react-colorful is to create another stylesheet to overr
 
 ## Why react-colorful?
 
-Today each dependency drags more dependencies and increasing your project’s bundle size uncontrollably. But size is very important for everything that intend to work in a browser
+Today each dependency drags more dependencies and increasing your project’s bundle size uncontrollably. But size is very important for everything that intends to work in a browser.
 
-**react-colorful** is a simple minimalist-friendly color picker for those who care about their bundle size and client-side performance. It's simple, fast and lightweight because:
+**react-colorful** is a simple minimalist-friendly color picker for those who care about their bundle size and client-side performance. It's simple, fast, and lightweight because:
 
 - has no dependencies;
 - built with hooks and functional components only (no classes and polyfills for them);
@@ -96,4 +96,4 @@ To show you the problem that **react-colorful** is trying to solve, we have perf
 | react-input-color v3.0.1  | 59 KB           | 19,1 KB        | 7            |
 | rc-color-picker v1.2.6    | 117 KB          | 32,4 KB        | 5            |
 
-If you don't chose dependencies blindly and think that a simple color picker shouldn't cost as the entire jQuery package, **react-colorful** is the right solution for you.
+If you don't choose dependencies blindly and think that a simple color picker shouldn't cost as the entire jQuery package, **react-colorful** is the right solution for you.
