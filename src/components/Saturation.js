@@ -4,7 +4,7 @@ import hsvToHex from "../utils/hsvToHex";
 import formatClassName from "../utils/formatClassName";
 import styles from "../styles.css";
 
-const Saturation = ({ className, hsv, onChange }) => {
+const Saturation = ({ hsv, onChange }) => {
   const handleMove = useCallback(
     (interaction) => {
       // Saturation and brightness always fit into [0, 100] range
@@ -25,11 +25,7 @@ const Saturation = ({ className, hsv, onChange }) => {
     backgroundColor: hsvToHex(hsv),
   };
 
-  const nodeClassName = formatClassName([
-    "react-colorful__saturation",
-    styles.saturation,
-    className,
-  ]);
+  const nodeClassName = formatClassName(["react-colorful__saturation", styles.saturation]);
   const pointerClassName = formatClassName(["react-colorful__saturation-pointer", styles.pointer]);
 
   return (

@@ -1,6 +1,6 @@
 {
   "name": "react-colorful",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "A tiny color picker component for modern React apps",
   "source": "src/index.js",
   "main": "dist/index.js",
@@ -11,7 +11,7 @@
     "lint": "eslint src/**/*.js demo/src/**/*.js",
     "size": "npm run build && size-limit",
     "test": "uvu -r esm tests",
-    "build": "microbundle --entry src/index.js --output dist/index.js --name react-colorful --css-modules --jsx React.createElement",
+    "build": "microbundle --entry src/index.js --output dist/index.js --name react-colorful --css-modules true --jsx React.createElement",
     "prepublishOnly": "npm run build",
     "start-demo": "parcel demo/src/index.html --out-dir demo/dist --open",
     "build-demo": "del-cli 'demo/dist/*' && parcel build demo/src/index.html --out-dir demo/dist --public-url /react-colorful/",

@@ -4,7 +4,7 @@ import formatClassName from "../utils/formatClassName";
 import hsvToHex from "../utils/hsvToHex";
 import styles from "../styles.css";
 
-const Hue = ({ className, hue, onChange }) => {
+const Hue = ({ hue, onChange }) => {
   const handleMove = useCallback(
     (interaction) => {
       // Hue measured in degrees of the color circle ranging from 0 to 360
@@ -19,7 +19,7 @@ const Hue = ({ className, hue, onChange }) => {
     backgroundColor: hsvToHex({ h: hue, s: 100, v: 100 }),
   };
 
-  const nodeClassName = formatClassName(["react-colorful__hue", styles.hue, className]);
+  const nodeClassName = formatClassName(["react-colorful__hue", styles.hue]);
   const pointerClassName = formatClassName(["react-colorful__hue-pointer", styles.pointer]);
 
   return (
