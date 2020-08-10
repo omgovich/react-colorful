@@ -1,21 +1,19 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import styles from "../styles.css";
 
-const limit = (number, min = 0, max = 1) => Math.min(Math.max(min, number), max);
+const limit = (number) => Math.min(Math.max(0, number), 1);
 
 const Interactive = ({ children, onMove }) => {
   const container = useRef();
   const [isDragging, setDragging] = useState(false);
 
   const getRelativePosition = useCallback((event) => {
-    const element = container.current;
-    const dimensions = element.getBoundingClientRect();
-    const left = typeof event.pageX === "number" ? event.pageX : event.touches[0].pageX;
-    const top = typeof event.pageY === "number" ? event.pageY : event.touches[0].pageY;
+    const rect = container.current.getBoundingClientRect();
+    const pointer = typeof event.pageX === "number" ? event : event.touches[0];
 
     return {
-      left: limit((left - (dimensions.left + window.pageXOffset)) / dimensions.width),
-      top: limit((top - (dimensions.top + window.pageYOffset)) / dimensions.height),
+      left: limit((pointer.pageX - (rect.left + window.pageXOffset)) / rect.width),
+      top: limit((pointer.pageY - (rect.top + window.pageYOffset)) / rect.height),
     };
   }, []);
 
