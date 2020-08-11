@@ -69,6 +69,7 @@
 .pointer {
   position: absolute;
   z-index: 1;
+  box-sizing: border-box;
   width: 24px;
   height: 24px;
   transform: translate(-50%, -50%);
