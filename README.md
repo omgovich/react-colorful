@@ -82,6 +82,8 @@ The easiest way to tweak react-colorful is to create another stylesheet to overr
 }
 ```
 
+[See examples →](https://codesandbox.io/s/react-colorful-customization-demo-mq85z?file=/src/styles.css)
+
 ## Why react-colorful?
 
 Today each dependency drags more dependencies and increases your project’s bundle size uncontrollably. But size is very important for everything that intends to work in a browser.
