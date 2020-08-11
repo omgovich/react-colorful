@@ -14,7 +14,7 @@
   <a href="https://npmjs.org/package/react-colorful">
     <img alt="npm" src="https://img.shields.io/david/omgovich/react-colorful.svg?labelColor=da248d&color=6ead0a">
   </a>
-  <a href="https://npmjs.org/package/react-colorful">
+  <a href="https://unpkg.com/react-colorful/dist/index.esmodule.js">
     <img alt="gzip size" src="http://img.badgesize.io/https://unpkg.com/react-colorful/dist/index.esmodule.js?compression=gzip&color=6ead0a">
   </a>
   
