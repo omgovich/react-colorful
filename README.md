@@ -100,5 +100,3 @@ To show you the problem that **react-colorful** is trying to solve, we have perf
 | react-color v2.18.1       | 165 KB          | 40,6 KB        | 6            |
 | react-input-color v3.0.1  | 59 KB           | 19,1 KB        | 7            |
 | rc-color-picker v1.2.6    | 117 KB          | 32,4 KB        | 5            |
-
-If you don't choose dependencies blindly and think that a simple color picker shouldn't cost as the entire jQuery package, **react-colorful** is the right solution for you.
