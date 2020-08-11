@@ -10,6 +10,7 @@
   "scripts": {
     "lint": "eslint src/**/*.js demo/src/**/*.js",
     "size": "npm run build && size-limit",
+    "jest": "jest",
     "test": "uvu -r esm tests",
     "build": "microbundle --entry src/index.js --output dist/index.js --name react-colorful --css-modules true --jsx React.createElement",
     "prepublishOnly": "npm run build",
@@ -23,6 +24,15 @@
       "limit": "2 KB"
     }
   ],
+  "jest": {
+    "verbose": true,
+    "transform": {
+      "\\.js$": "jest-esm-jsx-transform"
+    },
+    "moduleNameMapper": {
+      "\\.css$": "identity-obj-proxy"
+    }
+  },
   "files": [
     "dist",
     "ACKNOWLEDGMENTS",
@@ -53,6 +63,7 @@
   },
   "devDependencies": {
     "@size-limit/preset-small-lib": "^4.5.6",
+    "@testing-library/react": "^10.4.8",
     "del-cli": "^3.0.1",
     "eslint": "^7.5.0",
     "eslint-config-prettier": "^6.11.0",
@@ -61,6 +72,9 @@
     "eslint-plugin-react-hooks": "^4.0.8",
     "esm": "^3.2.25",
     "gh-pages": "^3.1.0",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^26.3.0",
+    "jest-esm-jsx-transform": "^1.0.0",
     "microbundle": "^0.12.3",
     "parcel-bundler": "^1.12.4",
     "postcss-modules": "^3.2.0",
