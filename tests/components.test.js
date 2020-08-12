@@ -24,6 +24,13 @@ it("Renders proper HTML", () => {
   expect(result.container.firstChild).toMatchSnapshot();
 });
 
+it("Accepts an additional `className`", () => {
+  const result = render(<ColorPicker className="custom-picker" />);
+
+  const hasClass = result.container.firstChild.classList.contains("custom-picker");
+  expect(hasClass).toBe(true);
+});
+
 it("Doesn't trigger `onChange` after mounting", () => {
   const handleChange = jest.fn();
   render(<ColorPicker onChange={handleChange} />);
