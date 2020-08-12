@@ -2,40 +2,38 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 import Hue from "./Hue";
 import Saturation from "./Saturation";
 import formatClassName from "../utils/formatClassName";
-import hsvToHex from "../utils/hsvToHex";
-import hexToHsv from "../utils/hexToHsv";
-import equalHex from "../utils/equalHex";
 import equalHsv from "../utils/equalHsv";
+import HEX from "../colorModels/hex";
 import styles from "../styles.css";
 
-const ColorPicker = ({ className, hex, onChange }) => {
+const ColorPicker = ({ className, color, colorModel, onChange }) => {
   // Input and output formats are HEX (#aabbcc),
   // but all internal calculations are based on HSV model
-  const [hsv, updateHsv] = useState(() => hexToHsv(hex));
+  const [hsv, updateHsv] = useState(() => colorModel.toHsv(color));
 
   // By using this ref we're able to prevent extra updates
   // and the effects recursion during the color conversion
-  const colorCache = useRef({ hex, hsv });
+  const cache = useRef({ color, hsv });
 
   // Update local HSV if `hex` property value is changed,
   // but only if it's not the same HEX-color that we just sent to the parent
   useEffect(() => {
-    if (!equalHex(hex, colorCache.current.hex)) {
-      const newHsv = hexToHsv(hex);
-      colorCache.current = { hsv: newHsv, hex };
+    if (!colorModel.equal(color, cache.current.color)) {
+      const newHsv = colorModel.toHsv(color);
+      cache.current = { hsv: newHsv, color };
       updateHsv(newHsv);
     }
-  }, [hex]);
+  }, [color, colorModel]);
 
   // If HSV is changed, convert it to the HEX-format, send to the parent component
   // and save the new HEX-color to the ref to prevent unnecessary updates
   useEffect(() => {
-    if (!equalHsv(hsv, colorCache.current.hsv)) {
-      const newHex = hsvToHex(hsv);
-      colorCache.current = { hsv, hex: newHex };
-      onChange(newHex);
+    if (!equalHsv(hsv, cache.current.hsv)) {
+      const newColor = colorModel.fromHsv(hsv);
+      cache.current = { hsv, color: newColor };
+      onChange(newColor);
     }
-  }, [hsv, onChange]);
+  }, [hsv, colorModel, onChange]);
 
   // Merge the current HSV color object with updated params.
   // For example, when a child component sends `h` or `s` only
@@ -54,7 +52,8 @@ const ColorPicker = ({ className, hex, onChange }) => {
 };
 
 ColorPicker.defaultProps = {
-  hex: "#ABC",
+  color: "#ABC",
+  colorModel: HEX,
   onChange: () => {},
 };
 

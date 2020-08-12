@@ -10,6 +10,7 @@ node_modules/
 
 # bundler
 dist/
+color/
 .cache
 
 # OSX
