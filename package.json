@@ -79,7 +79,8 @@
     "prettier": "2.0.5",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
-    "size-limit": "^4.5.5"
+    "size-limit": "^4.5.5",
+    "use-throttled-effect": "0.0.7"
   },
   "dependencies": {}
 }
