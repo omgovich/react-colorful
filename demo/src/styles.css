@@ -7,9 +7,8 @@
   outline: none;
 }
 
-html,
 body {
-  background: #fff;
+  background-color: #fff;
   color: #111;
   font: normal 20px/1.4 "Recursive", Arial, Helvetica, sans-serif;
 }
