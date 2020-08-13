@@ -42,7 +42,7 @@ const useFaviconColor = (color) => {
 
   // generate a favicon only once on mobiles in order to improve performance
   const shouldReplace = () => {
-    if (window.innerWidth < 768 && !faviconNode.current) return false;
+    if (window.innerWidth < 768 && faviconNode.current) return false;
     return true;
   };
 
