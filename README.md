@@ -9,7 +9,7 @@
     <img alt="npm" src="https://img.shields.io/npm/v/react-colorful.svg?labelColor=da248d&color=6ead0a" />
   </a>
   <a href="https://travis-ci.org/omgovich/react-colorful">
-    <img alt="CI" src="https://img.shields.io/travis/omgovich/react-colorful.svg?labelColor=da248d&color=6ead0a" />
+    <img alt="CI" src="https://img.shields.io/travis/omgovich/react-colorful/master.svg?branch=master&labelColor=da248d&color=6ead0a" />
   </a>
   <a href="https://npmjs.org/package/react-colorful">
     <img alt="npm" src="https://img.shields.io/david/omgovich/react-colorful.svg?labelColor=da248d&color=6ead0a">
