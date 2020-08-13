@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import ColorPicker from "../../src";
 import hexToRgb from "../../src/utils/hexToRgb";
 import styles from "./styles.css";
+import useFaviconColor from "./hooks/useFaviconColor";
 
 // See http://www.w3.org/TR/AERT#color-contrast
 const getBrightness = ({ r, g, b }) => (r * 299 + g * 587 + b * 114) / 1000;
@@ -23,6 +24,7 @@ const Demo = () => {
   }, []);
 
   useBodyBackground(color);
+  useFaviconColor(color);
 
   return (
     <div className={styles.wrapper} style={{ color: textColor }}>
