@@ -1,7 +1,7 @@
 import hexToHsv from "../src/utils/hexToHsv.js";
 import hsvToHex from "../src/utils/hsvToHex.js";
 import equalHex from "../src/utils/equalHex.js";
-import equalHsv from "../src/utils/equalHsv.js";
+import equalColorObjects from "../src/utils/equalColorObjects.js";
 import formatClassName from "../src/utils/formatClassName.js";
 
 it("Converts HEX to HSV", () => {
@@ -35,10 +35,10 @@ it("Compares two HEX colors", () => {
 });
 
 it("Compares two HSV colors", () => {
-  expect(equalHsv({ h: 0, s: 0, v: 100 }, { h: 0, s: 0, v: 100 })).toBe(true);
-  expect(equalHsv({ h: 100, s: 50, v: 50 }, { h: 100, s: 50, v: 50 })).toBe(true);
-  expect(equalHsv({ h: 50, s: 0, v: 0 }, { h: 100, s: 0, v: 0 })).toBe(false);
-  expect(equalHsv({ h: 1, s: 2, v: 3 }, { h: 4, s: 5, v: 6 })).toBe(false);
+  expect(equalColorObjects({ h: 0, s: 0, v: 100 }, { h: 0, s: 0, v: 100 })).toBe(true);
+  expect(equalColorObjects({ h: 100, s: 50, v: 50 }, { h: 100, s: 50, v: 50 })).toBe(true);
+  expect(equalColorObjects({ h: 50, s: 0, v: 0 }, { h: 100, s: 0, v: 0 })).toBe(false);
+  expect(equalColorObjects({ h: 1, s: 2, v: 3 }, { h: 4, s: 5, v: 6 })).toBe(false);
 });
 
 it("Formats a class name", () => {

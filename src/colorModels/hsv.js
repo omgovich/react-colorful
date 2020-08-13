@@ -1,7 +1,7 @@
-import equalHsv from "../utils/equalHsv";
+import equalColorObjects from "../utils/equalColorObjects";
 
 export default {
   toHsv: (hsv) => hsv,
   fromHsv: (hsv) => hsv,
-  equal: equalHsv,
+  equal: equalColorObjects,
 };

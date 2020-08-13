@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from "react";
 import ReactDOM from "react-dom";
 import ColorPicker from "../../src";
+import HEX from "../../src/colorModels/hex";
 import hexToRgb from "../../src/utils/hexToRgb";
 import styles from "./styles.css";
 
@@ -19,7 +20,12 @@ const Demo = () => {
   return (
     <div className={styles.wrapper} style={{ color: textColor, backgroundColor: color }}>
       <header className={styles.header}>
-        <ColorPicker className={styles.colorPicker} color={color} onChange={handleChange} />
+        <ColorPicker
+          className={styles.colorPicker}
+          color={color}
+          colorModel={HEX}
+          onChange={handleChange}
+        />
         <div className={styles.headerContent}>
           <h1 className={styles.headerTitle}>React Colorful 🎨</h1>
           <h2 className={styles.headerDescription}>
