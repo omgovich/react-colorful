@@ -1,8 +1,8 @@
 import React, { useCallback } from "react";
 import Interactive from "./Interactive";
-import hsvToHex from "../utils/hsvToHex";
 import formatClassName from "../utils/formatClassName";
 import styles from "../styles.css";
+import hsvToHslString from "../utils/hsvToHslString";
 
 const Saturation = ({ hsv, onChange }) => {
   const handleMove = useCallback(
@@ -16,13 +16,13 @@ const Saturation = ({ hsv, onChange }) => {
   );
 
   const containerStyle = {
-    backgroundColor: hsvToHex({ h: hsv.h, s: 100, v: 100 }),
+    backgroundColor: hsvToHslString({ h: hsv.h, s: 100, v: 100 }),
   };
 
   const pointerStyle = {
     top: `${100 - hsv.v}%`,
     left: `${hsv.s}%`,
-    backgroundColor: hsvToHex(hsv),
+    backgroundColor: hsvToHslString(hsv),
   };
 
   const nodeClassName = formatClassName(["react-colorful__saturation", styles.saturation]);
