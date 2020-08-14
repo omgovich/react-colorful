@@ -103,6 +103,16 @@ To show you the problem that **react-colorful** is trying to solve, we have perf
 | react-input-color v3.0.1  | 59 KB           | 19,1 KB        | 7            |
 | rc-color-picker v1.2.6    | 117 KB          | 32,4 KB        | 5            |
 
+## Companies using react-colorful
+
+<details>
+  <summary><a href="https://resume.io/">Resume.io</a> — online resume builder with over 7,800,000 users worldwide</summary>
+
+  <a href="https://omgovich.github.io/react-colorful">
+    <img src="demo/src/assets/resume-io.png" width="873" alt="resume-io" />
+  </a>
+</details>
+
 ## Roadmap
 
 - [ ] Preact support
