@@ -106,10 +106,10 @@ To show you the problem that **react-colorful** is trying to solve, we have perf
 ## Companies using react-colorful
 
 <details>
-  <summary><a href="https://resume.io/">Resume.io</a> — online resume builder with over 7,800,000 users worldwide</summary>
+  <summary><a href="https://resume.io">Resume.io</a> — online resume builder with over 7,800,000 users worldwide</summary>
 
-  <a href="https://omgovich.github.io/react-colorful">
-    <img src="demo/src/assets/resume-io.png" width="873" alt="resume-io" />
+  <a href="https://resume.io/">
+    <img src="demo/src/assets/resume-io.png" width="873" alt="resume.io" />
   </a>
 </details>
 
