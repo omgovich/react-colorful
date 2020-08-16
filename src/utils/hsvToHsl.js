@@ -3,7 +3,7 @@ const hsvToHsl = ({ h, s, v }) => {
 
   return {
     h: h,
-    s: (s * v) / (hh < 100 ? hh : 200 - hh),
+    s: hh === 0 || hh === 200 ? 0 : ((s * v) / 100 / (hh <= 100 ? hh : 200 - hh)) * 100,
     l: hh / 2,
   };
 };
