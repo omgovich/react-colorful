@@ -3,7 +3,7 @@ const hslToHsv = ({ h, s, l }) => {
 
   return {
     h: h,
-    s: ((2 * s) / (l + s)) * 100,
+    s: s > 0 ? ((2 * s) / (l + s)) * 100 : 0,
     v: l + s,
   };
 };
