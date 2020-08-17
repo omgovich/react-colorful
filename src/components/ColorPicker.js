@@ -6,7 +6,7 @@ import equalColorObjects from "../utils/equalColorObjects";
 import HSL from "../colorModels/hsl";
 import styles from "../styles.css";
 
-const ColorPicker = ({ className, color, colorModel, onChange }) => {
+const ColorPicker = ({ className, colorModel, color = colorModel.defaultColor, onChange }) => {
   // No matter which color model is used (HEX, RGB or HSL),
   // all internal calculations are based on HSV model
   const [hsv, updateHsv] = useState(() => colorModel.toHsv(color));
@@ -52,7 +52,6 @@ const ColorPicker = ({ className, color, colorModel, onChange }) => {
 };
 
 ColorPicker.defaultProps = {
-  color: { h: 0, s: 0, l: 0 },
   colorModel: HSL,
   onChange: () => {},
 };
