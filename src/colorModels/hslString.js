@@ -3,6 +3,7 @@ import fromHsv from "../utils/hsvToHslString";
 import equal from "../utils/equalColorObjects";
 
 export default {
+  defaultColor: "hsl(0, 0%, 0%)",
   toHsv,
   fromHsv,
   equal,
