@@ -2,6 +2,7 @@ import React from "react";
 import { render, cleanup, fireEvent, waitFor } from "@testing-library/react";
 import ColorPicker from "../src/";
 import HEX from "../src/colorModels/hex";
+import RGB from "../src/colorModels/rgb";
 
 afterEach(cleanup);
 
@@ -21,6 +22,12 @@ class FakeMouseEvent extends MouseEvent {
 
 it("Renders proper HTML", () => {
   const result = render(<ColorPicker color="#F00" colorModel={HEX} />);
+
+  expect(result.container.firstChild).toMatchSnapshot();
+});
+
+it("Works with no props", () => {
+  const result = render(<ColorPicker />);
 
   expect(result.container.firstChild).toMatchSnapshot();
 });
