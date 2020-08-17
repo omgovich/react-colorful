@@ -3,6 +3,7 @@ import hsvToHex from "../src/utils/hsvToHex.js";
 import hsvToHsl from "../src/utils/hsvToHsl.js";
 import hsvToHslString from "../src/utils/hsvToHslString.js";
 import hslToHsv from "../src/utils/hslToHsv.js";
+import hslStringToHsv from "../src/utils/hslStringToHsv.js";
 import equalHex from "../src/utils/equalHex.js";
 import equalColorObjects from "../src/utils/equalColorObjects.js";
 import formatClassName from "../src/utils/formatClassName.js";
@@ -48,6 +49,14 @@ it("Converts HSL to HSV", () => {
 
 it("Converts HSV to HSL string", () => {
   expect(hsvToHslString({ h: 0, s: 0, v: 0 })).toBe("hsl(0, 0%, 0%)");
+});
+
+it("Converts HSL string to HSV", () => {
+  expect(hslStringToHsv("hsl(0, 0%, 100%)")).toMatchObject({ h: 0, s: 0, v: 100 });
+  expect(hslStringToHsv("hsl(60, 100%, 50%)")).toMatchObject({ h: 60, s: 100, v: 100 });
+  expect(hslStringToHsv("hsl(0, 100%, 50%)")).toMatchObject({ h: 0, s: 100, v: 100 });
+  expect(hslStringToHsv("hsl(0, 0%, 0%)")).toMatchObject({ h: 0, s: 0, v: 0 });
+  expect(hslStringToHsv("hsl(200, 25%, 32%)")).toMatchObject({ h: 200, s: 40, v: 40 });
 });
 
 it("Compares two HEX colors", () => {

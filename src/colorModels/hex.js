@@ -1,9 +1,9 @@
-import hsvToHex from "../utils/hsvToHex";
-import hexToHsv from "../utils/hexToHsv";
-import equalHex from "../utils/equalHex";
+import toHsv from "../utils/hexToHsv";
+import fromHsv from "../utils/hsvToHex";
+import equal from "../utils/equalHex";
 
 export default {
-  toHsv: hexToHsv,
-  fromHsv: hsvToHex,
-  equal: equalHex,
+  toHsv,
+  fromHsv,
+  equal,
 };
