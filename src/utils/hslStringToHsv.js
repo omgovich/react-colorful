@@ -1,6 +1,6 @@
 import hslToHsv from "./hslToHsv";
 
-const matcher = /hsl\((\d+(?:\.\d+)*),\s*(\d+(?:\.\d+)*)%,\s*(\d+(?:\.\d+)*)%\)/;
+const matcher = /hsl\((\d+(?:\.\d+)*),\s*(\d+(?:\.\d+)*)%?,\s*(\d+(?:\.\d+)*)%?\)/;
 
 const hslStringToHsv = (string) => {
   const match = matcher.exec(string);

@@ -1,12 +1,22 @@
-import hexToHsv from "../src/utils/hexToHsv.js";
-import hsvToHex from "../src/utils/hsvToHex.js";
-import hsvToHsl from "../src/utils/hsvToHsl.js";
-import hsvToHslString from "../src/utils/hsvToHslString.js";
-import hslToHsv from "../src/utils/hslToHsv.js";
-import hslStringToHsv from "../src/utils/hslStringToHsv.js";
-import equalHex from "../src/utils/equalHex.js";
-import equalColorObjects from "../src/utils/equalColorObjects.js";
-import formatClassName from "../src/utils/formatClassName.js";
+// HEX
+import hexToHsv from "../src/utils/hexToHsv";
+import hsvToHex from "../src/utils/hsvToHex";
+import equalHex from "../src/utils/equalHex";
+// HSL
+import hsvToHsl from "../src/utils/hsvToHsl";
+import hslToHsv from "../src/utils/hslToHsv";
+// HSL string
+import hsvToHslString from "../src/utils/hsvToHslString";
+import hslStringToHsv from "../src/utils/hslStringToHsv";
+// RGB
+import hsvToRgb from "../src/utils/hsvToRgb";
+import rgbToHsv from "../src/utils/rgbToHsv";
+// RGB string
+import hsvToRgbString from "../src/utils/hsvToRgbString";
+import rgbStringToHsv from "../src/utils/rgbStringToHsv";
+// Rest
+import equalColorObjects from "../src/utils/equalColorObjects";
+import formatClassName from "../src/utils/formatClassName";
 
 it("Converts HEX to HSV", () => {
   expect(hexToHsv("#ffffff")).toMatchObject({ h: 0, s: 0, v: 100 });
@@ -53,10 +63,37 @@ it("Converts HSV to HSL string", () => {
 
 it("Converts HSL string to HSV", () => {
   expect(hslStringToHsv("hsl(0, 0%, 100%)")).toMatchObject({ h: 0, s: 0, v: 100 });
+  expect(hslStringToHsv("hsl(0,0,100)")).toMatchObject({ h: 0, s: 0, v: 100 });
   expect(hslStringToHsv("hsl(60, 100%, 50%)")).toMatchObject({ h: 60, s: 100, v: 100 });
   expect(hslStringToHsv("hsl(0, 100%, 50%)")).toMatchObject({ h: 0, s: 100, v: 100 });
   expect(hslStringToHsv("hsl(0, 0%, 0%)")).toMatchObject({ h: 0, s: 0, v: 0 });
   expect(hslStringToHsv("hsl(200, 25%, 32%)")).toMatchObject({ h: 200, s: 40, v: 40 });
+});
+
+it("Converts HSV to RGB", () => {
+  expect(hsvToRgb({ h: 0, s: 0, v: 100 })).toMatchObject({ r: 255, g: 255, b: 255 });
+  expect(hsvToRgb({ h: 0, s: 100, v: 100 })).toMatchObject({ r: 255, g: 0, b: 0 });
+});
+
+it("Converts RGB to HSV", () => {
+  expect(rgbToHsv({ r: 255, g: 255, b: 255 })).toMatchObject({ h: 0, s: 0, v: 100 });
+  expect(rgbToHsv({ r: 255, g: 0, b: 0 })).toMatchObject({ h: 0, s: 100, v: 100 });
+});
+
+it("Converts RGB string to HSV", () => {
+  expect(rgbStringToHsv("rgb(255, 255, 255)")).toMatchObject({ h: 0, s: 0, v: 100 });
+  expect(rgbStringToHsv("rgb(0,0,0)")).toMatchObject({ h: 0, s: 0, v: 0 });
+  expect(rgbStringToHsv("rgb(61, 88, 102)")).toMatchObject({ h: 200, s: 40, v: 40 });
+});
+
+it("Converts HSV to RGB string", () => {
+  expect(hsvToRgbString({ h: 0, s: 0, v: 100 })).toBe("rgb(255, 255, 255)");
+  expect(hsvToRgbString({ h: 200, s: 40, v: 40 })).toBe("rgb(61, 88, 102)");
+});
+
+it("Converts RGB string to HSV", () => {
+  expect(rgbStringToHsv("rgb(255, 255, 255)")).toMatchObject({ h: 0, s: 0, v: 100 });
+  expect(rgbStringToHsv("rgb(61, 88, 102)")).toMatchObject({ h: 200, s: 40, v: 40 });
 });
 
 it("Compares two HEX colors", () => {
