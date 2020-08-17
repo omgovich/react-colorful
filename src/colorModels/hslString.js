@@ -1,5 +1,5 @@
-import toHsv from "../utils/rgbToHsv";
-import fromHsv from "../utils/hsvToRgb";
+import toHsv from "../utils/hslStringToHsv";
+import fromHsv from "../utils/hsvToHslString";
 import equal from "../utils/equalColorObjects";
 
 export default {

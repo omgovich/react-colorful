@@ -11,7 +11,7 @@
     "lint": "eslint src/**/*.js demo/src/**/*.js",
     "size": "npm run build && size-limit",
     "test": "jest tests",
-    "build-color-models": "node ./build-color-models.js",
+    "build-color-models": "del-cli 'color/*' && node ./build-color-models.js",
     "build": "microbundle --entry src/index.js --output dist/index.js --name react-colorful --css-modules true --jsx React.createElement",
     "prepublishOnly": "npm run build && npm run build-color-models",
     "start-demo": "parcel demo/src/index.html --out-dir demo/dist --open",
