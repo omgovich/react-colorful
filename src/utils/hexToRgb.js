@@ -1,7 +1,7 @@
 const hexToRgb = (hex) => {
   if (hex[0] === "#") hex = hex.substr(1);
 
-  if (hex.length === 3) {
+  if (hex.length < 6) {
     return {
       r: parseInt(hex[0] + hex[0], 16),
       g: parseInt(hex[1] + hex[1], 16),

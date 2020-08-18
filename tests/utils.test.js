@@ -111,7 +111,6 @@ it("Compares two HSV colors", () => {
 });
 
 it("Formats a class name", () => {
-  expect(formatClassName()).toBe("");
   expect(formatClassName(["one"])).toBe("one");
   expect(formatClassName(["one", "two", "three"])).toBe("one two three");
   expect(formatClassName([false, "two", null])).toBe("two");
