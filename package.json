@@ -1,6 +1,6 @@
 {
   "name": "react-colorful",
-  "version": "2.0.0-beta.1",
+  "version": "2.0.0-beta.2",
   "description": "A tiny color picker component for modern React apps",
   "source": "src/index.js",
   "main": "dist/index.js",
@@ -11,9 +11,8 @@
     "lint": "eslint src/**/*.js demo/src/**/*.js",
     "size": "npm run build && size-limit",
     "test": "jest tests",
-    "build-packages": "node ./build-packages.js",
-    "build": "microbundle --entry src/index.js --output dist/index.js --name react-colorful --css-modules true --jsx React.createElement",
-    "prepublishOnly": "npm run build && npm run build-packages",
+    "build": "node ./build-packages.js",
+    "prepublishOnly": "npm run build",
     "start-demo": "parcel demo/src/index.html --out-dir demo/dist --open",
     "build-demo": "del-cli 'demo/dist/*' && parcel build demo/src/index.html --out-dir demo/dist --public-url /react-colorful/",
     "deploy-demo": "npm run build-demo && gh-pages -d demo/dist"
@@ -21,6 +20,26 @@
   "size-limit": [
     {
       "path": "dist/index.js",
+      "limit": "2 KB"
+    },
+    {
+      "path": "rgb/index.js",
+      "limit": "2 KB"
+    },
+    {
+      "path": "rgbString/index.js",
+      "limit": "2 KB"
+    },
+    {
+      "path": "hsl/index.js",
+      "limit": "2 KB"
+    },
+    {
+      "path": "hslString/index.js",
+      "limit": "2 KB"
+    },
+    {
+      "path": "hsv/index.js",
       "limit": "2 KB"
     }
   ],

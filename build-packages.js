@@ -16,7 +16,7 @@ fs.readdir(entryDirPath, async (e, files) => {
   for (let file of files) {
     const { name } = path.parse(file);
     const filePath = path.join(entryDirPath, file);
-    const outputDirPath = path.join(__dirname, name);
+    const outputDirPath = path.join(__dirname, name === "hex" ? "dist" : name);
     const manifestPath = path.join(outputDirPath, `package.json`);
     const bundlerPath = path.join(__dirname, "node_modules/.bin/microbundle");
 
@@ -24,14 +24,14 @@ fs.readdir(entryDirPath, async (e, files) => {
     await del(outputDirPath);
 
     // Run microbundle
-    await exec(
-      `${bundlerPath} --entry ${filePath} --output ${outputDirPath}/index.js --name ${name}`
+    const { stdout } = await exec(
+      `${bundlerPath} --entry ${filePath} --output ${outputDirPath}/index.js  --name react-colorful-${name} --css-modules true --jsx React.createElement`
     );
-    console.log(`🥁 ${name}: bundle is built`);
+    console.log(stdout);
 
     // Create `package.json`
     var manifestCode = JSON.stringify({
-      name,
+      name: `react-colorful-${name}`,
       private: true,
       main: "index.js",
       module: "index.module.js",
@@ -39,7 +39,6 @@ fs.readdir(entryDirPath, async (e, files) => {
     });
 
     await writeFile(manifestPath, manifestCode, "utf8");
-    console.log(`🥁 ${name}: package.json was created`);
   }
 
   console.log(`🎺 All packages are built`);
