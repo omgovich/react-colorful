@@ -56,6 +56,32 @@ const YourComponent = () => {
 };
 ```
 
+## Supported color models
+
+The default **react-colorful**'s input/output format is HEX string (like `#ffffff`). In case you need another color model, we provide 5 additional color picker bundles:
+
+| Import path                  | Value example                | Size (gzipped) |
+| ---------------------------- | ---------------------------- | -------------- |
+| `"react-colorful/rgb"`       | `{ r: 255, g: 255, b: 255 }` | ~1,4 KB        |
+| `"react-colorful/rgbString"` | `"rgb(255, 255, 255)"`       | ~1,5 KB        |
+| `"react-colorful/hsl"`       | `{ h: 0, s: 0, l: 100 }`     | ~1,2 KB        |
+| `"react-colorful/hslString"` | `"hsl(0, 0%, 100%)"`         | ~1,3 KB        |
+| `"react-colorful/hsv"`       | `{ h: 0, s: 0, v: 100 }`     | ~1,2 KB        |
+
+**Code example:**
+
+```js
+import RgbColorPicker from "react-colorful/rgb";
+import "react-colorful/dist/index.css";
+
+const YourComponent = () => {
+  const [color, setColor] = useState({ r: 50, g: 100, b: 150 });
+  return <RgbColorPicker color={color} onChange={setColor} />;
+};
+```
+
+[Live demo →](https://codesandbox.io/s/react-colorful-rgb-o9q0t?file=/src/App.js)
+
 ## Overriding styles
 
 The easiest way to tweak react-colorful is to create another stylesheet to override the default styles.
@@ -115,5 +141,6 @@ To show you the problem that **react-colorful** is trying to solve, we have perf
 
 ## Roadmap
 
+- [x] Additional modules to support different color models (like HSL and RGB)
+- [ ] HEX input component
 - [ ] Preact support
-- [ ] Additional modules to support different color models (like HSL and RGB)
