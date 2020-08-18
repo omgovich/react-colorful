@@ -19,23 +19,23 @@
   },
   "size-limit": [
     {
-      "path": "dist/index.js",
+      "path": "dist/index.module.js",
       "limit": "2 KB"
     },
     {
-      "path": "rgb/index.js",
+      "path": "rgb/index.module.js",
       "limit": "2 KB"
     },
     {
-      "path": "rgbString/index.js",
+      "path": "rgbString/index.module.js",
       "limit": "2 KB"
     },
     {
-      "path": "hsl/index.js",
+      "path": "hsl/index.module.js",
       "limit": "2 KB"
     },
     {
-      "path": "hslString/index.js",
+      "path": "hslString/index.module.js",
       "limit": "2 KB"
     },
     {
