@@ -58,7 +58,10 @@ const YourComponent = () => {
 
 ## Supported color models
 
-The default **react-colorful**'s input/output format is HEX string (like `#ffffff`). In case you need another color model, we provide 5 additional color picker bundles:
+The default **react-colorful**'s input/output format is HEX string (like `#ffffff`). In case you need another color model, we provide 5 additional color picker bundles.
+
+<details>
+  <summary>How to use another color model</summary>
 
 | Import path                  | Value example                | Size (gzipped) |
 | ---------------------------- | ---------------------------- | -------------- |
@@ -81,6 +84,8 @@ const YourComponent = () => {
 ```
 
 [Live demo →](https://codesandbox.io/s/react-colorful-rgb-o9q0t?file=/src/App.js)
+
+</details>
 
 ## Overriding styles
 
@@ -118,7 +123,7 @@ Today each dependency drags more dependencies and increases your project’s bun
 
 - has no dependencies (no risks in terms of vulnerabilities, no unexpected bundle size changes);
 - built with hooks and functional components only (no classes and polyfills for them);
-- a lot of things that you probably don't need (like HSL or 8-digit HEX colors support) were stripped out.
+- a lot of things that you probably don't need (like 8-digit HEX colors support) were stripped out from.
 
 To show you the problem that **react-colorful** is trying to solve, we have performed a simple benchmark (using [size-limit](https://github.com/ai/size-limit)) against popular React color picker libraries:
 
