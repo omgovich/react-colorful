@@ -20,6 +20,9 @@ fs.readdir(entryDirPath, async (e, files) => {
     const manifestPath = path.join(outputDirPath, `package.json`);
     const bundlerPath = path.join(__dirname, "node_modules/.bin/microbundle");
 
+    // Delete the previous package version if exists
+    await del(outputDirPath);
+
     // Run microbundle
     await exec(
       `${bundlerPath} --entry ${filePath} --output ${outputDirPath}/index.js --name ${name}`
