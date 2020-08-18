@@ -58,7 +58,7 @@ const YourComponent = () => {
 
 ## Supported color models
 
-The default **react-colorful**'s input/output format is HEX string (like `#ffffff`). In case you need another color model, we provide 5 additional color picker bundles.
+The default **react-colorful**'s input/output format is a HEX string (like `#ffffff`). In case if you need another color model, we provide 5 additional color picker bundles.
 
 <details>
   <summary>How to use another color model</summary>
