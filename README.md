@@ -52,7 +52,7 @@ import "react-colorful/dist/index.css";
 
 const YourComponent = () => {
   const [color, setColor] = useState("#aabbcc");
-  return <ColorPicker hex={color} onChange={setColor} />;
+  return <ColorPicker color={color} onChange={setColor} />;
 };
 ```
 
