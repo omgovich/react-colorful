@@ -6,7 +6,7 @@ import fromHsv from "../utils/hsvToHex";
 import equal from "../utils/equalHex";
 
 const HEX = {
-  defaultColor: "#000",
+  defaultColor: "000",
   toHsv,
   fromHsv,
   equal,
