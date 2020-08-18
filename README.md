@@ -63,6 +63,8 @@ The default **react-colorful**'s input/output format is HEX string (like `#fffff
 <details>
   <summary>How to use another color model</summary>
 
+#### Available pickers
+
 | Import path                  | Value example                | Size (gzipped) |
 | ---------------------------- | ---------------------------- | -------------- |
 | `"react-colorful/rgb"`       | `{ r: 255, g: 255, b: 255 }` | ~1,4 KB        |
@@ -71,7 +73,7 @@ The default **react-colorful**'s input/output format is HEX string (like `#fffff
 | `"react-colorful/hslString"` | `"hsl(0, 0%, 100%)"`         | ~1,3 KB        |
 | `"react-colorful/hsv"`       | `{ h: 0, s: 0, v: 100 }`     | ~1,2 KB        |
 
-**Code example:**
+#### Code example
 
 ```js
 import RgbColorPicker from "react-colorful/rgb";
