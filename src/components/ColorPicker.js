@@ -3,7 +3,6 @@ import Hue from "./Hue";
 import Saturation from "./Saturation";
 import formatClassName from "../utils/formatClassName";
 import equalColorObjects from "../utils/equalColorObjects";
-import HSL from "../colorModels/hsl";
 import styles from "../styles.css";
 
 const ColorPicker = ({ className, colorModel, color = colorModel.defaultColor, onChange }) => {
@@ -31,7 +30,7 @@ const ColorPicker = ({ className, colorModel, color = colorModel.defaultColor, o
     if (!equalColorObjects(hsv, cache.current.hsv)) {
       const newColor = colorModel.fromHsv(hsv);
       cache.current = { hsv, color: newColor };
-      onChange(newColor);
+      if (onChange) onChange(newColor);
     }
   }, [hsv, colorModel, onChange]);
 
@@ -51,9 +50,4 @@ const ColorPicker = ({ className, colorModel, color = colorModel.defaultColor, o
   );
 };
 
-ColorPicker.defaultProps = {
-  colorModel: HSL,
-  onChange: () => {},
-};
-
-export default React.memo(ColorPicker);
+export default ColorPicker;

@@ -11,9 +11,9 @@
     "lint": "eslint src/**/*.js demo/src/**/*.js",
     "size": "npm run build && size-limit",
     "test": "jest tests",
-    "build-color-models": "del-cli 'color/*' && node ./build-color-models.js",
+    "build-packages": "node ./build-packages.js",
     "build": "microbundle --entry src/index.js --output dist/index.js --name react-colorful --css-modules true --jsx React.createElement",
-    "prepublishOnly": "npm run build && npm run build-color-models",
+    "prepublishOnly": "npm run build && npm run build-packages",
     "start-demo": "parcel demo/src/index.html --out-dir demo/dist --open",
     "build-demo": "del-cli 'demo/dist/*' && parcel build demo/src/index.html --out-dir demo/dist --public-url /react-colorful/",
     "deploy-demo": "npm run build-demo && gh-pages -d demo/dist"
@@ -65,6 +65,7 @@
   "devDependencies": {
     "@size-limit/preset-small-lib": "^4.5.6",
     "@testing-library/react": "^10.4.8",
+    "del": "^5.1.0",
     "del-cli": "^3.0.1",
     "eslint": "^7.5.0",
     "eslint-config-prettier": "^6.11.0",

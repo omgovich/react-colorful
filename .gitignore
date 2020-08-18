@@ -9,9 +9,16 @@ node_modules/
 *.code-workspace
 
 # bundler
-dist/
-color/
 .cache
+dist/
+
+# packages
+/hex
+/hsl
+/hslString
+/hsv
+/rgb
+/rgbString
 
 # OSX
 .DS_Store
