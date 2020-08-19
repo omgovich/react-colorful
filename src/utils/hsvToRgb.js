@@ -6,7 +6,7 @@ const hsvToRgb = ({ h, s, v }) => {
   let hh = Math.floor(h),
     b = v * (1 - s),
     c = v * (1 - (h - hh) * s),
-    d = v * (1 - (1 - h - hh) * s),
+    d = v * (1 - (1 - h + hh) * s),
     module = hh % 6;
 
   return {
