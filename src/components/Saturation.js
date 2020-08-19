@@ -8,9 +8,10 @@ const Saturation = ({ hsv, onChange }) => {
   const handleMove = useCallback(
     (interaction) => {
       // Saturation and brightness always fit into [0, 100] range
-      const saturation = interaction.left * 100;
-      const brightness = 100 - interaction.top * 100;
-      onChange({ s: saturation, v: brightness });
+      onChange({
+        s: interaction.left * 100,
+        v: 100 - interaction.top * 100,
+      });
     },
     [onChange]
   );
@@ -30,9 +31,8 @@ const Saturation = ({ hsv, onChange }) => {
 
   return (
     <div className={nodeClassName} style={containerStyle}>
-      <Interactive onMove={handleMove}>
-        <div className={pointerClassName} style={pointerStyle} />
-      </Interactive>
+      <div className={pointerClassName} style={pointerStyle} />
+      <Interactive onMove={handleMove} />
     </div>
   );
 };

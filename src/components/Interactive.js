@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import styles from "../styles.css";
 
-const limit = (number) => Math.min(Math.max(0, number), 1);
+// Limit number within [0, 1] bounds.
+// Use ternary operator instead of `Math.min(Math.max(0, number), 1)` to save few bytes
+const limit = (number) => (number > 1 ? 1 : number < 0 ? 0 : number);
 
-const Interactive = ({ children, onMove }) => {
+const Interactive = ({ onMove }) => {
   const container = useRef();
   const [isDragging, setDragging] = useState(false);
 
@@ -58,9 +60,7 @@ const Interactive = ({ children, onMove }) => {
       ref={container}
       onTouchStart={handleMoveStart}
       onMouseDown={handleMoveStart}
-    >
-      {children}
-    </div>
+    />
   );
 };
 
