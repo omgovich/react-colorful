@@ -18,6 +18,19 @@ class FakeMouseEvent extends MouseEvent {
   }
 }
 
+// Mock `HTMLElement.getBoundingClientRect` to be able to read element sizes
+// See https://github.com/jsdom/jsdom/issues/135#issuecomment-68191941
+Object.defineProperties(HTMLElement.prototype, {
+  getBoundingClientRect: {
+    get: () => () => ({
+      left: 5,
+      top: 5,
+      width: 100,
+      height: 100,
+    }),
+  },
+});
+
 it("Renders proper HTML", () => {
   const result = render(<ColorPicker color="#F00" />);
 

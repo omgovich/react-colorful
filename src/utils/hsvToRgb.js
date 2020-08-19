@@ -1,34 +1,19 @@
 const hsvToRgb = ({ h, s, v }) => {
+  h = (h / 360) * 6;
   s = s / 100;
   v = v / 100;
 
-  let rgb = [];
-  let c = v * s;
-  let hh = h / 60;
-  let x = c * (1 - Math.abs((hh % 2) - 1));
-  let m = v - c;
+  let i = Math.floor(h),
+    f = h - i,
+    p = v * (1 - s),
+    q = v * (1 - f * s),
+    t = v * (1 - (1 - f) * s),
+    mod = i % 6,
+    r = Math.round([v, q, p, p, t, v][mod] * 255),
+    g = Math.round([t, v, v, q, p, p][mod] * 255),
+    b = Math.round([p, p, t, v, v, q][mod] * 255);
 
-  if (hh >= 0 && hh < 1) {
-    rgb = [c, x, 0];
-  } else if (hh >= 1 && hh < 2) {
-    rgb = [x, c, 0];
-  } else if (hh >= 2 && hh < 3) {
-    rgb = [0, c, x];
-  } else if (h >= 3 && hh < 4) {
-    rgb = [0, x, c];
-  } else if (h >= 4 && hh < 5) {
-    rgb = [x, 0, c];
-  } else if (h >= 5 && hh <= 6) {
-    rgb = [c, 0, x];
-  } else {
-    rgb = [0, 0, 0];
-  }
-
-  return {
-    r: Math.round(255 * (rgb[0] + m)),
-    g: Math.round(255 * (rgb[1] + m)),
-    b: Math.round(255 * (rgb[2] + m)),
-  };
+  return { r, g, b };
 };
 
 export default hsvToRgb;
