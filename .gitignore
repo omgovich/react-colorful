@@ -19,6 +19,7 @@ dist/
 /hsv
 /rgb
 /rgbString
+/HexInput
 
 # OSX
 .DS_Store

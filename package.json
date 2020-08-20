@@ -61,7 +61,8 @@
     "hslString",
     "hsv",
     "rgb",
-    "rgbString"
+    "rgbString",
+    "HexInput"
   ],
   "repository": "omgovich/react-colorful",
   "keywords": [
