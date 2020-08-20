@@ -154,7 +154,7 @@ Today each dependency drags more dependencies and increases your project’s bun
 
 - has no dependencies (no risks in terms of vulnerabilities, no unexpected bundle size changes);
 - built with hooks and functional components only (no classes and polyfills for them);
-- a lot of things that you probably don't need (like 8-digit HEX colors support) were stripped out.
+- ships only a minimal amount of manually optimized color conversion algorithms (while most of the popular pickers import entire color manipulation libraries that increase the bundle size by more than 10 KB and make your app slower).
 
 To show you the problem that **react-colorful** is trying to solve, we have performed a simple benchmark (using [bundlephobia.com](https://bundlephobia.com)) against popular React color picker libraries:
 
