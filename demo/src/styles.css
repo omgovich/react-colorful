@@ -53,7 +53,6 @@ body {
   padding-left: 0.7em;
   background: none;
   outline: none;
-  font-variant-numeric: tabular-nums;
   text-transform: uppercase;
   opacity: 0.5;
   transition: opacity 0.2s;
