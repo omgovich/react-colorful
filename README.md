@@ -142,7 +142,7 @@ const YourComponent = () => {
 
 `HexInput` doesn't have any default styles, but accepts all properties that a regular `input` tag does (such as `className`, `placeholder` and `autoFocus`). That means you can place and modify this component as you like. Also, that allows you to combine the color picker and input in different ways.
 
-By the way, `HexInput` is also minimalist-friendly — only 500 bytes gzipped.
+By the way, `HexInput` is also minimalist-friendly — only 400 bytes gzipped.
 
 </details>
 
