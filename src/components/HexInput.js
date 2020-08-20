@@ -4,7 +4,8 @@ import validHex from "../utils/validHex";
 // Escapes all non-hexadecimal characters including "#"
 const escape = (hex) => hex.replace(/([^0-9A-F]+)/gi, "");
 
-const HexInput = ({ color, onChange, ...rest }) => {
+const HexInput = (props) => {
+  const { color, onChange } = props;
   const [value, setValue] = useState(escape(color));
 
   // Trigger `onChange` handler only if the input value is a valid HEX-color
@@ -30,16 +31,16 @@ const HexInput = ({ color, onChange, ...rest }) => {
     setValue(escape(color));
   }, [color]);
 
-  return (
-    <input
-      {...rest}
-      value={value}
-      maxLength={6}
-      spellCheck="false"
-      onChange={handleChange}
-      onBlur={handleBlur}
-    />
-  );
+  // Spread operator replacement to get rid of the polyfill (saves 150 bytes gzipped)
+  const inputProps = Object.assign({}, props, {
+    value,
+    maxLength: 6,
+    spellCheck: "false", // the element should not be checked for spelling errors
+    onChange: handleChange,
+    onBlur: handleBlur,
+  });
+
+  return React.createElement("input", inputProps);
 };
 
 HexInput.defaultProps = {
