@@ -2,6 +2,7 @@
 import hexToHsv from "../src/utils/hexToHsv";
 import hsvToHex from "../src/utils/hsvToHex";
 import equalHex from "../src/utils/equalHex";
+import validHex from "../src/utils/validHex";
 // HSL
 import hsvToHsl from "../src/utils/hsvToHsl";
 import hslToHsv from "../src/utils/hslToHsv";
@@ -108,6 +109,23 @@ it("Compares two HSV colors", () => {
   expect(equalColorObjects({ h: 100, s: 50, v: 50 }, { h: 100, s: 50, v: 50 })).toBe(true);
   expect(equalColorObjects({ h: 50, s: 0, v: 0 }, { h: 100, s: 0, v: 0 })).toBe(false);
   expect(equalColorObjects({ h: 1, s: 2, v: 3 }, { h: 4, s: 5, v: 6 })).toBe(false);
+});
+
+it("Validates HEX colors", () => {
+  // valid strings
+  expect(validHex("#8c0dba")).toBe(true);
+  expect(validHex("aabbcc")).toBe(true);
+  expect(validHex("#ABC")).toBe(true);
+  expect(validHex("123")).toBe(true);
+  // out of [0-F] range
+  expect(validHex("#eeffhh")).toBe(false);
+  // wrong length
+  expect(validHex("#12")).toBe(false);
+  expect(validHex("#12345")).toBe(false);
+  // empty
+  expect(validHex("")).toBe(false);
+  expect(validHex(null)).toBe(false);
+  expect(validHex()).toBe(false);
 });
 
 it("Formats a class name", () => {

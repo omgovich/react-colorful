@@ -17,10 +17,51 @@ body {
   transition: color 0.15s;
 }
 
-.colorPicker {
+.demo {
+  position: relative;
+  width: 200px;
   flex-shrink: 0;
+}
+
+.colorPicker {
+  width: 100%;
   border-radius: 9px;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+}
+
+.field {
+  position: absolute;
+  top: calc(100% + 16px);
+  left: calc(50% - 45px);
+  width: 90px;
+  font-family: "PT Mono", monospace;
+}
+
+.field:before {
+  content: "#";
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  opacity: 0.33;
+}
+
+.hexInput {
+  display: block;
+  color: inherit;
+  width: 100%;
+  padding-left: 0.7em;
+  background: none;
+  outline: none;
+  font-variant-numeric: tabular-nums;
+  text-transform: uppercase;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+
+.hexInput:focus,
+.hexInput:hover {
+  opacity: 1;
 }
 
 .header {
@@ -84,5 +125,9 @@ body {
   .headerDescription {
     margin-left: auto;
     margin-right: auto;
+  }
+
+  .field {
+    display: none;
   }
 }

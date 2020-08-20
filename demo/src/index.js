@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import ReactDOM from "react-dom";
 import ColorPicker from "../../src";
+import HexInput from "../../src/components/HexInput";
 import hexToRgb from "../../src/utils/hexToRgb";
 import styles from "./styles.css";
 import useFaviconColor from "./hooks/useFaviconColor";
@@ -29,7 +30,12 @@ const Demo = () => {
   return (
     <div className={styles.wrapper} style={{ color: textColor }}>
       <header className={styles.header}>
-        <ColorPicker className={styles.colorPicker} color={color} onChange={handleChange} />
+        <div className={styles.demo}>
+          <ColorPicker className={styles.colorPicker} color={color} onChange={handleChange} />
+          <div className={styles.field}>
+            <HexInput className={styles.hexInput} color={color} onChange={handleChange} />
+          </div>
+        </div>
         <div className={styles.headerContent}>
           <h1 className={styles.headerTitle}>React Colorful 🎨</h1>
           <h2 className={styles.headerDescription}>
