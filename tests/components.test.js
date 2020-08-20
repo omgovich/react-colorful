@@ -80,8 +80,8 @@ it("Triggers `onChange` after a touch interaction", async () => {
   expect(handleChange).toHaveReturned();
 });
 
-it("Renders `HexInput` component", () => {
-  const result = render(<HexInput color="#F00" />);
+it("Renders `HexInput` component properly", () => {
+  const result = render(<HexInput className="custom-input" color="#F00" placeholder="AABBCC" />);
 
   expect(result.container.firstChild).toMatchSnapshot();
 });
