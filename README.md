@@ -119,10 +119,10 @@ The easiest way to tweak react-colorful is to create another stylesheet to overr
 
 ## How to paste or type a color?
 
-**react-colorful**'s color picker itself doesn't include any input field, but don't worry if you need one. Since `v2.1` we provide a separate component that works perfectly in pair with our color picker.
+As you probably noticed the color picker itself doesn't include an input field, but don't worry if you need one. **react-colorful** is a modular library that allows you to build any picker you need. Since `v2.1` we provide an additional component that works perfectly in pair with our color picker.
 
 <details>
-  <summary>How to use `HexInput`</summary>
+  <summary>How to use <code>HexInput</code></summary>
 
 ```diff
 import ColorPicker from "react-colorful";
