@@ -117,6 +117,35 @@ The easiest way to tweak react-colorful is to create another stylesheet to overr
 
 [See examples →](https://codesandbox.io/s/react-colorful-customization-demo-mq85z?file=/src/styles.css)
 
+## How to paste or type a color?
+
+**react-colorful**'s color picker itself doesn't include any input field, but don't worry if you need one. Since `v2.1` we provide a separate component that works perfectly in pair with our color picker.
+
+<details>
+  <summary>How to use `HexInput`</summary>
+
+```diff
+import ColorPicker from "react-colorful";
++import HexInput from "react-colorful/HexInput";
+import "react-colorful/dist/index.css";
+
+const YourComponent = () => {
+  const [color, setColor] = useState("#aabbcc");
+  return (
+    <div>
+      <ColorPicker color={color} onChange={setColor} />
++     <HexInput color={color} onChange={setColor} />
+    </div>
+  );
+};
+```
+
+`HexInput` doesn't have any default styles, but accepts all properties that a regular `input` tag does (such as `className`, `placeholder` and `autoFocus`). That means you can place and modify this component as you like. Also, that allows you to combine the color picker and input in different ways.
+
+By the way, `HexInput` is also minimalist-friendly — only 500 bytes gzipped.
+
+</details>
+
 ## Why react-colorful?
 
 Today each dependency drags more dependencies and increases your project’s bundle size uncontrollably. But size is very important for everything that intends to work in a browser.
@@ -149,5 +178,5 @@ To show you the problem that **react-colorful** is trying to solve, we have perf
 ## Roadmap
 
 - [x] Additional modules to support different color models (like HSL and RGB)
-- [ ] HEX input component
+- [x] HEX input component
 - [ ] Preact support
