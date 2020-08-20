@@ -33,6 +33,7 @@ const HexInput = (props) => {
 
   // Spread operator replacement to get rid of the polyfill (saves 150 bytes gzipped)
   const inputProps = Object.assign({}, props, {
+    color: null, // do not add `color` attr to `input`-tag
     value,
     maxLength: 6,
     spellCheck: "false", // the element should not be checked for spelling errors
