@@ -127,14 +127,14 @@ Today each dependency drags more dependencies and increases your project’s bun
 - built with hooks and functional components only (no classes and polyfills for them);
 - a lot of things that you probably don't need (like 8-digit HEX colors support) were stripped out.
 
-To show you the problem that **react-colorful** is trying to solve, we have performed a simple benchmark (using [size-limit](https://github.com/ai/size-limit)) against popular React color picker libraries:
+To show you the problem that **react-colorful** is trying to solve, we have performed a simple benchmark (using [bundlephobia.com](https://bundlephobia.com)) against popular React color picker libraries:
 
-| Name                      | Size (minified) | Size (gzipped) | Dependencies |
-| ------------------------- | --------------- | -------------- | ------------ |
-| **react-colorful v1.2.1** | **4 KB**        | **1,5 KB**     | **0**        |
-| react-color v2.18.1       | 165 KB          | 40,6 KB        | 6            |
-| react-input-color v3.0.1  | 59 KB           | 19,1 KB        | 7            |
-| rc-color-picker v1.2.6    | 117 KB          | 32,4 KB        | 5            |
+| Name               | Size (minified)                                                                                                                    | Size (gzipped)                                                                                                                     | Dependencies |
+| ------------------ | ---------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- | ------------ |
+| **react-colorful** | [![](https://badgen.net/bundlephobia/min/react-colorful?color=6ead0a&label=)](https://bundlephobia.com/result?p=react-colorful)    | [![](https://badgen.net/bundlephobia/minzip/react-colorful?color=6ead0a&label=)](https://bundlephobia.com/result?p=react-colorful) | **0**        |
+| react-color        | [![](https://badgen.net/bundlephobia/min/react-color?color=red&label=)](https://bundlephobia.com/result?p=react-color)             | ![](https://badgen.net/bundlephobia/minzip/react-color?color=red&label=)                                                           | 6            |
+| react-input-color  | [![](https://badgen.net/bundlephobia/min/react-input-color?color=red&label=)](https://bundlephobia.com/result?p=react-input-color) | ![](https://badgen.net/bundlephobia/minzip/react-input-color?color=red&label=)                                                     | 7            |
+| rc-color-picker    | [![](https://badgen.net/bundlephobia/min/rc-color-picker?color=red&label=)](https://bundlephobia.com/result?p=rc-color-picker)     | ![](https://badgen.net/bundlephobia/minzip/rc-color-picker?color=red&label=)                                                       | 5            |
 
 ## Companies using react-colorful
 
