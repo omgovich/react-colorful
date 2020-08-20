@@ -1,5 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Renders \`HexInput\` component 1`] = `
+<input
+  maxlength="6"
+  spellcheck="false"
+  value="F00"
+/>
+`;
+
 exports[`Renders proper HTML 1`] = `
 <div
   class="react-colorful container"
