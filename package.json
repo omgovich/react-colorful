@@ -41,6 +41,10 @@
     {
       "path": "hsv/index.js",
       "limit": "2 KB"
+    },
+    {
+      "path": "HexInput/index.module.js",
+      "limit": "1 KB"
     }
   ],
   "jest": {
