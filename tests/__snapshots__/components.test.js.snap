@@ -19,23 +19,25 @@ exports[`Renders proper HTML 1`] = `
     style="background-color: rgb(255, 0, 0);"
   >
     <div
-      class="react-colorful__saturation-pointer pointer"
-      style="top: 0%; left: 100%; background-color: rgb(255, 0, 0);"
-    />
-    <div
       class="interactive"
-    />
+    >
+      <div
+        class="react-colorful__saturation-pointer pointer"
+        style="top: 0%; left: 100%; background-color: rgb(255, 0, 0);"
+      />
+    </div>
   </div>
   <div
     class="react-colorful__hue hue"
   >
     <div
-      class="react-colorful__hue-pointer pointer"
-      style="top: 50%; left: 0%; background-color: rgb(255, 0, 0);"
-    />
-    <div
       class="interactive"
-    />
+    >
+      <div
+        class="react-colorful__hue-pointer pointer"
+        style="top: 50%; left: 0%; background-color: rgb(255, 0, 0);"
+      />
+    </div>
   </div>
 </div>
 `;
@@ -49,23 +51,25 @@ exports[`Works with no props 1`] = `
     style="background-color: rgb(255, 0, 0);"
   >
     <div
-      class="react-colorful__saturation-pointer pointer"
-      style="top: 100%; left: 0%; background-color: rgb(0, 0, 0);"
-    />
-    <div
       class="interactive"
-    />
+    >
+      <div
+        class="react-colorful__saturation-pointer pointer"
+        style="top: 100%; left: 0%; background-color: rgb(0, 0, 0);"
+      />
+    </div>
   </div>
   <div
     class="react-colorful__hue hue"
   >
     <div
-      class="react-colorful__hue-pointer pointer"
-      style="top: 50%; left: 0%; background-color: rgb(255, 0, 0);"
-    />
-    <div
       class="interactive"
-    />
+    >
+      <div
+        class="react-colorful__hue-pointer pointer"
+        style="top: 50%; left: 0%; background-color: rgb(255, 0, 0);"
+      />
+    </div>
   </div>
 </div>
 `;
