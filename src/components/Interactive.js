@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useLayoutEffect, useRef, useCallback } from "react";
 import styles from "../styles.css";
 
 // Limit number within [0, 1] bounds.
@@ -49,7 +49,7 @@ const Interactive = ({ onMove }) => {
     [handleMove, handleMoveEnd]
   );
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     toggleDocumentEvents(isDragging);
     return () => isDragging && toggleDocumentEvents(false);
   }, [isDragging, toggleDocumentEvents]);
