@@ -38,6 +38,7 @@ fs.readdir(entryDirPath, async (e, files) => {
         main: "index.js",
         module: "index.module.js",
         esmodule: "index.esmodule.js",
+        types: "../types/index.d.ts"
       });
 
       await writeFile(manifestPath, manifestCode, "utf8");
