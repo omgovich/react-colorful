@@ -85,7 +85,7 @@ const YourComponent = () => {
 };
 ```
 
-[Live demo →](https://codesandbox.io/s/react-colorful-rgb-o9q0t?file=/src/App.js)
+[Live demo →](https://codesandbox.io/s/react-colorful-rgb-o9q0t)
 
 </details>
 
@@ -122,7 +122,7 @@ The easiest way to tweak react-colorful is to create another stylesheet to overr
 As you probably noticed the color picker itself doesn't include an input field, but don't worry if you need one. **react-colorful** is a modular library that allows you to build any picker you need. Since `v2.1` we provide an additional component that works perfectly in pair with our color picker.
 
 <details>
-  <summary>How to use <code>HexInput</code></summary>
+  <summary>How to use <code>HexInput</code></summary><br />
 
 ```diff
 import ColorPicker from "react-colorful";
@@ -139,6 +139,8 @@ const YourComponent = () => {
   );
 };
 ```
+
+[Live demo →](https://codesandbox.io/s/react-colorful-hex-input-demo-0k2fx)
 
 `HexInput` doesn't have any default styles, but accepts all properties that a regular `input` tag does (such as `className`, `placeholder` and `autoFocus`). That means you can place and modify this component as you like. Also, that allows you to combine the color picker and input in different ways.
 
