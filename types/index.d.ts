@@ -1,7 +1,7 @@
 declare module "react-colorful" {
   import { FC } from 'react';
-  const HexColorPicker: FC<{ className: string; color: string; onChange: (newColor: string) => void; }>;
-  export = HexColorPicker;
+  const ColorPicker: FC<{ className: string; color: string; onChange: (newColor: string) => void; }>;
+  export = ColorPicker;
 }
 
 declare module "react-colorful/rgb" {
