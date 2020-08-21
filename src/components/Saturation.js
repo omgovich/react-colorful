@@ -31,8 +31,9 @@ const Saturation = ({ hsv, onChange }) => {
 
   return (
     <div className={nodeClassName} style={containerStyle}>
-      <div className={pointerClassName} style={pointerStyle} />
-      <Interactive onMove={handleMove} />
+      <Interactive onMove={handleMove}>
+        <div className={pointerClassName} style={pointerStyle} />
+      </Interactive>
     </div>
   );
 };

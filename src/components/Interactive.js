@@ -5,7 +5,7 @@ import styles from "../styles.css";
 // Use ternary operator instead of `Math.min(Math.max(0, number), 1)` to save few bytes
 const limit = (number) => (number > 1 ? 1 : number < 0 ? 0 : number);
 
-const Interactive = ({ onMove }) => {
+const Interactive = ({ onMove, children }) => {
   const container = useRef();
   const [isDragging, setDragging] = useState(false);
 
@@ -60,7 +60,9 @@ const Interactive = ({ onMove }) => {
       ref={container}
       onTouchStart={handleMoveStart}
       onMouseDown={handleMoveStart}
-    />
+    >
+      {children}
+    </div>
   );
 };
 

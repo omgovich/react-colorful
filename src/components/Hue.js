@@ -24,8 +24,9 @@ const Hue = ({ hue, onChange }) => {
 
   return (
     <div className={nodeClassName}>
-      <div className={pointerClassName} style={pointerStyle} />
-      <Interactive onMove={handleMove} />
+      <Interactive onMove={handleMove}>
+        <div className={pointerClassName} style={pointerStyle} />
+      </Interactive>
     </div>
   );
 };
