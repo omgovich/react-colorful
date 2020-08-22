@@ -180,6 +180,8 @@ To show you the problem that **react-colorful** is trying to solve, we have perf
 
 ## Roadmap
 
-- [x] Additional modules to support different color models (like HSL and RGB)
+- [x] Additional modules to support different RGB, HSL and HSV color models
 - [x] HEX input component
+- [x] TypeScript support
+- [ ] Alpha channel support (RGBA and HSLA color models)
 - [ ] Preact support
