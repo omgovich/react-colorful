@@ -36,3 +36,9 @@ declare module "react-colorful/hsv" {
   const ColorPicker: FC<{ className: string; color: hsv; onChange: (newColor: hsv) => void }>;
   export = ColorPicker;
 }
+
+declare module "react-colorful/HexInput" {
+  import { FC } from "react";
+  const HexInput: FC<{ color: string; onChange: (newColor: string) => void }>;
+  export = HexInput;
+}
