@@ -1,8 +1,10 @@
-const rgbToHsv = ({ r, g, b }) => {
-  let max = Math.max(r, g, b);
-  let delta = max - Math.min(r, g, b);
+import { HSV, RGB } from "../types";
 
-  let hh = delta
+const rgbToHsv = ({ r, g, b }: RGB): HSV => {
+  const max = Math.max(r, g, b);
+  const delta = max - Math.min(r, g, b);
+
+  const hh = delta
     ? max === r
       ? (g - b) / delta
       : max === g

@@ -1,9 +1,11 @@
-const hsvToRgb = ({ h, s, v }) => {
+import { HSV, RGB } from "../types";
+
+const hsvToRgb = ({ h, s, v }: HSV): RGB => {
   h = (h / 360) * 6;
   s = s / 100;
   v = v / 100;
 
-  let hh = Math.floor(h),
+  const hh = Math.floor(h),
     b = v * (1 - s),
     c = v * (1 - (h - hh) * s),
     d = v * (1 - (1 - h + hh) * s),

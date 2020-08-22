@@ -1,14 +1,28 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
+
 import Hue from "./Hue";
 import Saturation from "./Saturation";
 import formatClassName from "../utils/formatClassName";
 import equalColorObjects from "../utils/equalColorObjects";
 import styles from "../styles.css";
+import { ColorModel, Everything, HSV } from "../types";
 
-const ColorPicker = ({ className, colorModel, color = colorModel.defaultColor, onChange }) => {
+interface Props {
+  className: string;
+  colorModel: ColorModel;
+  color: Everything;
+  onChange: (newColor: any) => void;
+}
+
+const ColorPicker = ({
+  className,
+  colorModel,
+  color = colorModel.defaultColor,
+  onChange,
+}: Props) => {
   // No matter which color model is used (HEX, RGB or HSL),
   // all internal calculations are based on HSV model
-  const [hsv, updateHsv] = useState(() => colorModel.toHsv(color));
+  const [hsv, updateHsv] = useState<HSV>(() => colorModel.toHsv(color));
 
   // By using this ref we're able to prevent extra updates
   // and the effects recursion during the color conversion

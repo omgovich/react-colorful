@@ -26,7 +26,7 @@ fs.readdir(entryDirPath, async (e, files) => {
 
     // Run microbundle
     const { stdout } = await exec(
-      `${bundlerPath} --entry ${filePath} --output ${outputDirPath}/index.js  --name react-colorful-${name} --css-modules true --jsx React.createElement`
+      `${bundlerPath} --entry ${filePath} --output ${outputDirPath}/index.js --name react-colorful-${name} --css-modules true --jsx React.createElement --tsconfig tsconfig.build.json`
     );
     console.log(stdout);
 
@@ -35,10 +35,11 @@ fs.readdir(entryDirPath, async (e, files) => {
       var manifestCode = JSON.stringify({
         name: `react-colorful-${name}`,
         private: true,
+        source: filePath,
         main: "index.js",
         module: "index.module.js",
         esmodule: "index.esmodule.js",
-        types: "../types/index.d.ts"
+        types: "index.d.ts",
       });
 
       await writeFile(manifestPath, manifestCode, "utf8");

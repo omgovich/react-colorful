@@ -1,4 +1,6 @@
-const hslToHsv = ({ h, s, l }) => {
+import { HSL, HSV } from "../types";
+
+const hslToHsv = ({ h, s, l }: HSL): HSV => {
   s *= (l < 50 ? l : 100 - l) / 100;
 
   return {

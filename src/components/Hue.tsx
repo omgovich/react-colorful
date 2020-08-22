@@ -4,7 +4,12 @@ import formatClassName from "../utils/formatClassName";
 import hsvToHslString from "../utils/hsvToHslString";
 import styles from "../styles.css";
 
-const Hue = ({ hue, onChange }) => {
+interface Props {
+  hue: number;
+  onChange: (newColor: any) => void;
+}
+
+const Hue = ({ hue, onChange }: Props) => {
   const handleMove = useCallback(
     (interaction) => {
       // Hue measured in degrees of the color circle ranging from 0 to 360

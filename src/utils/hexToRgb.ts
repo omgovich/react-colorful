@@ -1,4 +1,6 @@
-const hexToRgb = (hex) => {
+import { RGB } from "../types";
+
+const hexToRgb = (hex: string): RGB => {
   if (hex[0] === "#") hex = hex.substr(1);
 
   if (hex.length < 6) {

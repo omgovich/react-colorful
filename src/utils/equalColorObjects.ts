@@ -1,7 +1,7 @@
-const equalColorObjects = (first, second) => {
+const equalColorObjects = (first: any, second: any): boolean => {
   if (first === second) return true;
 
-  for (let prop in first) {
+  for (const prop in first) {
     if (first[prop] !== second[prop]) return false;
   }
 

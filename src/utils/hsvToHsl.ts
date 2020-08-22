@@ -1,4 +1,6 @@
-const hsvToHsl = ({ h, s, v }) => {
+import { HSL, HSV } from "../types";
+
+const hsvToHsl = ({ h, s, v }: HSV): HSL => {
   const hh = ((200 - s) * v) / 100;
 
   return {

@@ -1,6 +1,7 @@
 import hsvToHsl from "./hsvToHsl";
+import { HSV } from "../types";
 
-const hsvToHslString = (hsv) => {
+const hsvToHslString = (hsv: HSV): string => {
   const { h, s, l } = hsvToHsl(hsv);
   return `hsl(${h}, ${s}%, ${l}%)`;
 };

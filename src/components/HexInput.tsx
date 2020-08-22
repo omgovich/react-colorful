@@ -2,9 +2,14 @@ import React, { useState, useEffect, useCallback } from "react";
 import validHex from "../utils/validHex";
 
 // Escapes all non-hexadecimal characters including "#"
-const escape = (hex) => hex.replace(/([^0-9A-F]+)/gi, "");
+const escape = (hex: string) => hex.replace(/([^0-9A-F]+)/gi, "");
 
-const HexInput = (props) => {
+interface Props {
+  color: string;
+  onChange: (newColor: any) => void;
+}
+
+const HexInput = (props: Props) => {
   const { color, onChange } = props;
   const [value, setValue] = useState(escape(color));
 
