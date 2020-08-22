@@ -4,14 +4,28 @@ import ColorPicker from "../components/ColorPicker";
 import toHsv from "../utils/hslStringToHsv";
 import fromHsv from "../utils/hsvToHslString";
 import equal from "../utils/equalColorObjects";
+import { BaseComponentProps } from "../types";
 
-const HSL_STRING = {
-  defaultColor: "hsl(0, 0%, 0%)",
-  toHsv,
-  fromHsv,
-  equal,
+interface Props extends BaseComponentProps {
+  className: string;
+  color: string;
+  onChange: (newColor: string) => void;
+}
+
+const HslString: React.FC<Props> = (props) => {
+  return (
+    <ColorPicker
+      className={props.className}
+      colorModel={{
+        defaultColor: "hsl(0, 0%, 0%)",
+        toHsv,
+        fromHsv,
+        equal,
+      }}
+      color={props.color}
+      onChange={props.onChange}
+    />
+  );
 };
 
-ColorPicker.defaultProps = { colorModel: HSL_STRING };
-
-export default React.memo(ColorPicker);
+export default React.memo(HslString);
