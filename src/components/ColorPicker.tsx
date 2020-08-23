@@ -5,8 +5,8 @@ import Saturation from "./Saturation";
 
 import styles from "../styles.css";
 import { ColorModel, Color, HSV } from "../types";
+import { equalColorObjects } from "../utils/compare";
 import formatClassName from "../utils/formatClassName";
-import equalColorObjects from "../utils/equalColorObjects";
 
 interface Props {
   className: string;
