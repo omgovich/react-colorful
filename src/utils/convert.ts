@@ -25,9 +25,9 @@ export const hslStringToHsv = (hslString: string): HSV => {
   const match = matcher.exec(hslString);
 
   return hslToHsv({
-    h: Number(match ? match : [1]),
-    s: Number(match ? match : [2]),
-    l: Number(match ? match : [3]),
+    h: Number(match ? match[1] : 0),
+    s: Number(match ? match[2] : 0),
+    l: Number(match ? match[3] : 0),
   });
 };
 
@@ -86,9 +86,9 @@ export const rgbStringToHsv = (rgbString: string): HSV => {
   const match = matcher.exec(rgbString);
 
   return rgbToHsv({
-    r: Number(match ? match : [1]),
-    g: Number(match ? match : [2]),
-    b: Number(match ? match : [3]),
+    r: Number(match ? match[1] : 0),
+    g: Number(match ? match[2] : 0),
+    b: Number(match ? match[3] : 0),
   });
 };
 
