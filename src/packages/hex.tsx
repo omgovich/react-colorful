@@ -12,7 +12,7 @@ interface Props extends ColorPickerBaseProps {
 }
 
 const colorModel: ColorModel<string> = {
-  defaultColor: { h: 0, s: 0, l: 0 },
+  defaultColor: "000",
   toHsv: hexToHsv,
   fromHsv: hsvToHex,
   equal: equalHex,
