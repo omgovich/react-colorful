@@ -1,8 +1,7 @@
 import React from "react";
-import ColorPicker from "../components/ColorPicker";
 
-import toHsv from "../utils/rgbStringToHsv";
-import fromHsv from "../utils/hsvToRgbString";
+import ColorPicker from "../components/ColorPicker";
+import { rgbStringToHsv, hsvToRgbString } from "../utils/conversions";
 import equal from "../utils/equalColorObjects";
 import { BaseComponentProps } from "../types";
 
@@ -18,8 +17,8 @@ const RgbString: React.FC<Props> = (props) => {
       className={props.className}
       colorModel={{
         defaultColor: "rgb(0, 0, 0)",
-        toHsv,
-        fromHsv,
+        toHsv: rgbStringToHsv,
+        fromHsv: hsvToRgbString,
         equal,
       }}
       color={props.color}

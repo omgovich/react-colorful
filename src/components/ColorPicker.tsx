@@ -2,10 +2,11 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 
 import Hue from "./Hue";
 import Saturation from "./Saturation";
-import formatClassName from "../utils/formatClassName";
-import equalColorObjects from "../utils/equalColorObjects";
+
 import styles from "../styles.css";
 import { ColorModel, Everything, HSV } from "../types";
+import formatClassName from "../utils/formatClassName";
+import equalColorObjects from "../utils/equalColorObjects";
 
 interface Props {
   className: string;

@@ -1,8 +1,8 @@
 import React from "react";
-import ColorPicker from "../components/ColorPicker";
 
-import equal from "../utils/equalColorObjects";
+import ColorPicker from "../components/ColorPicker";
 import { BaseComponentProps, HSV } from "../types";
+import equal from "../utils/equalColorObjects";
 
 interface Props extends BaseComponentProps {
   className: string;
@@ -16,7 +16,7 @@ const Hsv: React.FC<Props> = (props) => {
       className={props.className}
       colorModel={{
         defaultColor: { h: 0, s: 0, v: 0 },
-        toHsv: (hsv) => hsv,
+        toHsv: (hsv: HSV) => hsv,
         fromHsv: (hsv) => hsv,
         equal,
       }}

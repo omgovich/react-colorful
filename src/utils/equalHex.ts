@@ -1,4 +1,4 @@
-import hexToRgb from "./hexToRgb";
+import { hexToRgb } from "./conversions";
 import equalColorObjects from "./equalColorObjects";
 
 const equalHex = (first: string, second: string): boolean => {

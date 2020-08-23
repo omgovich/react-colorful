@@ -9,7 +9,6 @@
     "noImplicitAny": true,
     "outDir": "dist",
     "declaration": true,
-    "resolveJsonModule": true,
     "strict": true
   },
   "include": ["src", "test"]

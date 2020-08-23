@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
+
 import validHex from "../utils/validHex";
 
 // Escapes all non-hexadecimal characters including "#"

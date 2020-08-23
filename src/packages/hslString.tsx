@@ -1,10 +1,9 @@
 import React from "react";
-import ColorPicker from "../components/ColorPicker";
 
-import toHsv from "../utils/hslStringToHsv";
-import fromHsv from "../utils/hsvToHslString";
-import equal from "../utils/equalColorObjects";
+import ColorPicker from "../components/ColorPicker";
 import { BaseComponentProps } from "../types";
+import { hslStringToHsv, hsvToHslString } from "../utils/conversions";
+import equal from "../utils/equalColorObjects";
 
 interface Props extends BaseComponentProps {
   className: string;
@@ -18,8 +17,8 @@ const HslString: React.FC<Props> = (props) => {
       className={props.className}
       colorModel={{
         defaultColor: "hsl(0, 0%, 0%)",
-        toHsv,
-        fromHsv,
+        toHsv: hslStringToHsv,
+        fromHsv: hsvToHslString,
         equal,
       }}
       color={props.color}
