@@ -51,7 +51,8 @@
   "jest": {
     "verbose": true,
     "transform": {
-      "\\.js$": "jest-esm-jsx-transform"
+      "\\.js$": "jest-esm-jsx-transform",
+      "^.+\\.tsx?$": "ts-jest"
     },
     "moduleNameMapper": {
       "\\.css$": "identity-obj-proxy"
@@ -117,6 +118,7 @@
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
     "size-limit": "^4.5.5",
+    "ts-jest": "^26.2.0",
     "typescript": "^4.0.2",
     "use-throttled-effect": "0.0.7"
   },
