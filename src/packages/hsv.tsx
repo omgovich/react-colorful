@@ -5,9 +5,8 @@ import withColorModel from "../hocs/withColorModel";
 import { ColorModel, ColorPickerBaseProps, HSV } from "../types";
 import { equalColorObjects } from "../utils/compare";
 
-interface Props extends ColorPickerBaseProps {
+interface Props extends ColorPickerBaseProps<string> {
   color: string;
-  onChange: (newColor: string) => void;
 }
 
 const colorModel: ColorModel<HSV> = {

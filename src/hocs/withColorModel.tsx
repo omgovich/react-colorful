@@ -1,11 +1,12 @@
 import React from "react";
-import { ColorModel } from "../types";
+
+import { ColorModel, ColorPickerBaseProps } from "../types";
 
 const withColorModel = (
   Component: React.FC<any>,
   colorModel: ColorModel<any>
-): React.MemoExoticComponent<React.FC> => {
-  const ColorPicker = (props: any) => {
+): React.NamedExoticComponent<any> => {
+  const ColorPicker = (props: ColorPickerBaseProps) => {
     return <Component {...props} colorModel={colorModel} />;
   };
 

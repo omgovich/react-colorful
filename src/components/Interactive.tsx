@@ -6,8 +6,13 @@ import styles from "../styles.css";
 // Use ternary operator instead of `Math.min(Math.max(0, number), 1)` to save few bytes
 const limit = (number: number) => (number > 1 ? 1 : number < 0 ? 0 : number);
 
+interface Interaction {
+  left: number;
+  top: number;
+}
+
 interface Props {
-  onMove: (interaction: any) => void;
+  onMove: (interaction: Interaction) => void;
   children: React.ReactNode;
 }
 
@@ -16,8 +21,9 @@ const Interactive = ({ onMove, children }: Props) => {
   const [isDragging, setDragging] = useState(false);
 
   const getRelativePosition = useCallback((event) => {
-    if (!container.current) return;
-    const rect = container.current.getBoundingClientRect();
+    // This should be okay. This is only called onMove, and for it to be moved it must actually exist.
+    // I won't suppress the ESLint warning though, as it should probably be something to be aware of.
+    const rect = container.current!.getBoundingClientRect();
     const pointer = typeof event.pageX === "number" ? event : event.touches[0];
 
     return {

@@ -4,15 +4,15 @@ import Hue from "./Hue";
 import Saturation from "./Saturation";
 
 import styles from "../styles.css";
-import { ColorModel, Color, HSV } from "../types";
+import { ColorModel, AnyColor, HSV } from "../types";
 import { equalColorObjects } from "../utils/compare";
 import formatClassName from "../utils/formatClassName";
 
 interface Props {
   className: string;
-  colorModel: ColorModel<any>;
-  color: Color;
-  onChange: (newColor: Color) => void;
+  colorModel: ColorModel<AnyColor>;
+  color: AnyColor;
+  onChange: (newColor: AnyColor) => void;
 }
 
 const ColorPicker: React.FC<Props> = ({

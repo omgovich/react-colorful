@@ -6,9 +6,8 @@ import { ColorModel, ColorPickerBaseProps, HSL } from "../types";
 import { equalColorObjects } from "../utils/compare";
 import { hslToHsv, hsvToHsl } from "../utils/convert";
 
-interface Props extends ColorPickerBaseProps {
+interface Props extends ColorPickerBaseProps<HSL> {
   color: HSL;
-  onChange: (newColor: HSL) => void;
 }
 
 const colorModel: ColorModel<HSL> = {
