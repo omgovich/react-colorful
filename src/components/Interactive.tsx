@@ -58,7 +58,9 @@ const Interactive = ({ onMove, children }: Props) => {
 
   useLayoutEffect(() => {
     toggleDocumentEvents(isDragging);
-    if (isDragging) toggleDocumentEvents(false);
+    return () => {
+      isDragging && toggleDocumentEvents(false);
+    };
   }, [isDragging, toggleDocumentEvents]);
 
   return (
