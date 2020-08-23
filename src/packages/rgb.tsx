@@ -18,6 +18,6 @@ const colorModel: ColorModel<RGB> = {
   equal: equalColorObjects,
 };
 
-const RgbColorPicker: React.FC<Props> = withColorModel(ColorPicker, colorModel);
+const RgbColorPicker: React.FC<Partial<Props>> = withColorModel(ColorPicker, colorModel);
 
 export default RgbColorPicker;

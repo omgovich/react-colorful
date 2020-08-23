@@ -18,6 +18,6 @@ const colorModel: ColorModel<HSL> = {
   equal: equalColorObjects,
 };
 
-const HslColorPicker: React.FC<Props> = withColorModel(ColorPicker, colorModel);
+const HslColorPicker: React.FC<Partial<Props>> = withColorModel(ColorPicker, colorModel);
 
 export default HslColorPicker;

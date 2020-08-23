@@ -17,6 +17,6 @@ const colorModel: ColorModel<HSV> = {
   equal: equalColorObjects,
 };
 
-const HsvColorPicker: React.FC<Props> = withColorModel(ColorPicker, colorModel);
+const HsvColorPicker: React.FC<Partial<Props>> = withColorModel(ColorPicker, colorModel);
 
 export default HsvColorPicker;

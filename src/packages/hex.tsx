@@ -18,6 +18,6 @@ const colorModel: ColorModel<string> = {
   equal: equalHex,
 };
 
-const HexColorPicker: React.FC<Props> = withColorModel(ColorPicker, colorModel);
+const HexColorPicker: React.FC<Partial<Props>> = withColorModel(ColorPicker, colorModel);
 
 export default HexColorPicker;
