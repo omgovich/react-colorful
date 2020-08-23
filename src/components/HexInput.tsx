@@ -7,7 +7,7 @@ const escape = (hex: string) => hex.replace(/([^0-9A-F]+)/gi, "");
 
 interface Props {
   color: string;
-  onChange: (newColor: any) => void;
+  onChange: (newColor: string) => void;
 }
 
 const HexInput = (props: Props) => {

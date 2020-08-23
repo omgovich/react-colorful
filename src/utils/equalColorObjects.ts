@@ -1,4 +1,7 @@
-const equalColorObjects = (first: any, second: any): boolean => {
+const equalColorObjects = (
+  first: Record<string, unknown>,
+  second: Record<string, unknown>
+): boolean => {
   if (first === second) return true;
 
   for (const prop in first) {

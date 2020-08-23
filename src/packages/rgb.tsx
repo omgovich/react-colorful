@@ -1,30 +1,23 @@
 import React from "react";
 
 import ColorPicker from "../components/ColorPicker";
-import { BaseComponentProps, RGB } from "../types";
+import withColorModel from "../hocs/withColorModel";
+import { ColorModel, ColorPickerBaseProps, RGB } from "../types";
 import { rgbToHsv, hsvToRgb } from "../utils/conversions";
 import equal from "../utils/equalColorObjects";
 
-interface Props extends BaseComponentProps {
-  className: string;
+interface Props extends ColorPickerBaseProps {
   color: RGB;
   onChange: (newColor: RGB) => void;
 }
 
-const Rgb: React.FC<Props> = (props) => {
-  return (
-    <ColorPicker
-      className={props.className}
-      colorModel={{
-        defaultColor: { r: 0, g: 0, b: 0 },
-        toHsv: rgbToHsv,
-        fromHsv: hsvToRgb,
-        equal,
-      }}
-      color={props.color}
-      onChange={props.onChange}
-    />
-  );
+const colorModel: ColorModel<RGB> = {
+  defaultColor: { r: 0, g: 0, b: 0 },
+  toHsv: rgbToHsv,
+  fromHsv: hsvToRgb,
+  equal,
 };
 
-export default React.memo(Rgb);
+const RgbColorPicker: React.FC<Props> = withColorModel(ColorPicker, colorModel);
+
+export default RgbColorPicker;

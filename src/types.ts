@@ -2,31 +2,34 @@ export interface RGB {
   r: number;
   g: number;
   b: number;
+  [key: string]: number;
 }
 
 export interface HSL {
   h: number;
   s: number;
   l: number;
+  [key: string]: number;
 }
 
 export interface HSV {
   h: number;
   s: number;
   v: number;
+  [key: string]: number;
 }
 
-export type Everything = string | RGB | HSL | HSV;
+export type Color = string | RGB | HSL | HSV;
 
-export interface ColorModel {
-  defaultColor: Everything;
-  toHsv: (defaultColor: any) => HSV;
-  fromHsv: (hsv: HSV) => Everything;
+export interface ColorModel<T> {
+  defaultColor: Color;
+  toHsv: (defaultColor: T) => HSV;
+  fromHsv: (hsv: HSV) => T;
   equal: (first: any, second: any) => boolean;
 }
 
-export interface BaseComponentProps {
+export interface ColorPickerBaseProps {
   className: string;
-  color: any;
+  color: Color;
   onChange: (newColor: any) => void;
 }

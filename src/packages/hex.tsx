@@ -1,30 +1,23 @@
 import React from "react";
 
 import ColorPicker from "../components/ColorPicker";
-import { BaseComponentProps } from "../types";
+import withColorModel from "../hocs/withColorModel";
+import { ColorModel, ColorPickerBaseProps } from "../types";
 import { hexToHsv, hsvToHex } from "../utils/conversions";
 import equal from "../utils/equalHex";
 
-interface Props extends BaseComponentProps {
-  className: string;
+interface Props extends ColorPickerBaseProps {
   color: string;
   onChange: (newColor: string) => void;
 }
 
-const Hex: React.FC<Props> = (props) => {
-  return (
-    <ColorPicker
-      className={props.className}
-      colorModel={{
-        defaultColor: "000",
-        toHsv: hexToHsv,
-        fromHsv: hsvToHex,
-        equal,
-      }}
-      color={props.color}
-      onChange={props.onChange}
-    />
-  );
+const colorModel: ColorModel<string> = {
+  defaultColor: { h: 0, s: 0, l: 0 },
+  toHsv: hexToHsv,
+  fromHsv: hsvToHex,
+  equal,
 };
 
-export default React.memo(Hex);
+const HexColorPicker: React.FC<Props> = withColorModel(ColorPicker, colorModel);
+
+export default HexColorPicker;

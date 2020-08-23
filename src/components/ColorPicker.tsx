@@ -4,18 +4,18 @@ import Hue from "./Hue";
 import Saturation from "./Saturation";
 
 import styles from "../styles.css";
-import { ColorModel, Everything, HSV } from "../types";
+import { ColorModel, Color, HSV } from "../types";
 import formatClassName from "../utils/formatClassName";
 import equalColorObjects from "../utils/equalColorObjects";
 
 interface Props {
   className: string;
-  colorModel: ColorModel;
-  color: Everything;
-  onChange: (newColor: any) => void;
+  colorModel: ColorModel<any>;
+  color: Color;
+  onChange: (newColor: Color) => void;
 }
 
-const ColorPicker = ({
+const ColorPicker: React.FC<Props> = ({
   className,
   colorModel,
   color = colorModel.defaultColor,
