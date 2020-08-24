@@ -1,6 +1,6 @@
 import React from "react";
 import { render, cleanup, fireEvent, waitFor } from "@testing-library/react";
-import ColorPicker from "../src/";
+import ColorPicker from "../src/packages/hex";
 import HexInput from "../src/packages/HexInput";
 
 afterEach(cleanup);
