@@ -12,12 +12,12 @@ interface Props extends ColorPickerBaseProps {
   colorModel: ColorModel<AnyColor>;
 }
 
-const ColorPicker: React.FC<Props> = ({
+const ColorPicker = ({
   className,
   colorModel,
   color = colorModel.defaultColor,
   onChange,
-}: Props) => {
+}: Props): JSX.Element => {
   // No matter which color model is used (HEX, RGB or HSL),
   // all internal calculations are based on HSV model
   const [hsv, updateHsv] = useState<HSV>(() => colorModel.toHsv(color));
