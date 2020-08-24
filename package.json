@@ -12,14 +12,7 @@
     "lint": "eslint src/**/*.{ts,tsx} demo/src/**/*.js",
     "size": "npm run build && size-limit",
     "test": "jest tests",
-    "build": "npm-run-all --parallel build:*",
-    "build:submodule": "microbundle build --css-modules true --jsx React.createElement --tsconfig tsconfig.build.json",
-    "build:hexInput": "npm run build:submodule -- --cwd HexInput",
-    "build:hsl": "npm run build:submodule -- --cwd hsl",
-    "build:hslString": "npm run build:submodule -- --cwd hslString",
-    "build:hsv": "npm run build:submodule -- --cwd hsv",
-    "build:rgb": "npm run build:submodule -- --cwd rgb",
-    "build:rgbString": "npm run build:submodule -- --cwd rgbString",
+    "build": "node ./build-packages.js",
     "prepublishOnly": "npm run build",
     "start-demo": "parcel demo/src/index.html --out-dir demo/dist --open",
     "build-demo": "del-cli 'demo/dist/*' && parcel build demo/src/index.html --out-dir demo/dist --public-url /react-colorful/",
@@ -31,27 +24,27 @@
       "limit": "2 KB"
     },
     {
-      "path": "rgb/dist/index.module.js",
+      "path": "rgb/index.module.js",
       "limit": "2 KB"
     },
     {
-      "path": "rgbString/dist/index.module.js",
+      "path": "rgbString/index.module.js",
       "limit": "2 KB"
     },
     {
-      "path": "hsl/dist/index.module.js",
+      "path": "hsl/index.module.js",
       "limit": "2 KB"
     },
     {
-      "path": "hslString/dist/index.module.js",
+      "path": "hslString/index.module.js",
       "limit": "2 KB"
     },
     {
-      "path": "hsv/dist/index.module.js",
+      "path": "hsv/index.module.js",
       "limit": "2 KB"
     },
     {
-      "path": "HexInput/dist/index.module.js",
+      "path": "HexInput/index.module.js",
       "limit": "1 KB"
     }
   ],
@@ -117,8 +110,8 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^26.3.0",
     "jest-esm-jsx-transform": "^1.0.0",
+    "lodash": "^4.17.20",
     "microbundle": "^0.12.3",
-    "npm-run-all": "^4.1.5",
     "parcel-bundler": "^1.12.4",
     "postcss-modules": "^3.2.0",
     "prettier": "2.0.5",

@@ -14,6 +14,15 @@ node_modules/
 .cache
 dist/
 
+# packages
+/hex
+/hsl
+/hslString
+/hsv
+/rgb
+/rgbString
+/HexInput
+
 # OSX
 .DS_Store
 .LSOverride
