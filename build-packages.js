@@ -37,7 +37,7 @@ fs.readdir(entryDirPath, async (e, files) => {
         main: "index.js",
         module: "index.module.js",
         esmodule: "index.esmodule.js",
-        "umd:main": "dist/index.umd.js",
+        "umd:main": "index.umd.js",
         source: `../src/packages/${file}`,
         types: "../types/index.d.ts",
         peerDependencies,
