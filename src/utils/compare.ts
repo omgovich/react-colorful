@@ -1,8 +1,8 @@
 import { hexToRgb } from "./convert";
 
 export const equalColorObjects = (
-  first: Record<string, unknown>,
-  second: Record<string, unknown>
+  first: Record<string, number>,
+  second: Record<string, number>
 ): boolean => {
   if (first === second) return true;
 
@@ -11,6 +11,10 @@ export const equalColorObjects = (
   }
 
   return true;
+};
+
+export const equalColorString = (first: string, second: string): boolean => {
+  return first.replace(/\s/g, "") === second.replace(/\s/g, "");
 };
 
 export const equalHex = (first: string, second: string): boolean => {

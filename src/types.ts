@@ -25,7 +25,7 @@ export interface ColorModel<T> {
   defaultColor: AnyColor;
   toHsv: (defaultColor: T) => HSV;
   fromHsv: (hsv: HSV) => T;
-  equal: (first: any, second: any) => boolean;
+  equal: (first: T, second: T) => boolean;
 }
 
 export interface ColorPickerBaseProps<T extends AnyColor = AnyColor> {

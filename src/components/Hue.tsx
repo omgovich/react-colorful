@@ -8,7 +8,7 @@ import formatClassName from "../utils/formatClassName";
 
 interface Props {
   hue: number;
-  onChange: (newColor: any) => void;
+  onChange: (newHue: { h: number }) => void;
 }
 
 const Hue = ({ hue, onChange }: Props) => {
