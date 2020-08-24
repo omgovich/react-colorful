@@ -1,0 +1,14 @@
+{
+  "name": "react-colorful-hsl-string",
+  "private": true,
+  "source": "../src/packages/hslString.js",
+  "main": "dist/index.js",
+  "module": "dist/index.module.js",
+  "esmodule": "dist/index.esmodule.js",
+  "umd:main": "dist/index.umd.js",
+  "types": "../types/index.d.ts",
+  "peerDependencies": {
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
+  }
+}
