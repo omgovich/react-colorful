@@ -22,7 +22,7 @@ export interface HSV {
 export type AnyColor = string | RGB | HSL | HSV;
 
 export interface ColorModel<T> {
-  defaultColor: AnyColor;
+  defaultColor: T;
   toHsv: (defaultColor: T) => HSV;
   fromHsv: (hsv: HSV) => T;
   equal: (first: T, second: T) => boolean;

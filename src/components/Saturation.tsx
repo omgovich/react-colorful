@@ -3,13 +3,13 @@ import React, { useCallback } from "react";
 import Interactive from "./Interactive";
 
 import styles from "../styles.css";
-import { AnyColor, HSV } from "../types";
+import { HSV } from "../types";
 import { hsvToHslString } from "../utils/convert";
 import formatClassName from "../utils/formatClassName";
 
 interface Props {
   hsv: HSV;
-  onChange: (newColor: AnyColor) => void;
+  onChange: (newColor: { s: number; v: number }) => void;
 }
 
 const Saturation = ({ hsv, onChange }: Props) => {
@@ -17,12 +17,11 @@ const Saturation = ({ hsv, onChange }: Props) => {
     (interaction) => {
       // Saturation and brightness always fit into [0, 100] range
       onChange({
-        h: hsv.h,
         s: interaction.left * 100,
         v: 100 - interaction.top * 100,
       });
     },
-    [hsv.h, onChange]
+    [onChange]
   );
 
   const containerStyle = {

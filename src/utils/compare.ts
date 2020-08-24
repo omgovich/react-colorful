@@ -1,9 +1,8 @@
 import { hexToRgb } from "./convert";
 
-export const equalColorObjects = (
-  first: Record<string, number>,
-  second: Record<string, number>
-): boolean => {
+import { HSL, HSV, RGB } from "../types";
+
+export const equalColorObjects = (first: HSL | HSV | RGB, second: HSL | HSV | RGB): boolean => {
   if (first === second) return true;
 
   for (const prop in first) {

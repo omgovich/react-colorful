@@ -6,7 +6,7 @@ import styles from "../styles.css";
 // Use ternary operator instead of `Math.min(Math.max(0, number), 1)` to save few bytes
 const limit = (number: number) => (number > 1 ? 1 : number < 0 ? 0 : number);
 
-interface Interaction {
+export interface Interaction {
   left: number;
   top: number;
 }

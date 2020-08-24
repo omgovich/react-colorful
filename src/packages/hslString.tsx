@@ -6,10 +6,6 @@ import { ColorModel, ColorPickerBaseProps } from "../types";
 import { equalColorString } from "../utils/compare";
 import { hslStringToHsv, hsvToHslString } from "../utils/convert";
 
-interface Props extends ColorPickerBaseProps<string> {
-  color: string;
-}
-
 const colorModel: ColorModel<string> = {
   defaultColor: "hsl(0, 0%, 0%)",
   toHsv: hslStringToHsv,
@@ -17,6 +13,9 @@ const colorModel: ColorModel<string> = {
   equal: equalColorString,
 };
 
-const HslStringColorPicker: React.FC<Partial<Props>> = withColorModel(ColorPicker, colorModel);
+const HslStringColorPicker: React.FC<Partial<ColorPickerBaseProps<string>>> = withColorModel(
+  ColorPicker,
+  colorModel
+);
 
 export default HslStringColorPicker;
