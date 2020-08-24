@@ -10,8 +10,12 @@ interface Props {
   onChange: (newColor: string) => void;
 }
 
-const HexInput = (props: Props) => {
-  const { color, onChange } = props;
+const HexInput = (props: Partial<Props>) => {
+  const { color, onChange }: Props = {
+    color: "",
+    onChange: () => ({}),
+    ...props,
+  };
   const [value, setValue] = useState(escape(color));
 
   // Trigger `onChange` handler only if the input value is a valid HEX-color
@@ -19,7 +23,7 @@ const HexInput = (props: Props) => {
     (e) => {
       const inputValue = escape(e.target.value);
       setValue(inputValue);
-      if (onChange && validHex(inputValue)) onChange("#" + inputValue);
+      if (validHex(inputValue)) onChange("#" + inputValue);
     },
     [onChange]
   );
@@ -48,10 +52,6 @@ const HexInput = (props: Props) => {
   });
 
   return React.createElement("input", inputProps);
-};
-
-HexInput.defaultProps = {
-  color: "",
 };
 
 export default React.memo(HexInput);
