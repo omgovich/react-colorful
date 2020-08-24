@@ -1,0 +1,14 @@
+{
+  "name": "react-colorful-rgb-string",
+  "private": true,
+  "source": "../src/packages/rgbString.tsx",
+  "main": "dist/index.js",
+  "module": "dist/index.module.js",
+  "esmodule": "dist/index.esmodule.js",
+  "umd:main": "dist/index.umd.js",
+  "types": "dist/index.d.ts",
+  "peerDependencies": {
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
+  }
+}
