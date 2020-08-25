@@ -10,7 +10,8 @@ interface Props {
   onChange: (newColor: string) => void;
 }
 
-const HexInput = ({ color = "", onChange = () => ({}) }: Partial<Props>) => {
+const HexInput = (props: Partial<Props>) => {
+  const { color = "", onChange } = props;
   const [value, setValue] = useState(escape(color));
 
   // Trigger `onChange` handler only if the input value is a valid HEX-color
@@ -18,7 +19,7 @@ const HexInput = ({ color = "", onChange = () => ({}) }: Partial<Props>) => {
     (e) => {
       const inputValue = escape(e.target.value);
       setValue(inputValue);
-      if (validHex(inputValue)) onChange("#" + inputValue);
+      if (onChange !== undefined && validHex(inputValue)) onChange("#" + inputValue);
     },
     [onChange]
   );
@@ -37,18 +38,14 @@ const HexInput = ({ color = "", onChange = () => ({}) }: Partial<Props>) => {
   }, [color]);
 
   // Spread operator replacement to get rid of the polyfill (saves 150 bytes gzipped)
-  const inputProps = Object.assign(
-    {},
-    { color, onChange },
-    {
-      color: null, // do not add `color` attr to `input`-tag
-      value,
-      maxLength: 6,
-      spellCheck: "false", // the element should not be checked for spelling errors
-      onChange: handleChange,
-      onBlur: handleBlur,
-    }
-  );
+  const inputProps = Object.assign({}, props, {
+    color: null, // do not add `color` attr to `input`-tag
+    value,
+    maxLength: 6,
+    spellCheck: "false", // the element should not be checked for spelling errors
+    onChange: handleChange,
+    onBlur: handleBlur,
+  });
 
   return React.createElement("input", inputProps);
 };
