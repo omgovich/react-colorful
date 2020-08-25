@@ -12,7 +12,7 @@ const colorModel: ColorModel<string> = {
   equal: equalColorString,
 };
 
-const RgbStringColorPicker = (props: ColorPickerBaseProps<string>): JSX.Element => (
+const RgbStringColorPicker = (props: Partial<ColorPickerBaseProps<string>>): JSX.Element => (
   <ColorPicker {...props} colorModel={colorModel} />
 );
 

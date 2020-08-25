@@ -12,7 +12,7 @@ const colorModel: ColorModel<string> = {
   equal: equalHex,
 };
 
-const HexColorPicker = (props: ColorPickerBaseProps<string>): JSX.Element => (
+const HexColorPicker = (props: Partial<ColorPickerBaseProps<string>>): JSX.Element => (
   <ColorPicker {...props} colorModel={colorModel} />
 );
 

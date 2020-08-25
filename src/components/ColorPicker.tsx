@@ -8,12 +8,12 @@ import { ColorModel, HSV, ColorPickerBaseProps, AnyColor } from "../types";
 import { equalColorObjects } from "../utils/compare";
 import formatClassName from "../utils/formatClassName";
 
-interface Props<T extends AnyColor> extends ColorPickerBaseProps<T> {
+interface Props<T extends AnyColor> extends Partial<ColorPickerBaseProps<T>> {
   colorModel: ColorModel<T>;
 }
 
 const ColorPicker = <T extends AnyColor>({
-  className,
+  className = "",
   colorModel,
   color = colorModel.defaultColor,
   onChange,

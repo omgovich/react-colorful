@@ -12,7 +12,7 @@ const colorModel: ColorModel<HSL> = {
   equal: equalColorObjects,
 };
 
-const HslColorPicker = (props: ColorPickerBaseProps<HSL>): JSX.Element => (
+const HslColorPicker = (props: Partial<ColorPickerBaseProps<HSL>>): JSX.Element => (
   <ColorPicker {...props} colorModel={colorModel} />
 );
 
