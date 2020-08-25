@@ -4,20 +4,20 @@ import Hue from "./Hue";
 import Saturation from "./Saturation";
 
 import styles from "../styles.css";
-import { ColorModel, AnyColor, HSV, ColorPickerBaseProps } from "../types";
+import { ColorModel, HSV, ColorPickerBaseProps, AnyColor } from "../types";
 import { equalColorObjects } from "../utils/compare";
 import formatClassName from "../utils/formatClassName";
 
-interface Props extends ColorPickerBaseProps {
-  colorModel: ColorModel<AnyColor>;
+interface Props<T extends AnyColor> extends ColorPickerBaseProps<T> {
+  colorModel: ColorModel<T>;
 }
 
-const ColorPicker = ({
+const ColorPicker = <T extends AnyColor>({
   className,
   colorModel,
   color = colorModel.defaultColor,
   onChange,
-}: Props): JSX.Element => {
+}: Props<T>) => {
   // No matter which color model is used (HEX, RGB or HSL),
   // all internal calculations are based on HSV model
   const [hsv, updateHsv] = useState<HSV>(() => colorModel.toHsv(color));
@@ -62,4 +62,4 @@ const ColorPicker = ({
   );
 };
 
-export default ColorPicker;
+export default React.memo(ColorPicker) as typeof ColorPicker;

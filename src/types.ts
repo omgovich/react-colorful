@@ -19,16 +19,16 @@ export interface HSV {
   [key: string]: number;
 }
 
-export type AnyColor = string | RGB | HSL | HSV;
+export type AnyColor = string | HSL | HSV | RGB;
 
-export interface ColorModel<T> {
+export interface ColorModel<T extends AnyColor> {
   defaultColor: T;
   toHsv: (defaultColor: T) => HSV;
   fromHsv: (hsv: HSV) => T;
   equal: (first: T, second: T) => boolean;
 }
 
-export interface ColorPickerBaseProps<T extends AnyColor = AnyColor> {
+export interface ColorPickerBaseProps<T> {
   className: string;
   color: T;
   onChange: (newColor: T) => void;

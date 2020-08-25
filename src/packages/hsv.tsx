@@ -1,7 +1,6 @@
 import React from "react";
 
 import ColorPicker from "../components/ColorPicker";
-import withColorModel from "../hocs/withColorModel";
 import { ColorModel, ColorPickerBaseProps, HSV } from "../types";
 import { equalColorObjects } from "../utils/compare";
 
@@ -12,9 +11,8 @@ const colorModel: ColorModel<HSV> = {
   equal: equalColorObjects,
 };
 
-const HsvColorPicker: React.FC<Partial<ColorPickerBaseProps<HSV>>> = withColorModel(
-  ColorPicker,
-  colorModel
+const HsvColorPicker = (props: ColorPickerBaseProps<HSV>): JSX.Element => (
+  <ColorPicker {...props} colorModel={colorModel} />
 );
 
 export default HsvColorPicker;
