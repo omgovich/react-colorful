@@ -51,7 +51,7 @@ fs.readdir(entryDirPath, async (e, files) => {
     const args = {
       name: packageName,
       cwd: isMainPackage ? __dirname : outputDirPath,
-      output: `${outputDirPath}/dist/index.js`,
+      output: isMainPackage ? `${outputDirPath}/index.js` : `${outputDirPath}/dist/index.js`,
       jsx: "React.createElement",
       "css-modules": "true",
     };
