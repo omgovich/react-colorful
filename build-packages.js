@@ -34,10 +34,10 @@ fs.readdir(entryDirPath, async (e, files) => {
       var manifestCode = JSON.stringify({
         name: packageName,
         private: true,
-        main: "index.js",
-        module: "index.module.js",
-        esmodule: "index.esmodule.js",
-        "umd:main": "index.umd.js",
+        main: "dist/index.js",
+        module: "dist/index.module.js",
+        esmodule: "dist/index.esmodule.js",
+        "umd:main": "dist/index.umd.js",
         source: `../src/packages/${file}`,
         types: "../types/index.d.ts",
         peerDependencies,
@@ -51,7 +51,7 @@ fs.readdir(entryDirPath, async (e, files) => {
     const args = {
       name: packageName,
       cwd: isMainPackage ? __dirname : outputDirPath,
-      output: `${outputDirPath}/index.js`,
+      output: `${outputDirPath}/dist/index.js`,
       jsx: "React.createElement",
       "css-modules": "true",
     };
