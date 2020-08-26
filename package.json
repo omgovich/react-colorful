@@ -12,7 +12,7 @@
     "lint": "eslint src/**/*.{ts,tsx} demo/src/**/*.js",
     "size": "npm run build && size-limit",
     "test": "jest tests",
-    "build": "node --experimental-json-modules ./build-packages.mjs",
+    "build": "node ./build-packages.js",
     "prepublishOnly": "npm run build",
     "start-demo": "parcel demo/src/index.html --out-dir demo/dist --open",
     "build-demo": "del-cli 'demo/dist/*' && parcel build demo/src/index.html --out-dir demo/dist --public-url /react-colorful/",

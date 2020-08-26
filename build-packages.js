@@ -1,15 +1,12 @@
-import fs from "fs";
-import path from "path";
-import del from "del";
-import util from "util";
-import lodash from "lodash";
-const { kebabCase, map } = lodash;
-import childProcess from "child_process";
-import pkg from "./package.json";
-const { peerDependencies } = pkg;
+const fs = require("fs");
+const path = require("path");
+const del = require("del");
+const util = require("util");
+const { kebabCase, map } = require("lodash");
+const { peerDependencies } = require("./package.json");
 
 // Convert NodeJS methods to promises in order to use them with `await` statement
-const exec = util.promisify(childProcess.exec);
+const exec = util.promisify(require("child_process").exec);
 const writeFile = util.promisify(fs.writeFile);
 const makeDir = util.promisify(fs.mkdir);
 
@@ -23,8 +20,6 @@ const modulesArray = [
   "src/rgb.tsx",
   "src/rgbString.tsx",
 ];
-
-const __dirname = path.resolve();
 
 // Bundles a package asynchronously
 const bundlePackage = async (file) => {
@@ -81,6 +76,9 @@ const bundlePackage = async (file) => {
 console.log(`⚙️ Building ${modulesArray.length} packages...`);
 
 // Process all packages in parallel
-await Promise.all(modulesArray.map(bundlePackage));
+async function processPackages() {
+  await Promise.all(modulesArray.map(bundlePackage));
+  console.log(`🎺 All packages are built`);
+}
 
-console.log(`🎺 All packages are built`);
+processPackages();
