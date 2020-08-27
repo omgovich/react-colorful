@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback } from "react";
 import ReactDOM from "react-dom";
-import ColorPicker from "../../src";
-import HexInput from "../../src/components/HexInput";
-import hexToRgb from "../../src/utils/hexToRgb";
+import ColorPicker from "../../src/hex";
+import HexInput from "../../src/HexInput";
+import { hexToRgb } from "../../src/utils/convert";
 import styles from "./styles.css";
 import useFaviconColor from "./hooks/useFaviconColor";
 
