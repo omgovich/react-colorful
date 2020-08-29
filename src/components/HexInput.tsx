@@ -5,10 +5,9 @@ import { validHex } from "../utils/validate";
 // Escapes all non-hexadecimal characters including "#"
 const escape = (hex: string) => hex.replace(/([^0-9A-F]+)/gi, "");
 
-interface Props {
+interface Props extends HTMLInputElement {
   color: string;
   onChange: (newColor: string) => void;
-  [key: string]: unknown;
 }
 
 const HexInput = (props: Partial<Props>) => {
