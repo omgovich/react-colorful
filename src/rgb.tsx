@@ -17,3 +17,4 @@ const RgbColorPicker = (props: Partial<ColorPickerBaseProps<RGB>>): JSX.Element 
 );
 
 export default RgbColorPicker;
+export { RGB };
