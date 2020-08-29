@@ -2,21 +2,18 @@ export interface RGB {
   r: number;
   g: number;
   b: number;
-  [key: string]: number;
 }
 
 export interface HSL {
   h: number;
   s: number;
   l: number;
-  [key: string]: number;
 }
 
 export interface HSV {
   h: number;
   s: number;
   v: number;
-  [key: string]: number;
 }
 
 export type AnyColor = string | HSL | HSV | RGB;
