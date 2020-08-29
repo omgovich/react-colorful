@@ -1,12 +1,19 @@
 import React, { useCallback } from "react";
-import Interactive from "./Interactive";
-import formatClassName from "../utils/formatClassName";
-import hsvToHslString from "../utils/hsvToHslString";
-import styles from "../styles.css";
 
-const Hue = ({ hue, onChange }) => {
+import Interactive, { Interaction } from "./Interactive";
+
+import styles from "../styles.css";
+import { hsvToHslString } from "../utils/convert";
+import formatClassName from "../utils/formatClassName";
+
+interface Props {
+  hue: number;
+  onChange: (newHue: { h: number }) => void;
+}
+
+const Hue = ({ hue, onChange }: Props) => {
   const handleMove = useCallback(
-    (interaction) => {
+    (interaction: Interaction) => {
       // Hue measured in degrees of the color circle ranging from 0 to 360
       onChange({ h: 360 * interaction.left });
     },
