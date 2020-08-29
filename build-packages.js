@@ -61,6 +61,7 @@ const bundlePackage = async (file) => {
     output: `${outputDirPath}/index.js`,
     jsx: "React.createElement",
     "css-modules": "true",
+    sourcemap: "false", // don't publish js.map files to NPM to make the library installation faster
     tsconfig: "tsconfig.build.json",
   };
 
@@ -73,10 +74,9 @@ const bundlePackage = async (file) => {
   console.log(stdout);
 };
 
-console.log(`⚙️ Building ${modulesArray.length} packages...`);
-
 // Process all packages in parallel
 async function processPackages() {
+  console.log(`⚙️ Building ${modulesArray.length} packages...`);
   await Promise.all(modulesArray.map(bundlePackage));
   console.log(`🎺 All packages are built`);
 }
