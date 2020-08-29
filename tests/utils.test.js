@@ -1,22 +1,17 @@
 // HEX
-import hexToHsv from "../src/utils/hexToHsv";
-import hsvToHex from "../src/utils/hsvToHex";
-import equalHex from "../src/utils/equalHex";
-import validHex from "../src/utils/validHex";
+import { hexToHsv, hsvToHex } from "../src/utils/convert";
+import { equalHex } from "../src/utils/compare";
+import { validHex } from "../src/utils/validate";
 // HSL
-import hsvToHsl from "../src/utils/hsvToHsl";
-import hslToHsv from "../src/utils/hslToHsv";
+import { hsvToHsl, hslToHsv } from "../src/utils/convert";
 // HSL string
-import hsvToHslString from "../src/utils/hsvToHslString";
-import hslStringToHsv from "../src/utils/hslStringToHsv";
+import { hsvToHslString, hslStringToHsv } from "../src/utils/convert";
 // RGB
-import hsvToRgb from "../src/utils/hsvToRgb";
-import rgbToHsv from "../src/utils/rgbToHsv";
+import { hsvToRgb, rgbToHsv } from "../src/utils/convert";
 // RGB string
-import hsvToRgbString from "../src/utils/hsvToRgbString";
-import rgbStringToHsv from "../src/utils/rgbStringToHsv";
+import { hsvToRgbString, rgbStringToHsv } from "../src/utils/convert";
 // Rest
-import equalColorObjects from "../src/utils/equalColorObjects";
+import { equalColorObjects } from "../src/utils/compare";
 import formatClassName from "../src/utils/formatClassName";
 
 it("Converts HEX to HSV", () => {

@@ -1,11 +1,17 @@
 import React, { useState, useEffect, useCallback } from "react";
-import validHex from "../utils/validHex";
+
+import { validHex } from "../utils/validate";
 
 // Escapes all non-hexadecimal characters including "#"
-const escape = (hex) => hex.replace(/([^0-9A-F]+)/gi, "");
+const escape = (hex: string) => hex.replace(/([^0-9A-F]+)/gi, "");
 
-const HexInput = (props) => {
-  const { color, onChange } = props;
+interface Props {
+  color: string;
+  onChange: (newColor: string) => void;
+}
+
+const HexInput = (props: Partial<Props>) => {
+  const { color = "", onChange } = props;
   const [value, setValue] = useState(escape(color));
 
   // Trigger `onChange` handler only if the input value is a valid HEX-color
@@ -13,7 +19,7 @@ const HexInput = (props) => {
     (e) => {
       const inputValue = escape(e.target.value);
       setValue(inputValue);
-      if (onChange && validHex(inputValue)) onChange("#" + inputValue);
+      if (onChange !== undefined && validHex(inputValue)) onChange("#" + inputValue);
     },
     [onChange]
   );
@@ -42,10 +48,6 @@ const HexInput = (props) => {
   });
 
   return React.createElement("input", inputProps);
-};
-
-HexInput.defaultProps = {
-  color: "",
 };
 
 export default React.memo(HexInput);

@@ -11,64 +11,74 @@ const writeFile = util.promisify(fs.writeFile);
 const makeDir = util.promisify(fs.mkdir);
 
 // Read available package sources from the dir
-const entryDirPath = path.join(__dirname, "src/packages");
+const modulesArray = [
+  "src/hex.tsx",
+  "src/HexInput.ts",
+  "src/hsl.tsx",
+  "src/hslString.tsx",
+  "src/hsv.tsx",
+  "src/rgb.tsx",
+  "src/rgbString.tsx",
+];
 
-fs.readdir(entryDirPath, async (e, files) => {
-  // Bundles a package asynchronously
-  const bundlePackage = async (file) => {
-    const { name } = path.parse(file);
-    const isMainPackage = name === "hex";
-    const outputDirPath = path.join(__dirname, isMainPackage ? "dist" : name);
-    const manifestPath = path.join(outputDirPath, `package.json`);
-    const bundlerPath = path.join(__dirname, "node_modules/.bin/microbundle");
+// Bundles a package asynchronously
+const bundlePackage = async (file) => {
+  const { name } = path.parse(file);
+  const isMainPackage = name === "hex";
+  const outputDirPath = path.join(__dirname, isMainPackage ? "dist" : name);
+  const manifestPath = path.join(outputDirPath, `package.json`);
+  const bundlerPath = path.join(__dirname, "node_modules/.bin/microbundle");
 
-    // Format a package name according to NPM's naming guide
-    // https://docs.npmjs.com/files/package.json#name
-    const packageName = `react-colorful-${kebabCase(name)}`;
+  // Format a package name according to NPM's naming guide
+  // https://docs.npmjs.com/files/package.json#name
+  const packageName = `react-colorful-${kebabCase(name)}`;
 
-    // Delete the previous package version if exists
-    await del(outputDirPath);
+  // Delete the previous package version if exists
+  await del(outputDirPath);
 
-    if (!isMainPackage) {
-      // Create `package.json`
-      var manifestCode = JSON.stringify({
-        name: packageName,
-        private: true,
-        main: "dist/index.js",
-        module: "dist/index.module.js",
-        esmodule: "dist/index.esmodule.js",
-        "umd:main": "dist/index.umd.js",
-        source: `../src/packages/${file}`,
-        types: "../types/index.d.ts",
-        peerDependencies,
-      });
-
-      await makeDir(outputDirPath);
-      await writeFile(manifestPath, manifestCode, "utf8");
-    }
-
-    // Bundler options
-    const args = {
+  if (!isMainPackage) {
+    // Create `package.json`
+    const manifestCode = JSON.stringify({
       name: packageName,
-      cwd: isMainPackage ? __dirname : outputDirPath,
-      output: isMainPackage ? `${outputDirPath}/index.js` : `${outputDirPath}/dist/index.js`,
-      jsx: "React.createElement",
-      "css-modules": "true",
-    };
+      private: true,
+      main: "dist/index.js",
+      module: "dist/index.module.js",
+      esmodule: "dist/index.esmodule.js",
+      "umd:main": "dist/index.umd.js",
+      source: `../${file}`,
+      types: `${name}.d.ts`,
+      peerDependencies,
+    });
 
-    // Format CLI arguments string
-    // `{ "a": "b" }` => "--key value"
-    const argsString = map(args, (value, key) => `--${key} ${value}`).join(" ");
+    await makeDir(outputDirPath);
+    await writeFile(manifestPath, manifestCode);
+  }
 
-    // Run microbundle
-    const { stdout } = await exec(`${bundlerPath} ${argsString}`);
-    console.log(stdout);
+  // Bundler options
+  const args = {
+    name: packageName,
+    cwd: isMainPackage ? __dirname : outputDirPath,
+    output: isMainPackage ? `${outputDirPath}/index.js` : `${outputDirPath}/dist/index.js`,
+    jsx: "React.createElement",
+    "css-modules": "true",
+    sourcemap: "false", // don't publish js.map files to NPM to make the library installation faster
+    tsconfig: "tsconfig.build.json",
   };
 
-  console.log(`⚙️ Building ${files.length} packages...`);
+  // Format CLI arguments string
+  // `{ "a": "b" }` => "--key value"
+  const argsString = map(args, (value, key) => `--${key} ${value}`).join(" ");
 
-  // Process all packages in parallel
-  await Promise.all(files.map(bundlePackage));
+  // Run microbundle
+  const { stdout } = await exec(`${bundlerPath} ${argsString}`);
+  console.log(stdout);
+};
 
+// Process all packages in parallel
+async function processPackages() {
+  console.log(`⚙️ Building ${modulesArray.length} packages...`);
+  await Promise.all(modulesArray.map(bundlePackage));
   console.log(`🎺 All packages are built`);
-});
+}
+
+processPackages();

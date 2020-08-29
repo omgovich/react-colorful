@@ -1,10 +1,18 @@
 import React, { useCallback } from "react";
-import Interactive from "./Interactive";
-import formatClassName from "../utils/formatClassName";
-import styles from "../styles.css";
-import hsvToHslString from "../utils/hsvToHslString";
 
-const Saturation = ({ hsv, onChange }) => {
+import Interactive from "./Interactive";
+
+import styles from "../styles.css";
+import { HSV } from "../types";
+import { hsvToHslString } from "../utils/convert";
+import formatClassName from "../utils/formatClassName";
+
+interface Props {
+  hsv: HSV;
+  onChange: (newColor: { s: number; v: number }) => void;
+}
+
+const Saturation = ({ hsv, onChange }: Props) => {
   const handleMove = useCallback(
     (interaction) => {
       // Saturation and brightness always fit into [0, 100] range
