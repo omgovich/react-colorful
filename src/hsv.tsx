@@ -16,3 +16,4 @@ const HsvColorPicker = (props: Partial<ColorPickerBaseProps<HSV>>): JSX.Element 
 );
 
 export default HsvColorPicker;
+export { HSV };

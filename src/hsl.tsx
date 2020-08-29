@@ -17,3 +17,4 @@ const HslColorPicker = (props: Partial<ColorPickerBaseProps<HSL>>): JSX.Element 
 );
 
 export default HslColorPicker;
+export { HSL };
