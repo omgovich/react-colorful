@@ -30,6 +30,7 @@
 
 - **Small**: Just 1,5 KB (minified and gzipped). [Size Limit](https://github.com/ai/size-limit) controls the size.
 - **Fast**: Built with hooks and functional components only.
+- **Bulletproof**: Written in TypeScript and covered by 20+ tests.
 - **Simple**: The interface is straight forward and easy to use.
 - **Mobile-friendly**: Works well on mobile devices and touch screens.
 - **No dependencies**
@@ -183,5 +184,6 @@ To show you the problem that **react-colorful** is trying to solve, we have perf
 - [x] Additional modules to support different RGB, HSL and HSV color models
 - [x] HEX input component
 - [x] TypeScript support
+- [x] Rewrite the codebase to TypeScript
 - [ ] Alpha channel support (RGBA and HSLA color models)
 - [ ] Preact support
