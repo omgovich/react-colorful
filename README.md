@@ -152,7 +152,17 @@ By the way, `HexInput` is also minimalist-friendly — only 400 bytes gzipped.
 
 ## TypeScript Support
 
+React-colorful supports TypeScript and ships with types in the library itself; no need for any other install.
 
+While not only typing its own functions and variables, it can also help you type yours. Depending on the component you're using, you can also import the type that is associated with the component. For example, if you're using the `HslColorPicker`, you can also import the `HSL` type.
+
+```ts
+import HslColorPicker, { HSL }  from "react-colorful/hsl";
+
+const myHslValue: HSL = { h: 0, s: 0, l: 0 };
+```
+
+Take a look at [Supported Color Models](#supported-color-models) for more information about the types and color formats you may want to use.
 
 ## Why react-colorful?
 
