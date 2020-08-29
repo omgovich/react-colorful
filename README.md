@@ -149,6 +149,10 @@ By the way, `HexInput` is also minimalist-friendly — only 400 bytes gzipped.
 
 </details>
 
+## TypeScript Support
+
+
+
 ## Why react-colorful?
 
 Today each dependency drags more dependencies and increases your project’s bundle size uncontrollably. But size is very important for everything that intends to work in a browser.
