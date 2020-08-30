@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
+import { RGB } from "../../src/types";
 import ColorPicker from "../../src/hex";
 import HexInput from "../../src/HexInput";
 import { hexToRgb } from "../../src/utils/convert";
-import styles from "./styles.css";
+import styles from "./styles.module.css";
 import useFaviconColor from "./hooks/useFaviconColor";
 
 // See http://www.w3.org/TR/AERT#color-contrast
-const getBrightness = ({ r, g, b }) => (r * 299 + g * 587 + b * 114) / 1000;
+const getBrightness = ({ r, g, b }: RGB) => (r * 299 + g * 587 + b * 114) / 1000;
 
-const useBodyBackground = (color) => {
+const useBodyBackground = (color: string): void => {
   useEffect(() => {
     document.body.style.backgroundColor = color;
   }, [color]);

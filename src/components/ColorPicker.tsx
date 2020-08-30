@@ -3,7 +3,7 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 import Hue from "./Hue";
 import Saturation from "./Saturation";
 
-import styles from "../styles.css";
+import styles from "../styles.module.css";
 import { ColorModel, HSV, ColorPickerBaseProps, AnyColor } from "../types";
 import { equalColorObjects } from "../utils/compare";
 import formatClassName from "../utils/formatClassName";

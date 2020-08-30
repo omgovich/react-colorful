@@ -1,9 +1,9 @@
-import { useRef } from "react";
-import useThrottledEffect from "use-throttled-effect";
+import { useRef, useEffect } from "react";
 
 const ICON_SIZE = 64;
 const OUTLINE_RADIUS = 28;
 const POINTER_RADIUS = 22;
+const DELAY = 500;
 
 const createCanvas = () => {
   const canvas = document.createElement("canvas");
@@ -15,6 +15,7 @@ const createCanvas = () => {
 const createBackgroundCanvas = () => {
   const canvas = createCanvas();
   const ctx = canvas.getContext("2d");
+  if (!ctx) return;
 
   ctx.beginPath();
   ctx.arc(ICON_SIZE * 0.5, ICON_SIZE * 0.5, OUTLINE_RADIUS, 0, 2 * Math.PI, false);
@@ -29,10 +30,11 @@ const createBackgroundCanvas = () => {
   return canvas;
 };
 
-const useFaviconColor = (color) => {
-  const faviconNode = useRef();
-  const canvas = useRef();
-  const backgroundCanvas = useRef();
+const useFaviconColor = (color: string): void => {
+  const faviconNode = useRef<HTMLLinkElement>();
+  const canvas = useRef<HTMLCanvasElement>();
+  const backgroundCanvas = useRef<HTMLCanvasElement>();
+  const lastRan = useRef(Date.now());
 
   // create canvases only once
   if (!canvas.current) {
@@ -47,8 +49,13 @@ const useFaviconColor = (color) => {
   };
 
   // draw a new favicon and replace `link` tag
-  const replaceFavicon = (pointerColor) => {
+  const replaceFavicon = (pointerColor: string) => {
+    if (!canvas.current || !backgroundCanvas.current) return;
+
     const ctx = canvas.current.getContext("2d");
+
+    // according to the docs `getContext` could return `null`
+    if (!ctx) return;
 
     // wipe out the canvas
     ctx.clearRect(0, 0, ICON_SIZE, ICON_SIZE);
@@ -75,13 +82,17 @@ const useFaviconColor = (color) => {
     faviconNode.current = link;
   };
 
-  useThrottledEffect(
-    () => {
-      if (shouldReplace()) replaceFavicon(color);
-    },
-    500,
-    [color]
-  );
+  // modified from `use-throttled-effect` since the lib doesn't support TS
+  useEffect(() => {
+    const handler = setTimeout(function () {
+      if (Date.now() - lastRan.current >= DELAY) {
+        if (shouldReplace()) replaceFavicon(color);
+        lastRan.current = Date.now();
+      }
+    }, DELAY - (Date.now() - lastRan.current));
+
+    return () => clearTimeout(handler);
+  }, [color]);
 };
 
 export default useFaviconColor;

@@ -9,7 +9,8 @@
     "noImplicitAny": true,
     "outDir": "dist",
     "declaration": true,
-    "strict": true
+    "strict": true,
+    "plugins": [{ "name": "typescript-plugin-css-modules" }]
   },
-  "include": ["src", "test"]
+  "include": ["src", "demo/src", "test"]
 }
