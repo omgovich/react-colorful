@@ -41,10 +41,10 @@ const bundlePackage = async (file) => {
     const manifestCode = JSON.stringify({
       name: packageName,
       private: true,
-      main: "index.js",
-      module: "index.module.js",
-      esmodule: "index.esmodule.js",
-      "umd:main": "index.umd.js",
+      main: "dist/index.js",
+      module: "dist/index.module.js",
+      esmodule: "dist/index.esmodule.js",
+      "umd:main": "dist/index.umd.js",
       source: `../${file}`,
       types: `${name}.d.ts`,
       peerDependencies,
@@ -58,7 +58,7 @@ const bundlePackage = async (file) => {
   const args = {
     name: packageName,
     cwd: isMainPackage ? __dirname : outputDirPath,
-    output: `${outputDirPath}/index.js`,
+    output: isMainPackage ? `${outputDirPath}/index.js` : `${outputDirPath}/dist/index.js`,
     jsx: "React.createElement",
     "css-modules": "true",
     sourcemap: "false", // don't publish js.map files to NPM to make the library installation faster

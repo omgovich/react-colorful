@@ -24,27 +24,27 @@
       "limit": "2 KB"
     },
     {
-      "path": "rgb/index.module.js",
+      "path": "rgb/dist/index.module.js",
       "limit": "2 KB"
     },
     {
-      "path": "rgbString/index.module.js",
+      "path": "rgbString/dist/index.module.js",
       "limit": "2 KB"
     },
     {
-      "path": "hsl/index.module.js",
+      "path": "hsl/dist/index.module.js",
       "limit": "2 KB"
     },
     {
-      "path": "hslString/index.module.js",
+      "path": "hslString/dist/index.module.js",
       "limit": "2 KB"
     },
     {
-      "path": "hsv/index.module.js",
+      "path": "hsv/dist/index.module.js",
       "limit": "2 KB"
     },
     {
-      "path": "HexInput/index.module.js",
+      "path": "HexInput/dist/index.module.js",
       "limit": "1 KB"
     }
   ],
