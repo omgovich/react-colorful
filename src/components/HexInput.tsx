@@ -12,7 +12,7 @@ interface Props extends HTMLInputElement {
 
 const HexInput = (props: Partial<Props>) => {
   const { color = "", onChange } = props;
-  const [value, setValue] = useState(escape(color));
+  const [value, setValue] = useState(() => escape(color));
 
   // Trigger `onChange` handler only if the input value is a valid HEX-color
   const handleChange = useCallback(
