@@ -5,7 +5,6 @@ import Saturation from "./Saturation";
 
 import styles from "../styles.css";
 import { ColorModel, HSV, ColorPickerBaseProps, AnyColor } from "../types";
-import { equalColorObjects } from "../utils/compare";
 import formatClassName from "../utils/formatClassName";
 
 interface Props<T extends AnyColor> extends Partial<ColorPickerBaseProps<T>> {
@@ -24,24 +23,24 @@ const ColorPicker = <T extends AnyColor>({
 
   // By using this ref we're able to prevent extra updates
   // and the effects recursion during the color conversion
-  const cache = useRef({ color, hsv });
+  const cache = useRef(color);
 
   // Update local HSV if `color` property value is changed,
   // but only if that's not the same color that we just sent to the parent
   useEffect(() => {
-    if (!colorModel.equal(color, cache.current.color)) {
+    if (!colorModel.equal(color, cache.current)) {
       const newHsv = colorModel.toHsv(color);
-      cache.current = { hsv: newHsv, color };
+      cache.current = color;
       updateHsv(newHsv);
     }
   }, [color, colorModel]);
 
-  // If HSV is changed, convert it to the output format, send to the parent component
+  // Сonvert HSV to the output format, if it is changed send to the parent component
   // and save the new color to the ref to prevent unnecessary updates
   useEffect(() => {
-    if (!equalColorObjects(hsv, cache.current.hsv)) {
-      const newColor = colorModel.fromHsv(hsv);
-      cache.current = { hsv, color: newColor };
+    const newColor = colorModel.fromHsv(hsv);
+    if (!colorModel.equal(newColor, cache.current)) {
+      cache.current = newColor;
       if (onChange) onChange(newColor);
     }
   }, [hsv, colorModel, onChange]);
