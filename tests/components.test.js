@@ -71,7 +71,7 @@ it("Triggers `onChange` after a mouse interaction", async () => {
 
 it("Triggers `onChange` after a touch interaction", async () => {
   const handleChange = jest.fn();
-  const result = render(<ColorPicker onChange={handleChange} />);
+  const result = render(<ColorPicker color="f00" onChange={handleChange} />);
   const hue = result.container.querySelector(".react-colorful__hue .interactive");
 
   fireEvent.touchStart(hue, { touches: [{ pageX: 0, pageY: 0, bubbles: true }] });
