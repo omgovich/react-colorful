@@ -19,10 +19,10 @@ const Demo = () => {
   const [color, setColor] = useState("#c92281");
   const textColor = getBrightness(hexToRgb(color)) < 128 ? "#FFF" : "#000";
 
-  const handleChange = useCallback((color) => {
+  const handleChange = (color) => {
     console.log("🎨", color);
     setColor(color);
-  }, []);
+  };
 
   useBodyBackground(color);
   useFaviconColor(color);
