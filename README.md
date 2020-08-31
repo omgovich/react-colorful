@@ -169,6 +169,12 @@ Take a look at [Supported Color Models](#supported-color-models) for more inform
 
 </details>
 
+## Preact Support
+
+**react-colorful** will work flawlessly with Preact out-of-the-box if you're using [Preact-CLI](https://github.com/preactjs/preact-cli), [NextJS with Preact](https://github.com/vercel/next.js/tree/canary/examples/using-preact), or a few other tools/boilerplates thanks to aliasing.
+
+If you're using another solution, please refer to the [Aliasing React to Preact](https://preactjs.com/guide/v10/getting-started#aliasing-react-to-preact) section of the Preact documentation.
+
 ## Why react-colorful?
 
 Today each dependency drags more dependencies and increases your project’s bundle size uncontrollably. But size is very important for everything that intends to work in a browser.
@@ -205,4 +211,3 @@ To show you the problem that **react-colorful** is trying to solve, we have perf
 - [x] TypeScript support
 - [x] Rewrite the codebase to TypeScript
 - [ ] Alpha channel support (RGBA and HSLA color models)
-- [ ] Preact support
