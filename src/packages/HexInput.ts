@@ -1,1 +1,1 @@
-export { default } from "./components/HexInput";
+export { default } from "../components/HexInput";

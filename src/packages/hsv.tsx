@@ -1,8 +1,8 @@
 import React from "react";
 
-import ColorPicker from "./components/ColorPicker";
-import { ColorModel, ColorPickerBaseProps, HSV } from "./types";
-import { equalColorObjects } from "./utils/compare";
+import ColorPicker from "../components/ColorPicker";
+import { ColorModel, ColorPickerBaseProps, HSV } from "../types";
+import { equalColorObjects } from "../utils/compare";
 
 const colorModel: ColorModel<HSV> = {
   defaultColor: { h: 0, s: 0, v: 0 },

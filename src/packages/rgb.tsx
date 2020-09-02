@@ -1,9 +1,9 @@
 import React from "react";
 
-import ColorPicker from "./components/ColorPicker";
-import { ColorModel, ColorPickerBaseProps, RGB } from "./types";
-import { equalColorObjects } from "./utils/compare";
-import { rgbToHsv, hsvToRgb } from "./utils/convert";
+import ColorPicker from "../components/ColorPicker";
+import { ColorModel, ColorPickerBaseProps, RGB } from "../types";
+import { equalColorObjects } from "../utils/compare";
+import { rgbToHsv, hsvToRgb } from "../utils/convert";
 
 const colorModel: ColorModel<RGB> = {
   defaultColor: { r: 0, g: 0, b: 0 },
