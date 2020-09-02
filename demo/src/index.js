@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import ReactDOM from "react-dom";
-import ColorPicker from "../../src/hex";
-import HexInput from "../../src/HexInput";
+import { HexColorPicker, HexInput } from "../../src";
 import { hexToRgb } from "../../src/utils/convert";
 import styles from "./styles.css";
 import useFaviconColor from "./hooks/useFaviconColor";
@@ -31,7 +30,7 @@ const Demo = () => {
     <div className={styles.wrapper} style={{ color: textColor }}>
       <header className={styles.header}>
         <div className={styles.demo}>
-          <ColorPicker className={styles.colorPicker} color={color} onChange={handleChange} />
+          <HexColorPicker className={styles.colorPicker} color={color} onChange={handleChange} />
           <div className={styles.field}>
             <HexInput className={styles.hexInput} color={color} onChange={handleChange} />
           </div>

@@ -1,7 +1,6 @@
 import React from "react";
 import { render, cleanup, fireEvent, waitFor } from "@testing-library/react";
-import ColorPicker from "../src/hex";
-import HexInput from "../src/HexInput";
+import { HexColorPicker, HexInput } from "../src";
 
 afterEach(cleanup);
 
@@ -33,19 +32,19 @@ Object.defineProperties(HTMLElement.prototype, {
 });
 
 it("Renders proper HTML", () => {
-  const result = render(<ColorPicker color="#F00" />);
+  const result = render(<HexColorPicker color="#F00" />);
 
   expect(result.container.firstChild).toMatchSnapshot();
 });
 
 it("Works with no props", () => {
-  const result = render(<ColorPicker />);
+  const result = render(<HexColorPicker />);
 
   expect(result.container.firstChild).toMatchSnapshot();
 });
 
 it("Accepts an additional `className`", () => {
-  const result = render(<ColorPicker className="custom-picker" />);
+  const result = render(<HexColorPicker className="custom-picker" />);
 
   const hasClass = result.container.firstChild.classList.contains("custom-picker");
   expect(hasClass).toBe(true);
@@ -53,14 +52,14 @@ it("Accepts an additional `className`", () => {
 
 it("Doesn't trigger `onChange` after mounting", () => {
   const handleChange = jest.fn();
-  render(<ColorPicker onChange={handleChange} />);
+  render(<HexColorPicker onChange={handleChange} />);
 
   expect(handleChange).not.toHaveReturned();
 });
 
 it("Triggers `onChange` after a mouse interaction", async () => {
   const handleChange = jest.fn();
-  const result = render(<ColorPicker onChange={handleChange} />);
+  const result = render(<HexColorPicker onChange={handleChange} />);
   const saturation = result.container.querySelector(".react-colorful__saturation .interactive");
 
   fireEvent(saturation, new FakeMouseEvent("mousedown", { pageX: 0, pageY: 0, bubbles: true }));
@@ -71,7 +70,7 @@ it("Triggers `onChange` after a mouse interaction", async () => {
 
 it("Triggers `onChange` after a touch interaction", async () => {
   const handleChange = jest.fn();
-  const result = render(<ColorPicker onChange={handleChange} />);
+  const result = render(<HexColorPicker onChange={handleChange} />);
   const hue = result.container.querySelector(".react-colorful__hue .interactive");
 
   fireEvent.touchStart(hue, { touches: [{ pageX: 0, pageY: 0, bubbles: true }] });
