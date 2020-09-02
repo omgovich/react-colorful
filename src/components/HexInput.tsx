@@ -50,4 +50,4 @@ const HexInput = (props: Partial<Props>) => {
   return React.createElement("input", inputProps);
 };
 
-export default React.memo<Props>(HexInput);
+export default React.memo<Partial<Props>>(HexInput);
