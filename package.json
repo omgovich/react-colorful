@@ -22,30 +22,6 @@
     {
       "path": "dist/index.module.js",
       "limit": "2 KB"
-    },
-    {
-      "path": "rgb/dist/index.module.js",
-      "limit": "2 KB"
-    },
-    {
-      "path": "rgbString/dist/index.module.js",
-      "limit": "2 KB"
-    },
-    {
-      "path": "hsl/dist/index.module.js",
-      "limit": "2 KB"
-    },
-    {
-      "path": "hslString/dist/index.module.js",
-      "limit": "2 KB"
-    },
-    {
-      "path": "hsv/dist/index.module.js",
-      "limit": "2 KB"
-    },
-    {
-      "path": "HexInput/dist/index.module.js",
-      "limit": "1 KB"
     }
   ],
   "jest": {
