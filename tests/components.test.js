@@ -53,9 +53,29 @@ it("Accepts an additional `className`", () => {
 
 it("Doesn't trigger `onChange` after mounting", () => {
   const handleChange = jest.fn();
-  render(<ColorPicker onChange={handleChange} />);
+  render(<ColorPicker color="#c62182" onChange={handleChange} />);
 
   expect(handleChange).not.toHaveReturned();
+});
+
+it("Doesn't trigger `onChange` after controlled rerender", () => {
+  const handleChange = jest.fn();
+  const { rerender } = render(<ColorPicker color="#c62182" onChange={handleChange} />);
+
+  rerender(<ColorPicker color="#c72282" onChange={handleChange} />);
+
+  expect(handleChange).not.toHaveReturned();
+});
+
+it("Doesn't trigger `onChange` when hex color is black", () => {
+  const handleChange = jest.fn();
+  const { container } = render(<ColorPicker color="#000" onChange={handleChange} />);
+  const hue = container.querySelector(".react-colorful__hue .interactive");
+
+  fireEvent.touchStart(hue, { touches: [{ pageX: 0, pageY: 0, bubbles: true }] });
+  fireEvent.touchMove(hue, { touches: [{ pageX: 100, pageY: 0, bubbles: true }] });
+
+  expect(handleChange).not.toHaveBeenCalled();
 });
 
 it("Triggers `onChange` after a mouse interaction", async () => {
