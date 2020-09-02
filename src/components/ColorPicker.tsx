@@ -40,8 +40,8 @@ const ColorPicker = <T extends AnyColor>({
     }
   }, [color, colorModel]);
 
-  // Сonvert HSV to the output format, if it is changed send to the parent component
-  // and save the new color to the ref to prevent unnecessary updates
+  // Trigger `onChange` callback only if an updated color is different from cached one;
+  // save the new color to the ref to prevent unnecessary updates
   useEffect(() => {
     let newColor;
     if (
