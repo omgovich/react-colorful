@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 
+import { useEventCallback } from "../hooks/useEventCallback";
+
 import { validHex } from "../utils/validate";
 
 // Escapes all non-hexadecimal characters including "#"
@@ -13,15 +15,16 @@ interface Props extends HTMLInputElement {
 const HexInput = (props: Partial<Props>) => {
   const { color = "", onChange } = props;
   const [value, setValue] = useState(() => escape(color));
+  const onChangeCallback = useEventCallback<string>(onChange);
 
   // Trigger `onChange` handler only if the input value is a valid HEX-color
   const handleChange = useCallback(
     (e) => {
       const inputValue = escape(e.target.value);
       setValue(inputValue);
-      if (onChange !== undefined && validHex(inputValue)) onChange("#" + inputValue);
+      if (validHex(inputValue)) onChangeCallback("#" + inputValue);
     },
-    [onChange]
+    [onChangeCallback]
   );
 
   // Take the color from props if the last typed color (in local state) is not valid

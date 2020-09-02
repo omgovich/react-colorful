@@ -1,13 +1,14 @@
 import { useRef, useEffect, useCallback } from "react";
 
-function useEventCallback<T>(event?: (arg: T) => void): (arg: T) => void {
-  const eventRef = useRef(event);
+// Saves incoming handler to the ref in order to avoid "useCallback hell"
+function useEventCallback<T>(handler?: (value: T) => void): (value: T) => void {
+  const callbackRef = useRef(handler);
 
   useEffect(() => {
-    eventRef.current = event;
+    callbackRef.current = handler;
   });
 
-  return useCallback((arg: T) => eventRef.current && eventRef.current(arg), []);
+  return useCallback((value: T) => callbackRef.current && callbackRef.current(value), []);
 }
 
 export { useEventCallback };
