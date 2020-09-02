@@ -67,7 +67,7 @@ it("Doesn't trigger `onChange` after controlled rerender", () => {
   expect(handleChange).not.toHaveReturned();
 });
 
-it("Doesn't trigger `onChange` when hex color is black", () => {
+it("Doesn't call `onChange` when user changes a hue of a grayscale color", () => {
   const handleChange = jest.fn();
   const { container } = render(<ColorPicker color="#000" onChange={handleChange} />);
   const hue = container.querySelector(".react-colorful__hue .interactive");
