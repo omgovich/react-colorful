@@ -16,7 +16,7 @@ const HexInput = (props: Partial<Props>) => {
 
   // Trigger `onChange` handler only if the input value is a valid HEX-color
   const handleChange = useCallback(
-    (e) => {
+    (e: React.ChangeEvent<HTMLInputElement>) => {
       const inputValue = escape(e.target.value);
       setValue(inputValue);
       if (onChange !== undefined && validHex(inputValue)) onChange("#" + inputValue);
@@ -26,7 +26,7 @@ const HexInput = (props: Partial<Props>) => {
 
   // Take the color from props if the last typed color (in local state) is not valid
   const handleBlur = useCallback(
-    (e) => {
+    (e: React.FocusEvent<HTMLInputElement>) => {
       if (!validHex(e.target.value)) setValue(escape(color));
     },
     [color]
@@ -50,4 +50,4 @@ const HexInput = (props: Partial<Props>) => {
   return React.createElement("input", inputProps);
 };
 
-export default React.memo(HexInput);
+export default React.memo<Props>(HexInput);
