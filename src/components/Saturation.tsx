@@ -2,7 +2,7 @@ import React, { useCallback } from "react";
 
 import Interactive from "./Interactive";
 
-import styles from "../styles.css";
+import styles from "../css/styles.css";
 import { HSV } from "../types";
 import { hsvToHslString } from "../utils/convert";
 import formatClassName from "../utils/formatClassName";
