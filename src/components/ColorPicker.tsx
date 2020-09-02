@@ -6,19 +6,10 @@ import Saturation from "./Saturation";
 import styles from "../styles.css";
 import { ColorModel, HSV, ColorPickerBaseProps, AnyColor } from "../types";
 import formatClassName from "../utils/formatClassName";
+import { useEventCallback } from "../hooks/useEventCallback";
 
 interface Props<T extends AnyColor> extends Partial<ColorPickerBaseProps<T>> {
   colorModel: ColorModel<T>;
-}
-
-function useEventCallback<T>(event?: (arg: T) => void) {
-  const eventRef = useRef(event);
-
-  useEffect(() => {
-    eventRef.current = event;
-  });
-
-  return useCallback((arg: T) => eventRef.current && eventRef.current(arg), []);
 }
 
 const ColorPicker = <T extends AnyColor>({
@@ -28,7 +19,7 @@ const ColorPicker = <T extends AnyColor>({
   onChange,
 }: Props<T>) => {
   // Save onChange callback in the ref for avoiding "useCallback hell"
-  const onChangeRef = useEventCallback<T>(onChange);
+  const onChangeCallback = useEventCallback<T>(onChange);
 
   // No matter which color model is used (HEX, RGB or HSL),
   // all internal calculations are based on HSV model
@@ -54,9 +45,9 @@ const ColorPicker = <T extends AnyColor>({
     const newColor = colorModel.fromHsv(hsv);
     if (!colorModel.equal(newColor, cache.current)) {
       cache.current = newColor;
-      onChangeRef(newColor);
+      onChangeCallback(newColor);
     }
-  }, [hsv, colorModel, onChangeRef]);
+  }, [hsv, colorModel, onChangeCallback]);
 
   // Merge the current HSV color object with updated params.
   // For example, when a child component sends `h` or `s` only
