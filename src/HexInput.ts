@@ -1,2 +1,1 @@
-import HexInput from "./components/HexInput";
-export default HexInput;
+export { default } from "./components/HexInput";
