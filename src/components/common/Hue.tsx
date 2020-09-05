@@ -4,7 +4,7 @@ import Interactive, { Interaction } from "./Interactive";
 
 import styles from "../../css/styles.css";
 import { hsvToHslString } from "../../utils/convert";
-import formatClassName from "../../utils/formatClassName";
+import { formatClassName } from "../../utils/format";
 
 interface Props {
   hue: number;

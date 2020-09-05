@@ -7,7 +7,7 @@ import styles from "../../css/styles.css";
 import { ColorModel, HSV, ColorPickerBaseProps, AnyColor } from "../../types";
 import { useEventCallback } from "../../hooks/useEventCallback";
 import { equalColorObjects } from "../../utils/compare";
-import formatClassName from "../../utils/formatClassName";
+import { formatClassName } from "../../utils/format";
 
 interface Props<T extends AnyColor> extends Partial<ColorPickerBaseProps<T>> {
   colorModel: ColorModel<T>;
