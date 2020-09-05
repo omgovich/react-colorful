@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 
-import { useEventCallback } from "../../hooks/useEventCallback";
-import { validHex } from "../../utils/validate";
+import { useEventCallback } from "../hooks/useEventCallback";
+import { validHex } from "../utils/validate";
 
 // Escapes all non-hexadecimal characters including "#"
 const escape = (hex: string) => hex.replace(/([^0-9A-F]+)/gi, "");
