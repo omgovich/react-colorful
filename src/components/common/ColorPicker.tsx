@@ -5,6 +5,7 @@ import Saturation from "./Saturation";
 
 import styles from "../../css/styles.css";
 import { ColorModel, HSV, ColorPickerBaseProps, AnyColor } from "../../types";
+import { useEventCallback } from "../../hooks/useEventCallback";
 import { equalColorObjects } from "../../utils/compare";
 import formatClassName from "../../utils/formatClassName";
 
@@ -18,6 +19,9 @@ const ColorPicker = <T extends AnyColor>({
   color = colorModel.defaultColor,
   onChange,
 }: Props<T>) => {
+  // Save onChange callback in the ref for avoiding "useCallback hell"
+  const onChangeCallback = useEventCallback<T>(onChange);
+
   // No matter which color model is used (HEX, RGB or HSL),
   // all internal calculations are based on HSV model
   const [hsv, updateHsv] = useState<HSV>(() => colorModel.toHsv(color));
@@ -36,15 +40,18 @@ const ColorPicker = <T extends AnyColor>({
     }
   }, [color, colorModel]);
 
-  // If HSV is changed, convert it to the output format, send to the parent component
-  // and save the new color to the ref to prevent unnecessary updates
+  // Trigger `onChange` callback only if an updated color is different from cached one;
+  // save the new color to the ref to prevent unnecessary updates
   useEffect(() => {
-    if (!equalColorObjects(hsv, cache.current.hsv)) {
-      const newColor = colorModel.fromHsv(hsv);
+    let newColor;
+    if (
+      !equalColorObjects(hsv, cache.current.hsv) &&
+      !colorModel.equal((newColor = colorModel.fromHsv(hsv)), cache.current.color)
+    ) {
       cache.current = { hsv, color: newColor };
-      if (onChange) onChange(newColor);
+      onChangeCallback(newColor);
     }
-  }, [hsv, colorModel, onChange]);
+  }, [hsv, colorModel, onChangeCallback]);
 
   // Merge the current HSV color object with updated params.
   // For example, when a child component sends `h` or `s` only

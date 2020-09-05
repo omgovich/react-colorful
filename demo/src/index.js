@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import { HexColorPicker, HexColorInput } from "../../src/";
 import { hexToRgb } from "../../src/utils/convert";
@@ -18,10 +18,10 @@ const Demo = () => {
   const [color, setColor] = useState("#c92281");
   const textColor = getBrightness(hexToRgb(color)) < 128 ? "#FFF" : "#000";
 
-  const handleChange = useCallback((color) => {
+  const handleChange = (color) => {
     console.log("🎨", color);
     setColor(color);
-  }, []);
+  };
 
   useBodyBackground(color);
   useFaviconColor(color);
