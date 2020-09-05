@@ -1,6 +1,6 @@
 import React from "react";
-import { render, cleanup, fireEvent, waitFor } from "@testing-library/react";
-import { HexColorPicker, HexInput } from "../src";
+import { render, cleanup, fireEvent } from "@testing-library/react";
+import { HexColorPicker, HexColorInput } from "../src";
 
 afterEach(cleanup);
 
@@ -80,14 +80,16 @@ it("Triggers `onChange` after a touch interaction", async () => {
 });
 
 it("Renders `HexInput` component properly", () => {
-  const result = render(<HexInput className="custom-input" color="#F00" placeholder="AABBCC" />);
+  const result = render(
+    <HexColorInput className="custom-input" color="#F00" placeholder="AABBCC" />
+  );
 
   expect(result.container.firstChild).toMatchSnapshot();
 });
 
 it("Fires `onChange` when user changes `HexInput` value", () => {
   const handleChange = jest.fn((hex) => hex);
-  const result = render(<HexInput onChange={handleChange} />);
+  const result = render(<HexColorInput onChange={handleChange} />);
   const input = result.container.firstChild;
 
   fireEvent.change(input, { target: { value: "112233" } });
