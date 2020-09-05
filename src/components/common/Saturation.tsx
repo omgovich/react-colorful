@@ -2,10 +2,10 @@ import React, { useCallback } from "react";
 
 import Interactive from "./Interactive";
 
-import styles from "../css/styles.css";
-import { HSV } from "../types";
-import { hsvToHslString } from "../utils/convert";
-import formatClassName from "../utils/formatClassName";
+import styles from "../../css/styles.css";
+import { HSV } from "../../types";
+import { hsvToHslString } from "../../utils/convert";
+import formatClassName from "../../utils/formatClassName";
 
 interface Props {
   hsv: HSV;

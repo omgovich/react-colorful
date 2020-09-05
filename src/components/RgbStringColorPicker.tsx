@@ -1,6 +1,6 @@
 import React from "react";
 
-import ColorPicker from "../components/ColorPicker";
+import ColorPicker from "./common/ColorPicker";
 import { ColorModel, ColorPickerBaseProps } from "../types";
 import { equalColorString } from "../utils/compare";
 import { rgbStringToHsv, hsvToRgbString } from "../utils/convert";
@@ -12,8 +12,6 @@ const colorModel: ColorModel<string> = {
   equal: equalColorString,
 };
 
-const RgbStringColorPicker = (props: Partial<ColorPickerBaseProps<string>>): JSX.Element => (
+export const RgbStringColorPicker = (props: Partial<ColorPickerBaseProps<string>>): JSX.Element => (
   <ColorPicker {...props} colorModel={colorModel} />
 );
-
-export default RgbStringColorPicker;

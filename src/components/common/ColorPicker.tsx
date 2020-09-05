@@ -3,10 +3,10 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 import Hue from "./Hue";
 import Saturation from "./Saturation";
 
-import styles from "../css/styles.css";
-import { ColorModel, HSV, ColorPickerBaseProps, AnyColor } from "../types";
-import { equalColorObjects } from "../utils/compare";
-import formatClassName from "../utils/formatClassName";
+import styles from "../../css/styles.css";
+import { ColorModel, HSV, ColorPickerBaseProps, AnyColor } from "../../types";
+import { equalColorObjects } from "../../utils/compare";
+import formatClassName from "../../utils/formatClassName";
 
 interface Props<T extends AnyColor> extends Partial<ColorPickerBaseProps<T>> {
   colorModel: ColorModel<T>;

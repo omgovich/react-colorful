@@ -1,6 +1,6 @@
 import React, { useState, useLayoutEffect, useRef, useCallback } from "react";
 
-import styles from "../css/styles.css";
+import styles from "../../css/styles.css";
 
 // Limit number within [0, 1] bounds.
 // Use ternary operator instead of `Math.min(Math.max(0, number), 1)` to save few bytes

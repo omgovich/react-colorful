@@ -2,9 +2,9 @@ import React, { useCallback } from "react";
 
 import Interactive, { Interaction } from "./Interactive";
 
-import styles from "../css/styles.css";
-import { hsvToHslString } from "../utils/convert";
-import formatClassName from "../utils/formatClassName";
+import styles from "../../css/styles.css";
+import { hsvToHslString } from "../../utils/convert";
+import formatClassName from "../../utils/formatClassName";
 
 interface Props {
   hue: number;

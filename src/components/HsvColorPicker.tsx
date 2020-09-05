@@ -1,6 +1,6 @@
 import React from "react";
 
-import ColorPicker from "../components/ColorPicker";
+import ColorPicker from "./common/ColorPicker";
 import { ColorModel, ColorPickerBaseProps, HSV } from "../types";
 import { equalColorObjects } from "../utils/compare";
 
@@ -11,9 +11,8 @@ const colorModel: ColorModel<HSV> = {
   equal: equalColorObjects,
 };
 
-const HsvColorPicker = (props: Partial<ColorPickerBaseProps<HSV>>): JSX.Element => (
+export const HsvColorPicker = (props: Partial<ColorPickerBaseProps<HSV>>): JSX.Element => (
   <ColorPicker {...props} colorModel={colorModel} />
 );
 
-export default HsvColorPicker;
 export { HSV };
