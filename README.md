@@ -80,7 +80,7 @@ We provide 5 additional color picker components for different color models, unle
 #### Code example
 
 ```js
-import { RgbColorPicker } from "react-colorful/rgb";
+import { RgbColorPicker } from "react-colorful";
 import "react-colorful/dist/index.css";
 
 const YourComponent = () => {
