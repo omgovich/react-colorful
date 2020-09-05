@@ -70,14 +70,7 @@
     "ACKNOWLEDGMENTS",
     "LICENSE",
     "README.md",
-    "types",
-    "dist",
-    "hsl",
-    "hslString",
-    "hsv",
-    "rgb",
-    "rgbString",
-    "HexInput"
+    "dist"
   ],
   "repository": "omgovich/react-colorful",
   "keywords": [
