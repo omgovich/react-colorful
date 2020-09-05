@@ -8,6 +8,7 @@
   "esmodule": "dist/index.esmodule.js",
   "umd:main": "dist/index.umd.js",
   "types": "dist/index.d.ts",
+  "sideEffects": false,
   "scripts": {
     "lint": "eslint src/**/*.{ts,tsx} demo/src/**/*.js",
     "size": "npm run build && size-limit",
