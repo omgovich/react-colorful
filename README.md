@@ -136,7 +136,7 @@ const YourComponent = () => {
   const [color, setColor] = useState("#aabbcc");
   return (
     <div>
-      <ColorPicker color={color} onChange={setColor} />
+      <HexColorPicker color={color} onChange={setColor} />
       <HexColorInput color={color} onChange={setColor} />
     </div>
   );
