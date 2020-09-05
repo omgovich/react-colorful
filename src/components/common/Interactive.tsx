@@ -16,7 +16,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-const Interactive = ({ onMove, children }: Props) => {
+const InteractiveBase = ({ onMove, children }: Props) => {
   const container = useRef<HTMLDivElement>(null);
   const [isDragging, setDragging] = useState(false);
 
@@ -81,4 +81,4 @@ const Interactive = ({ onMove, children }: Props) => {
   );
 };
 
-export default React.memo(Interactive);
+export const Interactive = React.memo(InteractiveBase);

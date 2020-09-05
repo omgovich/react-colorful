@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 
-import Interactive, { Interaction } from "./Interactive";
+import { Interactive, Interaction } from "./Interactive";
 
 import styles from "../../css/styles.css";
 import { hsvToHslString } from "../../utils/convert";
@@ -11,7 +11,7 @@ interface Props {
   onChange: (newHue: { h: number }) => void;
 }
 
-const Hue = ({ hue, onChange }: Props) => {
+const HueBase = ({ hue, onChange }: Props) => {
   const handleMove = useCallback(
     (interaction: Interaction) => {
       // Hue measured in degrees of the color circle ranging from 0 to 360
@@ -38,4 +38,4 @@ const Hue = ({ hue, onChange }: Props) => {
   );
 };
 
-export default React.memo(Hue);
+export const Hue = React.memo(HueBase);

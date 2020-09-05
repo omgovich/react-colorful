@@ -1,6 +1,6 @@
 import React from "react";
 
-import ColorPicker from "./common/ColorPicker";
+import { ColorPicker } from "./common/ColorPicker";
 import { ColorModel, ColorPickerBaseProps } from "../types";
 import { equalColorString } from "../utils/compare";
 import { rgbStringToHsv, hsvToRgbString } from "../utils/convert";

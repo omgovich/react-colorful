@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 
-import Interactive from "./Interactive";
+import { Interactive, Interaction } from "./Interactive";
 
 import styles from "../../css/styles.css";
 import { HSV } from "../../types";
@@ -12,9 +12,9 @@ interface Props {
   onChange: (newColor: { s: number; v: number }) => void;
 }
 
-const Saturation = ({ hsv, onChange }: Props) => {
+const SaturationBase = ({ hsv, onChange }: Props) => {
   const handleMove = useCallback(
-    (interaction) => {
+    (interaction: Interaction) => {
       // Saturation and brightness always fit into [0, 100] range
       onChange({
         s: interaction.left * 100,
@@ -46,4 +46,4 @@ const Saturation = ({ hsv, onChange }: Props) => {
   );
 };
 
-export default React.memo(Saturation);
+export const Saturation = React.memo(SaturationBase);

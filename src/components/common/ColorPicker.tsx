@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 
-import Hue from "./Hue";
-import Saturation from "./Saturation";
+import { Hue } from "./Hue";
+import { Saturation } from "./Saturation";
 
 import styles from "../../css/styles.css";
 import { ColorModel, HSV, ColorPickerBaseProps, AnyColor } from "../../types";
@@ -13,7 +13,7 @@ interface Props<T extends AnyColor> extends Partial<ColorPickerBaseProps<T>> {
   colorModel: ColorModel<T>;
 }
 
-const ColorPicker = <T extends AnyColor>({
+const ColorPickerBase = <T extends AnyColor>({
   className = "",
   colorModel,
   color = colorModel.defaultColor,
@@ -69,4 +69,4 @@ const ColorPicker = <T extends AnyColor>({
   );
 };
 
-export default React.memo(ColorPicker) as typeof ColorPicker;
+export const ColorPicker = React.memo(ColorPickerBase) as typeof ColorPickerBase;
