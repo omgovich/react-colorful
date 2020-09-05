@@ -21,6 +21,37 @@
   "size-limit": [
     {
       "path": "dist/index.module.js",
+      "import": "{ HexColorPicker }",
+      "limit": "2 KB"
+    },
+    {
+      "path": "dist/index.module.js",
+      "import": "{ HslColorPicker }",
+      "limit": "2 KB"
+    },
+    {
+      "path": "dist/index.module.js",
+      "import": "{ HslStringColorPicker }",
+      "limit": "2 KB"
+    },
+    {
+      "path": "dist/index.module.js",
+      "import": "{ HsvColorPicker }",
+      "limit": "2 KB"
+    },
+    {
+      "path": "dist/index.module.js",
+      "import": "{ RgbColorPicker }",
+      "limit": "2 KB"
+    },
+    {
+      "path": "dist/index.module.js",
+      "import": "{ RgbStringColorPicker }",
+      "limit": "2 KB"
+    },
+    {
+      "path": "dist/index.module.js",
+      "import": "{ HexColorInput }",
       "limit": "2 KB"
     }
   ],
