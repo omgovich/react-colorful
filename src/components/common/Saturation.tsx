@@ -3,12 +3,12 @@ import React, { useCallback } from "react";
 import { Interactive, Interaction } from "./Interactive";
 
 import styles from "../../css/styles.css";
-import { HSV } from "../../types";
+import { HsvColor } from "../../types";
 import { hsvToHslString } from "../../utils/convert";
 import { formatClassName } from "../../utils/format";
 
 interface Props {
-  hsv: HSV;
+  hsv: HsvColor;
   onChange: (newColor: { s: number; v: number }) => void;
 }
 

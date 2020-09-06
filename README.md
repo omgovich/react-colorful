@@ -159,9 +159,9 @@ const YourComponent = () => {
 While not only typing its own functions and variables, it can also help you type yours. Depending on the component you are using, you can also import the type that is associated with the component. For example, if you are using our HSL color picker component, you can also import the `HSL` type.
 
 ```ts
-import { HslColorPicker, HSL } from "react-colorful";
+import { HslColorPicker, HslColor } from "react-colorful";
 
-const myHslValue: HSL = { h: 0, s: 0, l: 0 };
+const myHslValue: HslColor = { h: 0, s: 0, l: 0 };
 ```
 
 Take a look at [Supported Color Models](#supported-color-models) for more information about the types and color formats you may want to use.

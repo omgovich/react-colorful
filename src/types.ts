@@ -1,27 +1,29 @@
-export interface RGB {
+export interface RgbColor {
   r: number;
   g: number;
   b: number;
 }
 
-export interface HSL {
+export interface HslColor {
   h: number;
   s: number;
   l: number;
 }
 
-export interface HSV {
+export interface HsvColor {
   h: number;
   s: number;
   v: number;
 }
 
-export type AnyColor = string | HSL | HSV | RGB;
+export type ObjectColor = HslColor | HsvColor | RgbColor;
+
+export type AnyColor = string | ObjectColor;
 
 export interface ColorModel<T extends AnyColor> {
   defaultColor: T;
-  toHsv: (defaultColor: T) => HSV;
-  fromHsv: (hsv: HSV) => T;
+  toHsv: (defaultColor: T) => HsvColor;
+  fromHsv: (hsv: HsvColor) => T;
   equal: (first: T, second: T) => boolean;
 }
 
