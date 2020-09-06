@@ -206,8 +206,9 @@ To show you the problem that **react-colorful** is trying to solve, we have perf
 
 ## Roadmap
 
-- [x] Additional modules to support different RGB, HSL and HSV color models
+- [x] Additional modules to support RGB, HSL and HSV color models
 - [x] HEX input component
 - [x] TypeScript support
 - [x] Rewrite the codebase to TypeScript
 - [ ] Alpha channel support (RGBA and HSLA color models)
+- [ ] Storybook
