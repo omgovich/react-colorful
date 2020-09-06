@@ -123,7 +123,7 @@ The easiest way to tweak react-colorful is to create another stylesheet to overr
 
 ## How to paste or type a color?
 
-As you probably noticed the color picker itself doesn't include an input field, but don't worry if you need one. **react-colorful** is a modular library that allows you to build any picker you need. Since `v2.1` we provide an additional component that works perfectly in pair with our color picker.
+As you probably noticed the color picker itself does not include an input field, but do not worry if you need one. **react-colorful** is a modular library that allows you to build any picker you need. Since `v2.1` we provide an additional component that works perfectly in pair with our color picker.
 
 <details>
   <summary>How to use <code>HexColorInput</code></summary><br />
@@ -145,7 +145,7 @@ const YourComponent = () => {
 
 [Live demo →](https://codesandbox.io/s/react-colorful-hex-input-demo-0k2fx)
 
-`HexColorInput` doesn't have any default styles, but accepts all properties that a regular `input` tag does (such as `className`, `placeholder` and `autoFocus`). That means you can place and modify this component as you like. Also, that allows you to combine the color picker and input in different ways.
+`HexColorInput` does not have any default styles, but accepts all properties that a regular `input` tag does (such as `className`, `placeholder` and `autoFocus`). That means you can place and modify this component as you like. Also, that allows you to combine the color picker and input in different ways.
 
 </details>
 
@@ -156,7 +156,7 @@ const YourComponent = () => {
 <details>
   <summary>How you can get the most from our TypeScript support</summary><br />
   
-While not only typing its own functions and variables, it can also help you type yours. Depending on the component you're using, you can also import the type that is associated with the component. For example, if you're using our HSL color picker component, you can also import the `HSL` type.
+While not only typing its own functions and variables, it can also help you type yours. Depending on the component you are using, you can also import the type that is associated with the component. For example, if you are using our HSL color picker component, you can also import the `HSL` type.
 
 ```ts
 import { HslColorPicker, HSL } from "react-colorful";
@@ -170,15 +170,15 @@ Take a look at [Supported Color Models](#supported-color-models) for more inform
 
 ## Usage with Preact
 
-**react-colorful** will work flawlessly with Preact out-of-the-box if you're using [Preact-CLI](https://github.com/preactjs/preact-cli), [NextJS with Preact](https://github.com/vercel/next.js/tree/canary/examples/using-preact), or a few other tools/boilerplates thanks to aliasing.
+**react-colorful** will work flawlessly with Preact out-of-the-box if you are using [Preact-CLI](https://github.com/preactjs/preact-cli), [NextJS with Preact](https://github.com/vercel/next.js/tree/canary/examples/using-preact), or a few other tools/boilerplates thanks to aliasing.
 
-If you're using another solution, please refer to the [Aliasing React to Preact](https://preactjs.com/guide/v10/getting-started#aliasing-react-to-preact) section of the Preact documentation.
+If you are using another solution, please refer to the [Aliasing React to Preact](https://preactjs.com/guide/v10/getting-started#aliasing-react-to-preact) section of the Preact documentation.
 
 ## Why react-colorful?
 
 Today each dependency drags more dependencies and increases your project’s bundle size uncontrollably. But size is very important for everything that intends to work in a browser.
 
-**react-colorful** is a simple color picker for those who care about their bundle size and client-side performance. It's fast and lightweight because:
+**react-colorful** is a simple color picker for those who care about their bundle size and client-side performance. It is fast and lightweight because:
 
 - has no dependencies (no risks in terms of vulnerabilities, no unexpected bundle size changes);
 - built with hooks and functional components only (no classes and polyfills for them);
