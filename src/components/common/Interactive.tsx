@@ -1,6 +1,6 @@
 import React, { useState, useLayoutEffect, useRef, useCallback } from "react";
 
-import styles from "../styles.css";
+import styles from "../../css/styles.css";
 
 // Limit number within [0, 1] bounds.
 // Use ternary operator instead of `Math.min(Math.max(0, number), 1)` to save few bytes
@@ -16,7 +16,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-const Interactive = ({ onMove, children }: Props) => {
+const InteractiveBase = ({ onMove, children }: Props) => {
   const container = useRef<HTMLDivElement>(null);
   const [isDragging, setDragging] = useState(false);
 
@@ -81,4 +81,4 @@ const Interactive = ({ onMove, children }: Props) => {
   );
 };
 
-export default React.memo(Interactive);
+export const Interactive = React.memo(InteractiveBase);

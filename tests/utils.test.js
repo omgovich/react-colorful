@@ -12,7 +12,7 @@ import { hsvToRgb, rgbToHsv } from "../src/utils/convert";
 import { hsvToRgbString, rgbStringToHsv } from "../src/utils/convert";
 // Rest
 import { equalColorObjects } from "../src/utils/compare";
-import formatClassName from "../src/utils/formatClassName";
+import { formatClassName } from "../src/utils/format";
 
 it("Converts HEX to HSV", () => {
   expect(hexToHsv("#ffffff")).toMatchObject({ h: 0, s: 0, v: 100 });

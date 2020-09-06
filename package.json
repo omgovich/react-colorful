@@ -2,17 +2,18 @@
   "name": "react-colorful",
   "version": "2.3.1",
   "description": "A tiny color picker component for modern React apps",
-  "source": "src/hex.tsx",
+  "source": "src/index.ts",
   "main": "dist/index.js",
   "module": "dist/index.module.js",
   "esmodule": "dist/index.esmodule.js",
   "umd:main": "dist/index.umd.js",
-  "types": "dist/hex.d.ts",
+  "types": "dist/index.d.ts",
+  "sideEffects": false,
   "scripts": {
     "lint": "eslint src/**/*.{ts,tsx} demo/src/**/*.js",
     "size": "npm run build && size-limit",
     "test": "jest tests",
-    "build": "node ./build-packages.js",
+    "build": "microbundle build --entry src/index.ts --jsx React.createElement --name react-colorful --css-modules true --tsconfig tsconfig.build.json",
     "prepublishOnly": "npm run build",
     "start-demo": "parcel demo/src/index.html --out-dir demo/dist --open",
     "build-demo": "del-cli 'demo/dist/*' && parcel build demo/src/index.html --out-dir demo/dist --public-url /react-colorful/",
@@ -21,31 +22,38 @@
   "size-limit": [
     {
       "path": "dist/index.module.js",
+      "import": "{ HexColorPicker }",
       "limit": "2 KB"
     },
     {
-      "path": "rgb/dist/index.module.js",
+      "path": "dist/index.module.js",
+      "import": "{ HslColorPicker }",
       "limit": "2 KB"
     },
     {
-      "path": "rgbString/dist/index.module.js",
+      "path": "dist/index.module.js",
+      "import": "{ HslStringColorPicker }",
       "limit": "2 KB"
     },
     {
-      "path": "hsl/dist/index.module.js",
+      "path": "dist/index.module.js",
+      "import": "{ HsvColorPicker }",
       "limit": "2 KB"
     },
     {
-      "path": "hslString/dist/index.module.js",
+      "path": "dist/index.module.js",
+      "import": "{ RgbColorPicker }",
       "limit": "2 KB"
     },
     {
-      "path": "hsv/dist/index.module.js",
+      "path": "dist/index.module.js",
+      "import": "{ RgbStringColorPicker }",
       "limit": "2 KB"
     },
     {
-      "path": "HexInput/dist/index.module.js",
-      "limit": "1 KB"
+      "path": "dist/index.module.js",
+      "import": "{ HexColorInput }",
+      "limit": "2 KB"
     }
   ],
   "jest": {
@@ -62,14 +70,7 @@
     "ACKNOWLEDGMENTS",
     "LICENSE",
     "README.md",
-    "types",
-    "dist",
-    "hsl",
-    "hslString",
-    "hsv",
-    "rgb",
-    "rgbString",
-    "HexInput"
+    "dist"
   ],
   "repository": "omgovich/react-colorful",
   "keywords": [
@@ -100,7 +101,6 @@
     "@types/react": "^16.9.46",
     "@typescript-eslint/eslint-plugin": "^3.9.1",
     "@typescript-eslint/parser": "^3.9.1",
-    "del": "^5.1.0",
     "del-cli": "^3.0.1",
     "eslint": "^7.5.0",
     "eslint-config-prettier": "^6.11.0",
@@ -111,7 +111,6 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^26.3.0",
     "jest-esm-jsx-transform": "^1.0.0",
-    "lodash": "^4.17.20",
     "microbundle": "^0.12.3",
     "parcel-bundler": "^1.12.4",
     "postcss-modules": "^3.2.0",

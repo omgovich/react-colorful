@@ -1,8 +1,8 @@
-import { HSL, HSV, RGB } from "../types";
+import { HslColor, HsvColor, RgbColor } from "../types";
 
-export const hexToHsv = (hex: string): HSV => rgbToHsv(hexToRgb(hex));
+export const hexToHsv = (hex: string): HsvColor => rgbToHsv(hexToRgb(hex));
 
-export const hexToRgb = (hex: string): RGB => {
+export const hexToRgb = (hex: string): RgbColor => {
   if (hex[0] === "#") hex = hex.substr(1);
 
   if (hex.length < 6) {
@@ -20,7 +20,7 @@ export const hexToRgb = (hex: string): RGB => {
   };
 };
 
-export const hslStringToHsv = (hslString: string): HSV => {
+export const hslStringToHsv = (hslString: string): HsvColor => {
   const matcher = /hsl\((\d+(?:\.\d+)*),\s*(\d+(?:\.\d+)*)%?,\s*(\d+(?:\.\d+)*)%?\)/;
   const match = matcher.exec(hslString);
 
@@ -31,7 +31,7 @@ export const hslStringToHsv = (hslString: string): HSV => {
   });
 };
 
-export const hslToHsv = ({ h, s, l }: HSL): HSV => {
+export const hslToHsv = ({ h, s, l }: HslColor): HsvColor => {
   s *= (l < 50 ? l : 100 - l) / 100;
 
   return {
@@ -41,9 +41,9 @@ export const hslToHsv = ({ h, s, l }: HSL): HSV => {
   };
 };
 
-export const hsvToHex = (hsv: HSV): string => rgbToHex(hsvToRgb(hsv));
+export const hsvToHex = (hsv: HsvColor): string => rgbToHex(hsvToRgb(hsv));
 
-export const hsvToHsl = ({ h, s, v }: HSV): HSL => {
+export const hsvToHsl = ({ h, s, v }: HsvColor): HslColor => {
   const hh = ((200 - s) * v) / 100;
 
   return {
@@ -53,12 +53,12 @@ export const hsvToHsl = ({ h, s, v }: HSV): HSL => {
   };
 };
 
-export const hsvToHslString = (hsv: HSV): string => {
+export const hsvToHslString = (hsv: HsvColor): string => {
   const { h, s, l } = hsvToHsl(hsv);
   return `hsl(${h}, ${s}%, ${l}%)`;
 };
 
-export const hsvToRgb = ({ h, s, v }: HSV): RGB => {
+export const hsvToRgb = ({ h, s, v }: HsvColor): RgbColor => {
   h = (h / 360) * 6;
   s = s / 100;
   v = v / 100;
@@ -76,12 +76,12 @@ export const hsvToRgb = ({ h, s, v }: HSV): RGB => {
   };
 };
 
-export const hsvToRgbString = (hsv: HSV): string => {
+export const hsvToRgbString = (hsv: HsvColor): string => {
   const { r, g, b } = hsvToRgb(hsv);
   return `rgb(${r}, ${g}, ${b})`;
 };
 
-export const rgbStringToHsv = (rgbString: string): HSV => {
+export const rgbStringToHsv = (rgbString: string): HsvColor => {
   const matcher = /rgb\((\d+),\s*(\d+),\s*(\d+)\)/;
   const match = matcher.exec(rgbString);
 
@@ -97,9 +97,9 @@ const format = (number: number) => {
   return hex.length < 2 ? "0" + hex : hex;
 };
 
-export const rgbToHex = ({ r, g, b }: RGB): string => "#" + format(r) + format(g) + format(b);
+export const rgbToHex = ({ r, g, b }: RgbColor): string => "#" + format(r) + format(g) + format(b);
 
-export const rgbToHsv = ({ r, g, b }: RGB): HSV => {
+export const rgbToHsv = ({ r, g, b }: RgbColor): HsvColor => {
   const max = Math.max(r, g, b);
   const delta = max - Math.min(r, g, b);
 

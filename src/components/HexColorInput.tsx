@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 
 import { useEventCallback } from "../hooks/useEventCallback";
-
 import { validHex } from "../utils/validate";
 
 // Escapes all non-hexadecimal characters including "#"
@@ -12,7 +11,7 @@ interface Props extends HTMLInputElement {
   onChange: (newColor: string) => void;
 }
 
-const HexInput = (props: Partial<Props>) => {
+const HexColorInputBase = (props: Partial<Props>) => {
   const { color = "", onChange } = props;
   const [value, setValue] = useState(() => escape(color));
   const onChangeCallback = useEventCallback<string>(onChange);
@@ -53,4 +52,4 @@ const HexInput = (props: Partial<Props>) => {
   return React.createElement("input", inputProps);
 };
 
-export default React.memo<Partial<Props>>(HexInput);
+export const HexColorInput = React.memo<Partial<Props>>(HexColorInputBase);
