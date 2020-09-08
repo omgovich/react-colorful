@@ -9,7 +9,8 @@
     "noImplicitAny": true,
     "outDir": "dist",
     "declaration": true,
-    "strict": true
+    "strict": true,
+    "noEmit": true
   },
   "include": ["src", "test", "demo/src"]
 }
