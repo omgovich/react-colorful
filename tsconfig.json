@@ -7,7 +7,6 @@
     "jsxFactory": "React.createElement",
     "moduleResolution": "node",
     "noImplicitAny": true,
-    "outDir": "dist",
     "declaration": true,
     "strict": true,
     "noEmit": true
