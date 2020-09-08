@@ -1,24 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
-import { HexColorPicker, HexColorInput } from "../../src/";
+import { HexColorPicker, HexColorInput, RgbColor } from "../../src";
 import { hexToRgb } from "../../src/utils/convert";
-import styles from "./styles.css";
-import useFaviconColor from "./hooks/useFaviconColor";
+import { useFaviconColor } from "./hooks/useFaviconColor";
+import { useBodyBackground } from "./hooks/useBodyBackground";
+import styles from "./css/styles.css";
 
 // See http://www.w3.org/TR/AERT#color-contrast
-const getBrightness = ({ r, g, b }) => (r * 299 + g * 587 + b * 114) / 1000;
-
-const useBodyBackground = (color) => {
-  useEffect(() => {
-    document.body.style.backgroundColor = color;
-  }, [color]);
-};
+const getBrightness = ({ r, g, b }: RgbColor) => (r * 299 + g * 587 + b * 114) / 1000;
 
 const Demo = () => {
   const [color, setColor] = useState("#c92281");
   const textColor = getBrightness(hexToRgb(color)) < 128 ? "#FFF" : "#000";
 
-  const handleChange = (color) => {
+  const handleChange = (color: string) => {
     console.log("🎨", color);
     setColor(color);
   };

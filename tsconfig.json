@@ -11,5 +11,5 @@
     "declaration": true,
     "strict": true
   },
-  "include": ["src", "test"]
+  "include": ["src", "test", "demo/src"]
 }
