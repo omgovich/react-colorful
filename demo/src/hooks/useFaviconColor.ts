@@ -16,6 +16,9 @@ const createBackgroundCanvas = () => {
   const canvas = createCanvas();
   const ctx = canvas.getContext("2d");
 
+  // According to the docs `getContext` could return `null`
+  if (!ctx) return canvas;
+
   ctx.beginPath();
   ctx.arc(ICON_SIZE * 0.5, ICON_SIZE * 0.5, OUTLINE_RADIUS, 0, 2 * Math.PI, false);
   ctx.closePath();
@@ -29,10 +32,10 @@ const createBackgroundCanvas = () => {
   return canvas;
 };
 
-const useFaviconColor = (color) => {
-  const faviconNode = useRef();
-  const canvas = useRef();
-  const backgroundCanvas = useRef();
+export const useFaviconColor = (color: string): void => {
+  const faviconNode = useRef<HTMLLinkElement>();
+  const canvas = useRef<HTMLCanvasElement>();
+  const backgroundCanvas = useRef<HTMLCanvasElement>();
 
   // create canvases only once
   if (!canvas.current) {
@@ -47,8 +50,11 @@ const useFaviconColor = (color) => {
   };
 
   // draw a new favicon and replace `link` tag
-  const replaceFavicon = (pointerColor) => {
+  const replaceFavicon = (pointerColor: string) => {
+    if (!canvas.current || !backgroundCanvas.current) return;
+
     const ctx = canvas.current.getContext("2d");
+    if (!ctx) return;
 
     // wipe out the canvas
     ctx.clearRect(0, 0, ICON_SIZE, ICON_SIZE);
@@ -83,5 +89,3 @@ const useFaviconColor = (color) => {
     [color]
   );
 };
-
-export default useFaviconColor;
