@@ -193,13 +193,21 @@ To show you the problem that **react-colorful** is trying to solve, we have perf
 | react-input-color  | [![](https://badgen.net/bundlephobia/min/react-input-color?color=red&label=)](https://bundlephobia.com/result?p=react-input-color) | [![](https://badgen.net/bundlephobia/minzip/react-input-color?color=red&label=)](https://bundlephobia.com/result?p=react-input-color) | [![](https://badgen.net/bundlephobia/dependency-count/react-input-color?color=red&label=)](https://bundlephobia.com/result?p=react-input-color) |
 | rc-color-picker    | [![](https://badgen.net/bundlephobia/min/rc-color-picker?color=red&label=)](https://bundlephobia.com/result?p=rc-color-picker)     | [![](https://badgen.net/bundlephobia/minzip/rc-color-picker?color=red&label=)](https://bundlephobia.com/result?p=rc-color-picker)     | [![](https://badgen.net/bundlephobia/dependency-count/rc-color-picker?color=red&label=)](https://bundlephobia.com/result?p=rc-color-picker)     |
 
-## Companies using react-colorful
+## Projects using react-colorful
 
 <details>
   <summary><a href="https://resume.io">Resume.io</a> — online resume builder with over 7,800,000 users worldwide</summary>
 
   <a href="https://resume.io/">
     <img src="demo/src/assets/resume-io.png" width="873" alt="resume.io" />
+  </a>
+</details>
+
+<details>
+  <summary><a href="https://omatsuri.app">Omatsuri.app</a> — progressive web application with a lot of different frontend focused tools</summary>
+
+  <a href="https://omatsuri.app">
+    <img src="demo/src/assets/omatsuri-app.png" width="1223" alt="omatsuri.app" />
   </a>
 </details>
 
