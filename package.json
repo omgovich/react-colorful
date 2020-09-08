@@ -9,7 +9,7 @@
   "umd:main": "dist/index.umd.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "lint": "eslint src/**/*.{ts,tsx} demo/src/**/*.js",
+    "lint": "eslint src/**/*.{ts,tsx} demo/src/**/*.{ts,tsx}",
     "size": "npm run build && size-limit",
     "test": "jest tests",
     "build": "microbundle build --entry src/index.ts --jsx React.createElement --name react-colorful --css-modules true --tsconfig tsconfig.build.json",
