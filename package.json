@@ -1,6 +1,6 @@
 {
   "name": "react-colorful",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "A tiny color picker component for modern React apps",
   "source": "src/index.ts",
   "main": "dist/index.js",
@@ -8,7 +8,6 @@
   "esmodule": "dist/index.esmodule.js",
   "umd:main": "dist/index.umd.js",
   "types": "dist/index.d.ts",
-  "sideEffects": false,
   "scripts": {
     "lint": "eslint src/**/*.{ts,tsx} demo/src/**/*.js",
     "size": "npm run build && size-limit",
@@ -55,6 +54,9 @@
       "import": "{ HexColorInput }",
       "limit": "2 KB"
     }
+  ],
+  "sideEffects": [
+    "*.css"
   ],
   "jest": {
     "verbose": true,
