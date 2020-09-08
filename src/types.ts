@@ -27,7 +27,7 @@ export interface ColorModel<T extends AnyColor> {
   equal: (first: T, second: T) => boolean;
 }
 
-export interface ColorPickerBaseProps<T> {
+export interface ColorPickerBaseProps<T extends AnyColor> {
   className: string;
   color: T;
   onChange: (newColor: T) => void;
