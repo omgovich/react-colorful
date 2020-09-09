@@ -6,7 +6,6 @@
     "jsx": "react",
     "jsxFactory": "React.createElement",
     "moduleResolution": "node",
-    "noImplicitAny": true,
     "declaration": true,
     "strict": true,
     "noEmit": true
