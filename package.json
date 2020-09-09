@@ -13,7 +13,7 @@
     "size": "npm run build && size-limit",
     "test": "jest tests",
     "build": "del-cli 'dist/*' && microbundle build --entry src/index.ts --jsx React.createElement --name react-colorful --css-modules true --tsconfig tsconfig.build.json",
-    "check-types": "tsc",
+    "check-types": "tsc --noEmit true",
     "prepublishOnly": "npm run build",
     "start-demo": "parcel demo/src/index.html --out-dir demo/dist --open",
     "build-demo": "del-cli 'demo/dist/*' && parcel build demo/src/index.html --out-dir demo/dist --public-url /react-colorful/",
