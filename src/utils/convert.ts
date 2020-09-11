@@ -31,6 +31,17 @@ export const hslStringToHsv = (hslString: string): HsvColor => {
   });
 };
 
+export const hsvStringToHsv = (hsvString: string): HsvColor => {
+  const matcher = /hsv\((\d+(?:\.\d+)*),\s*(\d+(?:\.\d+)*)%?,\s*(\d+(?:\.\d+)*)%?\)/;
+  const match = matcher.exec(hsvString);
+
+  return {
+    h: Number(match ? match[1] : 0),
+    s: Number(match ? match[2] : 0),
+    v: Number(match ? match[3] : 0),
+  };
+};
+
 export const hslToHsv = ({ h, s, l }: HslColor): HsvColor => {
   s *= (l < 50 ? l : 100 - l) / 100;
 
@@ -56,6 +67,11 @@ export const hsvToHsl = ({ h, s, v }: HsvColor): HslColor => {
 export const hsvToHslString = (hsv: HsvColor): string => {
   const { h, s, l } = hsvToHsl(hsv);
   return `hsl(${h}, ${s}%, ${l}%)`;
+};
+
+export const hsvToHsvString = (hsv: HsvColor): string => {
+  const { h, s, v } = hsv;
+  return `hsv(${h}, ${s}%, ${v}%)`;
 };
 
 export const hsvToRgb = ({ h, s, v }: HsvColor): RgbColor => {
