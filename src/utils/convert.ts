@@ -22,17 +22,21 @@ export const hexToRgba = (hex: string): RgbaColor => {
   };
 };
 
-export const hslStringToHsva = (hslString: string): HsvaColor => {
-  const matcher = /hsl\((\d+(?:\.\d+)*),\s*(\d+(?:\.\d+)*)%?,\s*(\d+(?:\.\d+)*)%?\)/;
+export const hslaStringToHsva = (hslString: string): HsvaColor => {
+  const matcher = /hsla?\((\d+(?:\.\d+)*),\s*(\d+(?:\.\d+)*)%?,\s*(\d+(?:\.\d+)*)%?,?\s*(\d+\.?\d*)?\)/;
   const match = matcher.exec(hslString);
 
+  if (!match) return { h: 0, s: 0, v: 0, a: 1 };
+
   return hslaToHsva({
-    h: Number(match ? match[1] : 0),
-    s: Number(match ? match[2] : 0),
-    l: Number(match ? match[3] : 0),
-    a: 1,
+    h: Number(match[1]),
+    s: Number(match[2]),
+    l: Number(match[3]),
+    a: match[4] !== undefined ? Number(match[4]) : 1,
   });
 };
+
+export const hslStringToHsva = hslaStringToHsva;
 
 export const hslaToHsva = ({ h, s, l, a }: HslaColor): HsvaColor => {
   s *= (l < 50 ? l : 100 - l) / 100;
@@ -63,6 +67,11 @@ export const hsvaToHslString = (hsva: HsvaColor): string => {
   return `hsl(${h}, ${s}%, ${l}%)`;
 };
 
+export const hsvaToHslaString = (hsva: HsvaColor): string => {
+  const { h, s, l, a } = hsvaToHsla(hsva);
+  return `hsla(${h}, ${s}%, ${l}%, ${a})`;
+};
+
 export const hsvaToRgba = ({ h, s, v, a }: HsvaColor): RgbaColor => {
   h = (h / 360) * 6;
   s = s / 100;
@@ -87,17 +96,26 @@ export const hsvaToRgbString = (hsva: HsvaColor): string => {
   return `rgb(${r}, ${g}, ${b})`;
 };
 
-export const rgbStringToHsva = (rgbString: string): HsvaColor => {
-  const matcher = /rgb\((\d+),\s*(\d+),\s*(\d+)\)/;
-  const match = matcher.exec(rgbString);
+export const hsvaToRgbaString = (hsva: HsvaColor): string => {
+  const { r, g, b, a } = hsvaToRgba(hsva);
+  return `rgba(${r}, ${g}, ${b}, ${a})`;
+};
+
+export const rgbaStringToHsva = (rgbaString: string): HsvaColor => {
+  const matcher = /rgba?\((\d+),\s*(\d+),\s*(\d+),?\s*(\d+\.?\d*)?\)/;
+  const match = matcher.exec(rgbaString);
+
+  if (!match) return { h: 0, s: 0, v: 0, a: 1 };
 
   return rgbaToHsva({
-    r: Number(match ? match[1] : 0),
-    g: Number(match ? match[2] : 0),
-    b: Number(match ? match[3] : 0),
-    a: 1,
+    r: Number(match[1]),
+    g: Number(match[2]),
+    b: Number(match[3]),
+    a: match[4] !== undefined ? Number(match[4]) : 1,
   });
 };
+
+export const rgbStringToHsva = rgbaStringToHsva;
 
 const format = (number: number) => {
   const hex = number.toString(16);

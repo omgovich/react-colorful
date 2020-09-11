@@ -2,17 +2,19 @@ import React from "react";
 
 import { Hue } from "./Hue";
 import { Saturation } from "./Saturation";
+import { Alpha } from "./Alpha";
 
-import styles from "../../css/styles.css";
 import { ColorModel, ColorPickerBaseProps, AnyColor } from "../../types";
 import { useColorManipulation } from "../../hooks/useColorManipulation";
 import { formatClassName } from "../../utils/format";
+
+import styles from "../../css/styles.css";
 
 interface Props<T extends AnyColor> extends Partial<ColorPickerBaseProps<T>> {
   colorModel: ColorModel<T>;
 }
 
-export const ColorPicker = <T extends AnyColor>({
+export const AlphaColorPicker = <T extends AnyColor>({
   className = "",
   colorModel,
   color = colorModel.defaultColor,
@@ -25,7 +27,8 @@ export const ColorPicker = <T extends AnyColor>({
   return (
     <div className={nodeClassName}>
       <Saturation hsva={hsva} onChange={updateHsva} />
-      <Hue hue={hsva.h} onChange={updateHsva} className={styles.lastControl} />
+      <Hue hue={hsva.h} onChange={updateHsva} />
+      <Alpha hsva={hsva} onChange={updateHsva} className={styles.lastControl} />
     </div>
   );
 };
