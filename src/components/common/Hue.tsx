@@ -3,7 +3,7 @@ import React, { useCallback } from "react";
 import { Interactive, Interaction } from "./Interactive";
 
 import styles from "../../css/styles.css";
-import { hsvToHslString } from "../../utils/convert";
+import { hsvaToHslString } from "../../utils/convert";
 import { formatClassName } from "../../utils/format";
 
 interface Props {
@@ -23,7 +23,7 @@ const HueBase = ({ hue, onChange }: Props) => {
   const pointerStyle = {
     top: "50%",
     left: `${(hue / 360) * 100}%`,
-    backgroundColor: hsvToHslString({ h: hue, s: 100, v: 100 }),
+    backgroundColor: hsvaToHslString({ h: hue, s: 100, v: 100, a: 1 }),
   };
 
   const nodeClassName = formatClassName(["react-colorful__hue", styles.hue]);

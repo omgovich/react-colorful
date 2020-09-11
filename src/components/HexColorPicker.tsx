@@ -3,12 +3,12 @@ import React from "react";
 import { ColorPicker } from "./common/ColorPicker";
 import { ColorModel, ColorPickerBaseProps } from "../types";
 import { equalHex } from "../utils/compare";
-import { hexToHsv, hsvToHex } from "../utils/convert";
+import { hexToHsva, hsvaToHex } from "../utils/convert";
 
 const colorModel: ColorModel<string> = {
   defaultColor: "000",
-  toHsv: hexToHsv,
-  fromHsv: hsvToHex,
+  toHsva: hexToHsva,
+  fromHsva: hsvaToHex,
   equal: equalHex,
 };
 

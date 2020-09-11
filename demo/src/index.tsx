@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
-import { HexColorPicker, HexColorInput, RgbColor } from "../../src";
-import { hexToRgb } from "../../src/utils/convert";
+import { HexColorPicker, HexColorInput, RgbaColor } from "../../src";
+import { hexToRgba } from "../../src/utils/convert";
 import { useFaviconColor } from "./hooks/useFaviconColor";
 import { useBodyBackground } from "./hooks/useBodyBackground";
 import styles from "./css/styles.css";
 
 // See http://www.w3.org/TR/AERT#color-contrast
-const getBrightness = ({ r, g, b }: RgbColor) => (r * 299 + g * 587 + b * 114) / 1000;
+const getBrightness = ({ r, g, b }: RgbaColor) => (r * 299 + g * 587 + b * 114) / 1000;
 
 const Demo = () => {
   const [color, setColor] = useState("#c92281");
-  const textColor = getBrightness(hexToRgb(color)) < 128 ? "#FFF" : "#000";
+  const textColor = getBrightness(hexToRgba(color)) < 128 ? "#FFF" : "#000";
 
   const handleChange = (color: string) => {
     console.log("🎨", color);
