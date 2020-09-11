@@ -4,12 +4,22 @@ import { equalHex } from "../src/utils/compare";
 import { validHex } from "../src/utils/validate";
 // HSLA
 import { hsvaToHsla, hslaToHsva } from "../src/utils/convert";
+// HSLA String
+import { hslaStringToHsva } from "../src/utils/convert";
+// HSL
+import { hslaToHsl } from "../src/utils/convert";
 // HSL string
 import { hsvaToHslString, hslStringToHsva } from "../src/utils/convert";
 // RGBA
 import { hsvaToRgba, rgbaToHsva } from "../src/utils/convert";
+// RGBA String
+import { rgbaStringToHsva } from "../src/utils/convert";
+// RGB
+import { rgbaToRgb } from "../src/utils/convert";
 // RGB string
 import { hsvaToRgbString, rgbStringToHsva } from "../src/utils/convert";
+// HSV
+import { hsvaToHsv } from "../src/utils/convert";
 // Rest
 import { equalColorObjects } from "../src/utils/compare";
 import { formatClassName } from "../src/utils/format";
@@ -62,13 +72,16 @@ it("Converts HSVA to HSL string", () => {
   expect(hsvaToHslString({ h: 0, s: 0, v: 0, a: 1 })).toBe("hsl(0, 0%, 0%)");
 });
 
-it("Converts HSL string to HSV", () => {
+it("Converts HSL string to HSVA", () => {
   expect(hslStringToHsva("hsl(0, 0%, 100%)")).toMatchObject({ h: 0, s: 0, v: 100, a: 1 });
   expect(hslStringToHsva("hsl(0,0,100)")).toMatchObject({ h: 0, s: 0, v: 100, a: 1 });
   expect(hslStringToHsva("hsl(60, 100%, 50%)")).toMatchObject({ h: 60, s: 100, v: 100, a: 1 });
   expect(hslStringToHsva("hsl(0, 100%, 50%)")).toMatchObject({ h: 0, s: 100, v: 100, a: 1 });
-  expect(hslStringToHsva("hsl(0, 0%, 0%)")).toMatchObject({ h: 0, s: 0, v: 0, a: 1 });
-  expect(hslStringToHsva("hsl(200, 25%, 32%)")).toMatchObject({ h: 200, s: 40, v: 40, a: 1 });
+});
+
+it("Converts HSLA string to HSVA", () => {
+  expect(hslaStringToHsva("hsla(0, 0%, 0%, 0.5)")).toMatchObject({ h: 0, s: 0, v: 0, a: 0.5 });
+  expect(hslaStringToHsva("hsla(200, 25%, 32%, 1)")).toMatchObject({ h: 200, s: 40, v: 40, a: 1 });
 });
 
 it("Converts HSVA to RGBA", () => {
@@ -86,12 +99,21 @@ it("Converts RGBA to HSVA", () => {
 it("Converts RGB string to HSVA", () => {
   expect(rgbStringToHsva("rgb(255, 255, 255)")).toMatchObject({ h: 0, s: 0, v: 100, a: 1 });
   expect(rgbStringToHsva("rgb(0,0,0)")).toMatchObject({ h: 0, s: 0, v: 0, a: 1 });
-  expect(rgbStringToHsva("rgb(61, 88, 102)")).toMatchObject({ h: 200, s: 40, v: 40, a: 1 });
+});
+
+it("Converts RGBA string to HSVA", () => {
+  expect(rgbaStringToHsva("rgb(61, 88, 102, 0.5)")).toMatchObject({ h: 200, s: 40, v: 40, a: 0.5 });
 });
 
 it("Converts HSVA to RGB string", () => {
   expect(hsvaToRgbString({ h: 0, s: 0, v: 100, a: 1 })).toBe("rgb(255, 255, 255)");
   expect(hsvaToRgbString({ h: 200, s: 40, v: 40, a: 1 })).toBe("rgb(61, 88, 102)");
+});
+
+it("Trims alpha-channel", () => {
+  expect(rgbaToRgb({ r: 0, g: 0, b: 0, a: 1 })).toMatchObject({ r: 0, g: 0, b: 0 });
+  expect(hslaToHsl({ h: 0, s: 0, l: 0, a: 1 })).toMatchObject({ h: 0, s: 0, l: 0 });
+  expect(hsvaToHsv({ h: 0, s: 0, v: 0, a: 1 })).toMatchObject({ h: 0, s: 0, v: 0 });
 });
 
 it("Compares two HEX colors", () => {
