@@ -3,16 +3,16 @@ import React, { useCallback } from "react";
 import { Interactive, Interaction } from "./Interactive";
 
 import styles from "../../css/styles.css";
-import { HsvColor } from "../../types";
-import { hsvToHslString } from "../../utils/convert";
+import { HsvaColor } from "../../types";
+import { hsvaToHslString } from "../../utils/convert";
 import { formatClassName } from "../../utils/format";
 
 interface Props {
-  hsv: HsvColor;
+  hsva: HsvaColor;
   onChange: (newColor: { s: number; v: number }) => void;
 }
 
-const SaturationBase = ({ hsv, onChange }: Props) => {
+const SaturationBase = ({ hsva, onChange }: Props) => {
   const handleMove = useCallback(
     (interaction: Interaction) => {
       // Saturation and brightness always fit into [0, 100] range
@@ -25,13 +25,13 @@ const SaturationBase = ({ hsv, onChange }: Props) => {
   );
 
   const containerStyle = {
-    backgroundColor: hsvToHslString({ h: hsv.h, s: 100, v: 100 }),
+    backgroundColor: hsvaToHslString({ h: hsva.h, s: 100, v: 100, a: 1 }),
   };
 
   const pointerStyle = {
-    top: `${100 - hsv.v}%`,
-    left: `${hsv.s}%`,
-    backgroundColor: hsvToHslString(hsv),
+    top: `${100 - hsva.v}%`,
+    left: `${hsva.s}%`,
+    backgroundColor: hsvaToHslString(hsva),
   };
 
   const nodeClassName = formatClassName(["react-colorful__saturation", styles.saturation]);
