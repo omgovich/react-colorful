@@ -23,7 +23,7 @@ export const hexToRgba = (hex: string): RgbaColor => {
 };
 
 export const hslaStringToHsva = (hslString: string): HsvaColor => {
-  const matcher = /hsla?\((\d+(?:\.\d+)*),\s*(\d+(?:\.\d+)*)%?,\s*(\d+(?:\.\d+)*)%?,?\s*(\d+\.?\d*)?\)/;
+  const matcher = /hsla?\((\d+\.?\d*),\s*(\d+\.?\d*)%?,\s*(\d+\.?\d*)%?,?\s*(\d+\.?\d*)?\)/;
   const match = matcher.exec(hslString);
 
   if (!match) return { h: 0, s: 0, v: 0, a: 1 };
