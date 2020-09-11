@@ -8,13 +8,9 @@
 }
 
 body {
+  color: #222;
   background-color: #c92281;
-  color: #fff;
   font: normal 20px/1.4 "Recursive", Arial, Helvetica, sans-serif;
-}
-
-.wrapper {
-  transition: color 0.15s;
 }
 
 .demo {
@@ -71,6 +67,8 @@ body {
   margin: 0 auto;
   min-height: 100vh;
   padding: 120px 32px;
+  transition: color 0.15s;
+  color: #fff;
 }
 
 .headerContent {
@@ -102,6 +100,33 @@ body {
 
 .links a:hover {
   opacity: 1;
+}
+
+.preview {
+  display: flex;
+  align-items: center;
+  padding: 60px;
+  background-color: #fff;
+  border-top: 1px solid #aaa;
+}
+
+.previewTitle {
+  flex-shrink: 0;
+  width: 7em;
+  text-align: right;
+  padding-right: 20px;
+}
+
+.previewDemo {
+  flex-shrink: 0;
+}
+
+.previewOutput {
+  font-family: "PT Mono", monospace;
+  margin-left: 20px;
+  background-color: #eee;
+  padding: 4px 8px;
+  border-radius: 4px;
 }
 
 @media (max-width: 767px) {
