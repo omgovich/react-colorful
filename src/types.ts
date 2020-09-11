@@ -28,18 +28,14 @@ export interface HsvaColor extends HsvColor {
   a: number;
 }
 
-export type PlainObjectColor = RgbColor | HslColor | HsvColor;
-
-export type AlphaObjectColor = RgbaColor | HslaColor | HsvaColor;
-
-export type ObjectColor = PlainObjectColor | AlphaObjectColor;
+export type ObjectColor = RgbColor | HslColor | HsvColor | RgbaColor | HslaColor | HsvaColor;
 
 export type AnyColor = string | ObjectColor;
 
 export interface ColorModel<T extends AnyColor> {
   defaultColor: T;
   toHsva: (defaultColor: T) => HsvaColor;
-  fromHsva: (hsv: HsvaColor) => T;
+  fromHsva: (hsva: HsvaColor) => T;
   equal: (first: T, second: T) => boolean;
 }
 

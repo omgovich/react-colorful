@@ -3,22 +3,16 @@ import { ColorModel, AnyColor, HsvaColor } from "../types";
 import { equalColorObjects } from "../utils/compare";
 import { useEventCallback } from "./useEventCallback";
 
-interface Props<T extends AnyColor> {
-  color: T;
-  colorModel: ColorModel<T>;
-  onChange?: (color: T) => void;
-}
-
 interface Result {
   hsva: HsvaColor;
   handleChange: (color: Partial<HsvaColor>) => void;
 }
 
-export function useColorManipulation<T extends AnyColor>({
-  color,
-  colorModel,
-  onChange,
-}: Props<T>): [HsvaColor, (color: Partial<HsvaColor>) => void] {
+export function useColorManipulation<T extends AnyColor>(
+  colorModel: ColorModel<T>,
+  color: T,
+  onChange?: (color: T) => void
+): [HsvaColor, (color: Partial<HsvaColor>) => void] {
   // Save onChange callback in the ref for avoiding "useCallback hell"
   const onChangeCallback = useEventCallback<T>(onChange);
 
