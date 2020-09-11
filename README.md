@@ -76,6 +76,7 @@ We provide 5 additional color picker components for different color models, unle
 | `{ HslColorPicker }`       | `{ h: 0, s: 0, l: 100 }`     | ~1,3 KB        |
 | `{ HslStringColorPicker }` | `"hsl(0, 0%, 100%)"`         | ~1,4 KB        |
 | `{ HsvColorPicker }`       | `{ h: 0, s: 0, v: 100 }`     | ~1,3 KB        |
+| `{ HsvStringColorPicker }` | `"hsv(0, 0%, 100%)"`         | ~1,4 KB        |
 
 #### Code example
 
