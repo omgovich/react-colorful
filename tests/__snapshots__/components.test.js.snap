@@ -28,7 +28,7 @@ exports[`Renders proper HTML 1`] = `
     </div>
   </div>
   <div
-    class="react-colorful__hue hue"
+    class="react-colorful__hue hue lastControl"
   >
     <div
       class="interactive"
@@ -60,7 +60,7 @@ exports[`Works with no props 1`] = `
     </div>
   </div>
   <div
-    class="react-colorful__hue hue"
+    class="react-colorful__hue hue lastControl"
   >
     <div
       class="interactive"
