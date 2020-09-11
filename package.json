@@ -32,7 +32,17 @@
     },
     {
       "path": "dist/index.module.js",
+      "import": "{ HslaColorPicker }",
+      "limit": "2 KB"
+    },
+    {
+      "path": "dist/index.module.js",
       "import": "{ HslStringColorPicker }",
+      "limit": "2 KB"
+    },
+    {
+      "path": "dist/index.module.js",
+      "import": "{ HslaStringColorPicker }",
       "limit": "2 KB"
     },
     {
@@ -42,12 +52,27 @@
     },
     {
       "path": "dist/index.module.js",
+      "import": "{ HsvaColorPicker }",
+      "limit": "2 KB"
+    },
+    {
+      "path": "dist/index.module.js",
       "import": "{ RgbColorPicker }",
       "limit": "2 KB"
     },
     {
       "path": "dist/index.module.js",
+      "import": "{ RgbaColorPicker }",
+      "limit": "2 KB"
+    },
+    {
+      "path": "dist/index.module.js",
       "import": "{ RgbStringColorPicker }",
+      "limit": "2 KB"
+    },
+    {
+      "path": "dist/index.module.js",
+      "import": "{ RgbaStringColorPicker }",
       "limit": "2 KB"
     },
     {
