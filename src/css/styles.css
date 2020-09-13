@@ -14,6 +14,7 @@
   border-bottom: 12px solid #000;
   border-radius: 8px 8px 0 0;
 }
+
 .saturation:after,
 .saturation:before,
 .alpha:after,
@@ -22,20 +23,23 @@
   position: absolute;
   left: 0;
   top: 0;
-  width: 100%;
-  height: 100%;
+  right: 0;
+  bottom: 0;
   pointer-events: none;
   border-radius: inherit;
 }
 
+/* Saturation gradient: from white to transparent */
 .saturation:before {
   background: linear-gradient(to right, #fff, rgba(255, 255, 255, 0));
 }
 
+/* Brightness gradient: from black to transparent */
 .saturation:after {
   background: linear-gradient(to top, #000, rgba(0, 0, 0, 0));
 }
 
+/* Improve elements rendering on light backgrounds */
 .alpha:after,
 .saturation:after {
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.05);
@@ -62,9 +66,11 @@
 
 .alpha {
   background-color: #fff;
-  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill-opacity=".05"><rect x="8" width="8" height="8" /><rect y="8" width="8" height="8" /></svg>');
+  /* Chessboard pattern */
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill-opacity=".05"><rect x="8" width="8" height="8"/><rect y="8" width="8" height="8"/></svg>');
 }
 
+/* Round bottom corners of the last element: `Hue` for `ColorPicker` or `Alpha` for `AlphaColorPicker` */
 .lastControl {
   border-radius: 0 0 8px 8px;
 }
@@ -88,7 +94,7 @@
   transform: translate(-50%, -50%);
   border: 2px solid #fff;
   border-radius: 50%;
-  box-shadow: 0 2px 4px rgba(109, 79, 79, 0.2);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 /* Display the hue pointer over the alpha one */
