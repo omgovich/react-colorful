@@ -21,7 +21,7 @@ import { hsvaToRgbString, rgbStringToHsva } from "../src/utils/convert";
 // HSV
 import { hsvaToHsv } from "../src/utils/convert";
 // Rest
-import { equalColorObjects } from "../src/utils/compare";
+import { equalColorObjects, equalColorString } from "../src/utils/compare";
 import { formatClassName } from "../src/utils/format";
 
 it("Converts HEX to HSVA", () => {
@@ -128,6 +128,12 @@ it("Compares two object colors", () => {
   expect(equalColorObjects({ h: 100, s: 50, v: 50 }, { h: 100, s: 50, v: 50 })).toBe(true);
   expect(equalColorObjects({ h: 50, s: 0, v: 0 }, { h: 100, s: 0, v: 0 })).toBe(false);
   expect(equalColorObjects({ h: 1, s: 2, v: 3 }, { h: 4, s: 5, v: 6, a: 0 })).toBe(false);
+});
+
+it("Compares two string colors", () => {
+  expect(equalColorString("rgb(0,0,0)", "rgb(0, 0, 0)")).toBe(true);
+  expect(equalColorString(" hsl(60, 100%, 50%) ", "hsl(60,100%,50%)")).toBe(true);
+  expect(equalColorString("rgb(0, 0, 0)", "rgb(1, 1, 1)")).toBe(false);
 });
 
 it("Validates HEX colors", () => {
