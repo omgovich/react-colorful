@@ -217,5 +217,5 @@ To show you the problem that **react-colorful** is trying to solve, we have perf
 - [x] HEX input component
 - [x] TypeScript support
 - [x] Rewrite the codebase to TypeScript
-- [ ] Alpha channel support (RGBA and HSLA color models)
-- [ ] Storybook
+- [ ] `WIP` Alpha channel support (RGBA and HSLA color models)
+- [ ] Accessibility
