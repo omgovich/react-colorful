@@ -3,11 +3,6 @@ import { ColorModel, AnyColor, HsvaColor } from "../types";
 import { equalColorObjects } from "../utils/compare";
 import { useEventCallback } from "./useEventCallback";
 
-interface Result {
-  hsva: HsvaColor;
-  handleChange: (color: Partial<HsvaColor>) => void;
-}
-
 export function useColorManipulation<T extends AnyColor>(
   colorModel: ColorModel<T>,
   color: T,
