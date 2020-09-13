@@ -68,19 +68,19 @@ We provide 10 additional color picker components for different color models, unl
 
 #### Available pickers
 
-| Import                      | Value example                      | Size (gzipped) |
-| --------------------------- | ---------------------------------- | -------------- |
-| `{ HexColorPicker }`        | `"#ffffff"`                        | ~1,7 KB        |
-| `{ RgbColorPicker }`        | `{ r: 255, g: 255, b: 255 }`       | ~1,6 KB        |
-| `{ RgbaColorPicker }`       | `{ r: 255, g: 255, b: 255, a: 1 }` | ~1,7 KB        |
-| `{ RgbStringColorPicker }`  | `"rgb(255, 255, 255)"`             | ~1,7 KB        |
-| `{ RgbaStringColorPicker }` | `"rgba(255, 255, 255, 1)"`         | ~1,9 KB        |
-| `{ HslColorPicker }`        | `{ h: 0, s: 0, l: 100 }`           | ~1,4 KB        |
-| `{ HslaColorPicker }`       | `{ h: 0, s: 0, l: 100, a: 1 }`     | ~1,6 KB        |
-| `{ HslStringColorPicker }`  | `"hsl(0, 0%, 100%)"`               | ~1,5 KB        |
-| `{ HslaStringColorPicker }` | `"hsla(0, 0%, 100%, 1)"`           | ~1,7 KB        |
-| `{ HsvColorPicker }`        | `{ h: 0, s: 0, v: 100 }`           | ~1,4 KB        |
-| `{ HsvaColorPicker }`       | `{ h: 0, s: 0, v: 100, a: 1 }`     | ~1,5 KB        |
+| Import                      | Value example                      |
+| --------------------------- | ---------------------------------- |
+| `{ HexColorPicker }`        | `"#ffffff"`                        |
+| `{ RgbColorPicker }`        | `{ r: 255, g: 255, b: 255 }`       |
+| `{ RgbaColorPicker }`       | `{ r: 255, g: 255, b: 255, a: 1 }` |
+| `{ RgbStringColorPicker }`  | `"rgb(255, 255, 255)"`             |
+| `{ RgbaStringColorPicker }` | `"rgba(255, 255, 255, 1)"`         |
+| `{ HslColorPicker }`        | `{ h: 0, s: 0, l: 100 }`           |
+| `{ HslaColorPicker }`       | `{ h: 0, s: 0, l: 100, a: 1 }`     |
+| `{ HslStringColorPicker }`  | `"hsl(0, 0%, 100%)"`               |
+| `{ HslaStringColorPicker }` | `"hsla(0, 0%, 100%, 1)"`           |
+| `{ HsvColorPicker }`        | `{ h: 0, s: 0, v: 100 }`           |
+| `{ HsvaColorPicker }`       | `{ h: 0, s: 0, v: 100, a: 1 }`     |
 
 #### Code example
 
