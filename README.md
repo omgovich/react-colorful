@@ -61,21 +61,26 @@ const YourComponent = () => {
 
 ## Supported color models
 
-We provide 5 additional color picker components for different color models, unless your app needs a HEX string as an input/output format.
+We provide 10 additional color picker components for different color models, unless your app needs a HEX string as an input/output format.
 
 <details>
   <summary>How to use another color model</summary>
 
 #### Available pickers
 
-| Import                     | Value example                | Size (gzipped) |
-| -------------------------- | ---------------------------- | -------------- |
-| `{ HexColorPicker }`       | `"#ffffff"`                  | ~1,6 KB        |
-| `{ RgbColorPicker }`       | `{ r: 255, g: 255, b: 255 }` | ~1,5 KB        |
-| `{ RgbStringColorPicker }` | `"rgb(255, 255, 255)"`       | ~1,6 KB        |
-| `{ HslColorPicker }`       | `{ h: 0, s: 0, l: 100 }`     | ~1,3 KB        |
-| `{ HslStringColorPicker }` | `"hsl(0, 0%, 100%)"`         | ~1,4 KB        |
-| `{ HsvColorPicker }`       | `{ h: 0, s: 0, v: 100 }`     | ~1,3 KB        |
+| Import                      | Value example                      | Size (gzipped) |
+| --------------------------- | ---------------------------------- | -------------- |
+| `{ HexColorPicker }`        | `"#ffffff"`                        | ~1,7 KB        |
+| `{ RgbColorPicker }`        | `{ r: 255, g: 255, b: 255 }`       | ~1,6 KB        |
+| `{ RgbaColorPicker }`       | `{ r: 255, g: 255, b: 255, a: 1 }` | ~1,7 KB        |
+| `{ RgbStringColorPicker }`  | `"rgb(255, 255, 255)"`             | ~1,7 KB        |
+| `{ RgbaStringColorPicker }` | `"rgba(255, 255, 255, 1)"`         | ~1,9 KB        |
+| `{ HslColorPicker }`        | `{ h: 0, s: 0, l: 100 }`           | ~1,4 KB        |
+| `{ HslaColorPicker }`       | `{ h: 0, s: 0, l: 100, a: 1 }`     | ~1,6 KB        |
+| `{ HslStringColorPicker }`  | `"hsl(0, 0%, 100%)"`               | ~1,5 KB        |
+| `{ HslaStringColorPicker }` | `"hsla(0, 0%, 100%, 1)"`           | ~1,7 KB        |
+| `{ HsvColorPicker }`        | `{ h: 0, s: 0, v: 100 }`           | ~1,4 KB        |
+| `{ HsvaColorPicker }`       | `{ h: 0, s: 0, v: 100, a: 1 }`     | ~1,5 KB        |
 
 #### Code example
 
