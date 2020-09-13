@@ -10,7 +10,54 @@ exports[`Renders \`HexInput\` component properly 1`] = `
 />
 `;
 
-exports[`Renders proper HTML 1`] = `
+exports[`Renders proper alpha color picker markup 1`] = `
+<div
+  class="react-colorful container"
+>
+  <div
+    class="react-colorful__saturation saturation"
+    style="background-color: rgb(255, 0, 0);"
+  >
+    <div
+      class="interactive"
+    >
+      <div
+        class="react-colorful__saturation-pointer pointer"
+        style="top: 0%; left: 100%; background-color: rgb(255, 0, 0);"
+      />
+    </div>
+  </div>
+  <div
+    class="react-colorful__hue hue"
+  >
+    <div
+      class="interactive"
+    >
+      <div
+        class="react-colorful__hue-pointer pointer"
+        style="top: 50%; left: 0%; background-color: rgb(255, 0, 0);"
+      />
+    </div>
+  </div>
+  <div
+    class="react-colorful__alpha alpha lastControl"
+  >
+    <div
+      class="alphaGradient"
+    />
+    <div
+      class="interactive"
+    >
+      <div
+        class="react-colorful__alpha-pointer pointer"
+        style="top: 50%; left: 50%; background-color: rgba(255, 0, 0, 0.5);"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Renders proper color picker markup 1`] = `
 <div
   class="react-colorful container"
 >
