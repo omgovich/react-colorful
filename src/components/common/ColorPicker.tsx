@@ -13,7 +13,7 @@ interface Props<T extends AnyColor> extends Partial<ColorPickerBaseProps<T>> {
 }
 
 export const ColorPicker = <T extends AnyColor>({
-  className = "",
+  className,
   colorModel,
   color = colorModel.defaultColor,
   onChange,
