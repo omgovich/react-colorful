@@ -13,13 +13,14 @@ interface ComponentProps {
 
 type InputProps = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
-  "onChange" | "onBlur" | "maxLength" | "value"
+  "onChange" | "maxLength" | "value"
 >;
 
 export const HexColorInput = (props: Partial<InputProps & ComponentProps>): JSX.Element => {
-  const { color = "", onChange, ...rest } = props;
+  const { color = "", onChange, onBlur, ...rest } = props;
   const [value, setValue] = useState(() => escape(color));
   const onChangeCallback = useEventCallback<string>(onChange);
+  const onBlurCallback = useEventCallback<React.FocusEvent<HTMLInputElement>>(onBlur);
 
   // Trigger `onChange` handler only if the input value is a valid HEX-color
   const handleChange = useCallback(
@@ -35,8 +36,9 @@ export const HexColorInput = (props: Partial<InputProps & ComponentProps>): JSX.
   const handleBlur = useCallback(
     (e: React.FocusEvent<HTMLInputElement>) => {
       if (!validHex(e.target.value)) setValue(escape(color));
+      onBlurCallback(e);
     },
-    [color]
+    [color, onBlurCallback]
   );
 
   // Update the local state when `color` property value is changed
