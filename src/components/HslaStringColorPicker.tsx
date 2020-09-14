@@ -6,7 +6,7 @@ import { equalColorString } from "../utils/compare";
 import { hslaStringToHsva, hsvaToHslaString } from "../utils/convert";
 
 const colorModel: ColorModel<string> = {
-  defaultColor: "hsl(0, 0%, 0%, 1)",
+  defaultColor: "hsla(0, 0%, 0%, 1)",
   toHsva: hslaStringToHsva,
   fromHsva: hsvaToHslaString,
   equal: equalColorString,
