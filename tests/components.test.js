@@ -119,7 +119,7 @@ it("Changes alpha channel value after an interaction", async () => {
   expect(handleChange).toHaveReturnedWith({ h: 100, s: 0, l: 0, a: 1 });
 });
 
-it("Renders `HexInput` component properly", () => {
+it("Renders `HexColorInput` component properly", () => {
   const result = render(
     <HexColorInput className="custom-input" color="#F00" placeholder="AABBCC" />
   );
@@ -127,7 +127,7 @@ it("Renders `HexInput` component properly", () => {
   expect(result.container.firstChild).toMatchSnapshot();
 });
 
-it("Fires `onChange` when user changes `HexInput` value", () => {
+it("Fires `onChange` when user changes `HexColorInput` value", () => {
   const handleChange = jest.fn((hex) => hex);
   const result = render(<HexColorInput onChange={handleChange} />);
   const input = result.container.firstChild;
@@ -135,4 +135,14 @@ it("Fires `onChange` when user changes `HexInput` value", () => {
   fireEvent.change(input, { target: { value: "112233" } });
 
   expect(handleChange).toHaveReturnedWith("#112233");
+});
+
+it("Fires custom `onBlur` when `HexColorInput` has lost focus", () => {
+  const handleBlur = jest.fn((e) => e.target.value);
+  const result = render(<HexColorInput color="#ffffff" onBlur={handleBlur} />);
+  const input = result.container.firstChild;
+
+  fireEvent.blur(input);
+
+  expect(handleBlur).toHaveReturnedWith("ffffff");
 });
