@@ -65,12 +65,6 @@
   );
 }
 
-.alpha {
-  background-color: #fff;
-  /* Chessboard pattern */
-  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill-opacity=".05"><rect x="8" width="8" height="8"/><rect y="8" width="8" height="8"/></svg>');
-}
-
 /* Round bottom corners of the last element: `Hue` for `ColorPicker` or `Alpha` for `AlphaColorPicker` */
 .lastControl {
   border-radius: 0 0 8px 8px;
@@ -101,6 +95,12 @@
 
 .pointer:after {
   background-color: currentColor;
+}
+
+/* Chessboard-like pattern for alpha related elements */
+.alphaPattern {
+  background-color: #fff;
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill-opacity=".05"><rect x="8" width="8" height="8"/><rect y="8" width="8" height="8"/></svg>');
 }
 
 /* Display the saturation pointer over the hue one */
