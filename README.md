@@ -39,7 +39,8 @@
 ## Live demos
 
 - [Website](https://omgovich.github.io/react-colorful)
-- [CodeSandbox](https://codesandbox.io/s/react-colorful-demo-u5vwp)
+- [HEX Color Picker (CodeSandbox)](https://codesandbox.io/s/react-colorful-demo-u5vwp)
+- [RGBA Color Picker (CodeSandbox)](https://codesandbox.io/s/react-colorful-rgb-o9q0t)
 
 ## Install
 
