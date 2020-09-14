@@ -21,8 +21,8 @@ const InteractiveBase = ({ onMove, children }: Props) => {
   const [isDragging, setDragging] = useState(false);
 
   const getRelativePosition = useCallback((event: MouseEvent | TouchEvent) => {
-    // This should be okay. This is only called onMove, and for it to be moved it must actually exist.
-    // I won't suppress the ESLint warning though, as it should probably be something to be aware of.
+    // This method is only called `onMove`, and for it to be moved it must actually exist.
+    // We won't suppress the ESLint warning though, as it should probably be something to be aware of.
     const rect = container.current!.getBoundingClientRect();
 
     // Get user's pointer position from `touches` array if it's a `TouchEvent`
