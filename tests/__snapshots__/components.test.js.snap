@@ -1,0 +1,122 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Renders \`HexColorInput\` component properly 1`] = `
+<input
+  class="custom-input"
+  maxlength="6"
+  placeholder="AABBCC"
+  spellcheck="false"
+  value="F00"
+/>
+`;
+
+exports[`Renders proper alpha color picker markup 1`] = `
+<div
+  class="react-colorful container"
+>
+  <div
+    class="react-colorful__saturation saturation"
+    style="background-color: rgb(255, 0, 0);"
+  >
+    <div
+      class="interactive"
+    >
+      <div
+        class="react-colorful__saturation-pointer pointer"
+        style="top: 0%; left: 100%; color: rgb(255, 0, 0);"
+      />
+    </div>
+  </div>
+  <div
+    class="react-colorful__hue hue"
+  >
+    <div
+      class="interactive"
+    >
+      <div
+        class="react-colorful__hue-pointer pointer"
+        style="top: 50%; left: 0%; color: rgb(255, 0, 0);"
+      />
+    </div>
+  </div>
+  <div
+    class="react-colorful__alpha alpha alphaPattern lastControl"
+  >
+    <div
+      class="alphaGradient"
+    />
+    <div
+      class="interactive"
+    >
+      <div
+        class="react-colorful__alpha-pointer pointer alphaPattern"
+        style="top: 50%; left: 50%; color: rgba(255, 0, 0, 0.5);"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Renders proper color picker markup 1`] = `
+<div
+  class="react-colorful container"
+>
+  <div
+    class="react-colorful__saturation saturation"
+    style="background-color: rgb(255, 0, 0);"
+  >
+    <div
+      class="interactive"
+    >
+      <div
+        class="react-colorful__saturation-pointer pointer"
+        style="top: 0%; left: 100%; color: rgb(255, 0, 0);"
+      />
+    </div>
+  </div>
+  <div
+    class="react-colorful__hue hue lastControl"
+  >
+    <div
+      class="interactive"
+    >
+      <div
+        class="react-colorful__hue-pointer pointer"
+        style="top: 50%; left: 0%; color: rgb(255, 0, 0);"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Works with no props 1`] = `
+<div
+  class="react-colorful container"
+>
+  <div
+    class="react-colorful__saturation saturation"
+    style="background-color: rgb(255, 0, 0);"
+  >
+    <div
+      class="interactive"
+    >
+      <div
+        class="react-colorful__saturation-pointer pointer"
+        style="top: 100%; left: 0%; color: rgb(0, 0, 0);"
+      />
+    </div>
+  </div>
+  <div
+    class="react-colorful__hue hue lastControl"
+  >
+    <div
+      class="interactive"
+    >
+      <div
+        class="react-colorful__hue-pointer pointer"
+        style="top: 50%; left: 0%; color: rgb(255, 0, 0);"
+      />
+    </div>
+  </div>
+</div>
+`;
