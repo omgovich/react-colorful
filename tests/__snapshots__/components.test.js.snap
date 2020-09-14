@@ -23,7 +23,7 @@ exports[`Renders proper alpha color picker markup 1`] = `
     >
       <div
         class="react-colorful__saturation-pointer pointer"
-        style="top: 0%; left: 100%; background-color: rgb(255, 0, 0);"
+        style="top: 0%; left: 100%; color: rgb(255, 0, 0);"
       />
     </div>
   </div>
@@ -35,7 +35,7 @@ exports[`Renders proper alpha color picker markup 1`] = `
     >
       <div
         class="react-colorful__hue-pointer pointer"
-        style="top: 50%; left: 0%; background-color: rgb(255, 0, 0);"
+        style="top: 50%; left: 0%; color: rgb(255, 0, 0);"
       />
     </div>
   </div>
@@ -50,7 +50,7 @@ exports[`Renders proper alpha color picker markup 1`] = `
     >
       <div
         class="react-colorful__alpha-pointer pointer"
-        style="top: 50%; left: 50%; background-color: rgba(255, 0, 0, 0.5);"
+        style="top: 50%; left: 50%; color: rgba(255, 0, 0, 0.5);"
       />
     </div>
   </div>
@@ -70,7 +70,7 @@ exports[`Renders proper color picker markup 1`] = `
     >
       <div
         class="react-colorful__saturation-pointer pointer"
-        style="top: 0%; left: 100%; background-color: rgb(255, 0, 0);"
+        style="top: 0%; left: 100%; color: rgb(255, 0, 0);"
       />
     </div>
   </div>
@@ -82,7 +82,7 @@ exports[`Renders proper color picker markup 1`] = `
     >
       <div
         class="react-colorful__hue-pointer pointer"
-        style="top: 50%; left: 0%; background-color: rgb(255, 0, 0);"
+        style="top: 50%; left: 0%; color: rgb(255, 0, 0);"
       />
     </div>
   </div>
@@ -102,7 +102,7 @@ exports[`Works with no props 1`] = `
     >
       <div
         class="react-colorful__saturation-pointer pointer"
-        style="top: 100%; left: 0%; background-color: rgb(0, 0, 0);"
+        style="top: 100%; left: 0%; color: rgb(0, 0, 0);"
       />
     </div>
   </div>
@@ -114,7 +114,7 @@ exports[`Works with no props 1`] = `
     >
       <div
         class="react-colorful__hue-pointer pointer"
-        style="top: 50%; left: 0%; background-color: rgb(255, 0, 0);"
+        style="top: 50%; left: 0%; color: rgb(255, 0, 0);"
       />
     </div>
   </div>

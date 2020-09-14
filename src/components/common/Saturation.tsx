@@ -31,7 +31,7 @@ const SaturationBase = ({ hsva, onChange }: Props) => {
   const pointerStyle = {
     top: `${100 - hsva.v}%`,
     left: `${hsva.s}%`,
-    backgroundColor: hsvaToHslString(hsva),
+    color: hsvaToHslString(hsva),
   };
 
   const nodeClassName = formatClassName(["react-colorful__saturation", styles.saturation]);

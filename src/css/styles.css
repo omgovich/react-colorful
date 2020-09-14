@@ -18,6 +18,7 @@
 .saturation:after,
 .saturation:before,
 .alpha:after,
+.pointer:after,
 .alphaGradient {
   content: "";
   position: absolute;
@@ -92,9 +93,19 @@
   width: 28px;
   height: 28px;
   transform: translate(-50%, -50%);
+  background-color: #fff;
   border: 2px solid #fff;
   border-radius: 50%;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.pointer:after {
+  background-color: currentColor;
+}
+
+/* Display the saturation pointer over the hue one */
+.saturation .pointer {
+  z-index: 3;
 }
 
 /* Display the hue pointer over the alpha one */
