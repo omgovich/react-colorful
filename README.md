@@ -28,7 +28,7 @@
 
 ## Features
 
-- **Small**: Just 1,6 KB (minified and gzipped). [Size Limit](https://github.com/ai/size-limit) controls the size.
+- **Small**: Just 1,7 KB (minified and gzipped). [Size Limit](https://github.com/ai/size-limit) controls the size.
 - **Tree-shakeable**: Only the parts you use will be imported into your app's bundle.
 - **Fast**: Built with hooks and functional components only.
 - **Bulletproof**: Written in strict TypeScript and covered by 30+ tests.
@@ -221,5 +221,5 @@ To show you the problem that **react-colorful** is trying to solve, we have perf
 - [x] HEX input component
 - [x] TypeScript support
 - [x] Rewrite the codebase to TypeScript
-- [ ] `WIP` Alpha channel support (RGBA and HSLA color models)
+- [x] Alpha channel support (RGBA, HSLA and HSVA color models)
 - [ ] Accessibility
