@@ -34,8 +34,18 @@ export const Alpha = ({ className, hsva, onChange }: Props): JSX.Element => {
     color: hsvaToHslaString(hsva),
   };
 
-  const nodeClassName = formatClassName(["react-colorful__alpha", styles.alpha, className]);
-  const pointerClassName = formatClassName(["react-colorful__alpha-pointer", styles.pointer]);
+  const nodeClassName = formatClassName([
+    "react-colorful__alpha",
+    styles.alpha,
+    styles.alphaPattern,
+    className,
+  ]);
+
+  const pointerClassName = formatClassName([
+    "react-colorful__alpha-pointer",
+    styles.pointer,
+    styles.alphaPattern,
+  ]);
 
   return (
     <div className={nodeClassName}>
