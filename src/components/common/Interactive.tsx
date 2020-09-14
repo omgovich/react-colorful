@@ -26,7 +26,8 @@ const InteractiveBase = ({ onMove, children }: Props) => {
     const rect = container.current!.getBoundingClientRect();
 
     // Get user's pointer position from `touches` array if it's a `TouchEvent`
-    const pointer = event instanceof TouchEvent ? event.touches[0] : (event as MouseEvent);
+    const pointer =
+      window.TouchEvent && event instanceof TouchEvent ? event.touches[0] : (event as MouseEvent);
 
     return {
       left: limit((pointer.pageX - (rect.left + window.pageXOffset)) / rect.width),
