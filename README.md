@@ -107,7 +107,6 @@ The easiest way to tweak react-colorful is to create another stylesheet to overr
   height: 250px;
 }
 .react-colorful__saturation {
-  bottom: 30px;
   border-radius: 3px 3px 0 0;
 }
 .react-colorful__hue {
