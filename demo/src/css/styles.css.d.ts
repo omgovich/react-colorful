@@ -7,6 +7,9 @@ export const headerContent: string;
 export const headerTitle: string;
 export const headerDescription: string;
 export const links: string;
+export const link: string;
+export const linkIcon: string;
+export const linkSeparator: string;
 
 export const preview: string;
 export const previewDemo: string;

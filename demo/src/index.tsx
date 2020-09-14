@@ -28,9 +28,11 @@ import {
   HsvaColorPicker,
 } from "../../src";
 import { PickerPreview } from "./components/PickerPreview";
+import { Star } from "./components/Icon";
 import { hexToRgba } from "../../src/utils/convert";
 import { useFaviconColor } from "./hooks/useFaviconColor";
 import { useBodyBackground } from "./hooks/useBodyBackground";
+import { useStargazerCount } from "./hooks/useStargazerCount";
 import styles from "./css/styles.css";
 
 // See http://www.w3.org/TR/AERT#color-contrast
@@ -39,6 +41,8 @@ const getBrightness = ({ r, g, b }: RgbaColor) => (r * 299 + g * 587 + b * 114) 
 const Demo = () => {
   const [color, setColor] = useState("#c92281");
   const textColor = getBrightness(hexToRgba(color)) < 128 ? "#FFF" : "#000";
+
+  const stargazerCount = useStargazerCount();
 
   const handleChange = (color: string) => {
     console.log("🎨", color);
@@ -63,10 +67,23 @@ const Demo = () => {
             A tiny color picker component for modern React apps
           </h2>
           <nav className={styles.links}>
-            <a href="https://github.com/omgovich/react-colorful" target="_blank" rel="noreferrer">
+            <a
+              className={styles.link}
+              href="https://github.com/omgovich/react-colorful"
+              target="_blank"
+              rel="noreferrer"
+            >
               GitHub
+              <span className={styles.linkSeparator} />
+              <Star className={styles.linkIcon} />
+              {stargazerCount}
             </a>
-            <a href="https://www.npmjs.com/package/react-colorful" target="_blank" rel="noreferrer">
+            <a
+              className={styles.link}
+              href="https://www.npmjs.com/package/react-colorful"
+              target="_blank"
+              rel="noreferrer"
+            >
               NPM
             </a>
           </nav>
