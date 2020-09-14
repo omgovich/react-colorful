@@ -31,7 +31,7 @@ export const Alpha = ({ className, hsva, onChange }: Props): JSX.Element => {
   const pointerStyle = {
     top: "50%",
     left: `${hsva.a * 100}%`,
-    backgroundColor: hsvaToHslaString(hsva),
+    color: hsvaToHslaString(hsva),
   };
 
   const nodeClassName = formatClassName(["react-colorful__alpha", styles.alpha, className]);

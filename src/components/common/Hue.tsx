@@ -24,7 +24,7 @@ const HueBase = ({ className, hue, onChange }: Props) => {
   const pointerStyle = {
     top: "50%",
     left: `${(hue / 360) * 100}%`,
-    backgroundColor: hsvaToHslString({ h: hue, s: 100, v: 100, a: 1 }),
+    color: hsvaToHslString({ h: hue, s: 100, v: 100, a: 1 }),
   };
 
   const nodeClassName = formatClassName(["react-colorful__hue", styles.hue, className]);
