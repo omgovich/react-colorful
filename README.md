@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://omgovich.github.io/react-colorful">
-    <img src="demo/src/assets/design.png" width="224" height="230" alt="react-colorful" />
+    <img src="demo/src/assets/design.png" width="242" height="242" alt="react-colorful" />
   </a>
 </div>
 
