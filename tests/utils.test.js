@@ -18,8 +18,12 @@ import { rgbaStringToHsva } from "../src/utils/convert";
 import { rgbaToRgb } from "../src/utils/convert";
 // RGB string
 import { hsvaToRgbString, rgbStringToHsva } from "../src/utils/convert";
+// HSVA String
+import { hsvaToHsvaString } from "../src/utils/convert";
 // HSV
 import { hsvaToHsv } from "../src/utils/convert";
+// HSV string
+import { hsvaToHsvString } from "../src/utils/convert";
 // Rest
 import { equalColorObjects, equalColorString } from "../src/utils/compare";
 import { formatClassName } from "../src/utils/format";
@@ -108,6 +112,16 @@ it("Converts RGBA string to HSVA", () => {
 it("Converts HSVA to RGB string", () => {
   expect(hsvaToRgbString({ h: 0, s: 0, v: 100, a: 1 })).toBe("rgb(255, 255, 255)");
   expect(hsvaToRgbString({ h: 200, s: 40, v: 40, a: 1 })).toBe("rgb(61, 88, 102)");
+});
+
+it("Converts HSVA to HSVA string", () => {
+  expect(hsvaToHsvaString({ h: 0, s: 0, v: 100, a: 1 })).toBe("hsva(0, 0%, 100%, 1)");
+  expect(hsvaToHsvaString({ h: 200, s: 40, v: 40, a: 0 })).toBe("hsva(200, 40%, 40%, 0)");
+});
+
+it("Converts HSVA to HSV string", () => {
+  expect(hsvaToHsvString({ h: 0, s: 0, v: 100, a: 1 })).toBe("hsv(0, 0%, 100%)");
+  expect(hsvaToHsvString({ h: 200, s: 40, v: 40, a: 1 })).toBe("hsv(200, 40%, 40%)");
 });
 
 it("Trims alpha-channel", () => {
