@@ -62,7 +62,7 @@ const YourComponent = () => {
 
 ## Supported color models
 
-We provide 10 additional color picker components for different color models, unless your app needs a HEX string as an input/output format.
+We provide 12 additional color picker components for different color models, unless your app needs a HEX string as an input/output format.
 
 <details>
   <summary>How to use another color model</summary>
@@ -83,6 +83,7 @@ We provide 10 additional color picker components for different color models, unl
 | `{ HsvColorPicker }`        | `{ h: 0, s: 0, v: 100 }`           |
 | `{ HsvaColorPicker }`       | `{ h: 0, s: 0, v: 100, a: 1 }`     |
 | `{ HsvStringColorPicker }`  | `"hsv(0, 0%, 100%)"`               |
+| `{ HsvaStringColorPicker }` | `"hsva(0, 0%, 100%, 1)"`           |
 
 #### Code example
 
