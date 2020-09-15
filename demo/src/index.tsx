@@ -23,9 +23,11 @@ import {
   // HSV
   HsvColor,
   HsvColorPicker,
+  HsvStringColorPicker,
   // HSVA
   HsvaColor,
   HsvaColorPicker,
+  HsvaStringColorPicker,
 } from "../../src";
 import { PickerPreview } from "./components/PickerPreview";
 import { Star } from "./components/Icon";
@@ -137,10 +139,20 @@ const Demo = () => {
             PickerComponent={HsvColorPicker}
             initialColor={{ h: 200, s: 25, v: 50 }}
           />
+          <PickerPreview<string>
+            title="HSV String"
+            PickerComponent={HsvStringColorPicker}
+            initialColor="hsv(200, 25%, 50%)"
+          />
           <PickerPreview<HsvaColor>
             title="HSVA"
             PickerComponent={HsvaColorPicker}
             initialColor={{ h: 200, s: 25, v: 50, a: 0.5 }}
+          />
+          <PickerPreview<string>
+            title="HSVA String"
+            PickerComponent={HsvaStringColorPicker}
+            initialColor="hsva(200, 25%, 50%, 0.5)"
           />
         </div>
       )}
