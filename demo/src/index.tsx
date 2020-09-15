@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 import {
   // HEX
   HexColorPicker,
-  HexColorInput,
   // RGB
   RgbColor,
   RgbColorPicker,
@@ -31,7 +30,6 @@ import {
 } from "../../src";
 import { PickerPreview } from "./components/PickerPreview";
 import { Star } from "./components/Icon";
-import { hexToRgba } from "../../src/utils/convert";
 import { useFaviconColor } from "./hooks/useFaviconColor";
 import { useBodyBackground } from "./hooks/useBodyBackground";
 import { useStargazerCount } from "./hooks/useStargazerCount";
@@ -40,28 +38,39 @@ import styles from "./css/styles.css";
 // See http://www.w3.org/TR/AERT#color-contrast
 const getBrightness = ({ r, g, b }: RgbaColor) => (r * 299 + g * 587 + b * 114) / 1000;
 
+const getRandomColor = (): RgbaColor => {
+  const colors = [
+    { r: 209, g: 97, b: 28, a: 1 }, // orange
+    { r: 34, g: 91, b: 161, a: 1 }, // blue
+    { r: 225, g: 17, b: 135, a: 0.7625 }, // purple
+    { r: 21, g: 139, b: 59, a: 1 }, // green
+    { r: 189, g: 60, b: 60, a: 1 }, // salmon
+  ];
+
+  return colors[Math.floor(Math.random() * colors.length)];
+};
+
 const Demo = () => {
-  const [color, setColor] = useState("#c92281");
-  const textColor = getBrightness(hexToRgba(color)) < 128 ? "#FFF" : "#000";
+  const [color, setColor] = useState<RgbaColor>(getRandomColor);
+  const textColor = getBrightness(color) > 128 || color.a < 0.5 ? "#000" : "#FFF";
 
   const stargazerCount = useStargazerCount();
 
-  const handleChange = (color: string) => {
+  const handleChange = (color: RgbaColor) => {
     console.log("🎨", color);
     setColor(color);
   };
 
-  useBodyBackground(color);
-  useFaviconColor(color);
+  const colorString = `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a}`;
+
+  useBodyBackground(colorString);
+  useFaviconColor(colorString);
 
   return (
     <div>
       <header className={styles.header} style={{ color: textColor }}>
         <div className={styles.demo}>
-          <HexColorPicker className={styles.colorPicker} color={color} onChange={handleChange} />
-          <div className={styles.field}>
-            <HexColorInput className={styles.hexInput} color={color} onChange={handleChange} />
-          </div>
+          <RgbaColorPicker className={styles.colorPicker} color={color} onChange={handleChange} />
         </div>
         <div className={styles.headerContent}>
           <h1 className={styles.headerTitle}>React Colorful 🎨</h1>
@@ -94,6 +103,11 @@ const Demo = () => {
 
       {process.env.NODE_ENV === "development" && (
         <div>
+          <PickerPreview<string>
+            title="HEX"
+            PickerComponent={HexColorPicker}
+            initialColor="#406090"
+          />
           <PickerPreview<RgbColor>
             title="RGB"
             PickerComponent={RgbColorPicker}
