@@ -57,6 +57,16 @@
     },
     {
       "path": "dist/index.module.js",
+      "import": "{ HsvStringColorPicker }",
+      "limit": "2 KB"
+    },
+    {
+      "path": "dist/index.module.js",
+      "import": "{ HsvaStringColorPicker }",
+      "limit": "2 KB"
+    },
+    {
+      "path": "dist/index.module.js",
       "import": "{ RgbColorPicker }",
       "limit": "2 KB"
     },

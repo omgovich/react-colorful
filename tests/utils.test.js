@@ -4,7 +4,7 @@ import { equalHex } from "../src/utils/compare";
 import { validHex } from "../src/utils/validate";
 // HSLA
 import { hsvaToHsla, hslaToHsva } from "../src/utils/convert";
-// HSLA String
+// HSLA string
 import { hslaStringToHsva } from "../src/utils/convert";
 // HSL
 import { hslaToHsl } from "../src/utils/convert";
@@ -12,14 +12,18 @@ import { hslaToHsl } from "../src/utils/convert";
 import { hsvaToHslString, hslStringToHsva } from "../src/utils/convert";
 // RGBA
 import { hsvaToRgba, rgbaToHsva } from "../src/utils/convert";
-// RGBA String
+// RGBA string
 import { rgbaStringToHsva } from "../src/utils/convert";
 // RGB
 import { rgbaToRgb } from "../src/utils/convert";
 // RGB string
 import { hsvaToRgbString, rgbStringToHsva } from "../src/utils/convert";
+// HSVA String
+import { hsvaToHsvaString, hsvaStringToHsva } from "../src/utils/convert";
 // HSV
 import { hsvaToHsv } from "../src/utils/convert";
+// HSV string
+import { hsvaToHsvString, hsvStringToHsva } from "../src/utils/convert";
 // Rest
 import { equalColorObjects, equalColorString } from "../src/utils/compare";
 import { formatClassName } from "../src/utils/format";
@@ -108,6 +112,24 @@ it("Converts RGBA string to HSVA", () => {
 it("Converts HSVA to RGB string", () => {
   expect(hsvaToRgbString({ h: 0, s: 0, v: 100, a: 1 })).toBe("rgb(255, 255, 255)");
   expect(hsvaToRgbString({ h: 200, s: 40, v: 40, a: 1 })).toBe("rgb(61, 88, 102)");
+});
+
+it("Converts HSVA to HSVA string", () => {
+  expect(hsvaToHsvaString({ h: 0, s: 0, v: 100, a: 1 })).toBe("hsva(0, 0%, 100%, 1)");
+  expect(hsvaToHsvaString({ h: 200, s: 40, v: 40, a: 0 })).toBe("hsva(200, 40%, 40%, 0)");
+});
+
+it("Converts HSVA to HSV string", () => {
+  expect(hsvaToHsvString({ h: 0, s: 0, v: 100, a: 1 })).toBe("hsv(0, 0%, 100%)");
+  expect(hsvaToHsvString({ h: 200, s: 40, v: 40, a: 1 })).toBe("hsv(200, 40%, 40%)");
+});
+
+it("Converts HSV string to HSVA", () => {
+  expect(hsvStringToHsva("hsv(0, 10.5%, 0%)")).toMatchObject({ h: 0, s: 10.5, v: 0, a: 1 });
+});
+
+it("Converts HSVA string to HSVA", () => {
+  expect(hsvaStringToHsva("hsva(0, 10.5%, 0, 0.5)")).toMatchObject({ h: 0, s: 10.5, v: 0, a: 0.5 });
 });
 
 it("Trims alpha-channel", () => {
