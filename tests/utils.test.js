@@ -4,7 +4,7 @@ import { equalHex } from "../src/utils/compare";
 import { validHex } from "../src/utils/validate";
 // HSLA
 import { hsvaToHsla, hslaToHsva } from "../src/utils/convert";
-// HSLA String
+// HSLA string
 import { hslaStringToHsva } from "../src/utils/convert";
 // HSL
 import { hslaToHsl } from "../src/utils/convert";
@@ -12,7 +12,7 @@ import { hslaToHsl } from "../src/utils/convert";
 import { hsvaToHslString, hslStringToHsva } from "../src/utils/convert";
 // RGBA
 import { hsvaToRgba, rgbaToHsva } from "../src/utils/convert";
-// RGBA String
+// RGBA string
 import { rgbaStringToHsva } from "../src/utils/convert";
 // RGB
 import { rgbaToRgb } from "../src/utils/convert";
