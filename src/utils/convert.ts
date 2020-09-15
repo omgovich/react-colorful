@@ -112,7 +112,7 @@ export const hsvaToRgbaString = (hsva: HsvaColor): string => {
 };
 
 export const hsvaStringToHsva = (hsvString: string): HsvaColor => {
-  const matcher = /hsva\((\d+(?:\.\d+)*),\s*(\d+(?:\.\d+)*)%?,\s*(\d+(?:\.\d+)*)%?\)/;
+  const matcher = /hsva?\((\d+\.?\d*),\s*(\d+\.?\d*)%?,\s*(\d+\.?\d*)%?,?\s*(\d+\.?\d*)?\)/;
   const match = matcher.exec(hsvString);
 
   if (!match) return { h: 0, s: 0, v: 0, a: 1 };
