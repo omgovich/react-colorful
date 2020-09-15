@@ -1,5 +1,7 @@
 .container {
   position: relative;
+  display: flex;
+  flex-direction: column;
   width: 200px;
   height: 200px;
   user-select: none;
@@ -7,43 +9,50 @@
 }
 
 .saturation {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 20px;
-  border-bottom: 10px solid #000;
+  position: relative;
+  flex-grow: 1;
+  border-bottom: 12px solid #000;
   border-radius: 8px 8px 0 0;
 }
 
 .saturation:after,
-.saturation:before {
+.saturation:before,
+.alpha:after,
+.pointer:after,
+.alphaGradient {
   content: "";
   position: absolute;
   left: 0;
   top: 0;
-  width: 100%;
-  height: 100%;
+  right: 0;
+  bottom: 0;
   pointer-events: none;
   border-radius: inherit;
 }
 
+/* Saturation gradient: from white to transparent */
 .saturation:before {
   background: linear-gradient(to right, #fff, rgba(255, 255, 255, 0));
 }
 
+/* Brightness gradient: from black to transparent */
 .saturation:after {
   background: linear-gradient(to top, #000, rgba(0, 0, 0, 0));
+}
+
+/* Improve elements rendering on light backgrounds */
+.alpha:after,
+.saturation:after {
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.05);
 }
 
+.hue,
+.alpha {
+  position: relative;
+  height: 24px;
+}
+
 .hue {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 20px;
-  border-radius: 0 0 8px 8px;
   background: linear-gradient(
     to right,
     #f00 0%,
@@ -54,6 +63,11 @@
     #f0f 83%,
     #f00 100%
   );
+}
+
+/* Round bottom corners of the last element: `Hue` for `ColorPicker` or `Alpha` for `AlphaColorPicker` */
+.lastControl {
+  border-radius: 0 0 8px 8px;
 }
 
 .interactive {
@@ -70,10 +84,31 @@
   position: absolute;
   z-index: 1;
   box-sizing: border-box;
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   transform: translate(-50%, -50%);
+  background-color: #fff;
   border: 2px solid #fff;
   border-radius: 50%;
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.pointer:after {
+  background-color: currentColor;
+}
+
+/* Chessboard-like pattern for alpha related elements */
+.alphaPattern {
+  background-color: #fff;
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill-opacity=".05"><rect x="8" width="8" height="8"/><rect y="8" width="8" height="8"/></svg>');
+}
+
+/* Display the saturation pointer over the hue one */
+.saturation .pointer {
+  z-index: 3;
+}
+
+/* Display the hue pointer over the alpha one */
+.hue .pointer {
+  z-index: 2;
 }

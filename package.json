@@ -1,6 +1,6 @@
 {
   "name": "react-colorful",
-  "version": "3.0.3",
+  "version": "4.0.4",
   "description": "A tiny color picker component for modern React apps",
   "source": "src/index.ts",
   "main": "dist/index.js",
@@ -32,12 +32,27 @@
     },
     {
       "path": "dist/index.module.js",
+      "import": "{ HslaColorPicker }",
+      "limit": "2 KB"
+    },
+    {
+      "path": "dist/index.module.js",
       "import": "{ HslStringColorPicker }",
       "limit": "2 KB"
     },
     {
       "path": "dist/index.module.js",
+      "import": "{ HslaStringColorPicker }",
+      "limit": "2 KB"
+    },
+    {
+      "path": "dist/index.module.js",
       "import": "{ HsvColorPicker }",
+      "limit": "2 KB"
+    },
+    {
+      "path": "dist/index.module.js",
+      "import": "{ HsvaColorPicker }",
       "limit": "2 KB"
     },
     {
@@ -52,7 +67,17 @@
     },
     {
       "path": "dist/index.module.js",
+      "import": "{ RgbaColorPicker }",
+      "limit": "2 KB"
+    },
+    {
+      "path": "dist/index.module.js",
       "import": "{ RgbStringColorPicker }",
+      "limit": "2 KB"
+    },
+    {
+      "path": "dist/index.module.js",
+      "import": "{ RgbaStringColorPicker }",
       "limit": "2 KB"
     },
     {

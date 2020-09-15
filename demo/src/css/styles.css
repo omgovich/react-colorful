@@ -8,13 +8,9 @@
 }
 
 body {
+  color: #222;
   background-color: #c92281;
-  color: #fff;
   font: normal 20px/1.4 "Recursive", Arial, Helvetica, sans-serif;
-}
-
-.wrapper {
-  transition: color 0.15s;
 }
 
 .demo {
@@ -71,6 +67,8 @@ body {
   margin: 0 auto;
   min-height: 100vh;
   padding: 120px 32px;
+  transition: color 0.15s;
+  color: #fff;
 }
 
 .headerContent {
@@ -89,19 +87,67 @@ body {
 }
 
 .links {
-  margin-top: 24px;
+  display: flex;
+  margin-top: 32px;
 }
 
-.links a {
+.link {
+  display: flex;
+  align-items: center;
+  height: 44px;
   margin-right: 16px;
   color: inherit;
   text-decoration: none;
-  border-bottom: 2px solid currentColor;
+  border: 2px solid currentColor;
+  border-radius: 6px;
+  padding: 0 16px;
   opacity: 0.8;
 }
 
-.links a:hover {
+.link:last-child {
+  margin-right: 0;
+}
+
+.link:hover {
   opacity: 1;
+}
+
+.linkIcon {
+  margin-right: 4px;
+}
+
+.linkSeparator {
+  width: 2px;
+  height: 100%;
+  margin: 0 12px;
+  background: currentColor;
+}
+
+.preview {
+  display: flex;
+  align-items: center;
+  padding: 60px;
+  background-color: #fff;
+  border-top: 1px solid #aaa;
+}
+
+.previewTitle {
+  flex-shrink: 0;
+  width: 7em;
+  text-align: right;
+  padding-right: 20px;
+}
+
+.previewDemo {
+  flex-shrink: 0;
+}
+
+.previewOutput {
+  font-family: "PT Mono", monospace;
+  margin-left: 20px;
+  background-color: #eee;
+  padding: 4px 8px;
+  border-radius: 4px;
 }
 
 @media (max-width: 767px) {

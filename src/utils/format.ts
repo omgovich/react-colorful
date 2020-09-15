@@ -1,1 +1,1 @@
-export const formatClassName = (names: string[]): string => names.filter(Boolean).join(" ");
+export const formatClassName = (names: unknown[]): string => names.filter(Boolean).join(" ");

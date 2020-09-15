@@ -6,15 +6,21 @@ import { validHex } from "../utils/validate";
 // Escapes all non-hexadecimal characters including "#"
 const escape = (hex: string) => hex.replace(/([^0-9A-F]+)/gi, "");
 
-interface Props extends HTMLInputElement {
+interface ComponentProps {
   color: string;
   onChange: (newColor: string) => void;
 }
 
-const HexColorInputBase = (props: Partial<Props>) => {
-  const { color = "", onChange } = props;
+type InputProps = Omit<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  "onChange" | "maxLength" | "value"
+>;
+
+export const HexColorInput = (props: Partial<InputProps & ComponentProps>): JSX.Element => {
+  const { color = "", onChange, onBlur, ...rest } = props;
   const [value, setValue] = useState(() => escape(color));
   const onChangeCallback = useEventCallback<string>(onChange);
+  const onBlurCallback = useEventCallback<React.FocusEvent<HTMLInputElement>>(onBlur);
 
   // Trigger `onChange` handler only if the input value is a valid HEX-color
   const handleChange = useCallback(
@@ -30,8 +36,9 @@ const HexColorInputBase = (props: Partial<Props>) => {
   const handleBlur = useCallback(
     (e: React.FocusEvent<HTMLInputElement>) => {
       if (!validHex(e.target.value)) setValue(escape(color));
+      onBlurCallback(e);
     },
-    [color]
+    [color, onBlurCallback]
   );
 
   // Update the local state when `color` property value is changed
@@ -39,17 +46,14 @@ const HexColorInputBase = (props: Partial<Props>) => {
     setValue(escape(color));
   }, [color]);
 
-  // Spread operator replacement to get rid of the polyfill (saves 150 bytes gzipped)
-  const inputProps = Object.assign({}, props, {
-    color: null, // do not add `color` attr to `input`-tag
-    value,
-    maxLength: 6,
-    spellCheck: "false", // the element should not be checked for spelling errors
-    onChange: handleChange,
-    onBlur: handleBlur,
-  });
-
-  return React.createElement("input", inputProps);
+  return (
+    <input
+      {...rest}
+      value={value}
+      maxLength={6}
+      spellCheck="false" // the element should not be checked for spelling errors
+      onChange={handleChange}
+      onBlur={handleBlur}
+    />
+  );
 };
-
-export const HexColorInput = React.memo<Partial<Props>>(HexColorInputBase);

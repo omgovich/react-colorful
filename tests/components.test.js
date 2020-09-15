@@ -1,6 +1,6 @@
 import React from "react";
 import { render, cleanup, fireEvent } from "@testing-library/react";
-import { HexColorPicker, HexColorInput } from "../src";
+import { HexColorPicker, HexColorInput, RgbaStringColorPicker, HslaColorPicker } from "../src";
 
 afterEach(cleanup);
 
@@ -31,8 +31,14 @@ Object.defineProperties(HTMLElement.prototype, {
   },
 });
 
-it("Renders proper HTML", () => {
+it("Renders proper color picker markup", () => {
   const result = render(<HexColorPicker color="#F00" />);
+
+  expect(result.container.firstChild).toMatchSnapshot();
+});
+
+it("Renders proper alpha color picker markup", () => {
+  const result = render(<RgbaStringColorPicker color="rgba(255, 0, 0, 0.5)" />);
 
   expect(result.container.firstChild).toMatchSnapshot();
 });
@@ -89,17 +95,31 @@ it("Triggers `onChange` after a mouse interaction", async () => {
 });
 
 it("Triggers `onChange` after a touch interaction", async () => {
-  const handleChange = jest.fn();
+  const handleChange = jest.fn((hex) => hex);
   const result = render(<HexColorPicker color="f00" onChange={handleChange} />);
   const hue = result.container.querySelector(".react-colorful__hue .interactive");
 
   fireEvent.touchStart(hue, { touches: [{ pageX: 0, pageY: 0, bubbles: true }] });
-  fireEvent.touchMove(hue, { touches: [{ pageX: 100, pageY: 0, bubbles: true }] });
+  fireEvent.touchMove(hue, { touches: [{ pageX: 55, pageY: 0, bubbles: true }] });
 
-  expect(handleChange).toHaveReturned();
+  expect(handleChange).toHaveReturnedWith("#00ffff");
 });
 
-it("Renders `HexInput` component properly", () => {
+it("Changes alpha channel value after an interaction", async () => {
+  const handleChange = jest.fn((hsla) => hsla);
+
+  const result = render(
+    <HslaColorPicker color={{ h: 100, s: 0, l: 0, a: 0 }} onChange={handleChange} />
+  );
+  const alpha = result.container.querySelector(".react-colorful__alpha .interactive");
+
+  fireEvent(alpha, new FakeMouseEvent("mousedown", { pageX: 0, pageY: 0, bubbles: true }));
+  fireEvent(alpha, new FakeMouseEvent("mousemove", { pageX: 105, pageY: 0, bubbles: true }));
+
+  expect(handleChange).toHaveReturnedWith({ h: 100, s: 0, l: 0, a: 1 });
+});
+
+it("Renders `HexColorInput` component properly", () => {
   const result = render(
     <HexColorInput className="custom-input" color="#F00" placeholder="AABBCC" />
   );
@@ -107,7 +127,7 @@ it("Renders `HexInput` component properly", () => {
   expect(result.container.firstChild).toMatchSnapshot();
 });
 
-it("Fires `onChange` when user changes `HexInput` value", () => {
+it("Fires `onChange` when user changes `HexColorInput` value", () => {
   const handleChange = jest.fn((hex) => hex);
   const result = render(<HexColorInput onChange={handleChange} />);
   const input = result.container.firstChild;
@@ -115,4 +135,14 @@ it("Fires `onChange` when user changes `HexInput` value", () => {
   fireEvent.change(input, { target: { value: "112233" } });
 
   expect(handleChange).toHaveReturnedWith("#112233");
+});
+
+it("Fires custom `onBlur` when `HexColorInput` has lost focus", () => {
+  const handleBlur = jest.fn((e) => e.target.value);
+  const result = render(<HexColorInput color="#ffffff" onBlur={handleBlur} />);
+  const input = result.container.firstChild;
+
+  fireEvent.blur(input);
+
+  expect(handleBlur).toHaveReturnedWith("ffffff");
 });

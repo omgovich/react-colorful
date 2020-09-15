@@ -3,15 +3,16 @@ import React, { useCallback } from "react";
 import { Interactive, Interaction } from "./Interactive";
 
 import styles from "../../css/styles.css";
-import { hsvToHslString } from "../../utils/convert";
+import { hsvaToHslString } from "../../utils/convert";
 import { formatClassName } from "../../utils/format";
 
 interface Props {
+  className?: string;
   hue: number;
   onChange: (newHue: { h: number }) => void;
 }
 
-const HueBase = ({ hue, onChange }: Props) => {
+const HueBase = ({ className, hue, onChange }: Props) => {
   const handleMove = useCallback(
     (interaction: Interaction) => {
       // Hue measured in degrees of the color circle ranging from 0 to 360
@@ -23,10 +24,10 @@ const HueBase = ({ hue, onChange }: Props) => {
   const pointerStyle = {
     top: "50%",
     left: `${(hue / 360) * 100}%`,
-    backgroundColor: hsvToHslString({ h: hue, s: 100, v: 100 }),
+    color: hsvaToHslString({ h: hue, s: 100, v: 100, a: 1 }),
   };
 
-  const nodeClassName = formatClassName(["react-colorful__hue", styles.hue]);
+  const nodeClassName = formatClassName(["react-colorful__hue", styles.hue, className]);
   const pointerClassName = formatClassName(["react-colorful__hue-pointer", styles.pointer]);
 
   return (

@@ -28,10 +28,10 @@
 
 ## Features
 
-- **Small**: Just 1,6 KB (minified and gzipped). [Size Limit](https://github.com/ai/size-limit) controls the size.
+- **Small**: Just 1,5 KB (minified and gzipped). [Size Limit](https://github.com/ai/size-limit) controls the size.
 - **Tree-shakeable**: Only the parts you use will be imported into your app's bundle.
 - **Fast**: Built with hooks and functional components only.
-- **Bulletproof**: Written in strict TypeScript and covered by 25+ tests.
+- **Bulletproof**: Written in strict TypeScript and covered by 30+ tests.
 - **Simple**: The interface is straight forward and easy to use.
 - **Mobile-friendly**: Works well on mobile devices and touch screens.
 - **No dependencies**
@@ -39,7 +39,8 @@
 ## Live demos
 
 - [Website](https://omgovich.github.io/react-colorful)
-- [CodeSandbox](https://codesandbox.io/s/react-colorful-demo-u5vwp)
+- [HEX Color Picker (CodeSandbox)](https://codesandbox.io/s/react-colorful-demo-u5vwp)
+- [RGBA Color Picker (CodeSandbox)](https://codesandbox.io/s/react-colorful-rgb-o9q0t)
 
 ## Install
 
@@ -61,22 +62,27 @@ const YourComponent = () => {
 
 ## Supported color models
 
-We provide 5 additional color picker components for different color models, unless your app needs a HEX string as an input/output format.
+We provide 10 additional color picker components for different color models, unless your app needs a HEX string as an input/output format.
 
 <details>
   <summary>How to use another color model</summary>
 
 #### Available pickers
 
-| Import                     | Value example                | Size (gzipped) |
-| -------------------------- | ---------------------------- | -------------- |
-| `{ HexColorPicker }`       | `"#ffffff"`                  | ~1,6 KB        |
-| `{ RgbColorPicker }`       | `{ r: 255, g: 255, b: 255 }` | ~1,5 KB        |
-| `{ RgbStringColorPicker }` | `"rgb(255, 255, 255)"`       | ~1,6 KB        |
-| `{ HslColorPicker }`       | `{ h: 0, s: 0, l: 100 }`     | ~1,3 KB        |
-| `{ HslStringColorPicker }` | `"hsl(0, 0%, 100%)"`         | ~1,4 KB        |
-| `{ HsvColorPicker }`       | `{ h: 0, s: 0, v: 100 }`     | ~1,3 KB        |
-| `{ HsvStringColorPicker }` | `"hsv(0, 0%, 100%)"`         | ~1,4 KB        |
+| Import                      | Value example                      |
+| --------------------------- | ---------------------------------- |
+| `{ HexColorPicker }`        | `"#ffffff"`                        |
+| `{ RgbColorPicker }`        | `{ r: 255, g: 255, b: 255 }`       |
+| `{ RgbaColorPicker }`       | `{ r: 255, g: 255, b: 255, a: 1 }` |
+| `{ RgbStringColorPicker }`  | `"rgb(255, 255, 255)"`             |
+| `{ RgbaStringColorPicker }` | `"rgba(255, 255, 255, 1)"`         |
+| `{ HslColorPicker }`        | `{ h: 0, s: 0, l: 100 }`           |
+| `{ HslaColorPicker }`       | `{ h: 0, s: 0, l: 100, a: 1 }`     |
+| `{ HslStringColorPicker }`  | `"hsl(0, 0%, 100%)"`               |
+| `{ HslaStringColorPicker }` | `"hsla(0, 0%, 100%, 1)"`           |
+| `{ HsvColorPicker }`        | `{ h: 0, s: 0, v: 100 }`           |
+| `{ HsvaColorPicker }`       | `{ h: 0, s: 0, v: 100, a: 1 }`     |
+| `{ HsvStringColorPicker }`  | `"hsv(0, 0%, 100%)"`               |
 
 #### Code example
 
@@ -103,7 +109,6 @@ The easiest way to tweak react-colorful is to create another stylesheet to overr
   height: 250px;
 }
 .react-colorful__saturation {
-  bottom: 30px;
   border-radius: 3px 3px 0 0;
 }
 .react-colorful__hue {
@@ -218,5 +223,5 @@ To show you the problem that **react-colorful** is trying to solve, we have perf
 - [x] HEX input component
 - [x] TypeScript support
 - [x] Rewrite the codebase to TypeScript
-- [ ] Alpha channel support (RGBA and HSLA color models)
-- [ ] Storybook
+- [x] Alpha channel support (RGBA, HSLA and HSVA color models)
+- [ ] Accessibility

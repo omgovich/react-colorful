@@ -20,11 +20,14 @@ const InteractiveBase = ({ onMove, children }: Props) => {
   const container = useRef<HTMLDivElement>(null);
   const [isDragging, setDragging] = useState(false);
 
-  const getRelativePosition = useCallback((event) => {
-    // This should be okay. This is only called onMove, and for it to be moved it must actually exist.
-    // I won't suppress the ESLint warning though, as it should probably be something to be aware of.
+  const getRelativePosition = useCallback((event: MouseEvent | TouchEvent) => {
+    // This method is only called `onMove`, and for it to be moved it must actually exist.
+    // We won't suppress the ESLint warning though, as it should probably be something to be aware of.
     const rect = container.current!.getBoundingClientRect();
-    const pointer = typeof event.pageX === "number" ? event : event.touches[0];
+
+    // Get user's pointer position from `touches` array if it's a `TouchEvent`
+    const pointer =
+      window.TouchEvent && event instanceof TouchEvent ? event.touches[0] : (event as MouseEvent);
 
     return {
       left: limit((pointer.pageX - (rect.left + window.pageXOffset)) / rect.width),
@@ -33,7 +36,7 @@ const InteractiveBase = ({ onMove, children }: Props) => {
   }, []);
 
   const handleMove = useCallback(
-    (event) => {
+    (event: MouseEvent | TouchEvent) => {
       event.preventDefault();
       if (container.current) onMove(getRelativePosition(event));
     },
@@ -41,7 +44,8 @@ const InteractiveBase = ({ onMove, children }: Props) => {
   );
 
   const handleMoveStart = useCallback(
-    (event) => {
+    ({ nativeEvent: event }: React.MouseEvent | React.TouchEvent) => {
+      event.preventDefault();
       onMove(getRelativePosition(event));
       setDragging(true);
     },
