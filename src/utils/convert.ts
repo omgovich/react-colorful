@@ -72,6 +72,11 @@ export const hsvaToHsvString = (hsv: HsvColor): string => {
   return `hsv(${h}, ${s}%, ${v}%)`;
 };
 
+export const hsvaToHsvaString = (hsva: HsvaColor): string => {
+  const { h, s, v, a } = hsva;
+  return `hsva(${h}, ${s}, ${v}, ${a}`;
+};
+
 export const hsvaToHslaString = (hsva: HsvaColor): string => {
   const { h, s, l, a } = hsvaToHsla(hsva);
   return `hsla(${h}, ${s}%, ${l}%, ${a})`;

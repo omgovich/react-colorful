@@ -5,6 +5,7 @@ export { HslaStringColorPicker } from "./components/HslaStringColorPicker";
 export { HslColorPicker } from "./components/HslColorPicker";
 export { HslStringColorPicker } from "./components/HslStringColorPicker";
 export { HsvaColorPicker } from "./components/HsvaColorPicker";
+export { HsvaStringColorPicker } from "./components/HsvaStringColorPicker";
 export { HsvColorPicker } from "./components/HsvColorPicker";
 export { HsvStringColorPicker } from "./components/HsvStringColorPicker";
 export { RgbaColorPicker } from "./components/RgbaColorPicker";
