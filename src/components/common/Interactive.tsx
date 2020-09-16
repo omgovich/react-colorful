@@ -1,6 +1,7 @@
 import React, { useState, useLayoutEffect, useRef, useCallback } from "react";
-
 import styles from "../../css/styles.css";
+
+let hasTouched = false;
 
 // Limit number within [0, 1] bounds.
 // Use ternary operator instead of `Math.min(Math.max(0, number), 1)` to save few bytes
@@ -8,6 +9,14 @@ const limit = (number: number) => (number > 1 ? 1 : number < 0 ? 0 : number);
 
 // Check if an event was triggered by touch
 const isTouch = (e: MouseEvent | TouchEvent) => window.TouchEvent && e instanceof TouchEvent;
+
+// Prevent mobile browsers from handling mouse events (conflicting with touch ones).
+// If we detected a touch interaction before, we prefer reacting to touch events only.
+const isValid = (event: MouseEvent | TouchEvent): boolean => {
+  if (hasTouched && !isTouch(event)) return false;
+  if (!hasTouched) hasTouched = isTouch(event);
+  return true;
+};
 
 export interface Interaction {
   left: number;
@@ -21,7 +30,6 @@ interface Props {
 
 const InteractiveBase = ({ onMove, children }: Props) => {
   const container = useRef<HTMLDivElement>(null);
-  const preferTouch = useRef(false);
   const [isDragging, setDragging] = useState(false);
 
   const getRelativePosition = useCallback((event: MouseEvent | TouchEvent) => {
@@ -50,11 +58,8 @@ const InteractiveBase = ({ onMove, children }: Props) => {
     ({ nativeEvent: event }: React.MouseEvent | React.TouchEvent) => {
       event.preventDefault();
 
-      // Prevent mobile browsers from handling mouse events (conflicting with touch ones).
-      // If we detected a touch interaction before, we prefer reacting to touch events only.
-      if (preferTouch.current && !isTouch(event)) return;
+      if (!isValid(event)) return;
 
-      preferTouch.current = isTouch(event);
       onMove(getRelativePosition(event));
       setDragging(true);
     },
@@ -67,8 +72,8 @@ const InteractiveBase = ({ onMove, children }: Props) => {
     (state) => {
       // add or remove additional pointer event listeners
       const toggleEvent = state ? window.addEventListener : window.removeEventListener;
-      toggleEvent(preferTouch.current ? "touchmove" : "mousemove", handleMove);
-      toggleEvent(preferTouch.current ? "touchend" : "mouseup", handleMoveEnd);
+      toggleEvent(hasTouched ? "touchmove" : "mousemove", handleMove);
+      toggleEvent(hasTouched ? "touchend" : "mouseup", handleMoveEnd);
     },
     [handleMove, handleMoveEnd]
   );
