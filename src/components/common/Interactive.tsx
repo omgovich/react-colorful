@@ -15,10 +15,11 @@ export interface Interaction {
 
 interface Props {
   onMove: (interaction: Interaction) => void;
+  onKey: (key: number) => void;
   children: React.ReactNode;
 }
 
-const InteractiveBase = ({ onMove, children }: Props) => {
+const InteractiveBase = ({ onMove, onKey, children }: Props) => {
   const container = useRef<HTMLDivElement>(null);
   const hasTouched = useRef(false);
   const [isDragging, setDragging] = useState(false);
@@ -65,6 +66,14 @@ const InteractiveBase = ({ onMove, children }: Props) => {
     [onMove, getRelativePosition]
   );
 
+  const handleKeyDown = useCallback(
+    (event: React.KeyboardEvent) => {
+      event.preventDefault();
+      onKey(event.which);
+    },
+    [onKey]
+  );
+
   const handleMoveEnd = useCallback(() => setDragging(false), []);
 
   const toggleDocumentEvents = useCallback(
@@ -90,6 +99,9 @@ const InteractiveBase = ({ onMove, children }: Props) => {
       ref={container}
       onTouchStart={handleMoveStart}
       onMouseDown={handleMoveStart}
+      onKeyDown={handleKeyDown}
+      tabIndex={0}
+      role="slider"
     >
       {children}
     </div>
