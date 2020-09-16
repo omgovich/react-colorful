@@ -6,6 +6,9 @@ import styles from "../../css/styles.css";
 // Use ternary operator instead of `Math.min(Math.max(0, number), 1)` to save few bytes
 const limit = (number: number) => (number > 1 ? 1 : number < 0 ? 0 : number);
 
+// Check if an event was triggered by touch
+const isTouch = (e: MouseEvent | TouchEvent) => window.TouchEvent && e instanceof TouchEvent;
+
 export interface Interaction {
   left: number;
   top: number;
@@ -18,6 +21,7 @@ interface Props {
 
 const InteractiveBase = ({ onMove, children }: Props) => {
   const container = useRef<HTMLDivElement>(null);
+  const preferTouch = useRef(false);
   const [isDragging, setDragging] = useState(false);
 
   const getRelativePosition = useCallback((event: MouseEvent | TouchEvent) => {
@@ -26,8 +30,7 @@ const InteractiveBase = ({ onMove, children }: Props) => {
     const rect = container.current!.getBoundingClientRect();
 
     // Get user's pointer position from `touches` array if it's a `TouchEvent`
-    const pointer =
-      window.TouchEvent && event instanceof TouchEvent ? event.touches[0] : (event as MouseEvent);
+    const pointer = isTouch(event) ? (event as TouchEvent).touches[0] : (event as MouseEvent);
 
     return {
       left: limit((pointer.pageX - (rect.left + window.pageXOffset)) / rect.width),
@@ -46,6 +49,12 @@ const InteractiveBase = ({ onMove, children }: Props) => {
   const handleMoveStart = useCallback(
     ({ nativeEvent: event }: React.MouseEvent | React.TouchEvent) => {
       event.preventDefault();
+
+      // Prevent mobile browsers from handling mouse events (conflicting with touch ones).
+      // If we detected a touch interaction before, we prefer reacting to touch events only.
+      if (preferTouch.current && !isTouch(event)) return;
+
+      preferTouch.current = isTouch(event);
       onMove(getRelativePosition(event));
       setDragging(true);
     },
@@ -57,11 +66,9 @@ const InteractiveBase = ({ onMove, children }: Props) => {
   const toggleDocumentEvents = useCallback(
     (state) => {
       // add or remove additional pointer event listeners
-      const toggleEvent = state ? document.addEventListener : document.removeEventListener;
-      toggleEvent("mousemove", handleMove);
-      toggleEvent("touchmove", handleMove);
-      toggleEvent("mouseup", handleMoveEnd);
-      toggleEvent("touchend", handleMoveEnd);
+      const toggleEvent = state ? window.addEventListener : window.removeEventListener;
+      toggleEvent(preferTouch.current ? "touchmove" : "mousemove", handleMove);
+      toggleEvent(preferTouch.current ? "touchend" : "mouseup", handleMoveEnd);
     },
     [handleMove, handleMoveEnd]
   );
