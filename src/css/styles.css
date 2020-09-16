@@ -64,10 +64,16 @@
   position: absolute;
   left: 0;
   top: 0;
-  width: 100%;
-  height: 100%;
+  right: 0;
+  bottom: 0;
+  border-radius: inherit;
   /* Don't trigger the default scrolling behavior when the event is originating from this element */
   touch-action: none;
+}
+
+.interactive:focus {
+  z-index: 3;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.5), 0 0 0 3px rgba(0, 0, 0, 0.5);
 }
 
 .pointer {
