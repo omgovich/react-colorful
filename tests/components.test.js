@@ -119,6 +119,24 @@ it("Changes alpha channel value after an interaction", async () => {
   expect(handleChange).toHaveReturnedWith({ h: 100, s: 0, l: 0, a: 1 });
 });
 
+// Fast clicks on mobile devices
+// See https://github.com/omgovich/react-colorful/issues/55
+it("Doesn't react on mouse events after a touch interaction", () => {
+  const handleChange = jest.fn((hex) => hex);
+  const result = render(<HexColorPicker color="00f" onChange={handleChange} />);
+  const hue = result.container.querySelector(".react-colorful__hue .interactive");
+
+  fireEvent.touchStart(hue, { touches: [{ pageX: 0, pageY: 0, bubbles: true }] }); // 1 (#ff0000)
+  fireEvent.touchMove(hue, { touches: [{ pageX: 55, pageY: 0, bubbles: true }] }); // 2 (#00ffff)
+
+  // Should be skipped
+  fireEvent(hue, new FakeMouseEvent("mousedown", { pageX: 35, pageY: 0, bubbles: true })); // 3
+  fireEvent(hue, new FakeMouseEvent("mousemove", { pageX: 105, pageY: 0, bubbles: true })); // 4
+
+  expect(handleChange).toHaveReturnedTimes(2);
+  expect(handleChange).toHaveReturnedWith("#00ffff");
+});
+
 it("Renders `HexColorInput` component properly", () => {
   const result = render(
     <HexColorInput className="custom-input" color="#F00" placeholder="AABBCC" />
