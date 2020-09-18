@@ -162,7 +162,7 @@ const YourComponent = () => {
 
 <details>
   <summary>How you can get the most from our TypeScript support</summary><br />
-  
+
 While not only typing its own functions and variables, it can also help you type yours. Depending on the component you are using, you can also import the type that is associated with the component. For example, if you are using our HSL color picker component, you can also import the `HSL` type.
 
 ```ts
@@ -199,6 +199,14 @@ To show you the problem that **react-colorful** is trying to solve, we have perf
 | react-color        | [![](https://badgen.net/bundlephobia/min/react-color?color=red&label=)](https://bundlephobia.com/result?p=react-color)             | [![](https://badgen.net/bundlephobia/minzip/react-color?color=red&label=)](https://bundlephobia.com/result?p=react-color)             | [![](https://badgen.net/bundlephobia/dependency-count/react-color?color=red&label=)](https://bundlephobia.com/result?p=react-color)             |
 | react-input-color  | [![](https://badgen.net/bundlephobia/min/react-input-color?color=red&label=)](https://bundlephobia.com/result?p=react-input-color) | [![](https://badgen.net/bundlephobia/minzip/react-input-color?color=red&label=)](https://bundlephobia.com/result?p=react-input-color) | [![](https://badgen.net/bundlephobia/dependency-count/react-input-color?color=red&label=)](https://bundlephobia.com/result?p=react-input-color) |
 | rc-color-picker    | [![](https://badgen.net/bundlephobia/min/rc-color-picker?color=red&label=)](https://bundlephobia.com/result?p=rc-color-picker)     | [![](https://badgen.net/bundlephobia/minzip/rc-color-picker?color=red&label=)](https://bundlephobia.com/result?p=rc-color-picker)     | [![](https://badgen.net/bundlephobia/dependency-count/rc-color-picker?color=red&label=)](https://bundlephobia.com/result?p=rc-color-picker)     |
+
+## Ports / Related Projects
+
+Not using React or Preact? Not a problem! Check out the list of react-colorful ports adapted to your favourite framework or technology of choice:
+
+- **[vanilla-colorful](https://github.com/web-padawan/vanilla-colorful)** — a react-colorful reimplementation in vanilla Custom Elements, generously ported by [@web-padavan](https://github.com/web-padawan).
+
+If your project is not in the list, reach us out via [GitHub issues](https://github.com/omgovich/react-colorful/issues).
 
 ## Projects using react-colorful
 
