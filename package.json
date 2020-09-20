@@ -104,12 +104,6 @@
       "\\.css$": "identity-obj-proxy"
     }
   },
-  "files": [
-    "ACKNOWLEDGMENTS",
-    "LICENSE",
-    "README.md",
-    "dist"
-  ],
   "repository": "omgovich/react-colorful",
   "keywords": [
     "react",
