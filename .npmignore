@@ -1,0 +1,10 @@
+# blacklist all
+**
+
+# include whitelist
+!dist/*
+!dist/components/*
+!LICENSE
+!ACKNOWLEDGMENTS
+!README.md
+!package.json
