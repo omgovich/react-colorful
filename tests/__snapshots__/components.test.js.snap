@@ -18,7 +18,11 @@ exports[`Renders proper alpha color picker markup 1`] = `
     style="background-color: rgb(255, 0, 0);"
   >
     <div
+      aria-label="Color"
+      aria-valuetext="Saturation 100%, Brightness 100%"
       class="interactive"
+      role="slider"
+      tabindex="0"
     >
       <div
         class="react-colorful__saturation-pointer pointer"
@@ -30,7 +34,11 @@ exports[`Renders proper alpha color picker markup 1`] = `
     class="react-colorful__hue hue"
   >
     <div
+      aria-label="Hue"
+      aria-valuetext="0"
       class="interactive"
+      role="slider"
+      tabindex="0"
     >
       <div
         class="react-colorful__hue-pointer pointer"
@@ -45,7 +53,11 @@ exports[`Renders proper alpha color picker markup 1`] = `
       class="alphaGradient"
     />
     <div
+      aria-label="Alpha"
+      aria-valuetext="0.5"
       class="interactive"
+      role="slider"
+      tabindex="0"
     >
       <div
         class="react-colorful__alpha-pointer pointer alphaPattern"
@@ -65,7 +77,11 @@ exports[`Renders proper color picker markup 1`] = `
     style="background-color: rgb(255, 0, 0);"
   >
     <div
+      aria-label="Color"
+      aria-valuetext="Saturation 100%, Brightness 100%"
       class="interactive"
+      role="slider"
+      tabindex="0"
     >
       <div
         class="react-colorful__saturation-pointer pointer"
@@ -77,7 +93,11 @@ exports[`Renders proper color picker markup 1`] = `
     class="react-colorful__hue hue lastControl"
   >
     <div
+      aria-label="Hue"
+      aria-valuetext="0"
       class="interactive"
+      role="slider"
+      tabindex="0"
     >
       <div
         class="react-colorful__hue-pointer pointer"
@@ -97,7 +117,11 @@ exports[`Works with no props 1`] = `
     style="background-color: rgb(255, 0, 0);"
   >
     <div
+      aria-label="Color"
+      aria-valuetext="Saturation 0%, Brightness 0%"
       class="interactive"
+      role="slider"
+      tabindex="0"
     >
       <div
         class="react-colorful__saturation-pointer pointer"
@@ -109,7 +133,11 @@ exports[`Works with no props 1`] = `
     class="react-colorful__hue hue lastControl"
   >
     <div
+      aria-label="Hue"
+      aria-valuetext="0"
       class="interactive"
+      role="slider"
+      tabindex="0"
     >
       <div
         class="react-colorful__hue-pointer pointer"
