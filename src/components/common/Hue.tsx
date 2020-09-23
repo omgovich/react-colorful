@@ -2,9 +2,11 @@ import React, { useCallback } from "react";
 
 import { Interactive, Interaction } from "./Interactive";
 
-import styles from "../../css/styles.css";
 import { hsvaToHslString } from "../../utils/convert";
 import { formatClassName } from "../../utils/format";
+import { limit } from "../../utils/limit";
+
+import styles from "../../css/styles.css";
 
 interface Props {
   className?: string;
@@ -21,6 +23,12 @@ const HueBase = ({ className, hue, onChange }: Props) => {
     [onChange]
   );
 
+  const handleKey = (offset: Interaction) => {
+    onChange({
+      h: limit(hue + offset.left * 360, 0, 360),
+    });
+  };
+
   const pointerStyle = {
     top: "50%",
     left: `${(hue / 360) * 100}%`,
@@ -32,7 +40,12 @@ const HueBase = ({ className, hue, onChange }: Props) => {
 
   return (
     <div className={nodeClassName}>
-      <Interactive onMove={handleMove}>
+      <Interactive
+        onMove={handleMove}
+        onKey={handleKey}
+        aria-label="Hue"
+        aria-valuetext={Math.round(hue)}
+      >
         <div className={pointerClassName} style={pointerStyle} />
       </Interactive>
     </div>

@@ -3,10 +3,11 @@ import React from "react";
 import { Hue } from "./Hue";
 import { Saturation } from "./Saturation";
 
-import styles from "../../css/styles.css";
 import { ColorModel, ColorPickerBaseProps, AnyColor } from "../../types";
 import { useColorManipulation } from "../../hooks/useColorManipulation";
 import { formatClassName } from "../../utils/format";
+
+import styles from "../../css/styles.css";
 
 interface Props<T extends AnyColor> extends Partial<ColorPickerBaseProps<T>> {
   colorModel: ColorModel<T>;

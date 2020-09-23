@@ -1,11 +1,10 @@
 import React, { useCallback } from "react";
-
 import { Interactive, Interaction } from "./Interactive";
-
-import styles from "../../css/styles.css";
 import { HsvaColor } from "../../types";
 import { hsvaToHslString } from "../../utils/convert";
+import { limit } from "../../utils/limit";
 import { formatClassName } from "../../utils/format";
+import styles from "../../css/styles.css";
 
 interface Props {
   hsva: HsvaColor;
@@ -24,6 +23,13 @@ const SaturationBase = ({ hsva, onChange }: Props) => {
     [onChange]
   );
 
+  const handleKey = (offset: Interaction) => {
+    onChange({
+      s: limit(hsva.s + offset.left * 100, 0, 100),
+      v: limit(hsva.v - offset.top * 100, 0, 100),
+    });
+  };
+
   const containerStyle = {
     backgroundColor: hsvaToHslString({ h: hsva.h, s: 100, v: 100, a: 1 }),
   };
@@ -39,7 +45,12 @@ const SaturationBase = ({ hsva, onChange }: Props) => {
 
   return (
     <div className={nodeClassName} style={containerStyle}>
-      <Interactive onMove={handleMove}>
+      <Interactive
+        onMove={handleMove}
+        onKey={handleKey}
+        aria-label="Color"
+        aria-valuetext={`Saturation, ${Math.round(hsva.s)}%, Brightness ${Math.round(hsva.v)}%`}
+      >
         <div className={pointerClassName} style={pointerStyle} />
       </Interactive>
     </div>

@@ -1,9 +1,12 @@
 import React, { useCallback } from "react";
 
 import { Interactive, Interaction } from "./Interactive";
+
 import { hsvaToHslaString } from "../../utils/convert";
 import { formatClassName } from "../../utils/format";
+import { limit } from "../../utils/limit";
 import { HsvaColor } from "../../types";
+
 import styles from "../../css/styles.css";
 
 interface Props {
@@ -20,6 +23,12 @@ export const Alpha = ({ className, hsva, onChange }: Props): JSX.Element => {
     },
     [onChange]
   );
+
+  const handleKey = (offset: Interaction) => {
+    onChange({
+      a: limit(hsva.a + offset.left),
+    });
+  };
 
   const colorFrom = hsvaToHslaString({ ...hsva, a: 0 });
   const colorTo = hsvaToHslaString({ ...hsva, a: 1 });
@@ -50,7 +59,7 @@ export const Alpha = ({ className, hsva, onChange }: Props): JSX.Element => {
   return (
     <div className={nodeClassName}>
       <div className={styles.alphaGradient} style={gradientStyle} />
-      <Interactive onMove={handleMove}>
+      <Interactive onMove={handleMove} onKey={handleKey} aria-label="Alpha" aria-valuetext={hsva.a}>
         <div className={pointerClassName} style={pointerStyle} />
       </Interactive>
     </div>

@@ -1,12 +1,17 @@
 import React, { useState, useLayoutEffect, useRef, useCallback } from "react";
-import styles from "../../css/styles.css";
 
-// Limit number within [0, 1] bounds.
-// Use ternary operator instead of `Math.min(Math.max(0, number), 1)` to save few bytes
-const limit = (number: number) => (number > 1 ? 1 : number < 0 ? 0 : number);
+import { limit } from "../../utils/limit";
+
+import styles from "../../css/styles.css";
 
 // Check if an event was triggered by touch
 const isTouch = (e: MouseEvent | TouchEvent) => window.TouchEvent && e instanceof TouchEvent;
+
+// Arrow key codes: ←37, ↑38, →39, ↓40
+const getOffset = (keyCode: number) => ({
+  left: keyCode === 39 ? 0.05 : keyCode === 37 ? -0.05 : 0,
+  top: keyCode === 40 ? 0.05 : keyCode === 38 ? -0.05 : 0,
+});
 
 export interface Interaction {
   left: number;
@@ -15,11 +20,11 @@ export interface Interaction {
 
 interface Props {
   onMove: (interaction: Interaction) => void;
-  onKey: (key: number) => void;
+  onKey: (offset: Interaction) => void;
   children: React.ReactNode;
 }
 
-const InteractiveBase = ({ onMove, onKey, children }: Props) => {
+const InteractiveBase = ({ onMove, onKey, children, ...rest }: Props) => {
   const container = useRef<HTMLDivElement>(null);
   const hasTouched = useRef(false);
   const [isDragging, setDragging] = useState(false);
@@ -68,8 +73,12 @@ const InteractiveBase = ({ onMove, onKey, children }: Props) => {
 
   const handleKeyDown = useCallback(
     (event: React.KeyboardEvent) => {
+      // Ignore all keys except arrow ones
+      if (event.which < 37 || event.which > 40) return;
+      // Do not scroll page by arrow keys when document is focused on the element
       event.preventDefault();
-      onKey(event.which);
+      // Send relative offset to the parent component
+      onKey(getOffset(event.which));
     },
     [onKey]
   );
@@ -95,6 +104,7 @@ const InteractiveBase = ({ onMove, onKey, children }: Props) => {
 
   return (
     <div
+      {...rest}
       className={styles.interactive}
       ref={container}
       onTouchStart={handleMoveStart}
