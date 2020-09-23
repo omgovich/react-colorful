@@ -3,7 +3,6 @@
 exports[`Renders \`HexColorInput\` component properly 1`] = `
 <input
   class="custom-input"
-  maxlength="6"
   placeholder="AABBCC"
   spellcheck="false"
   value="F00"
