@@ -13,10 +13,10 @@
   flex-grow: 1;
   border-bottom: 12px solid #000;
   border-radius: 8px 8px 0 0;
+  background-image: linear-gradient(to top, #000, rgba(0, 0, 0, 0)),
+    linear-gradient(to right, #fff, rgba(255, 255, 255, 0));
 }
 
-.saturation:after,
-.saturation:before,
 .alpha:after,
 .pointer:after,
 .alphaGradient {
@@ -30,19 +30,9 @@
   border-radius: inherit;
 }
 
-/* Saturation gradient: from white to transparent */
-.saturation:before {
-  background: linear-gradient(to right, #fff, rgba(255, 255, 255, 0));
-}
-
-/* Brightness gradient: from black to transparent */
-.saturation:after {
-  background: linear-gradient(to top, #000, rgba(0, 0, 0, 0));
-}
-
 /* Improve elements rendering on light backgrounds */
 .alpha:after,
-.saturation:after {
+.saturation {
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.05);
 }
 
