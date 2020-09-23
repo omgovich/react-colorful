@@ -1,6 +1,6 @@
 {
   "name": "react-colorful",
-  "version": "4.0.6",
+  "version": "4.0.7",
   "description": "A tiny color picker component for modern React apps",
   "source": "src/index.ts",
   "main": "dist/index.js",
