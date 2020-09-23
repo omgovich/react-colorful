@@ -200,13 +200,13 @@ To show you the problem that **react-colorful** is trying to solve, we have perf
 | react-input-color  | [![](https://badgen.net/bundlephobia/min/react-input-color?color=red&label=)](https://bundlephobia.com/result?p=react-input-color) | [![](https://badgen.net/bundlephobia/minzip/react-input-color?color=red&label=)](https://bundlephobia.com/result?p=react-input-color) | [![](https://badgen.net/bundlephobia/dependency-count/react-input-color?color=red&label=)](https://bundlephobia.com/result?p=react-input-color) |
 | rc-color-picker    | [![](https://badgen.net/bundlephobia/min/rc-color-picker?color=red&label=)](https://bundlephobia.com/result?p=rc-color-picker)     | [![](https://badgen.net/bundlephobia/minzip/rc-color-picker?color=red&label=)](https://bundlephobia.com/result?p=rc-color-picker)     | [![](https://badgen.net/bundlephobia/dependency-count/rc-color-picker?color=red&label=)](https://bundlephobia.com/result?p=rc-color-picker)     |
 
-## Ports / Related Projects
+## Ports
 
 Not using React or Preact? Not a problem! Check out the list of react-colorful ports adapted to your favourite framework or technology of choice:
 
 - **[vanilla-colorful](https://github.com/web-padawan/vanilla-colorful)** — a react-colorful reimplementation in vanilla Custom Elements, generously ported by [@web-padavan](https://github.com/web-padawan).
 
-If your project is not in the list, reach us out via [GitHub issues](https://github.com/omgovich/react-colorful/issues).
+If your port is not in the list, reach us out via [GitHub issues](https://github.com/omgovich/react-colorful/issues).
 
 ## Projects using react-colorful
 
