@@ -49,7 +49,7 @@ const SaturationBase = ({ hsva, onChange }: Props) => {
         onMove={handleMove}
         onKey={handleKey}
         aria-label="Color"
-        aria-valuetext={`Saturation, ${Math.round(hsva.s)}%, Brightness ${Math.round(hsva.v)}%`}
+        aria-valuetext={`Saturation ${Math.round(hsva.s)}%, Brightness ${Math.round(hsva.v)}%`}
       >
         <div className={pointerClassName} style={pointerStyle} />
       </Interactive>
