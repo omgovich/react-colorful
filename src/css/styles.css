@@ -71,9 +71,8 @@
   touch-action: none;
 }
 
-.interactive:focus {
-  z-index: 3;
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.5), 0 0 0 3px rgba(0, 0, 0, 0.5);
+.interactive:focus .pointer {
+  transform: translate(-50%, -50%) scale(1.1);
 }
 
 .pointer {
