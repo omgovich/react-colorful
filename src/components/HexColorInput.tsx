@@ -4,17 +4,14 @@ import { useEventCallback } from "../hooks/useEventCallback";
 import { validHex } from "../utils/validate";
 
 // Escapes all non-hexadecimal characters including "#"
-const escape = (hex: string) => hex.replace(/([^0-9A-F]+)/gi, "");
+const escape = (hex: string) => hex.replace(/([^0-9A-F]+)/gi, "").substr(0, 6);
 
 interface ComponentProps {
   color: string;
   onChange: (newColor: string) => void;
 }
 
-type InputProps = Omit<
-  React.InputHTMLAttributes<HTMLInputElement>,
-  "onChange" | "maxLength" | "value"
->;
+type InputProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange" | "value">;
 
 export const HexColorInput = (props: Partial<InputProps & ComponentProps>): JSX.Element => {
   const { color = "", onChange, onBlur, ...rest } = props;
@@ -50,7 +47,6 @@ export const HexColorInput = (props: Partial<InputProps & ComponentProps>): JSX.
     <input
       {...rest}
       value={value}
-      maxLength={6}
       spellCheck="false" // the element should not be checked for spelling errors
       onChange={handleChange}
       onBlur={handleBlur}
