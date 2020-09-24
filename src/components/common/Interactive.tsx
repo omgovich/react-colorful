@@ -13,12 +13,6 @@ export interface Interaction {
 // Check if an event was triggered by touch
 const isTouch = (e: MouseEvent | TouchEvent) => "touches" in e;
 
-// Arrow key codes: ←37, ↑38, →39, ↓40
-const getOffset = (keyCode: number): Interaction => ({
-  left: keyCode === 39 ? 0.05 : keyCode === 37 ? -0.05 : 0,
-  top: keyCode === 40 ? 0.05 : keyCode === 38 ? -0.05 : 0,
-});
-
 // Returns a relative position of the pointer inside the node's bounding box
 const getRelativePosition = (node: HTMLDivElement, event: MouseEvent | TouchEvent): Interaction => {
   const rect = node.getBoundingClientRect();
@@ -83,8 +77,13 @@ const InteractiveBase = ({ onMove, onKey, ...rest }: Props) => {
       if (keyCode < 37 || keyCode > 40) return;
       // Do not scroll page by arrow keys when document is focused on the element
       event.preventDefault();
-      // Send relative offset to the parent component
-      onKeyCallback(getOffset(keyCode));
+      // Send relative offset to the parent component.
+      // We use codes (37←, 38↑, 39→, 40↓) instead of keys ('ArrowRight', 'ArrowDown', etc)
+      // to reduce the size of the library
+      onKeyCallback({
+        left: keyCode === 39 ? 0.05 : keyCode === 37 ? -0.05 : 0,
+        top: keyCode === 40 ? 0.05 : keyCode === 38 ? -0.05 : 0,
+      });
     },
     [onKeyCallback]
   );
