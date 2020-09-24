@@ -2,7 +2,7 @@ import React from "react";
 
 import { Interactive, Interaction } from "./Interactive";
 
-import { hsvaToHslaString } from "../../utils/convert";
+import { hsvaToHslString } from "../../utils/convert";
 import { formatClassName } from "../../utils/format";
 import { limit } from "../../utils/limit";
 
@@ -29,7 +29,7 @@ const HueBase = ({ className, hue, onChange }: Props) => {
   const pointerStyle = {
     top: "50%",
     left: `${(hue / 360) * 100}%`,
-    color: hsvaToHslaString({ h: hue, s: 100, v: 100, a: 1 }),
+    color: hsvaToHslString({ h: hue, s: 100, v: 100, a: 1 }),
   };
 
   const nodeClassName = formatClassName(["react-colorful__hue", styles.hue, className]);
