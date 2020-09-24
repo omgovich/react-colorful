@@ -22,9 +22,7 @@ export const Alpha = ({ className, hsva, onChange }: Props): JSX.Element => {
   };
 
   const handleKey = (offset: Interaction) => {
-    onChange({
-      a: limit(hsva.a + offset.left),
-    });
+    onChange({ a: limit(hsva.a + offset.left) });
   };
 
   // We use `Object.assign` instead of the spread operator
