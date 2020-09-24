@@ -27,6 +27,7 @@ import { hsvaToHsvString, hsvStringToHsva } from "../src/utils/convert";
 // Rest
 import { equalColorObjects, equalColorString } from "../src/utils/compare";
 import { formatClassName } from "../src/utils/format";
+import { clamp } from "../src/utils/clamp";
 
 it("Converts HEX to HSVA", () => {
   expect(hexToHsva("#ffffff")).toMatchObject({ h: 0, s: 0, v: 100, a: 1 });
@@ -179,4 +180,13 @@ it("Formats a class name", () => {
   expect(formatClassName(["one"])).toBe("one");
   expect(formatClassName(["one", "two", "three"])).toBe("one two three");
   expect(formatClassName([false, "two", null])).toBe("two");
+});
+
+it("Clamps a number between bounds", () => {
+  expect(clamp(0.5)).toBe(0.5);
+  expect(clamp(1.5)).toBe(1);
+  expect(clamp(-1)).toBe(0);
+  expect(clamp(50, -50, 100)).toBe(50);
+  expect(clamp(-500, -50, 100)).toBe(-50);
+  expect(clamp(500, -50, 100)).toBe(100);
 });

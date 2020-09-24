@@ -4,7 +4,7 @@ import { Interactive, Interaction } from "./Interactive";
 
 import { hsvaToHslString } from "../../utils/convert";
 import { formatClassName } from "../../utils/format";
-import { limit } from "../../utils/limit";
+import { clamp } from "../../utils/clamp";
 
 import styles from "../../css/styles.css";
 
@@ -22,7 +22,7 @@ const HueBase = ({ className, hue, onChange }: Props) => {
 
   const handleKey = (offset: Interaction) => {
     onChange({
-      h: limit(hue + offset.left * 360, 0, 360),
+      h: clamp(hue + offset.left * 360, 0, 360),
     });
   };
 
