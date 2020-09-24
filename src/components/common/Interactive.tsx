@@ -5,11 +5,16 @@ import { limit } from "../../utils/limit";
 
 import styles from "../../css/styles.css";
 
+export interface Interaction {
+  left: number;
+  top: number;
+}
+
 // Check if an event was triggered by touch
 const isTouch = (e: MouseEvent | TouchEvent) => "touches" in e;
 
 // Arrow key codes: ←37, ↑38, →39, ↓40
-const getOffset = (keyCode: number) => ({
+const getOffset = (keyCode: number): Interaction => ({
   left: keyCode === 39 ? 0.05 : keyCode === 37 ? -0.05 : 0,
   top: keyCode === 40 ? 0.05 : keyCode === 38 ? -0.05 : 0,
 });
@@ -27,18 +32,13 @@ const getRelativePosition = (node: HTMLDivElement, event: MouseEvent | TouchEven
   };
 };
 
-export interface Interaction {
-  left: number;
-  top: number;
-}
-
 interface Props {
   onMove: (interaction: Interaction) => void;
   onKey: (offset: Interaction) => void;
   children: React.ReactNode;
 }
 
-const InteractiveBase = ({ onMove, onKey, children, ...rest }: Props) => {
+const InteractiveBase = ({ onMove, onKey, ...rest }: Props) => {
   const container = useRef<HTMLDivElement>(null);
   const hasTouched = useRef(false);
   const [isDragging, setDragging] = useState(false);
@@ -67,7 +67,9 @@ const InteractiveBase = ({ onMove, onKey, children, ...rest }: Props) => {
 
       if (!isValid(event)) return;
 
-      if (container.current) onMoveCallback(getRelativePosition(container.current!, event));
+      // The node/ref must actually exist when user start an interaction.
+      // We won't suppress the ESLint warning though, as it should probably be something to be aware of.
+      onMoveCallback(getRelativePosition(container.current!, event));
       setDragging(true);
     },
     [onMoveCallback]
@@ -114,9 +116,7 @@ const InteractiveBase = ({ onMove, onKey, children, ...rest }: Props) => {
       onKeyDown={handleKeyDown}
       tabIndex={0}
       role="slider"
-    >
-      {children}
-    </div>
+    />
   );
 };
 
