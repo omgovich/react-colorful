@@ -137,6 +137,47 @@ it("Doesn't react on mouse events after a touch interaction", () => {
   expect(handleChange).toHaveReturnedWith("#00ffff");
 });
 
+it("Captures keyboard commands", async () => {
+  const handleChange = jest.fn((hex) => hex);
+  const initialValue = "#ff0000";
+
+  const result = render(<HexColorPicker color={initialValue} onChange={handleChange} />);
+  const saturation = result.container.querySelector(".react-colorful__saturation .interactive");
+
+  saturation.focus();
+  const node = document.activeElement || document.body;
+
+  fireEvent.keyDown(node, { keyCode: 36 }); // should be ignored
+  fireEvent.keyDown(node, { keyCode: 37 }); // left
+  fireEvent.keyDown(node, { keyCode: 40 }); // bottom
+
+  expect(handleChange).toHaveReturnedTimes(2);
+  expect(handleChange).toHaveReturnedWith("#f20c0c");
+
+  fireEvent.keyDown(node, { keyCode: 38 }); // top
+  fireEvent.keyDown(node, { keyCode: 39 }); // right
+  fireEvent.keyDown(node, { keyCode: 41 }); // should be ignored
+
+  expect(handleChange).toHaveReturnedTimes(4);
+  expect(handleChange).toHaveReturnedWith(initialValue);
+});
+
+it("Ignores keyboard commands if the pointer is already on an edge", async () => {
+  const handleChange = jest.fn();
+
+  // Place pointer to the left-top corner of the saturation area
+  const result = render(<HexColorPicker color="#FFF" onChange={handleChange} />);
+  const saturation = result.container.querySelector(".react-colorful__saturation .interactive");
+
+  saturation.focus();
+  const node = document.activeElement || document.body;
+
+  fireEvent.keyDown(node, { keyCode: 38 }); // top
+  fireEvent.keyDown(node, { keyCode: 37 }); // left
+
+  expect(handleChange).toHaveReturnedTimes(0);
+});
+
 it("Sets proper `aria-valuetext` attribute value", async () => {
   const handleChange = jest.fn();
   const result = render(<HexColorPicker color="#000" onChange={handleChange} />);
