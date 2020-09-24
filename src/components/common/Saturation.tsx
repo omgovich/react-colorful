@@ -1,7 +1,7 @@
 import React from "react";
 import { Interactive, Interaction } from "./Interactive";
 import { HsvaColor } from "../../types";
-import { hsvaToHslaString } from "../../utils/convert";
+import { hsvaToHslString } from "../../utils/convert";
 import { limit } from "../../utils/limit";
 import { formatClassName } from "../../utils/format";
 import styles from "../../css/styles.css";
@@ -28,13 +28,13 @@ const SaturationBase = ({ hsva, onChange }: Props) => {
   };
 
   const containerStyle = {
-    backgroundColor: hsvaToHslaString({ h: hsva.h, s: 100, v: 100, a: 1 }),
+    backgroundColor: hsvaToHslString({ h: hsva.h, s: 100, v: 100, a: 1 }),
   };
 
   const pointerStyle = {
     top: `${100 - hsva.v}%`,
     left: `${hsva.s}%`,
-    color: hsvaToHslaString(hsva),
+    color: hsvaToHslString(hsva),
   };
 
   const nodeClassName = formatClassName(["react-colorful__saturation", styles.saturation]);
