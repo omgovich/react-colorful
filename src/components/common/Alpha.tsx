@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 
 import { Interactive, Interaction } from "./Interactive";
 
@@ -16,13 +16,10 @@ interface Props {
 }
 
 export const Alpha = ({ className, hsva, onChange }: Props): JSX.Element => {
-  const handleMove = useCallback(
-    (interaction: Interaction) => {
-      // Alpha always fit into [0, 1] range
-      onChange({ a: interaction.left });
-    },
-    [onChange]
-  );
+  // Alpha always fit into [0, 1] range
+  const handleMove = (interaction: Interaction) => {
+    onChange({ a: interaction.left });
+  };
 
   const handleKey = (offset: Interaction) => {
     onChange({

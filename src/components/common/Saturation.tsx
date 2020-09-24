@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 import { Interactive, Interaction } from "./Interactive";
 import { HsvaColor } from "../../types";
 import { hsvaToHslString } from "../../utils/convert";
@@ -12,16 +12,13 @@ interface Props {
 }
 
 const SaturationBase = ({ hsva, onChange }: Props) => {
-  const handleMove = useCallback(
-    (interaction: Interaction) => {
-      // Saturation and brightness always fit into [0, 100] range
-      onChange({
-        s: interaction.left * 100,
-        v: 100 - interaction.top * 100,
-      });
-    },
-    [onChange]
-  );
+  // Saturation and brightness always fit into [0, 100] range
+  const handleMove = (interaction: Interaction) => {
+    onChange({
+      s: interaction.left * 100,
+      v: 100 - interaction.top * 100,
+    });
+  };
 
   const handleKey = (offset: Interaction) => {
     onChange({
