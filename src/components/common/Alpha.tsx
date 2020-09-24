@@ -56,7 +56,12 @@ export const Alpha = ({ className, hsva, onChange }: Props): JSX.Element => {
   return (
     <div className={nodeClassName}>
       <div className={styles.alphaGradient} style={gradientStyle} />
-      <Interactive onMove={handleMove} onKey={handleKey} aria-label="Alpha" aria-valuetext={hsva.a}>
+      <Interactive
+        onMove={handleMove}
+        onKey={handleKey}
+        aria-label="Alpha"
+        aria-valuetext={`${Math.round(hsva.a * 100)}%`}
+      >
         <div className={pointerClassName} style={pointerStyle} />
       </Interactive>
     </div>
