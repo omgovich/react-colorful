@@ -27,6 +27,8 @@ export const Alpha = ({ className, hsva, onChange }: Props): JSX.Element => {
     });
   };
 
+  // We use `Object.assign` instead of the spread operator
+  // to prevent adding the polyfill (about 150 bytes gzipped)
   const colorFrom = hsvaToHslaString(Object.assign({}, hsva, { a: 0 }));
   const colorTo = hsvaToHslaString(Object.assign({}, hsva, { a: 1 }));
 
