@@ -28,12 +28,13 @@
 
 ## Features
 
-- **Small**: Just 1,5 KB (minified and gzipped). [Size Limit](https://github.com/ai/size-limit) controls the size.
+- **Small**: Just 1,8 KB (minified and gzipped). [Size Limit](https://github.com/ai/size-limit) controls the size.
 - **Tree-shakeable**: Only the parts you use will be imported into your app's bundle.
 - **Fast**: Built with hooks and functional components only.
 - **Bulletproof**: Written in strict TypeScript and covered by 30+ tests.
 - **Simple**: The interface is straight forward and easy to use.
 - **Mobile-friendly**: Works well on mobile devices and touch screens.
+- **Accessible**: Follows the [WAI-ARIA](https://www.w3.org/WAI/standards-guidelines/aria/) guidelines to support users of assistive technologies.
 - **No dependencies**
 
 ## Live demos
