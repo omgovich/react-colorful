@@ -4,7 +4,7 @@ import { Interactive, Interaction } from "./Interactive";
 
 import { hsvaToHslaString } from "../../utils/convert";
 import { formatClassName } from "../../utils/format";
-import { limit } from "../../utils/limit";
+import { clamp } from "../../utils/clamp";
 import { HsvaColor } from "../../types";
 
 import styles from "../../css/styles.css";
@@ -22,7 +22,7 @@ export const Alpha = ({ className, hsva, onChange }: Props): JSX.Element => {
   };
 
   const handleKey = (offset: Interaction) => {
-    onChange({ a: limit(hsva.a + offset.left) });
+    onChange({ a: clamp(hsva.a + offset.left) });
   };
 
   // We use `Object.assign` instead of the spread operator

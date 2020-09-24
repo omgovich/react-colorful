@@ -1,7 +1,7 @@
 import React, { useState, useLayoutEffect, useRef, useCallback } from "react";
 
 import { useEventCallback } from "../../hooks/useEventCallback";
-import { limit } from "../../utils/limit";
+import { clamp } from "../../utils/clamp";
 
 import styles from "../../css/styles.css";
 
@@ -27,8 +27,8 @@ const getRelativePosition = (node: HTMLDivElement, event: MouseEvent | TouchEven
   const pointer = isTouch(event) ? (event as TouchEvent).touches[0] : (event as MouseEvent);
 
   return {
-    left: limit((pointer.pageX - (rect.left + window.pageXOffset)) / rect.width),
-    top: limit((pointer.pageY - (rect.top + window.pageYOffset)) / rect.height),
+    left: clamp((pointer.pageX - (rect.left + window.pageXOffset)) / rect.width),
+    top: clamp((pointer.pageY - (rect.top + window.pageYOffset)) / rect.height),
   };
 };
 

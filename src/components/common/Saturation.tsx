@@ -2,7 +2,7 @@ import React from "react";
 import { Interactive, Interaction } from "./Interactive";
 import { HsvaColor } from "../../types";
 import { hsvaToHslString } from "../../utils/convert";
-import { limit } from "../../utils/limit";
+import { clamp } from "../../utils/clamp";
 import { formatClassName } from "../../utils/format";
 import styles from "../../css/styles.css";
 
@@ -22,8 +22,8 @@ const SaturationBase = ({ hsva, onChange }: Props) => {
 
   const handleKey = (offset: Interaction) => {
     onChange({
-      s: limit(hsva.s + offset.left * 100, 0, 100),
-      v: limit(hsva.v - offset.top * 100, 0, 100),
+      s: clamp(hsva.s + offset.left * 100, 0, 100),
+      v: clamp(hsva.v - offset.top * 100, 0, 100),
     });
   };
 
