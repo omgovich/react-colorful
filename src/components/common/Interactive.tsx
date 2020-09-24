@@ -77,12 +77,14 @@ const InteractiveBase = ({ onMove, onKey, ...rest }: Props) => {
 
   const handleKeyDown = useCallback(
     (event: React.KeyboardEvent) => {
+      const keyCode = event.which || event.keyCode;
+
       // Ignore all keys except arrow ones
-      if (event.which < 37 || event.which > 40) return;
+      if (keyCode < 37 || keyCode > 40) return;
       // Do not scroll page by arrow keys when document is focused on the element
       event.preventDefault();
       // Send relative offset to the parent component
-      onKeyCallback(getOffset(event.which));
+      onKeyCallback(getOffset(keyCode));
     },
     [onKeyCallback]
   );
