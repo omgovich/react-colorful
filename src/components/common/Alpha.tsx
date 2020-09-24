@@ -27,8 +27,8 @@ export const Alpha = ({ className, hsva, onChange }: Props): JSX.Element => {
     });
   };
 
-  const colorFrom = hsvaToHslaString({ ...hsva, a: 0 });
-  const colorTo = hsvaToHslaString({ ...hsva, a: 1 });
+  const colorFrom = hsvaToHslaString(Object.assign({}, hsva, { a: 0 }));
+  const colorTo = hsvaToHslaString(Object.assign({}, hsva, { a: 1 }));
 
   const gradientStyle = {
     backgroundImage: `linear-gradient(to right, ${colorFrom}, ${colorTo}`,
