@@ -137,6 +137,19 @@ it("Doesn't react on mouse events after a touch interaction", () => {
   expect(handleChange).toHaveReturnedWith("#00ffff");
 });
 
+it("Sets proper `aria-valuetext` attribute value", async () => {
+  const handleChange = jest.fn();
+  const result = render(<HexColorPicker color="#000" onChange={handleChange} />);
+  const saturation = result.container.querySelector(".react-colorful__saturation .interactive");
+
+  expect(saturation.getAttribute("aria-valuetext")).toBe("Saturation 0%, Brightness 0%");
+
+  fireEvent(saturation, new FakeMouseEvent("mousedown", { pageX: 0, pageY: 0, bubbles: true }));
+  fireEvent(saturation, new FakeMouseEvent("mousemove", { pageX: 500, pageY: 0, bubbles: true })); // '#ff0000'
+
+  expect(saturation.getAttribute("aria-valuetext")).toBe("Saturation 100%, Brightness 100%");
+});
+
 it("Renders `HexColorInput` component properly", () => {
   const result = render(
     <HexColorInput className="custom-input" color="#F00" placeholder="AABBCC" />
