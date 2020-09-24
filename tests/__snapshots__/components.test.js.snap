@@ -54,7 +54,7 @@ exports[`Renders proper alpha color picker markup 1`] = `
     />
     <div
       aria-label="Alpha"
-      aria-valuetext="0.5"
+      aria-valuetext="50%"
       class="interactive"
       role="slider"
       tabindex="0"
