@@ -1,17 +1,31 @@
 import React, { useState, useLayoutEffect, useRef, useCallback } from "react";
 
+import { useEventCallback } from "../../hooks/useEventCallback";
 import { limit } from "../../utils/limit";
 
 import styles from "../../css/styles.css";
 
 // Check if an event was triggered by touch
-const isTouch = (e: MouseEvent | TouchEvent) => window.TouchEvent && e instanceof TouchEvent;
+const isTouch = (e: MouseEvent | TouchEvent) => "touches" in e;
 
 // Arrow key codes: ←37, ↑38, →39, ↓40
 const getOffset = (keyCode: number) => ({
   left: keyCode === 39 ? 0.05 : keyCode === 37 ? -0.05 : 0,
   top: keyCode === 40 ? 0.05 : keyCode === 38 ? -0.05 : 0,
 });
+
+// Returns a relative position of the pointer inside the node's bounding box
+const getRelativePosition = (node: HTMLDivElement, event: MouseEvent | TouchEvent): Interaction => {
+  const rect = node.getBoundingClientRect();
+
+  // Get user's pointer position from `touches` array if it's a `TouchEvent`
+  const pointer = isTouch(event) ? (event as TouchEvent).touches[0] : (event as MouseEvent);
+
+  return {
+    left: limit((pointer.pageX - (rect.left + window.pageXOffset)) / rect.width),
+    top: limit((pointer.pageY - (rect.top + window.pageYOffset)) / rect.height),
+  };
+};
 
 export interface Interaction {
   left: number;
@@ -28,20 +42,8 @@ const InteractiveBase = ({ onMove, onKey, children, ...rest }: Props) => {
   const container = useRef<HTMLDivElement>(null);
   const hasTouched = useRef(false);
   const [isDragging, setDragging] = useState(false);
-
-  const getRelativePosition = useCallback((event: MouseEvent | TouchEvent) => {
-    // This method is only called `onMove`, and for it to be moved it must actually exist.
-    // We won't suppress the ESLint warning though, as it should probably be something to be aware of.
-    const rect = container.current!.getBoundingClientRect();
-
-    // Get user's pointer position from `touches` array if it's a `TouchEvent`
-    const pointer = isTouch(event) ? (event as TouchEvent).touches[0] : (event as MouseEvent);
-
-    return {
-      left: limit((pointer.pageX - (rect.left + window.pageXOffset)) / rect.width),
-      top: limit((pointer.pageY - (rect.top + window.pageYOffset)) / rect.height),
-    };
-  }, []);
+  const onMoveCallback = useEventCallback<Interaction>(onMove);
+  const onKeyCallback = useEventCallback<Interaction>(onKey);
 
   // Prevent mobile browsers from handling mouse events (conflicting with touch ones).
   // If we detected a touch interaction before, we prefer reacting to touch events only.
@@ -54,9 +56,9 @@ const InteractiveBase = ({ onMove, onKey, children, ...rest }: Props) => {
   const handleMove = useCallback(
     (event: MouseEvent | TouchEvent) => {
       event.preventDefault();
-      if (container.current) onMove(getRelativePosition(event));
+      if (container.current) onMoveCallback(getRelativePosition(container.current, event));
     },
-    [onMove, getRelativePosition]
+    [onMoveCallback]
   );
 
   const handleMoveStart = useCallback(
@@ -65,10 +67,10 @@ const InteractiveBase = ({ onMove, onKey, children, ...rest }: Props) => {
 
       if (!isValid(event)) return;
 
-      onMove(getRelativePosition(event));
+      if (container.current) onMoveCallback(getRelativePosition(container.current!, event));
       setDragging(true);
     },
-    [onMove, getRelativePosition]
+    [onMoveCallback]
   );
 
   const handleKeyDown = useCallback(
@@ -78,9 +80,9 @@ const InteractiveBase = ({ onMove, onKey, children, ...rest }: Props) => {
       // Do not scroll page by arrow keys when document is focused on the element
       event.preventDefault();
       // Send relative offset to the parent component
-      onKey(getOffset(event.which));
+      onKeyCallback(getOffset(event.which));
     },
-    [onKey]
+    [onKeyCallback]
   );
 
   const handleMoveEnd = useCallback(() => setDragging(false), []);

@@ -32,7 +32,7 @@ export const hslaStringToHsva = (hslString: string): HsvaColor => {
     h: Number(match[1]),
     s: Number(match[2]),
     l: Number(match[3]),
-    a: match[4] !== undefined ? Number(match[4]) : 1,
+    a: match[4] == null ? 1 : Number(match[4]),
   });
 };
 
@@ -121,7 +121,7 @@ export const hsvaStringToHsva = (hsvString: string): HsvaColor => {
     h: Number(match[1]),
     s: Number(match[2]),
     v: Number(match[3]),
-    a: match[4] !== undefined ? Number(match[4]) : 1,
+    a: match[4] == null ? 1 : Number(match[4]),
   };
 };
 
@@ -137,7 +137,7 @@ export const rgbaStringToHsva = (rgbaString: string): HsvaColor => {
     r: Number(match[1]),
     g: Number(match[2]),
     b: Number(match[3]),
-    a: match[4] !== undefined ? Number(match[4]) : 1,
+    a: match[4] == null ? 1 : Number(match[4]),
   });
 };
 
