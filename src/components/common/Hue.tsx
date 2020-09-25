@@ -15,12 +15,12 @@ interface Props {
 }
 
 const HueBase = ({ className, hue, onChange }: Props) => {
-  // Hue measured in degrees of the color circle ranging from 0 to 360
   const handleMove = (interaction: Interaction) => {
     onChange({ h: 360 * interaction.left });
   };
 
   const handleKey = (offset: Interaction) => {
+    // Hue measured in degrees of the color circle ranging from 0 to 360
     onChange({
       h: clamp(hue + offset.left * 360, 0, 360),
     });
