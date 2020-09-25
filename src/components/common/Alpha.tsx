@@ -31,7 +31,7 @@ export const Alpha = ({ className, hsva, onChange }: Props): JSX.Element => {
   const colorTo = hsvaToHslaString(Object.assign({}, hsva, { a: 1 }));
 
   const gradientStyle = {
-    backgroundImage: `linear-gradient(to right, ${colorFrom}, ${colorTo}`,
+    backgroundImage: `linear-gradient(90deg, ${colorFrom}, ${colorTo})`,
   };
 
   const pointerStyle = {
