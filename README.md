@@ -157,7 +157,7 @@ const YourComponent = () => {
 
 </details>
 
-## TypeScript Support
+## TypeScript support
 
 **react-colorful** supports TypeScript and ships with types in the library itself; no need for any other install.
 
@@ -226,6 +226,11 @@ If your port is not in the list, reach us out via [GitHub issues](https://github
     <img src="demo/src/assets/omatsuri-app.png" width="1223" alt="omatsuri.app" />
   </a>
 </details>
+
+## Browser support
+
+It's easier to say that **react-colorful** works everywhere. But if you need more detailed information, we have tested our picker in the browsers that were released in 2014–2015: Chrome 40, Firefox 32, Opera 25, Safari 9 and Edge 12.
+The picker works even in IE11 if an app has an `Object.assign` polyfill installed.
 
 ## Roadmap
 
