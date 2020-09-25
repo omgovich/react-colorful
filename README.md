@@ -234,4 +234,4 @@ If your port is not in the list, reach us out via [GitHub issues](https://github
 - [x] TypeScript support
 - [x] Rewrite the codebase to TypeScript
 - [x] Alpha channel support (RGBA, HSLA and HSVA color models)
-- [ ] Accessibility
+- [x] Accessibility
