@@ -114,7 +114,13 @@
     "hex",
     "color",
     "front-end",
-    "color-picker"
+    "color-picker",
+    "accessible",
+    "react-color",
+    "accessibility",
+    "aria",
+    "a11y",
+    "wai-aria"
   ],
   "author": "Vlad Shilov <omgovich@ya.ru>",
   "license": "MIT",
