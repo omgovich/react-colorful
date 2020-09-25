@@ -229,9 +229,7 @@ If your port is not in the list, reach us out via [GitHub issues](https://github
 
 ## Browser support
 
-It's easier to say that **react-colorful** works everywhere. But if you need more detailed information, we have tested our picker in the browsers that were released in 2014–2015: Chrome 40, Firefox 32, Opera 25, Safari 9 and Edge 12.
-The picker works even in IE11 if an app has an `Object.assign` polyfill installed.
-
+**react-colorful** aims to support all browsers on the market and we test against legacy versions of many of the popular browsers. **react-colorful** will work out-of-the-box with all modern browsers and only requires that a `Object.assign` polyfill be provided for full IE11 support.
 ## Roadmap
 
 - [x] Additional modules to support RGB, HSL and HSV color models
