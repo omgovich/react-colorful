@@ -12,7 +12,6 @@ interface Props {
 }
 
 const SaturationBase = ({ hsva, onChange }: Props) => {
-  // Saturation and brightness always fit into [0, 100] range
   const handleMove = (interaction: Interaction) => {
     onChange({
       s: interaction.left * 100,
@@ -21,6 +20,7 @@ const SaturationBase = ({ hsva, onChange }: Props) => {
   };
 
   const handleKey = (offset: Interaction) => {
+    // Saturation and brightness always fit into [0, 100] range
     onChange({
       s: clamp(hsva.s + offset.left * 100, 0, 100),
       v: clamp(hsva.v - offset.top * 100, 0, 100),

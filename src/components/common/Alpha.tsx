@@ -16,12 +16,12 @@ interface Props {
 }
 
 export const Alpha = ({ className, hsva, onChange }: Props): JSX.Element => {
-  // Alpha always fit into [0, 1] range
   const handleMove = (interaction: Interaction) => {
     onChange({ a: interaction.left });
   };
 
   const handleKey = (offset: Interaction) => {
+    // Alpha always fit into [0, 1] range
     onChange({ a: clamp(hsva.a + offset.left) });
   };
 
