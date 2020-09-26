@@ -182,6 +182,31 @@ Take a look at [Supported Color Models](#supported-color-models) for more inform
 
 If you are using another solution, please refer to the [Aliasing React to Preact](https://preactjs.com/guide/v10/getting-started#aliasing-react-to-preact) section of the Preact documentation.
 
+<details>
+  <summary>Preact + Typescript</summary><br />
+
+**react-colorful**, like all other React + TS projects, can potentially cause issues in a Preact + TS application if you have the `@types/react` package installed, either as a direct dependency or a dependency of a dependency. For example, the Preact TS template comes with `@types/enzyme` which has `@types/react` as a dependency.
+
+To fix this, create a `declaration.d.ts` file or add to your existing:
+
+```
+import React from "react";
+
+declare global {
+    namespace React {
+        interface ReactElement {
+            nodeName: any;
+            attributes: any;
+            children: any;
+        }
+    }
+}
+```
+
+This will correct the types an allow you to use **react-colorful** along with many other React + TS libraries in your Preact + TS application.
+
+</details>
+
 ## Why react-colorful?
 
 Today each dependency drags more dependencies and increases your project’s bundle size uncontrollably. But size is very important for everything that intends to work in a browser.
