@@ -11,14 +11,14 @@ export interface Interaction {
 }
 
 // Check if an event was triggered by touch
-const isTouch = (e: MouseEvent | TouchEvent) => "touches" in e;
+const isTouch = (e: MouseEvent | TouchEvent): e is TouchEvent => "touches" in e;
 
 // Returns a relative position of the pointer inside the node's bounding box
 const getRelativePosition = (node: HTMLDivElement, event: MouseEvent | TouchEvent): Interaction => {
   const rect = node.getBoundingClientRect();
 
   // Get user's pointer position from `touches` array if it's a `TouchEvent`
-  const pointer = isTouch(event) ? (event as TouchEvent).touches[0] : (event as MouseEvent);
+  const pointer = isTouch(event) ? event.touches[0] : (event as MouseEvent);
 
   return {
     left: clamp((pointer.pageX - (rect.left + window.pageXOffset)) / rect.width),
