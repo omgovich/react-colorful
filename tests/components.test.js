@@ -1,6 +1,15 @@
 import React from "react";
 import { render, cleanup, fireEvent } from "@testing-library/react";
-import { HexColorPicker, HexColorInput, RgbaStringColorPicker, HslaColorPicker } from "../src";
+import {
+  HexColorInput,
+  HexColorPicker,
+  RgbColorPicker,
+  RgbaStringColorPicker,
+  HslColorPicker,
+  HslaColorPicker,
+  HsvColorPicker,
+  HsvaColorPicker,
+} from "../src";
 
 afterEach(cleanup);
 
@@ -50,7 +59,7 @@ it("Works with no props", () => {
 });
 
 it("Accepts an additional `className`", () => {
-  const result = render(<HexColorPicker className="custom-picker" />);
+  const result = render(<RgbColorPicker className="custom-picker" />);
 
   const hasClass = result.container.firstChild.classList.contains("custom-picker");
   expect(hasClass).toBe(true);
@@ -96,13 +105,14 @@ it("Triggers `onChange` after a mouse interaction", async () => {
 
 it("Triggers `onChange` after a touch interaction", async () => {
   const handleChange = jest.fn((hex) => hex);
-  const result = render(<HexColorPicker color="f00" onChange={handleChange} />);
+  const initialValue = { h: 0, s: 100, v: 100 };
+  const result = render(<HsvColorPicker color={initialValue} onChange={handleChange} />);
   const hue = result.container.querySelector(".react-colorful__hue .interactive");
 
   fireEvent.touchStart(hue, { touches: [{ pageX: 0, pageY: 0, bubbles: true }] });
   fireEvent.touchMove(hue, { touches: [{ pageX: 55, pageY: 0, bubbles: true }] });
 
-  expect(handleChange).toHaveReturnedWith("#00ffff");
+  expect(handleChange).toHaveReturnedWith({ h: 180, s: 100, v: 100 });
 });
 
 it("Changes alpha channel value after an interaction", async () => {
@@ -160,6 +170,34 @@ it("Captures keyboard commands", async () => {
 
   expect(handleChange).toHaveReturnedTimes(4);
   expect(handleChange).toHaveReturnedWith(initialValue);
+});
+
+it("Changes hue with arrow keys", async () => {
+  const handleChange = jest.fn();
+  const initialValue = { h: 180, s: 0, l: 50, a: 1 };
+
+  const result = render(<HslColorPicker color={initialValue} onChange={handleChange} />);
+  const hue = result.container.querySelector(".react-colorful__hue .interactive");
+
+  hue.focus();
+  const node = document.activeElement || document.body;
+  fireEvent.keyDown(node, { keyCode: 39 }); // left
+
+  expect(handleChange).toHaveReturnedTimes(1);
+});
+
+it("Changes alpha with arrow keys", async () => {
+  const handleChange = jest.fn();
+  const initialValue = { h: 180, s: 0, l: 50, a: 0.5 };
+
+  const result = render(<HsvaColorPicker color={initialValue} onChange={handleChange} />);
+  const alpha = result.container.querySelector(".react-colorful__alpha .interactive");
+
+  alpha.focus();
+  const node = document.activeElement || document.body;
+  fireEvent.keyDown(node, { keyCode: 39 }); // right
+
+  expect(handleChange).toHaveReturnedTimes(1);
 });
 
 it("Ignores keyboard commands if the pointer is already on an edge", async () => {
