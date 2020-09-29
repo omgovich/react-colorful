@@ -4,6 +4,8 @@ import {
   HexColorInput,
   HexColorPicker,
   RgbColorPicker,
+  RgbStringColorPicker,
+  RgbaColorPicker,
   RgbaStringColorPicker,
   HslColorPicker,
   HslaColorPicker,
@@ -94,7 +96,7 @@ it("Doesn't call `onChange` when user changes a hue of a grayscale color", () =>
 
 it("Triggers `onChange` after a mouse interaction", async () => {
   const handleChange = jest.fn();
-  const result = render(<HexColorPicker onChange={handleChange} />);
+  const result = render(<RgbaColorPicker onChange={handleChange} />);
   const saturation = result.container.querySelector(".react-colorful__saturation .interactive");
 
   fireEvent(saturation, new FakeMouseEvent("mousedown", { pageX: 0, pageY: 0, bubbles: true }));
@@ -117,10 +119,9 @@ it("Triggers `onChange` after a touch interaction", async () => {
 
 it("Changes alpha channel value after an interaction", async () => {
   const handleChange = jest.fn((hsla) => hsla);
+  const initialValue = { h: 100, s: 0, l: 0, a: 0 };
 
-  const result = render(
-    <HslaColorPicker color={{ h: 100, s: 0, l: 0, a: 0 }} onChange={handleChange} />
-  );
+  const result = render(<HslaColorPicker color={initialValue} onChange={handleChange} />);
   const alpha = result.container.querySelector(".react-colorful__alpha .interactive");
 
   fireEvent(alpha, new FakeMouseEvent("mousedown", { pageX: 0, pageY: 0, bubbles: true }));
@@ -218,7 +219,7 @@ it("Ignores keyboard commands if the pointer is already on an edge", async () =>
 
 it("Sets proper `aria-valuetext` attribute value", async () => {
   const handleChange = jest.fn();
-  const result = render(<HexColorPicker color="#000" onChange={handleChange} />);
+  const result = render(<RgbStringColorPicker color="rgb(0, 0, 0)" onChange={handleChange} />);
   const saturation = result.container.querySelector(".react-colorful__saturation .interactive");
 
   expect(saturation.getAttribute("aria-valuetext")).toBe("Saturation 0%, Brightness 0%");
