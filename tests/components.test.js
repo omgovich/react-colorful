@@ -8,8 +8,11 @@ import {
   RgbaColorPicker,
   RgbaStringColorPicker,
   HslColorPicker,
+  HslStringColorPicker,
   HslaColorPicker,
+  HslaStringColorPicker,
   HsvColorPicker,
+  HsvStringColorPicker,
   HsvaColorPicker,
 } from "../src";
 
@@ -133,26 +136,26 @@ it("Changes alpha channel value after an interaction", async () => {
 // Fast clicks on mobile devices
 // See https://github.com/omgovich/react-colorful/issues/55
 it("Doesn't react on mouse events after a touch interaction", () => {
-  const handleChange = jest.fn((hex) => hex);
-  const result = render(<HexColorPicker color="00f" onChange={handleChange} />);
+  const handleChange = jest.fn((hslString) => hslString);
+  const result = render(<HslStringColorPicker color="hsl(100, 0%, 0%)" onChange={handleChange} />);
   const hue = result.container.querySelector(".react-colorful__hue .interactive");
 
-  fireEvent.touchStart(hue, { touches: [{ pageX: 0, pageY: 0, bubbles: true }] }); // 1 (#ff0000)
-  fireEvent.touchMove(hue, { touches: [{ pageX: 55, pageY: 0, bubbles: true }] }); // 2 (#00ffff)
+  fireEvent.touchStart(hue, { touches: [{ pageX: 0, pageY: 0, bubbles: true }] }); // 1
+  fireEvent.touchMove(hue, { touches: [{ pageX: 55, pageY: 0, bubbles: true }] }); // 2
 
   // Should be skipped
   fireEvent(hue, new FakeMouseEvent("mousedown", { pageX: 35, pageY: 0, bubbles: true })); // 3
   fireEvent(hue, new FakeMouseEvent("mousemove", { pageX: 105, pageY: 0, bubbles: true })); // 4
 
   expect(handleChange).toHaveReturnedTimes(2);
-  expect(handleChange).toHaveReturnedWith("#00ffff");
+  expect(handleChange).toHaveReturnedWith("hsl(180, 0%, 0%)");
 });
 
 it("Captures keyboard commands", async () => {
   const handleChange = jest.fn((hex) => hex);
-  const initialValue = "#ff0000";
+  const initialValue = "hsv(180, 90%, 90%)";
 
-  const result = render(<HexColorPicker color={initialValue} onChange={handleChange} />);
+  const result = render(<HsvStringColorPicker color={initialValue} onChange={handleChange} />);
   const saturation = result.container.querySelector(".react-colorful__saturation .interactive");
 
   saturation.focus();
@@ -163,7 +166,7 @@ it("Captures keyboard commands", async () => {
   fireEvent.keyDown(node, { keyCode: 40 }); // bottom
 
   expect(handleChange).toHaveReturnedTimes(2);
-  expect(handleChange).toHaveReturnedWith("#f20c0c");
+  expect(handleChange).toHaveReturnedWith("hsv(180, 85%, 85%)");
 
   fireEvent.keyDown(node, { keyCode: 38 }); // top
   fireEvent.keyDown(node, { keyCode: 39 }); // right
@@ -202,10 +205,12 @@ it("Changes alpha with arrow keys", async () => {
 });
 
 it("Ignores keyboard commands if the pointer is already on an edge", async () => {
+  // HsvaStringColorPicker
   const handleChange = jest.fn();
 
   // Place pointer to the left-top corner of the saturation area
-  const result = render(<HexColorPicker color="#FFF" onChange={handleChange} />);
+  const initialValue = "hsla(200, 0%, 100%, 1)";
+  const result = render(<HslaStringColorPicker color={initialValue} onChange={handleChange} />);
   const saturation = result.container.querySelector(".react-colorful__saturation .interactive");
 
   saturation.focus();
