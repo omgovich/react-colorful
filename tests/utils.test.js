@@ -13,7 +13,7 @@ import { hsvaToHslString, hslStringToHsva } from "../src/utils/convert";
 // RGBA
 import { hsvaToRgba, rgbaToHsva } from "../src/utils/convert";
 // RGBA string
-import { rgbaStringToHsva } from "../src/utils/convert";
+import { hsvaToRgbaString, rgbaStringToHsva } from "../src/utils/convert";
 // RGB
 import { rgbaToRgb } from "../src/utils/convert";
 // RGB string
@@ -106,13 +106,19 @@ it("Converts RGB string to HSVA", () => {
   expect(rgbStringToHsva("rgb(0,0,0)")).toMatchObject({ h: 0, s: 0, v: 0, a: 1 });
 });
 
-it("Converts RGBA string to HSVA", () => {
-  expect(rgbaStringToHsva("rgb(61, 88, 102, 0.5)")).toMatchObject({ h: 200, s: 40, v: 40, a: 0.5 });
-});
-
 it("Converts HSVA to RGB string", () => {
   expect(hsvaToRgbString({ h: 0, s: 0, v: 100, a: 1 })).toBe("rgb(255, 255, 255)");
   expect(hsvaToRgbString({ h: 200, s: 40, v: 40, a: 1 })).toBe("rgb(61, 88, 102)");
+});
+
+it("Converts HSVA to RGBA string", () => {
+  let test = (input, output) => expect(hsvaToRgbaString(input)).toBe(output);
+  test({ h: 200, s: 40, v: 40, a: 0.5 }, "rgba(61, 88, 102, 0.5)");
+});
+
+it("Converts RGBA string to HSVA", () => {
+  let test = (input, output) => expect(rgbaStringToHsva(input)).toMatchObject(output);
+  test("rgba(61, 88, 102, 0.5)", { h: 200, s: 40, v: 40, a: 0.5 });
 });
 
 it("Converts HSVA to HSVA string", () => {
