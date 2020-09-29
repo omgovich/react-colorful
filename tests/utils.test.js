@@ -98,6 +98,7 @@ it("Converts HSVA to RGBA", () => {
 
 it("Converts RGBA to HSVA", () => {
   expect(rgbaToHsva({ r: 255, g: 255, b: 255, a: 1 })).toMatchObject({ h: 0, s: 0, v: 100, a: 1 });
+  expect(rgbaToHsva({ r: 0, g: 255, b: 0, a: 1 })).toMatchObject({ h: 120, s: 100, v: 100, a: 1 });
   expect(rgbaToHsva({ r: 255, g: 0, b: 0, a: 1 })).toMatchObject({ h: 0, s: 100, v: 100, a: 1 });
 });
 
