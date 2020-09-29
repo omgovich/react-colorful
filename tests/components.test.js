@@ -14,6 +14,7 @@ import {
   HsvColorPicker,
   HsvStringColorPicker,
   HsvaColorPicker,
+  HsvaStringColorPicker,
 } from "../src";
 
 afterEach(cleanup);
@@ -204,8 +205,7 @@ it("Changes alpha with arrow keys", async () => {
   expect(handleChange).toHaveReturnedTimes(1);
 });
 
-it("Ignores keyboard commands if the pointer is already on an edge", async () => {
-  // HsvaStringColorPicker
+it("Ignores keyboard commands if the pointer is already on a saturation edge", async () => {
   const handleChange = jest.fn();
 
   // Place pointer to the left-top corner of the saturation area
@@ -218,6 +218,22 @@ it("Ignores keyboard commands if the pointer is already on an edge", async () =>
 
   fireEvent.keyDown(node, { keyCode: 38 }); // top
   fireEvent.keyDown(node, { keyCode: 37 }); // left
+
+  expect(handleChange).toHaveReturnedTimes(0);
+});
+
+it("Ignores keyboard commands if the pointer is already on a alpha edge", async () => {
+  const handleChange = jest.fn();
+
+  // Place pointer to the right side of the alpha area
+  const initialValue = "hsva(0, 0%, 0%, 1)";
+  const result = render(<HsvaStringColorPicker color={initialValue} onChange={handleChange} />);
+  const saturation = result.container.querySelector(".react-colorful__alpha .interactive");
+
+  saturation.focus();
+  const node = document.activeElement || document.body;
+
+  fireEvent.keyDown(node, { keyCode: 39 }); // right
 
   expect(handleChange).toHaveReturnedTimes(0);
 });
