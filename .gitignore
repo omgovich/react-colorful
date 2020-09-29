@@ -5,6 +5,9 @@ node_modules/
 /package-lock.json
 /yarn.lock
 
+# tests
+/coverage
+
 # IDEs
 .vscode/
 *.code-workspace

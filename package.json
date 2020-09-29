@@ -12,7 +12,7 @@
     "lint": "eslint src/**/*.{ts,tsx} demo/src/**/*.{ts,tsx}",
     "size": "npm run build && size-limit",
     "check-types": "tsc --noEmit true",
-    "test": "jest tests",
+    "test": "jest tests --coverage",
     "build": "del-cli 'dist/*' && microbundle build --entry src/index.ts --jsx React.createElement --name react-colorful --css-modules true --tsconfig tsconfig.build.json",
     "prepublishOnly": "npm run build",
     "start-demo": "parcel demo/src/index.html --out-dir demo/dist --open",
