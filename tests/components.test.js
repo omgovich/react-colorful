@@ -152,7 +152,7 @@ it("Doesn't react on mouse events after a touch interaction", () => {
   expect(handleChange).toHaveReturnedWith("hsl(180, 0%, 0%)");
 });
 
-it("Captures keyboard commands", async () => {
+it("Captures arrow keys only", async () => {
   const handleChange = jest.fn((hex) => hex);
   const initialValue = "hsv(180, 90%, 90%)";
 
@@ -175,6 +175,21 @@ it("Captures keyboard commands", async () => {
 
   expect(handleChange).toHaveReturnedTimes(4);
   expect(handleChange).toHaveReturnedWith(initialValue);
+});
+
+it("Changes saturation with arrow keys", async () => {
+  const handleChange = jest.fn();
+  const initialValue = { r: 80, g: 100, b: 120 };
+
+  const result = render(<RgbColorPicker color={initialValue} onChange={handleChange} />);
+  const hue = result.container.querySelector(".react-colorful__saturation .interactive");
+
+  hue.focus();
+  const node = document.activeElement || document.body;
+  fireEvent.keyDown(node, { keyCode: 39 });
+  fireEvent.keyDown(node, { keyCode: 40 });
+
+  expect(handleChange).toHaveReturnedTimes(2);
 });
 
 it("Changes hue with arrow keys", async () => {
