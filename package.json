@@ -14,7 +14,7 @@
     "check-types": "tsc --noEmit true",
     "test": "jest tests --coverage",
     "build:code": "microbundle build --entry src/index.ts --jsx React.createElement --name react-colorful --css-modules true --tsconfig tsconfig.build.json",
-    "build:types": "dts-bundle-generator -o dist/index.d.ts src/index.ts",
+    "build:types": "dts-bundle-generator --external-types=react -o=dist/index.d.ts src/index.ts",
     "build": "del-cli 'dist/*' && npm run build:code && npm run build:types",
     "prepublishOnly": "npm run build",
     "start-demo": "parcel demo/src/index.html --out-dir demo/dist --open",
