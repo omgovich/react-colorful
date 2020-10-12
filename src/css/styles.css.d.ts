@@ -7,3 +7,4 @@ export const alphaPattern: string;
 export const lastControl: string;
 export const interactive: string;
 export const pointer: string;
+export const pointerFill: string;

@@ -1,6 +1,7 @@
 import React from "react";
 
 import { Interactive, Interaction } from "./Interactive";
+import { Pointer } from "./Pointer";
 
 import { hsvaToHslString } from "../../utils/convert";
 import { formatClassName } from "../../utils/format";
@@ -26,14 +27,7 @@ const HueBase = ({ className, hue, onChange }: Props) => {
     });
   };
 
-  const pointerStyle = {
-    top: "50%",
-    left: `${(hue / 360) * 100}%`,
-    color: hsvaToHslString({ h: hue, s: 100, v: 100, a: 1 }),
-  };
-
   const nodeClassName = formatClassName(["react-colorful__hue", styles.hue, className]);
-  const pointerClassName = formatClassName(["react-colorful__hue-pointer", styles.pointer]);
 
   return (
     <div className={nodeClassName}>
@@ -43,7 +37,11 @@ const HueBase = ({ className, hue, onChange }: Props) => {
         aria-label="Hue"
         aria-valuetext={Math.round(hue)}
       >
-        <div className={pointerClassName} style={pointerStyle} />
+        <Pointer
+          className="react-colorful__hue-pointer"
+          left={hue / 360}
+          color={hsvaToHslString({ h: hue, s: 100, v: 100, a: 1 })}
+        />
       </Interactive>
     </div>
   );
