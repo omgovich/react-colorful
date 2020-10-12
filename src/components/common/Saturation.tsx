@@ -1,5 +1,6 @@
 import React from "react";
 import { Interactive, Interaction } from "./Interactive";
+import { Pointer } from "./Pointer";
 import { HsvaColor } from "../../types";
 import { hsvaToHslString } from "../../utils/convert";
 import { clamp } from "../../utils/clamp";
@@ -31,14 +32,7 @@ const SaturationBase = ({ hsva, onChange }: Props) => {
     backgroundColor: hsvaToHslString({ h: hsva.h, s: 100, v: 100, a: 1 }),
   };
 
-  const pointerStyle = {
-    top: `${100 - hsva.v}%`,
-    left: `${hsva.s}%`,
-    color: hsvaToHslString(hsva),
-  };
-
   const nodeClassName = formatClassName(["react-colorful__saturation", styles.saturation]);
-  const pointerClassName = formatClassName(["react-colorful__saturation-pointer", styles.pointer]);
 
   return (
     <div className={nodeClassName} style={containerStyle}>
@@ -48,7 +42,12 @@ const SaturationBase = ({ hsva, onChange }: Props) => {
         aria-label="Color"
         aria-valuetext={`Saturation ${Math.round(hsva.s)}%, Brightness ${Math.round(hsva.v)}%`}
       >
-        <div className={pointerClassName} style={pointerStyle} />
+        <Pointer
+          className="react-colorful__saturation-pointer"
+          top={1 - hsva.v / 100}
+          left={hsva.s / 100}
+          color={hsvaToHslString(hsva)}
+        />
       </Interactive>
     </div>
   );
