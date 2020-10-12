@@ -67,6 +67,7 @@
   right: 0;
   bottom: 0;
   border-radius: inherit;
+  outline: none;
   /* Don't trigger the default scrolling behavior when the event is originating from this element */
   touch-action: none;
 }
