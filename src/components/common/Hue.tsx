@@ -6,6 +6,7 @@ import { Pointer } from "./Pointer";
 import { hsvaToHslString } from "../../utils/convert";
 import { formatClassName } from "../../utils/format";
 import { clamp } from "../../utils/clamp";
+import { round } from "../../utils/round";
 
 import styles from "../../css/styles.css";
 
@@ -35,7 +36,7 @@ const HueBase = ({ className, hue, onChange }: Props) => {
         onMove={handleMove}
         onKey={handleKey}
         aria-label="Hue"
-        aria-valuetext={Math.round(hue)}
+        aria-valuetext={round(hue)}
       >
         <Pointer
           className="react-colorful__hue-pointer"

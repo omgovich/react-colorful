@@ -6,6 +6,7 @@ import { Pointer } from "./Pointer";
 import { hsvaToHslaString } from "../../utils/convert";
 import { formatClassName } from "../../utils/format";
 import { clamp } from "../../utils/clamp";
+import { round } from "../../utils/round";
 import { HsvaColor } from "../../types";
 
 import styles from "../../css/styles.css";
@@ -51,7 +52,7 @@ export const Alpha = ({ className, hsva, onChange }: Props): JSX.Element => {
         onMove={handleMove}
         onKey={handleKey}
         aria-label="Alpha"
-        aria-valuetext={`${Math.round(hsva.a * 100)}%`}
+        aria-valuetext={`${round(hsva.a * 100)}%`}
       >
         <Pointer className={pointerClassName} left={hsva.a} color={hsvaToHslaString(hsva)} />
       </Interactive>

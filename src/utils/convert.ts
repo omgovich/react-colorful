@@ -1,3 +1,4 @@
+import { round } from "./round";
 import { RgbaColor, RgbColor, HslaColor, HslColor, HsvaColor, HsvColor } from "../types";
 
 export const hexToHsva = (hex: string): HsvaColor => rgbaToHsva(hexToRgba(hex));
@@ -94,9 +95,9 @@ export const hsvaToRgba = ({ h, s, v, a }: HsvaColor): RgbaColor => {
     module = hh % 6;
 
   return {
-    r: Math.round([v, c, b, b, d, v][module] * 255),
-    g: Math.round([d, v, v, c, b, b][module] * 255),
-    b: Math.round([b, b, d, v, v, c][module] * 255),
+    r: round([v, c, b, b, d, v][module] * 255),
+    g: round([d, v, v, c, b, b][module] * 255),
+    b: round([b, b, d, v, v, c][module] * 255),
     a,
   };
 };
@@ -166,9 +167,9 @@ export const rgbaToHsva = ({ r, g, b, a }: RgbaColor): HsvaColor => {
     : 0;
 
   return {
-    h: Math.round(60 * (hh < 0 ? hh + 6 : hh)),
-    s: Math.round(max ? (delta / max) * 100 : 0),
-    v: Math.round((max / 255) * 100),
+    h: round(60 * (hh < 0 ? hh + 6 : hh)),
+    s: round(max ? (delta / max) * 100 : 0),
+    v: round((max / 255) * 100),
     a,
   };
 };
