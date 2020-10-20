@@ -118,12 +118,12 @@ export const hsvaStringToHsva = (hsvString: string): HsvaColor => {
 
   if (!match) return { h: 0, s: 0, v: 0, a: 1 };
 
-  return {
+  return roundHsva({
     h: Number(match[1]),
     s: Number(match[2]),
     v: Number(match[3]),
     a: match[4] === undefined ? 1 : Number(match[4]),
-  };
+  });
 };
 
 export const hsvStringToHsva = hsvaStringToHsva;
