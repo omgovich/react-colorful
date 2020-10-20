@@ -4,6 +4,7 @@ import { Pointer } from "./Pointer";
 import { HsvaColor } from "../../types";
 import { hsvaToHslString } from "../../utils/convert";
 import { clamp } from "../../utils/clamp";
+import { round } from "../../utils/round";
 import { formatClassName } from "../../utils/format";
 import styles from "../../css/styles.css";
 
@@ -40,7 +41,7 @@ const SaturationBase = ({ hsva, onChange }: Props) => {
         onMove={handleMove}
         onKey={handleKey}
         aria-label="Color"
-        aria-valuetext={`Saturation ${Math.round(hsva.s)}%, Brightness ${Math.round(hsva.v)}%`}
+        aria-valuetext={`Saturation ${round(hsva.s)}%, Brightness ${round(hsva.v)}%`}
       >
         <Pointer
           className="react-colorful__saturation-pointer"
