@@ -56,10 +56,10 @@ export const hsvaToHsla = ({ h, s, v, a }: HsvaColor): HslaColor => {
   const hh = ((200 - s) * v) / 100;
 
   return {
-    h: h,
-    s: hh > 0 && hh < 200 ? ((s * v) / 100 / (hh <= 100 ? hh : 200 - hh)) * 100 : 0,
-    l: hh / 2,
-    a,
+    h: round(h),
+    s: round(hh > 0 && hh < 200 ? ((s * v) / 100 / (hh <= 100 ? hh : 200 - hh)) * 100 : 0),
+    l: round(hh / 2),
+    a: round(a, 2),
   };
 };
 
@@ -68,13 +68,13 @@ export const hsvaToHslString = (hsva: HsvaColor): string => {
   return `hsl(${h}, ${s}%, ${l}%)`;
 };
 
-export const hsvaToHsvString = (hsv: HsvaColor): string => {
-  const { h, s, v } = hsv;
+export const hsvaToHsvString = (hsva: HsvaColor): string => {
+  const { h, s, v } = roundHsva(hsva);
   return `hsv(${h}, ${s}%, ${v}%)`;
 };
 
 export const hsvaToHsvaString = (hsva: HsvaColor): string => {
-  const { h, s, v, a } = hsva;
+  const { h, s, v, a } = roundHsva(hsva);
   return `hsva(${h}, ${s}%, ${v}%, ${a})`;
 };
 
@@ -174,8 +174,18 @@ export const rgbaToHsva = ({ r, g, b, a }: RgbaColor): HsvaColor => {
   };
 };
 
+export const roundHsva = (hsva: HsvaColor): HsvaColor => ({
+  h: round(hsva.h),
+  s: round(hsva.s),
+  v: round(hsva.v),
+  a: round(hsva.a, 2),
+});
+
 export const rgbaToRgb = ({ r, g, b }: RgbaColor): RgbColor => ({ r, g, b });
 
 export const hslaToHsl = ({ h, s, l }: HslaColor): HslColor => ({ h, s, l });
 
-export const hsvaToHsv = ({ h, s, v }: HsvaColor): HsvColor => ({ h, s, v });
+export const hsvaToHsv = (hsva: HsvaColor): HsvColor => {
+  const { h, s, v } = roundHsva(hsva);
+  return { h, s, v };
+};
