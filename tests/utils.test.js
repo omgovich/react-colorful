@@ -1,5 +1,5 @@
 // HEX
-import { hexToHsva, hsvaToHex } from "../src/utils/convert";
+import { hexToHsva, hsvaToHex, roundHsva } from "../src/utils/convert";
 import { equalHex } from "../src/utils/compare";
 import { validHex } from "../src/utils/validate";
 // HSLA
@@ -28,6 +28,7 @@ import { hsvaToHsvString, hsvStringToHsva } from "../src/utils/convert";
 import { equalColorObjects, equalColorString } from "../src/utils/compare";
 import { formatClassName } from "../src/utils/format";
 import { clamp } from "../src/utils/clamp";
+import { round } from "../src/utils/round";
 
 it("Converts HEX to HSVA", () => {
   expect(hexToHsva("#ffffff")).toMatchObject({ h: 0, s: 0, v: 100, a: 1 });
@@ -55,11 +56,11 @@ it("Converts HSVA to HEX", () => {
 it("Converts HSVA to HSLA", () => {
   let test = (input, output) => expect(hsvaToHsla(input)).toMatchObject(output);
 
-  test({ h: 0, s: 0, v: 100 }, { h: 0, s: 0, l: 100 });
-  test({ h: 60, s: 100, v: 100 }, { h: 60, s: 100, l: 50 });
-  test({ h: 0, s: 100, v: 100 }, { h: 0, s: 100, l: 50 });
-  test({ h: 0, s: 0, v: 0 }, { h: 0, s: 0, l: 0 });
-  test({ h: 200, s: 40, v: 40 }, { h: 200, s: 25, l: 32 });
+  test({ h: 0, s: 0, v: 100, a: 1 }, { h: 0, s: 0, l: 100, a: 1 });
+  test({ h: 60, s: 100, v: 100, a: 1 }, { h: 60, s: 100, l: 50, a: 1 });
+  test({ h: 0, s: 100, v: 100, a: 1 }, { h: 0, s: 100, l: 50, a: 1 });
+  test({ h: 0, s: 0, v: 0, a: 1 }, { h: 0, s: 0, l: 0, a: 1 });
+  test({ h: 200, s: 40, v: 40, a: 0.499 }, { h: 200, s: 25, l: 32, a: 0.5 });
 });
 
 it("Converts HSLA to HSVA", () => {
@@ -125,6 +126,7 @@ it("Converts RGBA string to HSVA", () => {
 it("Converts HSVA to HSVA string", () => {
   expect(hsvaToHsvaString({ h: 0, s: 0, v: 100, a: 1 })).toBe("hsva(0, 0%, 100%, 1)");
   expect(hsvaToHsvaString({ h: 200, s: 40, v: 40, a: 0 })).toBe("hsva(200, 40%, 40%, 0)");
+  expect(hsvaToHsvaString({ h: 3.33, s: 5.55, v: 6.66, a: 0.567 })).toBe("hsva(3, 6%, 7%, 0.57)");
 });
 
 it("Converts HSVA to HSV string", () => {
@@ -133,11 +135,18 @@ it("Converts HSVA to HSV string", () => {
 });
 
 it("Converts HSV string to HSVA", () => {
-  expect(hsvStringToHsva("hsv(0, 10.5%, 0%)")).toMatchObject({ h: 0, s: 10.5, v: 0, a: 1 });
+  expect(hsvStringToHsva("hsv(0, 10.5%, 0%)")).toMatchObject({ h: 0, s: 11, v: 0, a: 1 });
 });
 
 it("Converts HSVA string to HSVA", () => {
-  expect(hsvaStringToHsva("hsva(0, 10.5%, 0, 0.5)")).toMatchObject({ h: 0, s: 10.5, v: 0, a: 0.5 });
+  expect(hsvaStringToHsva("hsva(0, 10.5%, 0, 0.5)")).toMatchObject({ h: 0, s: 11, v: 0, a: 0.5 });
+});
+
+it("Rounds HSVA", () => {
+  let test = (input, output) => expect(roundHsva(input)).toMatchObject(output);
+
+  test({ h: 1, s: 1, v: 1, a: 1 }, { h: 1, s: 1, v: 1, a: 1 });
+  test({ h: 3.3333, s: 4.4444, v: 5.5555, a: 0.6789 }, { h: 3, s: 4, v: 6, a: 0.68 });
 });
 
 it("Trims alpha-channel", () => {
@@ -187,6 +196,17 @@ it("Formats a class name", () => {
   expect(formatClassName(["one"])).toBe("one");
   expect(formatClassName(["one", "two", "three"])).toBe("one two three");
   expect(formatClassName([false, "two", null])).toBe("two");
+});
+
+it("Rounds a number", () => {
+  expect(round(0)).toBe(0);
+  expect(round(1)).toBe(1);
+  expect(round(0.1)).toBe(0);
+  expect(round(0.9)).toBe(1);
+  expect(round(0.123, 2)).toBe(0.12);
+  expect(round(0.789, 2)).toBe(0.79);
+  expect(round(1, 10)).toBe(1);
+  expect(round(0.123, 10)).toBe(0.123);
 });
 
 it("Clamps a number between bounds", () => {

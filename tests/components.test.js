@@ -208,7 +208,7 @@ it("Changes hue with arrow keys", async () => {
 
 it("Changes alpha with arrow keys", async () => {
   const handleChange = jest.fn();
-  const initialValue = { h: 180, s: 0, l: 50, a: 0.5 };
+  const initialValue = { h: 180, s: 0, v: 50, a: 0.5 };
 
   const result = render(<HsvaColorPicker color={initialValue} onChange={handleChange} />);
   const alpha = result.container.querySelector(".react-colorful__alpha .interactive");
