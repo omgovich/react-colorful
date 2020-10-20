@@ -98,7 +98,7 @@ export const hsvaToRgba = ({ h, s, v, a }: HsvaColor): RgbaColor => {
     r: round([v, c, b, b, d, v][module] * 255),
     g: round([d, v, v, c, b, b][module] * 255),
     b: round([b, b, d, v, v, c][module] * 255),
-    a,
+    a: round(a, 2),
   };
 };
 
