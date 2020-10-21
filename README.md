@@ -31,7 +31,7 @@
 
 ## Features
 
-- **Small**: Just 1,8 KB gzipped (18 times lighter than **react-color**).
+- **Small**: Just 1,9 KB gzipped (17 times lighter than **react-color**).
 - **Tree-shakeable**: Only the parts you use will be imported into your app's bundle.
 - **Fast**: Built with hooks and functional components only.
 - **Bulletproof**: Written in strict TypeScript and covered by 40+ tests.
