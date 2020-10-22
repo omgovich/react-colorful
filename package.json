@@ -113,7 +113,7 @@
     }
   },
   "files": [
-    "dist/*.{js,ts,css}",
+    "dist/*.{js,ts,map,css}",
     "dist/components/*.ts",
     "LICENSE",
     "ACKNOWLEDGMENTS",
