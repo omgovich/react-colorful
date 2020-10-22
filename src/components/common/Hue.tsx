@@ -8,8 +8,6 @@ import { formatClassName } from "../../utils/format";
 import { clamp } from "../../utils/clamp";
 import { round } from "../../utils/round";
 
-import styles from "../../css/styles.css";
-
 interface Props {
   className?: string;
   hue: number;
@@ -28,7 +26,7 @@ const HueBase = ({ className, hue, onChange }: Props) => {
     });
   };
 
-  const nodeClassName = formatClassName(["react-colorful__hue", styles.hue, className]);
+  const nodeClassName = formatClassName(["react-colorful__hue", className]);
 
   return (
     <div className={nodeClassName}>

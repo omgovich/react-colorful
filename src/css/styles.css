@@ -1,4 +1,4 @@
-.container {
+.react-colorful {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -8,7 +8,7 @@
   cursor: default;
 }
 
-.saturation {
+.react-colorful__saturation {
   position: relative;
   flex-grow: 1;
   border-bottom: 12px solid #000;
@@ -17,9 +17,9 @@
     linear-gradient(to right, #fff, rgba(255, 255, 255, 0));
 }
 
-.alpha:after,
-.pointerFill,
-.alphaGradient {
+.react-colorful__alpha:after,
+.react-colorful__pointer-fill,
+.react-colorful__alpha-gradient {
   content: "";
   position: absolute;
   left: 0;
@@ -31,18 +31,18 @@
 }
 
 /* Improve elements rendering on light backgrounds */
-.alpha:after,
-.saturation {
+.react-colorful__alpha:after,
+.react-colorful__saturation {
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.05);
 }
 
-.hue,
-.alpha {
+.react-colorful__hue,
+.react-colorful__alpha {
   position: relative;
   height: 24px;
 }
 
-.hue {
+.react-colorful__hue {
   background: linear-gradient(
     to right,
     #f00 0%,
@@ -56,11 +56,11 @@
 }
 
 /* Round bottom corners of the last element: `Hue` for `ColorPicker` or `Alpha` for `AlphaColorPicker` */
-.lastControl {
+.react-colorful__last-control {
   border-radius: 0 0 8px 8px;
 }
 
-.interactive {
+.react-colorful__interactive {
   position: absolute;
   left: 0;
   top: 0;
@@ -72,11 +72,7 @@
   touch-action: none;
 }
 
-.interactive:focus .pointer {
-  transform: translate(-50%, -50%) scale(1.1);
-}
-
-.pointer {
+.react-colorful__pointer {
   position: absolute;
   z-index: 1;
   box-sizing: border-box;
@@ -89,18 +85,23 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
+.react-colorful__interactive:focus .react-colorful__pointer {
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
 /* Chessboard-like pattern for alpha related elements */
-.alphaPattern {
+.react-colorful__alpha,
+.react-colorful__alpha-pointer {
   background-color: #fff;
   background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill-opacity=".05"><rect x="8" width="8" height="8"/><rect y="8" width="8" height="8"/></svg>');
 }
 
 /* Display the saturation pointer over the hue one */
-.saturation .pointer {
+.react-colorful__saturation-pointer {
   z-index: 3;
 }
 
 /* Display the hue pointer over the alpha one */
-.hue .pointer {
+.react-colorful__hue-pointer {
   z-index: 2;
 }

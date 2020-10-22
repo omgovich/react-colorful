@@ -5,8 +5,6 @@ import { HsvaColor } from "../../types";
 import { hsvaToHslString } from "../../utils/convert";
 import { clamp } from "../../utils/clamp";
 import { round } from "../../utils/round";
-import { formatClassName } from "../../utils/format";
-import styles from "../../css/styles.css";
 
 interface Props {
   hsva: HsvaColor;
@@ -33,10 +31,8 @@ const SaturationBase = ({ hsva, onChange }: Props) => {
     backgroundColor: hsvaToHslString({ h: hsva.h, s: 100, v: 100, a: 1 }),
   };
 
-  const nodeClassName = formatClassName(["react-colorful__saturation", styles.saturation]);
-
   return (
-    <div className={nodeClassName} style={containerStyle}>
+    <div className="react-colorful__saturation" style={containerStyle}>
       <Interactive
         onMove={handleMove}
         onKey={handleKey}

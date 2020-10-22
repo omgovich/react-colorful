@@ -1,8 +1,6 @@
 import React from "react";
 import { formatClassName } from "../../utils/format";
 
-import styles from "../../css/styles.css";
-
 interface Props {
   className?: string;
   top?: number;
@@ -11,7 +9,7 @@ interface Props {
 }
 
 export const Pointer = ({ className, color, left, top = 0.5 }: Props): JSX.Element => {
-  const nodeClassName = formatClassName([className, styles.pointer]);
+  const nodeClassName = formatClassName(["react-colorful__pointer", className]);
 
   const style = {
     top: `${top * 100}%`,
@@ -20,7 +18,7 @@ export const Pointer = ({ className, color, left, top = 0.5 }: Props): JSX.Eleme
 
   return (
     <div className={nodeClassName} style={style}>
-      <div className={styles.pointerFill} style={{ backgroundColor: color }} />
+      <div className="react-colorful__pointer-fill" style={{ backgroundColor: color }} />
     </div>
   );
 };

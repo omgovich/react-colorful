@@ -3,8 +3,6 @@ import React, { useState, useLayoutEffect, useRef, useCallback } from "react";
 import { useEventCallback } from "../../hooks/useEventCallback";
 import { clamp } from "../../utils/clamp";
 
-import styles from "../../css/styles.css";
-
 export interface Interaction {
   left: number;
   top: number;
@@ -110,7 +108,7 @@ const InteractiveBase = ({ onMove, onKey, ...rest }: Props) => {
   return (
     <div
       {...rest}
-      className={styles.interactive}
+      className="react-colorful__interactive"
       ref={container}
       onTouchStart={handleMoveStart}
       onMouseDown={handleMoveStart}

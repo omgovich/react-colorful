@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ColorPickerBaseProps, AnyColor } from "../../../src/types";
-import styles from "../css/styles.css";
+import styles from "../css/styles.module.css";
 
 interface Props<T extends AnyColor> {
   title: string;
