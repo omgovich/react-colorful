@@ -38,7 +38,7 @@ export const Alpha = ({ className, hsva, onChange }: Props): JSX.Element => {
 
   return (
     <div className={nodeClassName}>
-      <div className={"react-colorful__alpha-gradient"} style={gradientStyle} />
+      <div className="react-colorful__alpha-gradient" style={gradientStyle} />
       <Interactive
         onMove={handleMove}
         onKey={handleKey}
