@@ -33,7 +33,7 @@ import { Star } from "./components/Icon";
 import { useFaviconColor } from "./hooks/useFaviconColor";
 import { useBodyBackground } from "./hooks/useBodyBackground";
 import { useStargazerCount } from "./hooks/useStargazerCount";
-import styles from "./css/styles.css";
+import styles from "./css/styles.module.css";
 
 // See http://www.w3.org/TR/AERT#color-contrast
 const getBrightness = ({ r, g, b }: RgbaColor) => (r * 299 + g * 587 + b * 114) / 1000;
@@ -68,29 +68,29 @@ const Demo = () => {
 
   return (
     <div>
-      <header className={styles.header} style={{ color: textColor }}>
-        <div className={styles.demo}>
-          <RgbaColorPicker className={styles.colorPicker} color={color} onChange={handleChange} />
+      <header className="header" style={{ color: textColor }}>
+        <div className="header__demo">
+          <RgbaColorPicker className="header__picker" color={color} onChange={handleChange} />
         </div>
-        <div className={styles.headerContent}>
-          <h1 className={styles.headerTitle}>React Colorful 🎨</h1>
-          <h2 className={styles.headerDescription}>
+        <div className="header__content">
+          <h1 className="header__title">React Colorful 🎨</h1>
+          <h2 className="header__description">
             A tiny color picker component for modern React apps
           </h2>
-          <nav className={styles.links}>
+          <nav className="links">
             <a
-              className={styles.link}
+              className="link"
               href="https://github.com/omgovich/react-colorful"
               target="_blank"
               rel="noreferrer"
             >
               GitHub
-              <span className={styles.linkSeparator} />
-              <Star className={styles.linkIcon} />
+              <span className="link__separator" />
+              <Star className="link__icon" />
               {stargazerCount}
             </a>
             <a
-              className={styles.link}
+              className="link"
               href="https://www.npmjs.com/package/react-colorful"
               target="_blank"
               rel="noreferrer"
