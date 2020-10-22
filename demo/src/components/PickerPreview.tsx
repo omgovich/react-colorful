@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { ColorPickerBaseProps, AnyColor } from "../../../src/types";
-import styles from "../css/styles.module.css";
 
 interface Props<T extends AnyColor> {
   title: string;
@@ -21,10 +20,10 @@ export function PickerPreview<T extends AnyColor>({
   };
 
   return (
-    <div className={styles.preview}>
-      <div className={styles.previewTitle}>{title}</div>
-      <PickerComponent className={styles.previewDemo} color={color} onChange={handleChange} />
-      <div className={styles.previewOutput}>{JSON.stringify(color)}</div>
+    <div className="preview">
+      <div className="preview__title">{title}</div>
+      <PickerComponent className="preview__demo" color={color} onChange={handleChange} />
+      <div className="preview__output">{JSON.stringify(color)}</div>
     </div>
   );
 }
