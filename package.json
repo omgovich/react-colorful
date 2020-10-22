@@ -8,6 +8,14 @@
   "esmodule": "dist/index.esmodule.js",
   "umd:main": "dist/index.umd.js",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "browser": "./dist/index.module.js",
+      "umd": "./dist/index.umd.js",
+      "import": "./dist/index.module.js",
+      "require": "./dist/index.js"
+    }
+  },
   "scripts": {
     "lint": "eslint src/**/*.{ts,tsx} demo/src/**/*.{ts,tsx}",
     "size": "npm run build && size-limit",
@@ -104,6 +112,14 @@
       "\\.css$": "identity-obj-proxy"
     }
   },
+  "files": [
+    "dist/*.{js,ts}",
+    "dist/components/*.ts",
+    "LICENSE",
+    "ACKNOWLEDGMENTS",
+    "README.md",
+    "package.json"
+  ],
   "repository": "omgovich/react-colorful",
   "keywords": [
     "react",
