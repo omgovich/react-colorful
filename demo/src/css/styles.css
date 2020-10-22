@@ -13,18 +13,6 @@ body {
   font: normal 20px/1.4 "Recursive", Arial, Helvetica, sans-serif;
 }
 
-.demo {
-  position: relative;
-  width: 200px;
-  flex-shrink: 0;
-}
-
-.color-picker {
-  width: 100%;
-  border-radius: 9px;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
-}
-
 .header {
   display: flex;
   align-items: center;
@@ -35,6 +23,18 @@ body {
   padding: 120px 32px;
   transition: color 0.15s;
   color: #fff;
+}
+
+.header__demo {
+  position: relative;
+  width: 200px;
+  flex-shrink: 0;
+}
+
+.header__picker {
+  width: 100%;
+  border-radius: 9px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
 }
 
 .header__content {

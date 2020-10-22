@@ -33,7 +33,7 @@ import { Star } from "./components/Icon";
 import { useFaviconColor } from "./hooks/useFaviconColor";
 import { useBodyBackground } from "./hooks/useBodyBackground";
 import { useStargazerCount } from "./hooks/useStargazerCount";
-import styles from "./css/styles.module.css";
+import "./css/styles.css";
 
 // See http://www.w3.org/TR/AERT#color-contrast
 const getBrightness = ({ r, g, b }: RgbaColor) => (r * 299 + g * 587 + b * 114) / 1000;
