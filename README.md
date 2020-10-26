@@ -210,6 +210,15 @@ This will correct the types an allow you to use **react-colorful** along with ma
 
 </details>
 
+## Code Recipes
+
+- [Value debouncing](https://codesandbox.io/s/dgqn0?file=/src/DebouncedPicker.js)
+- [Popover picker](https://codesandbox.io/s/opmco?file=/src/PopoverPicker.js)
+- [Preset colors (color squares)](https://codesandbox.io/s/bekry?file=/src/SwatchesPicker.js)
+- [Picker that accepts any color input](https://codesandbox.io/s/6fp23?file=/src/CustomPicker.js)
+- [Text field to be able to type/copy/paste a color](https://codesandbox.io/s/0k2fx?file=/src/App.js)
+- [Custom styles and layout](https://codesandbox.io/s/mq85z?file=/src/styles.css)
+
 ## Why react-colorful?
 
 Today each dependency drags more dependencies and increases your project’s bundle size uncontrollably. But size is very important for everything that intends to work in a browser.
