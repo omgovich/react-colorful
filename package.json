@@ -21,13 +21,17 @@
     "size": "npm run build && size-limit",
     "check-types": "tsc --noEmit true",
     "test": "jest tests --coverage",
-    "build": "del-cli 'dist/*' && microbundle build --entry src/index.ts --jsx React.createElement --name react-colorful --css-modules false --tsconfig tsconfig.build.json",
+    "build": "del-cli 'dist/*' && microbundle build --entry src/index.ts --jsx React.createElement --name react-colorful --css-modules false --tsconfig tsconfig.build.json && node scripts/inject-css-to-js-dist.js",
     "prepublishOnly": "npm run build",
     "start-demo": "parcel demo/src/index.html --out-dir demo/dist --open",
     "build-demo": "del-cli 'demo/dist/*' && parcel build demo/src/index.html --out-dir demo/dist --public-url /react-colorful/",
     "deploy-demo": "npm run build-demo && gh-pages -d demo/dist"
   },
   "size-limit": [
+    {
+      "path": "dist/index.module.js",
+      "limit": "4 KB"
+    },
     {
       "path": "dist/index.module.js",
       "import": "{ HexColorPicker }",
@@ -172,6 +176,7 @@
     "prettier": "2.0.5",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
+    "replace-in-file": "^6.1.0",
     "size-limit": "^4.6.2",
     "ts-jest": "^26.2.0",
     "typescript": "^3.9.7",

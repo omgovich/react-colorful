@@ -16,5 +16,9 @@ export { RgbStringColorPicker } from "./components/RgbStringColorPicker";
 // Additional components
 export { HexColorInput } from "./components/HexColorInput";
 
+// Export styles as string for those who uses a CSS-in-JS library and doesn't have a CSS-loader.
+// The marker below (DO NOT TOUCH) will be replaced with the real styles during the package building
+export const styles = ".react-colorful{}";
+
 // Color model types
 export { RgbColor, RgbaColor, HslColor, HslaColor, HsvColor, HsvaColor } from "./types";
