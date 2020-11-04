@@ -14,7 +14,8 @@
       "umd": "./dist/index.umd.js",
       "import": "./dist/index.module.js",
       "require": "./dist/index.js"
-    }
+    },
+    "./dist/index.css": "./dist/index.css"
   },
   "scripts": {
     "lint": "eslint src/**/*.{ts,tsx} demo/src/**/*.{ts,tsx}",
