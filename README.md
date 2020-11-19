@@ -15,7 +15,7 @@
     <img alt="coverage" src="https://img.shields.io/codecov/c/github/omgovich/react-colorful.svg?labelColor=da248d&color=6ead0a" />
   </a>
   <a href="https://npmjs.org/package/react-colorful">
-    <img alt="no dependencies" src="https://img.shields.io/david/omgovich/react-colorful.svg?labelColor=da248d&color=6ead0a" />
+    <img alt="no dependencies" src="https://badgen.net/bundlephobia/dependency-count/react-colorful?labelColor=da248d&color=6ead0a" />
   </a>
   <a href="https://bundlephobia.com/result?p=react-colorful">
     <img alt="tree-shakeable" src="https://badgen.net/bundlephobia/tree-shaking/react-colorful?labelColor=da248d&color=6ead0a" />
