@@ -8,8 +8,8 @@
   <a href="https://npmjs.org/package/react-colorful">
     <img alt="npm" src="https://img.shields.io/npm/v/react-colorful.svg?labelColor=da248d&color=6ead0a" />
   </a>
-  <a href="https://travis-ci.org/omgovich/react-colorful">
-    <img alt="build" src="https://img.shields.io/travis/omgovich/react-colorful/master.svg?branch=master&labelColor=da248d&color=6ead0a" />
+  <a href="https://github.com/omgovich/react-colorful/actions">
+    <img alt="build" src="https://img.shields.io/github/workflow/status/omgovich/react-colorful/Node.js%20CI/master.svg?labelColor=da248d&color=6ead0a" />
   </a>
   <a href="https://codecov.io/gh/omgovich/react-colorful">
     <img alt="coverage" src="https://img.shields.io/codecov/c/github/omgovich/react-colorful.svg?labelColor=da248d&color=6ead0a" />
