@@ -23,11 +23,5 @@ jobs:
       - run: npm run size
       - run: npm run test
 
-      - name: Compressed size report
-        uses: preactjs/compressed-size-action@v2
-        with:
-          repo-token: "${{ secrets.GITHUB_TOKEN }}"
-          pattern: "{**/dist/**/index.module.js,./dist/index.css}"
-
       - name: Code coverage report
         uses: codecov/codecov-action@v1
