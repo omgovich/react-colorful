@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 
 import { useEventCallback } from "../../hooks/useEventCallback";
 import { clamp } from "../../utils/clamp";
@@ -98,7 +98,7 @@ const InteractiveBase = ({ onMove, onKey, ...rest }: Props) => {
     [handleMove, handleMoveEnd]
   );
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     toggleDocumentEvents(isDragging);
     return () => {
       isDragging && toggleDocumentEvents(false);
