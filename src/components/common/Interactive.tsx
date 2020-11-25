@@ -1,5 +1,6 @@
-import React, { useState, useLayoutEffect, useRef, useCallback } from "react";
+import React, { useState, useRef, useCallback } from "react";
 
+import { useIsomorphicLayoutEffect } from "../../hooks/useIsomorphicLayoutEffect";
 import { useEventCallback } from "../../hooks/useEventCallback";
 import { clamp } from "../../utils/clamp";
 
@@ -98,7 +99,7 @@ const InteractiveBase = ({ onMove, onKey, ...rest }: Props) => {
     [handleMove, handleMoveEnd]
   );
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     toggleDocumentEvents(isDragging);
     return () => {
       isDragging && toggleDocumentEvents(false);
