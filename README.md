@@ -26,7 +26,7 @@
 </div>
 
 <div align="center">
-  <strong>react-colorful</strong> is a tiny color picker component for modern React apps.
+  <strong>react-colorful</strong> is a tiny color picker component for React and Preact apps.
 </div>
 
 ## Features
