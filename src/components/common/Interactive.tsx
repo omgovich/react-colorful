@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, PointerEvent } from "react";
+import React, { useState, useRef, useCallback } from "react";
 
 import { useIsomorphicLayoutEffect } from "../../hooks/useIsomorphicLayoutEffect";
 import { useEventCallback } from "../../hooks/useEventCallback";
@@ -43,12 +43,15 @@ const InteractiveBase = ({ onMove, onKey, ...rest }: Props) => {
   );
 
   const handleMoveStart = useCallback(
-    ({ nativeEvent: event }: React.PointerEvent) => {
+    (event: React.PointerEvent) => {
       event.preventDefault();
+
+      // Start capturing to handle cases when pointer is outside of the frame or window
+      container.current!.setPointerCapture(event.pointerId);
 
       // The node/ref must actually exist when user start an interaction.
       // We won't suppress the ESLint warning though, as it should probably be something to be aware of.
-      onMoveCallback(getRelativePosition(container.current!, event));
+      onMoveCallback(getRelativePosition(container.current!, event.nativeEvent));
       setDragging(true);
     },
     [onMoveCallback]
@@ -73,17 +76,15 @@ const InteractiveBase = ({ onMove, onKey, ...rest }: Props) => {
     [onKeyCallback]
   );
 
-  const handleMoveEnd = useCallback(() => setDragging(false), []);
+  const handleMoveEnd = useCallback((event: NativePointerEvent) => {
+    setDragging(false);
+    if (container.current) container.current.releasePointerCapture(event.pointerId);
+  }, []);
 
   const toggleDocumentEvents = useCallback(
     (state) => {
       // add or remove additional pointer event listeners
       const toggleEvent = state ? window.addEventListener : window.removeEventListener;
-
-      if (container.current) {
-        container.current.setPointerCapture(e.pointerId);
-      }
-
       toggleEvent("pointermove", handleMove);
       toggleEvent("pointerup", handleMoveEnd);
     },
