@@ -9,8 +9,11 @@ export interface Interaction {
   top: number;
 }
 
+// Fix conflicting `PointerEvent` types from React and TS
+type NativePointerEvent = WindowEventMap["pointermove"];
+
 // Returns a relative position of the pointer inside the node's bounding box
-const getRelativePosition = (node: HTMLDivElement, event: PointerEvent): Interaction => {
+const getRelativePosition = (node: HTMLDivElement, event: NativePointerEvent): Interaction => {
   const rect = node.getBoundingClientRect();
 
   return {
@@ -32,7 +35,7 @@ const InteractiveBase = ({ onMove, onKey, ...rest }: Props) => {
   const onKeyCallback = useEventCallback<Interaction>(onKey);
 
   const handleMove = useCallback(
-    (event: PointerEvent) => {
+    (event: NativePointerEvent) => {
       event.preventDefault();
       if (container.current) onMoveCallback(getRelativePosition(container.current, event));
     },
@@ -76,6 +79,10 @@ const InteractiveBase = ({ onMove, onKey, ...rest }: Props) => {
     (state) => {
       // add or remove additional pointer event listeners
       const toggleEvent = state ? window.addEventListener : window.removeEventListener;
+
+      if (container.current) {
+        container.current.setPointerCapture(e.pointerId);
+      }
 
       toggleEvent("pointermove", handleMove);
       toggleEvent("pointerup", handleMoveEnd);
