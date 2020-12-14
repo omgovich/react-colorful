@@ -241,7 +241,7 @@ To show you the problem that **react-colorful** is trying to solve, we have perf
 ## Projects using react-colorful
 
 <details>
-  <summary><a href="https://resume.io">Resume.io</a> — online resume builder with over 7,800,000 users worldwide</summary>
+  <summary><a href="https://resume.io">Resume.io</a> — online resume builder with over 9,400,000 users worldwide</summary>
 
   <a href="https://resume.io/">
     <img src="demo/src/assets/resume-io.png" width="873" alt="resume.io" />
@@ -253,6 +253,14 @@ To show you the problem that **react-colorful** is trying to solve, we have perf
 
   <a href="https://wireflow.co/">
     <img src="demo/src/assets/wireflow-co.png" width="1222" alt="wireflow.co" />
+  </a>
+</details>
+
+<details>
+  <summary><a href="https://www.magicpattern.design/">MagicPattern.design</a> — unique geometric pattern generator</summary>
+
+  <a href="https://www.magicpattern.design/">
+    <img src="demo/src/assets/magicpattern-design.jpg" width="943" alt="magicpattern.design" />
   </a>
 </details>
 
