@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from "react";
+import React, { useState, useRef, useCallback, PointerEvent } from "react";
 
 import { useIsomorphicLayoutEffect } from "../../hooks/useIsomorphicLayoutEffect";
 import { useEventCallback } from "../../hooks/useEventCallback";
@@ -9,19 +9,13 @@ export interface Interaction {
   top: number;
 }
 
-// Check if an event was triggered by touch
-const isTouch = (e: MouseEvent | TouchEvent): e is TouchEvent => "touches" in e;
-
 // Returns a relative position of the pointer inside the node's bounding box
-const getRelativePosition = (node: HTMLDivElement, event: MouseEvent | TouchEvent): Interaction => {
+const getRelativePosition = (node: HTMLDivElement, event: PointerEvent): Interaction => {
   const rect = node.getBoundingClientRect();
 
-  // Get user's pointer position from `touches` array if it's a `TouchEvent`
-  const pointer = isTouch(event) ? event.touches[0] : (event as MouseEvent);
-
   return {
-    left: clamp((pointer.pageX - (rect.left + window.pageXOffset)) / rect.width),
-    top: clamp((pointer.pageY - (rect.top + window.pageYOffset)) / rect.height),
+    left: clamp((event.pageX - (rect.left + window.pageXOffset)) / rect.width),
+    top: clamp((event.pageY - (rect.top + window.pageYOffset)) / rect.height),
   };
 };
 
@@ -33,21 +27,12 @@ interface Props {
 
 const InteractiveBase = ({ onMove, onKey, ...rest }: Props) => {
   const container = useRef<HTMLDivElement>(null);
-  const hasTouched = useRef(false);
   const [isDragging, setDragging] = useState(false);
   const onMoveCallback = useEventCallback<Interaction>(onMove);
   const onKeyCallback = useEventCallback<Interaction>(onKey);
 
-  // Prevent mobile browsers from handling mouse events (conflicting with touch ones).
-  // If we detected a touch interaction before, we prefer reacting to touch events only.
-  const isValid = (event: MouseEvent | TouchEvent): boolean => {
-    if (hasTouched.current && !isTouch(event)) return false;
-    if (!hasTouched.current) hasTouched.current = isTouch(event);
-    return true;
-  };
-
   const handleMove = useCallback(
-    (event: MouseEvent | TouchEvent) => {
+    (event: PointerEvent) => {
       event.preventDefault();
       if (container.current) onMoveCallback(getRelativePosition(container.current, event));
     },
@@ -55,10 +40,8 @@ const InteractiveBase = ({ onMove, onKey, ...rest }: Props) => {
   );
 
   const handleMoveStart = useCallback(
-    ({ nativeEvent: event }: React.MouseEvent | React.TouchEvent) => {
+    ({ nativeEvent: event }: React.PointerEvent) => {
       event.preventDefault();
-
-      if (!isValid(event)) return;
 
       // The node/ref must actually exist when user start an interaction.
       // We won't suppress the ESLint warning though, as it should probably be something to be aware of.
@@ -93,8 +76,9 @@ const InteractiveBase = ({ onMove, onKey, ...rest }: Props) => {
     (state) => {
       // add or remove additional pointer event listeners
       const toggleEvent = state ? window.addEventListener : window.removeEventListener;
-      toggleEvent(hasTouched.current ? "touchmove" : "mousemove", handleMove);
-      toggleEvent(hasTouched.current ? "touchend" : "mouseup", handleMoveEnd);
+
+      toggleEvent("pointermove", handleMove);
+      toggleEvent("pointerup", handleMoveEnd);
     },
     [handleMove, handleMoveEnd]
   );
@@ -111,8 +95,7 @@ const InteractiveBase = ({ onMove, onKey, ...rest }: Props) => {
       {...rest}
       className="react-colorful__interactive"
       ref={container}
-      onTouchStart={handleMoveStart}
-      onMouseDown={handleMoveStart}
+      onPointerDown={handleMoveStart}
       onKeyDown={handleKeyDown}
       tabIndex={0}
       role="slider"
