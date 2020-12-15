@@ -1,3 +1,7 @@
+### 4.4.4
+
+- Fix bug when a user releases the mouse button outside of the document bounds (via #99)
+
 ### 4.4.3
 
 - Get rid of `useLayoutEffect` warning when using on the server (via #95)
