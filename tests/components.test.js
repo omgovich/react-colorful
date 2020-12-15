@@ -23,12 +23,11 @@ afterEach(cleanup);
 // See https://github.com/testing-library/react-testing-library/issues/268
 class FakeMouseEvent extends MouseEvent {
   constructor(type, values = {}) {
-    const { pageX, pageY, ...rest } = values;
-    super(type, rest);
+    super(type, { buttons: 1, ...values });
 
     Object.assign(this, {
-      pageX: pageX || 0,
-      pageY: pageY || 0,
+      pageX: values.pageX || 0,
+      pageY: values.pageY || 0,
     });
   }
 }
