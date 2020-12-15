@@ -48,6 +48,8 @@ const InteractiveBase = ({ onMove, onKey, ...rest }: Props) => {
 
   const handleMove = useCallback(
     (event: MouseEvent | TouchEvent) => {
+      event.preventDefault();
+
       // If user moves the pointer outside of the window or iframe bounds and release it there,
       // `mouseup`/`touchend` won't be fired. In order to stop the picker from following the cursor
       // after the user has moved the mouse/finger back to the document, we check `event.buttons`
