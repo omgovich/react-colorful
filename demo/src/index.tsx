@@ -75,7 +75,7 @@ const Demo = () => {
         <div className="header__content">
           <h1 className="header__title">React Colorful 🎨</h1>
           <h2 className="header__description">
-            A tiny color picker component for modern React apps
+            A tiny color picker component for React and Preact apps
           </h2>
           <nav className="links">
             <a
