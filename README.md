@@ -284,6 +284,8 @@ Not using React or Preact? Not a problem! Check out the list of react-colorful p
 
 - **[vanilla-colorful](https://github.com/web-padawan/vanilla-colorful)** — a react-colorful reimplementation in vanilla Custom Elements, generously ported by [@web-padavan](https://github.com/web-padawan).
 
+- **[angular-colorful](https://github.com/fil0157/angular-colorful)** — a react-colorful rewritten for use with the Angular framework, lovingly ported by [@fil0157](https://github.com/fil0157).
+
 If your port is not in the list, reach us out via [GitHub issues](https://github.com/omgovich/react-colorful/issues).
 
 ## Roadmap
