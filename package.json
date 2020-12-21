@@ -168,7 +168,7 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^26.3.0",
     "jest-esm-jsx-transform": "^1.0.0",
-    "microbundle": "^0.12.3",
+    "microbundle": "^0.13.0",
     "parcel-bundler": "^1.12.4",
     "postcss-modules": "^3.2.0",
     "prettier": "2.0.5",
