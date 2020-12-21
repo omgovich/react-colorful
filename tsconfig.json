@@ -9,5 +9,5 @@
     "declaration": true,
     "strict": true
   },
-  "include": ["src", "test", "demo/src"]
+  "include": ["./src/**/*", "./test/**/*", "./demo/src/**/*"]
 }
