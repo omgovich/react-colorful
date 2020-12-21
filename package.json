@@ -22,7 +22,7 @@
     "size": "npm run build && size-limit",
     "check-types": "tsc --noEmit true",
     "test": "jest tests --coverage",
-    "build": "del-cli 'dist/*' && microbundle build --entry src/index.ts --jsx React.createElement --name react-colorful --css-modules false --tsconfig tsconfig.build.json",
+    "build": "del-cli 'dist/*' && microbundle build --entry src/index.ts --jsx React.createElement --name react-colorful --css inline --tsconfig tsconfig.build.json",
     "prepublishOnly": "npm run build",
     "start-demo": "parcel demo/src/index.html --out-dir demo/dist --open",
     "build-demo": "del-cli 'demo/dist/*' && parcel build demo/src/index.html --out-dir demo/dist --public-url https://omgovich.github.io/react-colorful/",
@@ -170,13 +170,14 @@
     "jest-esm-jsx-transform": "^1.0.0",
     "microbundle": "^0.13.0",
     "parcel-bundler": "^1.12.4",
+    "parcel-plugin-css-to-string": "^2.5.1",
     "postcss-modules": "^3.2.0",
     "prettier": "2.0.5",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
     "size-limit": "^4.6.2",
     "ts-jest": "^26.2.0",
-    "typescript": "^3.9.7",
+    "typescript": "^4.1.3",
     "use-throttled-effect": "0.0.7"
   }
 }
