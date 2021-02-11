@@ -14,8 +14,7 @@
       "umd": "./dist/index.umd.js",
       "import": "./dist/index.module.js",
       "require": "./dist/index.js"
-    },
-    "./dist/index.css": "./dist/index.css"
+    }
   },
   "scripts": {
     "lint": "eslint src/**/*.{ts,tsx} demo/src/**/*.{ts,tsx}",
@@ -106,13 +105,10 @@
     "transform": {
       "\\.js$": "jest-esm-jsx-transform",
       "^.+\\.tsx?$": "ts-jest"
-    },
-    "moduleNameMapper": {
-      "\\.css$": "identity-obj-proxy"
     }
   },
   "files": [
-    "dist/*.{js,ts,map,css}",
+    "dist/*.{js,ts,map}",
     "dist/components/*.ts",
     "LICENSE",
     "ACKNOWLEDGMENTS",
@@ -169,7 +165,6 @@
     "microbundle": "^0.13.0",
     "parcel-bundler": "^1.12.4",
     "parcel-plugin-css-to-string": "^2.5.1",
-    "postcss-modules": "^3.2.0",
     "prettier": "2.0.5",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
