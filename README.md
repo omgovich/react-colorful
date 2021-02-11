@@ -31,7 +31,7 @@
 
 ## Features
 
-- **Small**: Just 1,9 KB gzipped (17 times lighter than **react-color**).
+- **Small**: Just 2,5 KB gzipped (14 times lighter than **react-color**).
 - **Tree-shakeable**: Only the parts you use will be imported into your app's bundle.
 - **Fast**: Built with hooks and functional components only.
 - **Bulletproof**: Written in strict TypeScript and covered by 40+ tests.
@@ -56,7 +56,6 @@ npm install react-colorful --save
 
 ```js
 import { HexColorPicker } from "react-colorful";
-import "react-colorful/dist/index.css";
 
 const YourComponent = () => {
   const [color, setColor] = useState("#aabbcc");
@@ -93,7 +92,6 @@ We provide 12 additional color picker components for different color models, unl
 
 ```js
 import { RgbColorPicker } from "react-colorful";
-import "react-colorful/dist/index.css";
 
 const YourComponent = () => {
   const [color, setColor] = useState({ r: 50, g: 100, b: 150 });
@@ -141,7 +139,6 @@ As you probably noticed the color picker itself does not include an input field,
 
 ```js
 import { HexColorPicker, HexColorInput } from "react-colorful";
-import "react-colorful/dist/index.css";
 
 const YourComponent = () => {
   const [color, setColor] = useState("#aabbcc");
