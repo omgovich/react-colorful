@@ -105,6 +105,9 @@
     "transform": {
       "\\.js$": "jest-esm-jsx-transform",
       "^.+\\.tsx?$": "ts-jest"
+    },
+    "moduleNameMapper": {
+      "\\.css$": "identity-obj-proxy"
     }
   },
   "files": [
