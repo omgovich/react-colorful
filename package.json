@@ -1,7 +1,7 @@
 {
   "name": "react-colorful",
   "version": "4.4.4",
-  "description": "🎨 A tiny (1,9 KB) color picker component for React and Preact apps. Fast, well-tested, dependency-free, mobile-friendly and accessible",
+  "description": "🎨 A tiny (2,5 KB) color picker component for React and Preact apps. Fast, well-tested, dependency-free, mobile-friendly and accessible",
   "source": "src/index.ts",
   "main": "dist/index.js",
   "module": "dist/index.module.js",
@@ -32,77 +32,75 @@
     {
       "path": "dist/index.module.js",
       "import": "{ HexColorPicker }",
-      "limit": "2 KB"
+      "limit": "3 KB"
     },
     {
       "path": "dist/index.module.js",
       "import": "{ HslColorPicker }",
-      "limit": "2 KB"
+      "limit": "3 KB"
     },
     {
       "path": "dist/index.module.js",
       "import": "{ HslaColorPicker }",
-      "limit": "2 KB"
+      "limit": "3 KB"
     },
     {
       "path": "dist/index.module.js",
       "import": "{ HslStringColorPicker }",
-      "limit": "2 KB"
+      "limit": "3 KB"
     },
     {
       "path": "dist/index.module.js",
       "import": "{ HslaStringColorPicker }",
-      "limit": "2 KB"
+      "limit": "3 KB"
     },
     {
       "path": "dist/index.module.js",
       "import": "{ HsvColorPicker }",
-      "limit": "2 KB"
+      "limit": "3 KB"
     },
     {
       "path": "dist/index.module.js",
       "import": "{ HsvaColorPicker }",
-      "limit": "2 KB"
+      "limit": "3 KB"
     },
     {
       "path": "dist/index.module.js",
       "import": "{ HsvStringColorPicker }",
-      "limit": "2 KB"
+      "limit": "3 KB"
     },
     {
       "path": "dist/index.module.js",
       "import": "{ HsvaStringColorPicker }",
-      "limit": "2 KB"
+      "limit": "3 KB"
     },
     {
       "path": "dist/index.module.js",
       "import": "{ RgbColorPicker }",
-      "limit": "2 KB"
+      "limit": "3 KB"
     },
     {
       "path": "dist/index.module.js",
       "import": "{ RgbaColorPicker }",
-      "limit": "2 KB"
+      "limit": "3 KB"
     },
     {
       "path": "dist/index.module.js",
       "import": "{ RgbStringColorPicker }",
-      "limit": "2 KB"
+      "limit": "3 KB"
     },
     {
       "path": "dist/index.module.js",
       "import": "{ RgbaStringColorPicker }",
-      "limit": "2.1 KB"
+      "limit": "3 KB"
     },
     {
       "path": "dist/index.module.js",
       "import": "{ HexColorInput }",
-      "limit": "2 KB"
+      "limit": "3 KB"
     }
   ],
-  "sideEffects": [
-    "*.css"
-  ],
+  "sideEffects": false,
   "jest": {
     "verbose": true,
     "transform": {
