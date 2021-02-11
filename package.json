@@ -107,7 +107,7 @@
       "^.+\\.tsx?$": "ts-jest"
     },
     "moduleNameMapper": {
-      "\\.css$": "identity-obj-proxy"
+      "\\.css$": "<rootDir>/tests/__mocks__/styles.css.mock.ts"
     }
   },
   "files": [
