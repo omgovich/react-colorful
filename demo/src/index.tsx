@@ -1,39 +1,23 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
-import {
-  // HEX
-  HexColorPicker,
-  // RGB
-  RgbColor,
-  RgbColorPicker,
-  RgbStringColorPicker,
-  // RGBA
-  RgbaColor,
-  RgbaColorPicker,
-  RgbaStringColorPicker,
-  // HSL
-  HslColor,
-  HslColorPicker,
-  HslStringColorPicker,
-  // HSLA
-  HslaColor,
-  HslaColorPicker,
-  HslaStringColorPicker,
-  // HSV
-  HsvColor,
-  HsvColorPicker,
-  HsvStringColorPicker,
-  // HSVA
-  HsvaColor,
-  HsvaColorPicker,
-  HsvaStringColorPicker,
-} from "../../src";
-import { PickerPreview } from "./components/PickerPreview";
-import { Star } from "./components/Icon";
+import { RgbaColor } from "../../src";
+import { DevTools } from "./components/DevTools";
 import { useFaviconColor } from "./hooks/useFaviconColor";
 import { useBodyBackground } from "./hooks/useBodyBackground";
 import { useStargazerCount } from "./hooks/useStargazerCount";
-import "./css/styles.css";
+import {
+  GlobalStyles,
+  Header,
+  HeaderContent,
+  HeaderDemo,
+  HeaderDemoPicker,
+  HeaderDescription,
+  HeaderTitle,
+  Link,
+  LinkStarIcon,
+  Links,
+  LinkSeparator,
+} from "./styles";
 
 // See http://www.w3.org/TR/AERT#color-contrast
 const getBrightness = ({ r, g, b }: RgbaColor) => (r * 299 + g * 587 + b * 114) / 1000;
@@ -68,108 +52,41 @@ const Demo = () => {
 
   return (
     <div>
-      <header className="header" style={{ color: textColor }}>
-        <div className="header__demo">
-          <RgbaColorPicker className="header__picker" color={color} onChange={handleChange} />
-        </div>
-        <div className="header__content">
-          <h1 className="header__title">React Colorful 🎨</h1>
-          <h2 className="header__description">
+      <GlobalStyles />
+
+      <Header style={{ color: textColor }}>
+        <HeaderDemo>
+          <HeaderDemoPicker color={color} onChange={handleChange} />
+        </HeaderDemo>
+        <HeaderContent>
+          <HeaderTitle>React Colorful 🎨</HeaderTitle>
+          <HeaderDescription>
             A tiny color picker component for React and Preact apps
-          </h2>
-          <nav className="links">
-            <a
-              className="link"
+          </HeaderDescription>
+
+          <Links>
+            <Link
               href="https://github.com/omgovich/react-colorful"
               target="_blank"
               rel="noreferrer"
             >
               GitHub
-              <span className="link__separator" />
-              <Star className="link__icon" />
+              <LinkSeparator />
+              <LinkStarIcon />
               {stargazerCount}
-            </a>
-            <a
-              className="link"
+            </Link>
+            <Link
               href="https://www.npmjs.com/package/react-colorful"
               target="_blank"
               rel="noreferrer"
             >
               NPM
-            </a>
-          </nav>
-        </div>
-      </header>
+            </Link>
+          </Links>
+        </HeaderContent>
+      </Header>
 
-      {process.env.NODE_ENV === "development" && (
-        <div>
-          <PickerPreview<string>
-            title="HEX"
-            PickerComponent={HexColorPicker}
-            initialColor="#406090"
-          />
-          <PickerPreview<RgbColor>
-            title="RGB"
-            PickerComponent={RgbColorPicker}
-            initialColor={{ r: 60, g: 80, b: 120 }}
-          />
-          <PickerPreview<string>
-            title="RGB String"
-            PickerComponent={RgbStringColorPicker}
-            initialColor="rgb(60, 80, 120)"
-          />
-          <PickerPreview<RgbaColor>
-            title="RGBA"
-            PickerComponent={RgbaColorPicker}
-            initialColor={{ r: 60, g: 80, b: 120, a: 0.5 }}
-          />
-          <PickerPreview<string>
-            title="RGBA String"
-            PickerComponent={RgbaStringColorPicker}
-            initialColor="rgba(60, 80, 120, 0.5)"
-          />
-          <PickerPreview<HslColor>
-            title="HSL"
-            PickerComponent={HslColorPicker}
-            initialColor={{ h: 200, s: 25, l: 32 }}
-          />
-          <PickerPreview<string>
-            title="HSL String"
-            PickerComponent={HslStringColorPicker}
-            initialColor="hsl(200, 25%, 32%)"
-          />
-          <PickerPreview<HslaColor>
-            title="HSLA"
-            PickerComponent={HslaColorPicker}
-            initialColor={{ h: 200, s: 25, l: 32, a: 0.5 }}
-          />
-          <PickerPreview<string>
-            title="HSLA String"
-            PickerComponent={HslaStringColorPicker}
-            initialColor="hsl(200, 25%, 32%, 0.5)"
-          />
-          <PickerPreview<HsvColor>
-            title="HSV"
-            PickerComponent={HsvColorPicker}
-            initialColor={{ h: 200, s: 25, v: 50 }}
-          />
-          <PickerPreview<string>
-            title="HSV String"
-            PickerComponent={HsvStringColorPicker}
-            initialColor="hsv(200, 25%, 50%)"
-          />
-          <PickerPreview<HsvaColor>
-            title="HSVA"
-            PickerComponent={HsvaColorPicker}
-            initialColor={{ h: 200, s: 25, v: 50, a: 0.5 }}
-          />
-          <PickerPreview<string>
-            title="HSVA String"
-            PickerComponent={HsvaStringColorPicker}
-            initialColor="hsva(200, 25%, 50%, 0.5)"
-          />
-        </div>
-      )}
+      {process.env.NODE_ENV === "development" && <DevTools />}
     </div>
   );
 };
