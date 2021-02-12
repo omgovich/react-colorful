@@ -1,3 +1,7 @@
+## 5.0
+
+- The library is 100% CSS-in-JS now. No need to import the CSS file to render the picker properly (via #101)
+
 ### 4.4.4
 
 - Fix bug when a user releases the mouse button outside of the document bounds (via #99)
