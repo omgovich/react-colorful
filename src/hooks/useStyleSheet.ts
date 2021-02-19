@@ -3,7 +3,7 @@ import { useIsomorphicLayoutEffect } from "./useIsomorphicLayoutEffect";
 // Bundler is configured to load this as a processed minified CSS-string
 import styles from "../css/styles.css";
 
-const styleId = '__react-colorful';
+const styleId = "__react-colorful";
 let styleElement: HTMLStyleElement | undefined;
 
 /**
