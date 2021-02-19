@@ -18,3 +18,6 @@ export { HexColorInput } from "./components/HexColorInput";
 
 // Color model types
 export { RgbColor, RgbaColor, HslColor, HslaColor, HsvColor, HsvaColor } from "./types";
+
+// CSS String
+export { getStyleSheet } from './hooks/useStyleSheet';
