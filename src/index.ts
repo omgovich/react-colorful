@@ -20,4 +20,4 @@ export { HexColorInput } from "./components/HexColorInput";
 export { RgbColor, RgbaColor, HslColor, HslaColor, HsvColor, HsvaColor } from "./types";
 
 // CSS String
-export { getStyleSheet } from './hooks/useStyleSheet';
+export { getStyleSheet } from "./hooks/useStyleSheet";

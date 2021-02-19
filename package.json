@@ -113,6 +113,7 @@
   "files": [
     "dist/*.{js,ts,map}",
     "dist/components/*.ts",
+    "dist/hooks/useStyleSheet.d.ts",
     "LICENSE",
     "ACKNOWLEDGMENTS",
     "README.md",
