@@ -269,6 +269,14 @@ To show you the problem that **react-colorful** is trying to solve, we have perf
   </a>
 </details>
 
+<details>
+  <summary><a href="https://github.com/pmndrs/leva">Leva</a> — open source extensible GUI panel made for React</summary>
+
+  <a href="https://github.com/pmndrs/leva">
+    <img src="demo/src/assets/leva.png" width="1223" alt="pmndrs/leva" />
+  </a>
+</details>
+
 ## Browser support
 
 It would be an easier task to list all of the browsers and versions that **react-colorful** does not support! We regularly test against browser versions going all the way back to 2013 and this includes IE11.
