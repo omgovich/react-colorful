@@ -103,28 +103,25 @@ const YourComponent = () => {
 
 </details>
 
-## Overriding styles
+## Customization
 
-The easiest way to tweak react-colorful is to create another stylesheet to override the default styles.
+The easiest way to tweak **react-colorful** is to create another stylesheet to override the default styles.
 
 ```css
-.react-colorful {
-  height: 250px;
+.your-component .react-colorful {
+  height: 240px;
 }
-.react-colorful__saturation {
-  border-radius: 3px 3px 0 0;
+.your-component .react-colorful__saturation {
+  border-radius: 4px 4px 0 0;
 }
-.react-colorful__hue {
-  height: 30px;
-  border-radius: 0 0 3px 3px;
+.your-component .react-colorful__hue {
+  height: 40px;
+  border-radius: 0 0 4px 4px;
 }
-.react-colorful__saturation-pointer {
-  border-radius: 5px;
-}
-.react-colorful__hue-pointer {
-  border-radius: 2px;
-  width: 15px;
+.your-component .react-colorful__hue-pointer {
+  width: 12px;
   height: inherit;
+  border-radius: 0;
 }
 ```
 
@@ -216,6 +213,12 @@ This will correct the types an allow you to use **react-colorful** along with ma
 - [Text field to be able to type/copy/paste a color](https://codesandbox.io/s/0k2fx?file=/src/App.js)
 - [Custom styles and layout](https://codesandbox.io/s/mq85z?file=/src/styles.css)
 
+## Browser support
+
+It would be an easier task to list all of the browsers and versions that **react-colorful** does not support! We regularly test against browser versions going all the way back to 2013 and this includes IE11.
+
+**react-colorful** works out-of-the-box for most browsers, regardless of version, and only requires an `Object.assign` polyfill be provided for full IE11 support.
+
 ## Why react-colorful?
 
 Today each dependency drags more dependencies and increases your project’s bundle size uncontrollably. But size is very important for everything that intends to work in a browser.
@@ -277,12 +280,6 @@ To show you the problem that **react-colorful** is trying to solve, we have perf
   </a>
 </details>
 
-## Browser support
-
-It would be an easier task to list all of the browsers and versions that **react-colorful** does not support! We regularly test against browser versions going all the way back to 2013 and this includes IE11.
-
-**react-colorful** works out-of-the-box for most browsers, regardless of version, and only requires an `Object.assign` polyfill be provided for full IE11 support.
-
 ## Ports
 
 Not using React or Preact? Not a problem! Check out the list of react-colorful ports adapted to your favourite framework or technology of choice:
@@ -292,13 +289,3 @@ Not using React or Preact? Not a problem! Check out the list of react-colorful p
 - **[angular-colorful](https://github.com/fil0157/angular-colorful)** — a react-colorful rewritten for use with the Angular framework, lovingly ported by [@fil0157](https://github.com/fil0157).
 
 If your port is not in the list, reach us out via [GitHub issues](https://github.com/omgovich/react-colorful/issues).
-
-## Roadmap
-
-- [x] Additional modules to support RGB, HSL and HSV color models
-- [x] HEX input component
-- [x] TypeScript support
-- [x] Rewrite the codebase to TypeScript
-- [x] Alpha channel support (RGBA, HSLA and HSVA color models)
-- [x] Accessibility
-- [x] CSS-in-JS version
