@@ -30,71 +30,85 @@
   "size-limit": [
     {
       "path": "dist/index.module.js",
+      "name": "HexColorPicker",
       "import": "{ HexColorPicker }",
       "limit": "3 KB"
     },
     {
       "path": "dist/index.module.js",
+      "name": "HslColorPicker",
       "import": "{ HslColorPicker }",
       "limit": "3 KB"
     },
     {
       "path": "dist/index.module.js",
+      "name": "HslaColorPicker",
       "import": "{ HslaColorPicker }",
       "limit": "3 KB"
     },
     {
       "path": "dist/index.module.js",
+      "name": "HslStringColorPicker",
       "import": "{ HslStringColorPicker }",
       "limit": "3 KB"
     },
     {
       "path": "dist/index.module.js",
+      "name": "HslaStringColorPicker",
       "import": "{ HslaStringColorPicker }",
       "limit": "3 KB"
     },
     {
       "path": "dist/index.module.js",
+      "name": "HsvColorPicker",
       "import": "{ HsvColorPicker }",
       "limit": "3 KB"
     },
     {
       "path": "dist/index.module.js",
+      "name": "HsvaColorPicker",
       "import": "{ HsvaColorPicker }",
       "limit": "3 KB"
     },
     {
       "path": "dist/index.module.js",
+      "name": "HsvStringColorPicker",
       "import": "{ HsvStringColorPicker }",
       "limit": "3 KB"
     },
     {
       "path": "dist/index.module.js",
+      "name": "HsvaStringColorPicker",
       "import": "{ HsvaStringColorPicker }",
       "limit": "3 KB"
     },
     {
       "path": "dist/index.module.js",
+      "name": "RgbColorPicker",
       "import": "{ RgbColorPicker }",
       "limit": "3 KB"
     },
     {
       "path": "dist/index.module.js",
+      "name": "RgbaColorPicker",
       "import": "{ RgbaColorPicker }",
       "limit": "3 KB"
     },
     {
       "path": "dist/index.module.js",
+      "name": "RgbStringColorPicker",
       "import": "{ RgbStringColorPicker }",
       "limit": "3 KB"
     },
     {
       "path": "dist/index.module.js",
+      "name": "RgbaStringColorPicker",
       "import": "{ RgbaStringColorPicker }",
       "limit": "3 KB"
     },
     {
       "path": "dist/index.module.js",
+      "name": "HexColorInput",
       "import": "{ HexColorInput }",
       "limit": "3 KB"
     }
