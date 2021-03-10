@@ -18,6 +18,7 @@ export const AlphaColorPicker = <T extends AnyColor>({
   colorModel,
   color = colorModel.defaultColor,
   onChange,
+  ...rest
 }: Props<T>): JSX.Element => {
   useStyleSheet();
 
@@ -26,7 +27,7 @@ export const AlphaColorPicker = <T extends AnyColor>({
   const nodeClassName = formatClassName(["react-colorful", className]);
 
   return (
-    <div className={nodeClassName}>
+    <div {...rest} className={nodeClassName}>
       <Saturation hsva={hsva} onChange={updateHsva} />
       <Hue hue={hsva.h} onChange={updateHsva} />
       <Alpha hsva={hsva} onChange={updateHsva} className="react-colorful__last-control" />

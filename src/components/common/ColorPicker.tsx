@@ -17,6 +17,7 @@ export const ColorPicker = <T extends AnyColor>({
   colorModel,
   color = colorModel.defaultColor,
   onChange,
+  ...rest
 }: Props<T>): JSX.Element => {
   useStyleSheet();
 
@@ -25,7 +26,7 @@ export const ColorPicker = <T extends AnyColor>({
   const nodeClassName = formatClassName(["react-colorful", className]);
 
   return (
-    <div className={nodeClassName}>
+    <div {...rest} className={nodeClassName}>
       <Saturation hsva={hsva} onChange={updateHsva} />
       <Hue hue={hsva.h} onChange={updateHsva} className="react-colorful__last-control" />
     </div>

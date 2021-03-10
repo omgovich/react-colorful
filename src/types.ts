@@ -1,3 +1,5 @@
+import React from "react";
+
 export interface RgbColor {
   r: number;
   g: number;
@@ -39,8 +41,12 @@ export interface ColorModel<T extends AnyColor> {
   equal: (first: T, second: T) => boolean;
 }
 
-export interface ColorPickerBaseProps<T extends AnyColor> {
-  className: string;
+type ColorPickerHTMLAttributes = Omit<
+  React.HTMLAttributes<HTMLDivElement>,
+  "color" | "onChange" | "onChangeCapture"
+>;
+
+export interface ColorPickerBaseProps<T extends AnyColor> extends ColorPickerHTMLAttributes {
   color: T;
   onChange: (newColor: T) => void;
 }
