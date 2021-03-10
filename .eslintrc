@@ -1,14 +1,13 @@
 {
+  "root": true,
   "env": {
     "browser": true,
     "es6": true,
     "jest": true,
     "node": true
   },
-  "parserOptions": {
-    "sourceType": "module"
-  },
-  "plugins": ["prettier", "react"],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint", "prettier", "react"],
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
@@ -16,8 +15,7 @@
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
     "plugin:prettier/recommended",
-    "prettier/@typescript-eslint",
-    "prettier/react"
+    "prettier"
   ],
   "rules": {
     "prettier/prettier": "error",
@@ -30,9 +28,7 @@
   },
   "overrides": [
     {
-      "files": [
-        "*.js"
-      ],
+      "files": ["*.js"],
       "rules": {
         "@typescript-eslint/no-var-requires": [0],
         "@typescript-eslint/explicit-module-boundary-types": [0]
