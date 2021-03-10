@@ -298,6 +298,20 @@ it("Sets proper `aria-valuetext` attribute value", async () => {
   expect(saturation.getAttribute("aria-valuetext")).toBe("Saturation 100%, Brightness 100%");
 });
 
+it("Accepts any valid `div` attributes", () => {
+  const result = render(<HexColorPicker id="my-id" aria-hidden="false" />);
+
+  expect(result.container.firstChild).toMatchSnapshot();
+});
+
+it("Supports any event that a regular div does", () => {
+  const handleHover = jest.fn();
+  const result = render(<HsvaColorPicker onMouseEnter={handleHover} />);
+  fireEvent.mouseEnter(result.container.firstChild);
+
+  expect(handleHover).toHaveReturnedTimes(1);
+});
+
 it("Renders `HexColorInput` component properly", () => {
   const result = render(
     <HexColorInput className="custom-input" color="#F00" placeholder="AABBCC" />
