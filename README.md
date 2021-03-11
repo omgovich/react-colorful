@@ -46,13 +46,25 @@
 - [HEX Color Picker (CodeSandbox)](https://codesandbox.io/s/react-colorful-demo-u5vwp)
 - [RGBA Color Picker (CodeSandbox)](https://codesandbox.io/s/react-colorful-rgb-o9q0t)
 
-## Install
+## Table of Contents
+
+- [Getting Started](#getting-started)
+- [Supported Color Models](#supported-color-models)
+- [Customization](#customization)
+- [How to paste or type a color?](#how-to-paste-or-type-a-color)
+- [Code Recipes](#code-recipes)
+- [TypeScript Support](#typescript-support)
+- [Usage with Preact](#usage-with-preact)
+- [Browser Support](#browser-support)
+- [Why react-colorful?](#why-react-colorful)
+- [Projects using react-colorful](#projects-using-react-colorful)
+- [Ports](#ports)
+
+## Getting Started
 
 ```
-npm install react-colorful --save
+npm install react-colorful
 ```
-
-## Usage
 
 ```js
 import { HexColorPicker } from "react-colorful";
@@ -63,7 +75,7 @@ const YourComponent = () => {
 };
 ```
 
-## Supported color models
+## Supported Color Models
 
 We provide 12 additional color picker components for different color models, unless your app needs a HEX string as an input/output format.
 
@@ -154,7 +166,16 @@ const YourComponent = () => {
 
 </details>
 
-## TypeScript support
+## Code Recipes
+
+- [Value debouncing](https://codesandbox.io/s/dgqn0?file=/src/DebouncedPicker.js)
+- [Popover picker](https://codesandbox.io/s/opmco?file=/src/PopoverPicker.js)
+- [Preset colors (color squares)](https://codesandbox.io/s/bekry?file=/src/SwatchesPicker.js)
+- [Picker that accepts any color input](https://codesandbox.io/s/6fp23?file=/src/CustomPicker.js)
+- [Text field to be able to type/copy/paste a color](https://codesandbox.io/s/0k2fx?file=/src/App.js)
+- [Custom styles and layout](https://codesandbox.io/s/mq85z?file=/src/styles.css)
+
+## TypeScript Support
 
 **react-colorful** supports TypeScript and ships with types in the library itself; no need for any other install.
 
@@ -204,16 +225,7 @@ This will correct the types an allow you to use **react-colorful** along with ma
 
 </details>
 
-## Code Recipes
-
-- [Value debouncing](https://codesandbox.io/s/dgqn0?file=/src/DebouncedPicker.js)
-- [Popover picker](https://codesandbox.io/s/opmco?file=/src/PopoverPicker.js)
-- [Preset colors (color squares)](https://codesandbox.io/s/bekry?file=/src/SwatchesPicker.js)
-- [Picker that accepts any color input](https://codesandbox.io/s/6fp23?file=/src/CustomPicker.js)
-- [Text field to be able to type/copy/paste a color](https://codesandbox.io/s/0k2fx?file=/src/App.js)
-- [Custom styles and layout](https://codesandbox.io/s/mq85z?file=/src/styles.css)
-
-## Browser support
+## Browser Support
 
 It would be an easier task to list all of the browsers and versions that **react-colorful** does not support! We regularly test against browser versions going all the way back to 2013 and this includes IE11.
 

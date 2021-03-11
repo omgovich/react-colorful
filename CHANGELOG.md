@@ -1,3 +1,7 @@
+### 5.0.1
+
+- The picker supports all HTML attributes and DOM events that a regular tag does (e.g. `id` or `onMouseEnter` (via #119)
+
 ## 5.0
 
 - The library is 100% CSS-in-JS now. No need to import the CSS file to render the picker properly (via #101)
