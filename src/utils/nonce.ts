@@ -2,7 +2,7 @@ declare const __webpack_nonce__: string | undefined;
 let nonce: string | undefined;
 
 /**
- * Returns a nonce hash included by Webpack or the one defined manually by user or the one.
+ * Returns a nonce hash included by Webpack or the one defined manually by developer.
  * https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce
  * https://webpack.js.org/guides/csp/
  */
