@@ -1,3 +1,7 @@
+### 5.1.1
+
+- Fixed `setNonce` type declaration file publishing (via #123)
+
 ### 5.1.0
 
 - The picker complies with the strict CSP (Content Security Policy). The `style` tag added by the component uses a nonce hash provided by Webpack or the one defined manually by the new `setNonce` function (via #121)
