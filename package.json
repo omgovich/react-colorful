@@ -127,6 +127,7 @@
   "files": [
     "dist/*.{js,ts,map}",
     "dist/components/*.ts",
+    "dist/utils/nonce.d.ts",
     "LICENSE",
     "ACKNOWLEDGMENTS",
     "README.md",
