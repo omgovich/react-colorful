@@ -253,6 +253,14 @@ To show you the problem that **react-colorful** is trying to solve, we have perf
 ## Projects using react-colorful
 
 <details>
+  <summary><a href="https://storybook.js.org/">Storybook</a> — the most widely used open-source tool for developing UI components</summary>
+
+  <a href="https://storybook.js.org/">
+    <img src="demo/src/assets/storybook.png" width="551" alt="Storybook" />
+  </a>
+</details>
+
+<details>
   <summary><a href="https://resume.io">Resume.io</a> — online resume builder with over 9,400,000 users worldwide</summary>
 
   <a href="https://resume.io/">
