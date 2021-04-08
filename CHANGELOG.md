@@ -1,6 +1,10 @@
+### 5.1.2
+
+- Add `"default"` fallback to the exports map (via #124)
+
 ### 5.1.1
 
-- Fixed `setNonce` type declaration file publishing (via #123)
+- Fix `setNonce` type declaration file publishing (via #123)
 
 ### 5.1.0
 
