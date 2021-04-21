@@ -5,6 +5,7 @@
   "source": "src/index.ts",
   "main": "dist/index.js",
   "module": "dist/index.module.js",
+  "esmodule": "dist/index.esmodule.js",
   "umd:main": "dist/index.umd.js",
   "types": "dist/index.d.ts",
   "exports": {
