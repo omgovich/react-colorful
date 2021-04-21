@@ -5,14 +5,13 @@
   "source": "src/index.ts",
   "main": "dist/index.js",
   "module": "dist/index.module.js",
-  "esmodule": "dist/index.esmodule.js",
   "umd:main": "dist/index.umd.js",
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
       "browser": "./dist/index.module.js",
       "umd": "./dist/index.umd.js",
-      "import": "./dist/index.module.js",
+      "import": "./dist/index.mjs",
       "require": "./dist/index.js",
       "default": "./dist/index.module.js"
     }
@@ -23,6 +22,7 @@
     "check-types": "tsc --noEmit true",
     "test": "jest tests --coverage",
     "build": "del-cli 'dist/*' && microbundle build --entry src/index.ts --jsx React.createElement --name react-colorful --css inline --tsconfig tsconfig.build.json",
+    "postbuild": "node ./post-build.js",
     "prepublishOnly": "npm run build",
     "check-release": "npm publish --dry-run",
     "release": "npm publish",
