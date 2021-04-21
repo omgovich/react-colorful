@@ -31,14 +31,16 @@
 
 ## Features
 
-- **Small**: Just 2,5 KB gzipped (14 times lighter than **react-color**).
-- **Tree-shakeable**: Only the parts you use will be imported into your app's bundle.
-- **Fast**: Built with hooks and functional components only.
-- **Bulletproof**: Written in strict TypeScript and covered by 40+ tests.
-- **Simple**: The interface is straight forward and easy to use.
-- **Mobile-friendly**: Works well on mobile devices and touch screens.
-- **Accessible**: Follows the [WAI-ARIA](https://www.w3.org/WAI/standards-guidelines/aria/) guidelines to support users of assistive technologies.
-- **No dependencies**
+- 🗜 **Small**: Just 2,5 KB gzipped ([14x lighter](#why-react-colorful) than **react-color**).
+- 🌳 **Tree-shakeable**: Only the parts you use will be imported into your app's bundle.
+- 🚀 **Fast**: Built with hooks and functional components only.
+- 🛡 **Bulletproof**: Written in strict TypeScript and covered by 40+ tests.
+- 🗂 **Typed**: Ships with [types included](#typescript-support)
+- 😍 **Simple**: The interface is straight forward and easy to use.
+- 👫 **Cross-browser**: Works out-of-the-box for most browsers, regardless of version.
+- 📲 **Mobile-friendly**: Supports mobile devices and touch screens.
+- 💬 **Accessible**: Follows the [WAI-ARIA](https://www.w3.org/WAI/standards-guidelines/aria/) guidelines to support users of assistive technologies.
+- 💨 **No dependencies**
 
 ## Live demos
 
