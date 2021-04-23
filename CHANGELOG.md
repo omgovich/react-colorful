@@ -1,3 +1,7 @@
+### 5.1.3
+
+- Export `.mjs` file to improve different environments and bundlers support. Thanks to @rschristian (via #127)
+
 ### 5.1.2
 
 - Add `"default"` fallback to the exports map (via #124)
