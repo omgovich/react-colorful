@@ -129,7 +129,7 @@
     }
   },
   "files": [
-    "dist/*.{js,ts,map}",
+    "dist/*.{js,mjs,ts,map}",
     "dist/components/*.ts",
     "dist/utils/nonce.d.ts",
     "LICENSE",
