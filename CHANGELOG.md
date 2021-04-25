@@ -1,3 +1,7 @@
+### 5.1.4
+
+- Fix `.mjs` file publishing (via #129)
+
 ### 5.1.3
 
 - Export `.mjs` file to improve different environments and bundlers support. Thanks to @rschristian (via #127)
