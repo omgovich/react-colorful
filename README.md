@@ -198,7 +198,7 @@ Take a look at [Supported Color Models](#supported-color-models) for more inform
 
 ## Usage with Preact
 
-**react-colorful** will work flawlessly with Preact out-of-the-box if you are using [Preact-CLI](https://github.com/preactjs/preact-cli), [NextJS with Preact](https://github.com/vercel/next.js/tree/canary/examples/using-preact), or a few other tools/boilerplates thanks to aliasing.
+**react-colorful** will work flawlessly with Preact out-of-the-box if you are using [WMR](https://github.com/preactjs/wmr), [Preact-CLI](https://github.com/preactjs/preact-cli), [NextJS with Preact](https://github.com/vercel/next.js/tree/canary/examples/using-preact), or a few other tools/boilerplates thanks to aliasing.
 
 If you are using another solution, please refer to the [Aliasing React to Preact](https://preactjs.com/guide/v10/getting-started#aliasing-react-to-preact) section of the Preact documentation.
 
