@@ -1,3 +1,7 @@
+### 5.2.0
+
+- Improve input color parsers to support more CSS color notations and units (via #133)
+
 ### 5.1.4
 
 - Fix `.mjs` file publishing (via #129)
