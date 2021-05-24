@@ -6,9 +6,13 @@ export interface RgbColor {
   b: number;
 }
 
+export type RgbStringColor = `rgb(${number}, ${number}, ${number})`;
+
 export interface RgbaColor extends RgbColor {
   a: number;
 }
+
+export type RgbaStringColor = `rgba(${number}, ${number}, ${number}, ${number})`;
 
 export interface HslColor {
   h: number;
@@ -16,9 +20,13 @@ export interface HslColor {
   l: number;
 }
 
+export type HslStringColor = `hsl(${number}, ${number}%, ${number}%)`;
+
 export interface HslaColor extends HslColor {
   a: number;
 }
+
+export type HslaStringColor = `hsla(${number}, ${number}%, ${number}%, ${number})`;
 
 export interface HsvColor {
   h: number;
@@ -26,13 +34,24 @@ export interface HsvColor {
   v: number;
 }
 
+export type HsvStringColor = `hsv(${number}, ${number}%, ${number}%)`;
+
 export interface HsvaColor extends HsvColor {
   a: number;
 }
 
-export type ObjectColor = RgbColor | HslColor | HsvColor | RgbaColor | HslaColor | HsvaColor;
+export type HsvaStringColor = `hsva(${number}, ${number}%, ${number}%, ${number})`;
 
-export type AnyColor = string | ObjectColor;
+export type ObjectColor = RgbColor | HslColor | HsvColor | RgbaColor | HslaColor | HsvaColor;
+export type StringColor =
+  | RgbStringColor
+  | HslStringColor
+  | HsvStringColor
+  | RgbaStringColor
+  | HslaStringColor
+  | HsvaStringColor;
+
+export type AnyColor = string | StringColor | ObjectColor;
 
 export interface ColorModel<T extends AnyColor> {
   defaultColor: T;
