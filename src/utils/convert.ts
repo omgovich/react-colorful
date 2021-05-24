@@ -1,5 +1,14 @@
 import { round } from "./round";
-import { RgbaColor, RgbColor, HslaColor, HslColor, HsvaColor, HsvColor } from "../types";
+import {
+  RgbaColor,
+  RgbColor,
+  HslaColor,
+  HslColor,
+  HsvaColor,
+  HsvColor,
+  RgbStringColor,
+  RgbaStringColor,
+} from "../types";
 
 /**
  * Valid CSS <angle> units.
@@ -116,12 +125,12 @@ export const hsvaToRgba = ({ h, s, v, a }: HsvaColor): RgbaColor => {
   };
 };
 
-export const hsvaToRgbString = (hsva: HsvaColor): string => {
+export const hsvaToRgbString = (hsva: HsvaColor): RgbStringColor => {
   const { r, g, b } = hsvaToRgba(hsva);
   return `rgb(${r}, ${g}, ${b})`;
 };
 
-export const hsvaToRgbaString = (hsva: HsvaColor): string => {
+export const hsvaToRgbaString = (hsva: HsvaColor): RgbaStringColor => {
   const { r, g, b, a } = hsvaToRgba(hsva);
   return `rgba(${r}, ${g}, ${b}, ${a})`;
 };
