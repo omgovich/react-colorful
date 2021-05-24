@@ -8,6 +8,10 @@ import {
   HsvColor,
   RgbStringColor,
   RgbaStringColor,
+  HsvStringColor,
+  HsvaStringColor,
+  HslStringColor,
+  HslaStringColor,
 } from "../types";
 
 /**
@@ -86,24 +90,24 @@ export const hsvaToHsla = ({ h, s, v, a }: HsvaColor): HslaColor => {
   };
 };
 
-export const hsvaToHslString = (hsva: HsvaColor): string => {
+export const hsvaToHslString = (hsva: HsvaColor): HslStringColor => {
   const { h, s, l } = hsvaToHsla(hsva);
   return `hsl(${h}, ${s}%, ${l}%)`;
 };
 
-export const hsvaToHsvString = (hsva: HsvaColor): string => {
+export const hsvaToHslaString = (hsva: HsvaColor): HslaStringColor => {
+  const { h, s, l, a } = hsvaToHsla(hsva);
+  return `hsla(${h}, ${s}%, ${l}%, ${a})`;
+};
+
+export const hsvaToHsvString = (hsva: HsvaColor): HsvStringColor => {
   const { h, s, v } = roundHsva(hsva);
   return `hsv(${h}, ${s}%, ${v}%)`;
 };
 
-export const hsvaToHsvaString = (hsva: HsvaColor): string => {
+export const hsvaToHsvaString = (hsva: HsvaColor): HsvaStringColor => {
   const { h, s, v, a } = roundHsva(hsva);
   return `hsva(${h}, ${s}%, ${v}%, ${a})`;
-};
-
-export const hsvaToHslaString = (hsva: HsvaColor): string => {
-  const { h, s, l, a } = hsvaToHsla(hsva);
-  return `hsla(${h}, ${s}%, ${l}%, ${a})`;
 };
 
 export const hsvaToRgba = ({ h, s, v, a }: HsvaColor): RgbaColor => {

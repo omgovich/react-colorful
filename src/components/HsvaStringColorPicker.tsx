@@ -1,11 +1,11 @@
 import React from "react";
 
 import { AlphaColorPicker } from "./common/AlphaColorPicker";
-import { ColorModel, ColorPickerBaseProps } from "../types";
+import { ColorModel, ColorPickerBaseProps, HsvaStringColor } from "../types";
 import { equalColorString } from "../utils/compare";
 import { hsvaStringToHsva, hsvaToHsvaString } from "../utils/convert";
 
-const colorModel: ColorModel<string> = {
+const colorModel: ColorModel<HsvaStringColor> = {
   defaultColor: "hsva(0, 0%, 0%, 1)",
   toHsva: hsvaStringToHsva,
   fromHsva: hsvaToHsvaString,
@@ -13,5 +13,5 @@ const colorModel: ColorModel<string> = {
 };
 
 export const HsvaStringColorPicker = (
-  props: Partial<ColorPickerBaseProps<string>>
+  props: Partial<ColorPickerBaseProps<HsvaStringColor>>
 ): JSX.Element => <AlphaColorPicker {...props} colorModel={colorModel} />;
