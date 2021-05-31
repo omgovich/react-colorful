@@ -1,3 +1,7 @@
+### 5.2.2
+
+- Fix "Unable to preventDefault inside passive event listener" (via #141)
+
 ### 5.2.1
 
 - Fix rounded corner rendering bug (via #140)
