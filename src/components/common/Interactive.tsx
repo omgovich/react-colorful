@@ -10,7 +10,7 @@ export interface Interaction {
 }
 
 // Check if an event was triggered by touch
-const isTouch = (e: MouseEvent | TouchEvent): e is TouchEvent => "touches" in e;
+const isTouch = (event: MouseEvent | TouchEvent): event is TouchEvent => "touches" in event;
 
 // Returns a relative position of the pointer inside the node's bounding box
 const getRelativePosition = (node: HTMLDivElement, event: MouseEvent | TouchEvent): Interaction => {
@@ -23,6 +23,13 @@ const getRelativePosition = (node: HTMLDivElement, event: MouseEvent | TouchEven
     left: clamp((pointer.pageX - (rect.left + window.pageXOffset)) / rect.width),
     top: clamp((pointer.pageY - (rect.top + window.pageYOffset)) / rect.height),
   };
+};
+
+// Browsers introduced an intervention, making touch events passive by default.
+// This workaround removes `preventDefault` call from the touch handlers.
+// https://github.com/facebook/react/issues/19651
+const preventDefaultMove = (event: MouseEvent | TouchEvent): void => {
+  !isTouch(event) && event.preventDefault();
 };
 
 interface Props {
@@ -48,7 +55,7 @@ const InteractiveBase = ({ onMove, onKey, ...rest }: Props) => {
 
   const handleMove = useCallback(
     (event: MouseEvent | TouchEvent) => {
-      event.preventDefault();
+      preventDefaultMove(event);
 
       // If user moves the pointer outside of the window or iframe bounds and release it there,
       // `mouseup`/`touchend` won't be fired. In order to stop the picker from following the cursor
@@ -67,14 +74,14 @@ const InteractiveBase = ({ onMove, onKey, ...rest }: Props) => {
   );
 
   const handleMoveStart = useCallback(
-    ({ nativeEvent: event }: React.MouseEvent | React.TouchEvent) => {
-      event.preventDefault();
+    ({ nativeEvent }: React.MouseEvent | React.TouchEvent) => {
+      preventDefaultMove(nativeEvent);
 
-      if (!isValid(event)) return;
+      if (!isValid(nativeEvent)) return;
 
       // The node/ref must actually exist when user start an interaction.
       // We won't suppress the ESLint warning though, as it should probably be something to be aware of.
-      onMoveCallback(getRelativePosition(container.current!, event));
+      onMoveCallback(getRelativePosition(container.current!, nativeEvent));
       setDragging(true);
     },
     [onMoveCallback]
