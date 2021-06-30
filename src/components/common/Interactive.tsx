@@ -25,6 +25,13 @@ const getRelativePosition = (node: HTMLDivElement, event: MouseEvent | TouchEven
   };
 };
 
+// Browsers introduced an intervention, making touch events passive by default.
+// This workaround removes `preventDefault` call from the touch handlers.
+// https://github.com/facebook/react/issues/19651
+const preventDefaultMove = (event: MouseEvent | TouchEvent): void => {
+  !isTouch(event) && event.preventDefault();
+};
+
 interface Props {
   onMove: (interaction: Interaction) => void;
   onKey: (offset: Interaction) => void;
@@ -48,11 +55,8 @@ const InteractiveBase = ({ onMove, onKey, ...rest }: Props) => {
 
   const handleMove = useCallback(
     (event: MouseEvent | TouchEvent) => {
-      // Perform `preventDefault()` to prevent text selection on desktop Safari.
-      // Browsers introduced an intervention, making touch events passive by default.
-      // `isTouch` workaround removes `preventDefault` call from the touch handlers.
-      // https://github.com/facebook/react/issues/19651
-      !isTouch(event) && event.preventDefault();
+      // Perform `preventDefault()` to prevent text selection on desktop Safari
+      preventDefaultMove(event);
 
       // If user moves the pointer outside of the window or iframe bounds and release it there,
       // `mouseup`/`touchend` won't be fired. In order to stop the picker from following the cursor
@@ -72,10 +76,12 @@ const InteractiveBase = ({ onMove, onKey, ...rest }: Props) => {
 
   const handleMoveStart = useCallback(
     ({ nativeEvent }: React.MouseEvent | React.TouchEvent) => {
-      if (!isValid(nativeEvent)) return;
+      // Interrupt "mousedown" call on mobiles
+      if (!isValid(nativeEvent)) return preventDefaultMove(nativeEvent);
 
       // The node/ref must actually exist when user start an interaction.
       // We won't suppress the ESLint warning though, as it should probably be something to be aware of.
+      container.current!.focus();
       onMoveCallback(getRelativePosition(container.current!, nativeEvent));
       setDragging(true);
     },
