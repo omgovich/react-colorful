@@ -25,13 +25,6 @@ const getRelativePosition = (node: HTMLDivElement, event: MouseEvent | TouchEven
   };
 };
 
-// Browsers introduced an intervention, making touch events passive by default.
-// This workaround removes `preventDefault` call from the touch handlers.
-// https://github.com/facebook/react/issues/19651
-const preventDefaultMove = (event: MouseEvent | TouchEvent): void => {
-  !isTouch(event) && event.preventDefault();
-};
-
 interface Props {
   onMove: (interaction: Interaction) => void;
   onKey: (offset: Interaction) => void;
@@ -55,7 +48,11 @@ const InteractiveBase = ({ onMove, onKey, ...rest }: Props) => {
 
   const handleMove = useCallback(
     (event: MouseEvent | TouchEvent) => {
-      preventDefaultMove(event);
+      // Perform `preventDefault()` to prevent text selection on desktop Safari.
+      // Browsers introduced an intervention, making touch events passive by default.
+      // `isTouch` workaround removes `preventDefault` call from the touch handlers.
+      // https://github.com/facebook/react/issues/19651
+      !isTouch(event) && event.preventDefault();
 
       // If user moves the pointer outside of the window or iframe bounds and release it there,
       // `mouseup`/`touchend` won't be fired. In order to stop the picker from following the cursor
@@ -75,8 +72,6 @@ const InteractiveBase = ({ onMove, onKey, ...rest }: Props) => {
 
   const handleMoveStart = useCallback(
     ({ nativeEvent }: React.MouseEvent | React.TouchEvent) => {
-      preventDefaultMove(nativeEvent);
-
       if (!isValid(nativeEvent)) return;
 
       // The node/ref must actually exist when user start an interaction.
