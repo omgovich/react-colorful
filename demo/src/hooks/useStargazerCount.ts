@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 export const useStargazerCount = (): number => {
-  const [count, setCount] = useState(445);
+  const [count, setCount] = useState(1300);
 
   useEffect(() => {
     if (process.env.NODE_ENV !== "development" && "fetch" in window) {

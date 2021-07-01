@@ -1,3 +1,7 @@
+### 5.2.3
+
+- Fix: Make the picker take focus on click (via #143)
+
 ### 5.2.2
 
 - Fix "Unable to preventDefault inside passive event listener" (via #141)
