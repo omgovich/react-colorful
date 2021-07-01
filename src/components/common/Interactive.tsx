@@ -55,6 +55,7 @@ const InteractiveBase = ({ onMove, onKey, ...rest }: Props) => {
 
   const handleMove = useCallback(
     (event: MouseEvent | TouchEvent) => {
+      // Prevent text selection
       preventDefaultMove(event);
 
       // If user moves the pointer outside of the window or iframe bounds and release it there,
@@ -75,15 +76,18 @@ const InteractiveBase = ({ onMove, onKey, ...rest }: Props) => {
 
   const handleMoveStart = useCallback(
     ({ nativeEvent }: React.MouseEvent | React.TouchEvent) => {
+      const el = container.current;
+
+      // Prevent text selection
       preventDefaultMove(nativeEvent);
 
       // Interrupt "mousedown" call on mobiles
-      if (!isValid(nativeEvent)) return;
+      if (!isValid(nativeEvent) || !el) return;
 
       // The node/ref must actually exist when user start an interaction.
       // We won't suppress the ESLint warning though, as it should probably be something to be aware of.
-      container.current!.focus();
-      onMoveCallback(getRelativePosition(container.current!, nativeEvent));
+      el.focus();
+      onMoveCallback(getRelativePosition(el, nativeEvent));
       setDragging(true);
     },
     [onMoveCallback]
