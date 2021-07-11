@@ -310,6 +310,10 @@ To show you the problem that **react-colorful** is trying to solve, we have perf
   </a>
 </details>
 
+## Backers and sponsors
+
+<a href="https://opencollective.com/react-colorful"><img src="https://opencollective.com/react-colorful/individuals.svg?width=890"></a>
+
 ## Ports
 
 Not using React or Preact? Not a problem! Check out the list of react-colorful ports adapted to your favourite framework or technology of choice:
