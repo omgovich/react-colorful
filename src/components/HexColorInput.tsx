@@ -7,6 +7,7 @@ import { validHex } from "../utils/validate";
 const escape = (hex: string) => hex.replace(/([^0-9A-F]+)/gi, "").substr(0, 6);
 
 interface ComponentProps {
+  prefixed: boolean;
   color: string;
   onChange: (newColor: string) => void;
 }
@@ -14,7 +15,7 @@ interface ComponentProps {
 type InputProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange" | "value">;
 
 export const HexColorInput = (props: Partial<InputProps & ComponentProps>): JSX.Element => {
-  const { color = "", onChange, onBlur, ...rest } = props;
+  const { color = "", onChange, onBlur, prefixed, ...rest } = props;
   const [value, setValue] = useState(() => escape(color));
   const onChangeCallback = useEventCallback<string>(onChange);
   const onBlurCallback = useEventCallback<React.FocusEvent<HTMLInputElement>>(onBlur);
@@ -46,7 +47,7 @@ export const HexColorInput = (props: Partial<InputProps & ComponentProps>): JSX.
   return (
     <input
       {...rest}
-      value={value}
+      value={(prefixed ? "#" : "") + value}
       spellCheck="false" // the element should not be checked for spelling errors
       onChange={handleChange}
       onBlur={handleBlur}
