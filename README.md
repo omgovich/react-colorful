@@ -166,6 +166,12 @@ const YourComponent = () => {
 
 `HexColorInput` does not have any default styles, but accepts all properties that a regular `input` tag does (such as `className`, `placeholder` and `autoFocus`). That means you can place and modify this component as you like. Also, that allows you to combine the color picker and input in different ways.
 
+`#` prefix is not displayed in the input by default, but you can turn it on by adding `prefixed` property.
+
+```jsx
+<HexColorInput color={color} onChange={setColor} prefixed />
+```
+
 </details>
 
 ## Code Recipes
