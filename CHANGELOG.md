@@ -1,3 +1,7 @@
+### 5.3.0
+
+- Add new `prefixed` property for `HexColorInput` to display "#" prefix
+
 ### 5.2.3
 
 - Fix: Make the picker take focus on click (via #143)
