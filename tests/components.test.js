@@ -1,5 +1,5 @@
 import React from "react";
-import { render, cleanup, fireEvent } from "@testing-library/react";
+import { render, cleanup, fireEvent, act } from "@testing-library/react";
 import {
   HexColorInput,
   HexColorPicker,
@@ -338,4 +338,13 @@ it("Fires custom `onBlur` when `HexColorInput` has lost focus", () => {
   fireEvent.blur(input);
 
   expect(handleBlur).toHaveReturnedWith("ffffff");
+});
+
+it("Displays `#` prefix in `HexColorInput` if `prefixed` is turned on", () => {
+  const result = render(<HexColorInput color="111" prefixed />);
+  const input = result.container.firstChild;
+  expect(input.value).toBe("#111");
+
+  fireEvent.change(input, { target: { value: "112233" } });
+  expect(input.value).toBe("#112233");
 });
