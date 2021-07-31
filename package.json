@@ -124,6 +124,9 @@
       "\\.js$": "jest-esm-jsx-transform",
       "^.+\\.tsx?$": "ts-jest"
     },
+    "setupFilesAfterEnv": [
+      "./tests/setup.js"
+    ],
     "moduleNameMapper": {
       "\\.css$": "<rootDir>/tests/__mocks__/styles.css.mock.ts"
     }

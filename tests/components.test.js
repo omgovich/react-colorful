@@ -8,7 +8,6 @@ import {
   RgbaColorPicker,
   RgbaStringColorPicker,
   HslColorPicker,
-  HslStringColorPicker,
   HslaColorPicker,
   HslaStringColorPicker,
   HsvColorPicker,
