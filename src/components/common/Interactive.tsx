@@ -1,9 +1,7 @@
-import React, { useState, useRef, useCallback } from "react";
+import React, { useRef, useMemo } from "react";
 
-import { useIsomorphicLayoutEffect } from "../../hooks/useIsomorphicLayoutEffect";
 import { useEventCallback } from "../../hooks/useEventCallback";
 import { clamp } from "../../utils/clamp";
-
 export interface Interaction {
   left: number;
   top: number;
@@ -32,6 +30,11 @@ const preventDefaultMove = (event: MouseEvent | TouchEvent): void => {
   !isTouch(event) && event.preventDefault();
 };
 
+// Prevent mobile browsers from handling mouse events (conflicting with touch ones).
+// If we detected a touch interaction before, we prefer reacting to touch events only.
+const isInvalid = (event: MouseEvent | TouchEvent, hasTouch: boolean): boolean =>
+  hasTouch && !isTouch(event);
+
 interface Props {
   onMove: (interaction: Interaction) => void;
   onKey: (offset: Interaction) => void;
@@ -40,21 +43,31 @@ interface Props {
 
 const InteractiveBase = ({ onMove, onKey, ...rest }: Props) => {
   const container = useRef<HTMLDivElement>(null);
-  const hasTouched = useRef(false);
-  const [isDragging, setDragging] = useState(false);
   const onMoveCallback = useEventCallback<Interaction>(onMove);
   const onKeyCallback = useEventCallback<Interaction>(onKey);
+  const hasTouch = useRef(false);
 
-  // Prevent mobile browsers from handling mouse events (conflicting with touch ones).
-  // If we detected a touch interaction before, we prefer reacting to touch events only.
-  const isValid = (event: MouseEvent | TouchEvent): boolean => {
-    if (hasTouched.current && !isTouch(event)) return false;
-    if (!hasTouched.current) hasTouched.current = isTouch(event);
-    return true;
-  };
+  const [handleMoveStart, handleKeyDown] = useMemo(() => {
+    const handleMoveStart = ({ nativeEvent }: React.MouseEvent | React.TouchEvent) => {
+      const el = container.current;
+      if (!el) {
+        return;
+      }
 
-  const handleMove = useCallback(
-    (event: MouseEvent | TouchEvent) => {
+      // Prevent text selection
+      preventDefaultMove(nativeEvent);
+
+      if (isInvalid(nativeEvent, hasTouch.current) || !el) return;
+      hasTouch.current = isTouch(nativeEvent);
+
+      // The node/ref must actually exist when user start an interaction.
+      // We won't suppress the ESLint warning though, as it should probably be something to be aware of.
+      el.focus();
+      onMoveCallback(getRelativePosition(el, nativeEvent));
+      toggleDocumentEvents(true);
+    };
+
+    const handleMove = (event: MouseEvent | TouchEvent) => {
       // Prevent text selection
       preventDefaultMove(event);
 
@@ -68,33 +81,13 @@ const InteractiveBase = ({ onMove, onKey, ...rest }: Props) => {
       if (isDown && container.current) {
         onMoveCallback(getRelativePosition(container.current, event));
       } else {
-        setDragging(false);
+        toggleDocumentEvents(false);
       }
-    },
-    [onMoveCallback]
-  );
+    };
 
-  const handleMoveStart = useCallback(
-    ({ nativeEvent }: React.MouseEvent | React.TouchEvent) => {
-      const el = container.current;
+    const handleMoveEnd = () => toggleDocumentEvents(false);
 
-      // Prevent text selection
-      preventDefaultMove(nativeEvent);
-
-      // Interrupt "mousedown" call on mobiles
-      if (!isValid(nativeEvent) || !el) return;
-
-      // The node/ref must actually exist when user start an interaction.
-      // We won't suppress the ESLint warning though, as it should probably be something to be aware of.
-      el.focus();
-      onMoveCallback(getRelativePosition(el, nativeEvent));
-      setDragging(true);
-    },
-    [onMoveCallback]
-  );
-
-  const handleKeyDown = useCallback(
-    (event: React.KeyboardEvent) => {
+    const handleKeyDown = (event: React.KeyboardEvent) => {
       const keyCode = event.which || event.keyCode;
 
       // Ignore all keys except arrow ones
@@ -108,36 +101,26 @@ const InteractiveBase = ({ onMove, onKey, ...rest }: Props) => {
         left: keyCode === 39 ? 0.05 : keyCode === 37 ? -0.05 : 0,
         top: keyCode === 40 ? 0.05 : keyCode === 38 ? -0.05 : 0,
       });
-    },
-    [onKeyCallback]
-  );
-
-  const handleMoveEnd = useCallback(() => setDragging(false), []);
-
-  const toggleDocumentEvents = useCallback(
-    (state) => {
-      // add or remove additional pointer event listeners
-      const toggleEvent = state ? window.addEventListener : window.removeEventListener;
-      toggleEvent(hasTouched.current ? "touchmove" : "mousemove", handleMove);
-      toggleEvent(hasTouched.current ? "touchend" : "mouseup", handleMoveEnd);
-    },
-    [handleMove, handleMoveEnd]
-  );
-
-  useIsomorphicLayoutEffect(() => {
-    toggleDocumentEvents(isDragging);
-    return () => {
-      isDragging && toggleDocumentEvents(false);
     };
-  }, [isDragging, toggleDocumentEvents]);
+
+    function toggleDocumentEvents(state: boolean) {
+      const touch = hasTouch.current;
+      // add or remove additional pointer event listeners
+      const toggleEvent = state ? self.addEventListener : self.removeEventListener;
+      toggleEvent(touch ? "touchmove" : "mousemove", handleMove);
+      toggleEvent(touch ? "touchend" : "mouseup", handleMoveEnd);
+    }
+
+    return [handleMoveStart, handleKeyDown];
+  }, []);
 
   return (
     <div
       {...rest}
-      className="react-colorful__interactive"
-      ref={container}
       onTouchStart={handleMoveStart}
       onMouseDown={handleMoveStart}
+      className="react-colorful__interactive"
+      ref={container}
       onKeyDown={handleKeyDown}
       tabIndex={0}
       role="slider"
