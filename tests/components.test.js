@@ -91,7 +91,9 @@ it("Doesn't call `onChange` when user changes a hue of a grayscale color", () =>
   const { container } = render(<HexColorPicker color="#000" onChange={handleChange} />);
   const hue = container.querySelector(".react-colorful__hue .react-colorful__interactive");
 
-  fireEvent.touchStart(hue, { touches: [{ pageX: 0, pageY: 0 }] });
+  fireEvent.touchStart(hue, {
+    touches: [{ pageX: 0, pageY: 0 }],
+  });
   fireEvent.touchMove(hue, { touches: [{ pageX: 100, pageY: 0 }] });
 
   expect(handleChange).not.toHaveBeenCalled();
@@ -116,7 +118,9 @@ it("Triggers `onChange` after a touch interaction", async () => {
   const result = render(<HsvColorPicker color={initialValue} onChange={handleChange} />);
   const hue = result.container.querySelector(".react-colorful__hue .react-colorful__interactive");
 
-  fireEvent.touchStart(hue, { touches: [{ pageX: 0, pageY: 0, bubbles: true }] });
+  fireEvent.touchStart(hue, {
+    touches: [{ pageX: 0, pageY: 0, bubbles: true }],
+  });
   fireEvent.touchMove(hue, { touches: [{ pageX: 55, pageY: 0, bubbles: true }] });
 
   expect(handleChange).toHaveReturnedWith({ h: 180, s: 100, v: 100 });
@@ -161,7 +165,9 @@ it("Doesn't react on mouse events after a touch interaction", () => {
   const result = render(<HslStringColorPicker color="hsl(100, 0%, 0%)" onChange={handleChange} />);
   const hue = result.container.querySelector(".react-colorful__hue .react-colorful__interactive");
 
-  fireEvent.touchStart(hue, { touches: [{ pageX: 0, pageY: 0, bubbles: true }] }); // 1
+  fireEvent.touchStart(hue, {
+    touches: [{ pageX: 0, pageY: 0, bubbles: true }],
+  }); // 1
   fireEvent.touchMove(hue, { touches: [{ pageX: 55, pageY: 0, bubbles: true }] }); // 2
 
   // Should be skipped
