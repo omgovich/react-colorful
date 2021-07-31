@@ -19,19 +19,6 @@ import {
 
 afterEach(cleanup);
 
-// Fix to pass `pageX` and `pageY`
-// See https://github.com/testing-library/react-testing-library/issues/268
-class FakeMouseEvent extends MouseEvent {
-  constructor(type, values = {}) {
-    super(type, { buttons: 1, bubbles: true, ...values });
-
-    Object.assign(this, {
-      pageX: values.pageX || 0,
-      pageY: values.pageY || 0,
-    });
-  }
-}
-
 // Mock `HTMLElement.getBoundingClientRect` to be able to read element sizes
 // See https://github.com/jsdom/jsdom/issues/135#issuecomment-68191941
 Object.defineProperties(HTMLElement.prototype, {
@@ -44,6 +31,25 @@ Object.defineProperties(HTMLElement.prototype, {
     }),
   },
 });
+
+// Testing-library doesn't support pageX and pageY by default.
+// Moreover for the pointer events it setup only isTrusted field
+// We can ovverride EventConstructor which is used in createEvent testing-library function:
+// https://github.com/testing-library/dom-testing-library/blob/75197fe09a85646a6ca1d877f5dde21da60e6b76/src/events.js#L21-L63
+// Also see this issue:
+// https://github.com/testing-library/dom-testing-library/issues/558
+const pointerEventCtorProps = ["pageX", "pageY"];
+export default class PointerEventFake extends Event {
+  constructor(type, props) {
+    super(type, props);
+    pointerEventCtorProps.forEach((prop) => {
+      if (props[prop] != null) {
+        this[prop] = props[prop];
+      }
+    });
+  }
+}
+window.PointerEvent = PointerEventFake;
 
 it("Renders proper color picker markup", () => {
   const result = render(<HexColorPicker color="#F00" />);
@@ -91,52 +97,35 @@ it("Doesn't call `onChange` when user changes a hue of a grayscale color", () =>
   const { container } = render(<HexColorPicker color="#000" onChange={handleChange} />);
   const hue = container.querySelector(".react-colorful__hue .react-colorful__interactive");
 
-  fireEvent.touchStart(hue, { touches: [{ pageX: 0, pageY: 0 }] });
-  fireEvent.touchMove(hue, { touches: [{ pageX: 100, pageY: 0 }] });
+  fireEvent.pointerDown(hue, { pageX: 0, pageY: 0 });
+  fireEvent.pointerMove(hue, { pageX: 100, pageY: 0 });
 
   expect(handleChange).not.toHaveBeenCalled();
 });
 
-it("Triggers `onChange` after a mouse interaction", async () => {
+it("Triggers `onChange` after a pointer interaction", async () => {
   const handleChange = jest.fn();
   const result = render(<RgbaColorPicker onChange={handleChange} />);
   const saturation = result.container.querySelector(
     ".react-colorful__saturation .react-colorful__interactive"
   );
 
-  fireEvent(saturation, new FakeMouseEvent("mousedown", { pageX: 0, pageY: 0 }));
-  fireEvent(saturation, new FakeMouseEvent("mousemove", { pageX: 10, pageY: 10 }));
+  fireEvent.pointerDown(saturation, { pageX: 0, pageY: 0 });
+  fireEvent.pointerMove(saturation, { pageX: 10, pageY: 10 });
 
   expect(handleChange).toHaveReturned();
 });
 
-it("Triggers `onChange` after a touch interaction", async () => {
+it("Triggers `onChange` after a pointer interaction", async () => {
   const handleChange = jest.fn((hex) => hex);
   const initialValue = { h: 0, s: 100, v: 100 };
   const result = render(<HsvColorPicker color={initialValue} onChange={handleChange} />);
   const hue = result.container.querySelector(".react-colorful__hue .react-colorful__interactive");
 
-  fireEvent.touchStart(hue, { touches: [{ pageX: 0, pageY: 0, bubbles: true }] });
-  fireEvent.touchMove(hue, { touches: [{ pageX: 55, pageY: 0, bubbles: true }] });
+  fireEvent.pointerDown(hue, { pageX: 0, pageY: 0 });
+  fireEvent.pointerMove(hue, { pageX: 55, pageY: 0 });
 
   expect(handleChange).toHaveReturnedWith({ h: 180, s: 100, v: 100 });
-});
-
-it("Pointer doesn't follow the mouse if it was released outside of the document bounds", async () => {
-  const handleChange = jest.fn();
-  const result = render(<RgbaColorPicker onChange={handleChange} />);
-  const saturation = result.container.querySelector(
-    ".react-colorful__saturation .react-colorful__interactive"
-  );
-
-  // User presses and moves the cursor inside the window
-  fireEvent(saturation, new FakeMouseEvent("mousedown", { pageX: 20, pageY: 10 })); // 1
-  fireEvent(saturation, new FakeMouseEvent("mousemove", { pageX: 10, pageY: 10 })); // 2
-  // User releases the mouse button outside of the document bounds with no `mouseup` event fired
-  // User moves the cursor back to the document with no button pressed
-  fireEvent(saturation, new FakeMouseEvent("mousemove", { pageX: 1, pageY: 50, buttons: 0 })); // 3
-
-  expect(handleChange).toHaveReturnedTimes(2); // the last `mousemove` has to be ignored
 });
 
 it("Changes alpha channel value after an interaction", async () => {
@@ -148,28 +137,10 @@ it("Changes alpha channel value after an interaction", async () => {
     ".react-colorful__alpha .react-colorful__interactive"
   );
 
-  fireEvent(alpha, new FakeMouseEvent("mousedown", { pageX: 0, pageY: 0 }));
-  fireEvent(alpha, new FakeMouseEvent("mousemove", { pageX: 105, pageY: 0 }));
+  fireEvent.pointerDown(alpha, { pageX: 0, pageY: 0 });
+  fireEvent.pointerMove(alpha, { pageX: 105, pageY: 0 });
 
   expect(handleChange).toHaveReturnedWith({ h: 100, s: 0, l: 0, a: 1 });
-});
-
-// Fast clicks on mobile devices
-// See https://github.com/omgovich/react-colorful/issues/55
-it("Doesn't react on mouse events after a touch interaction", () => {
-  const handleChange = jest.fn((hslString) => hslString);
-  const result = render(<HslStringColorPicker color="hsl(100, 0%, 0%)" onChange={handleChange} />);
-  const hue = result.container.querySelector(".react-colorful__hue .react-colorful__interactive");
-
-  fireEvent.touchStart(hue, { touches: [{ pageX: 0, pageY: 0, bubbles: true }] }); // 1
-  fireEvent.touchMove(hue, { touches: [{ pageX: 55, pageY: 0, bubbles: true }] }); // 2
-
-  // Should be skipped
-  fireEvent(hue, new FakeMouseEvent("mousedown", { pageX: 35, pageY: 0 })); // 3
-  fireEvent(hue, new FakeMouseEvent("mousemove", { pageX: 105, pageY: 0 })); // 4
-
-  expect(handleChange).toHaveReturnedTimes(2);
-  expect(handleChange).toHaveReturnedWith("hsl(180, 0%, 0%)");
 });
 
 it("Captures arrow keys only", async () => {
@@ -292,8 +263,8 @@ it("Sets proper `aria-valuetext` attribute value", async () => {
 
   expect(saturation.getAttribute("aria-valuetext")).toBe("Saturation 0%, Brightness 0%");
 
-  fireEvent(saturation, new FakeMouseEvent("mousedown", { pageX: 0, pageY: 0 }));
-  fireEvent(saturation, new FakeMouseEvent("mousemove", { pageX: 500, pageY: 0 })); // '#ff0000'
+  fireEvent.pointerDown(saturation, { pageX: 0, pageY: 0 });
+  fireEvent.pointerMove(saturation, { pageX: 500, pageY: 0 }); // '#ff0000'
 
   expect(saturation.getAttribute("aria-valuetext")).toBe("Saturation 100%, Brightness 100%");
 });
