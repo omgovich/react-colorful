@@ -92,6 +92,7 @@ it("Doesn't call `onChange` when user changes a hue of a grayscale color", () =>
   const hue = container.querySelector(".react-colorful__hue .react-colorful__interactive");
 
   fireEvent.touchStart(hue, {
+    changedTouches: [{ pageX: 0, pageY: 0 }],
     touches: [{ pageX: 0, pageY: 0 }],
   });
   fireEvent.touchMove(hue, { touches: [{ pageX: 100, pageY: 0 }] });
@@ -119,6 +120,7 @@ it("Triggers `onChange` after a touch interaction", async () => {
   const hue = result.container.querySelector(".react-colorful__hue .react-colorful__interactive");
 
   fireEvent.touchStart(hue, {
+    changedTouches: [{ pageX: 0, pageY: 0 }],
     touches: [{ pageX: 0, pageY: 0, bubbles: true }],
   });
   fireEvent.touchMove(hue, { touches: [{ pageX: 55, pageY: 0, bubbles: true }] });
@@ -166,6 +168,7 @@ it("Doesn't react on mouse events after a touch interaction", () => {
   const hue = result.container.querySelector(".react-colorful__hue .react-colorful__interactive");
 
   fireEvent.touchStart(hue, {
+    changedTouches: [{ pageX: 0, pageY: 0 }],
     touches: [{ pageX: 0, pageY: 0, bubbles: true }],
   }); // 1
   fireEvent.touchMove(hue, { touches: [{ pageX: 55, pageY: 0, bubbles: true }] }); // 2
