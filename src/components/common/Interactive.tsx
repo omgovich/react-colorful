@@ -1,4 +1,4 @@
-import React, { useRef, useMemo } from "react";
+import React, { useRef, useMemo, useEffect } from "react";
 
 import { useEventCallback } from "../../hooks/useEventCallback";
 import { clamp } from "../../utils/clamp";
@@ -47,7 +47,7 @@ const InteractiveBase = ({ onMove, onKey, ...rest }: Props) => {
   const onKeyCallback = useEventCallback<Interaction>(onKey);
   const hasTouch = useRef(false);
 
-  const [handleMoveStart, handleKeyDown] = useMemo(() => {
+  const [handleMoveStart, handleKeyDown, toggleDocumentEvents] = useMemo(() => {
     const handleMoveStart = ({ nativeEvent }: React.MouseEvent | React.TouchEvent) => {
       const el = container.current;
       if (!el) {
@@ -103,7 +103,7 @@ const InteractiveBase = ({ onMove, onKey, ...rest }: Props) => {
       });
     };
 
-    function toggleDocumentEvents(state: boolean) {
+    function toggleDocumentEvents(state?: boolean) {
       const touch = hasTouch.current;
       // add or remove additional pointer event listeners
       const toggleEvent = state ? self.addEventListener : self.removeEventListener;
@@ -111,8 +111,9 @@ const InteractiveBase = ({ onMove, onKey, ...rest }: Props) => {
       toggleEvent(touch ? "touchend" : "mouseup", handleMoveEnd);
     }
 
-    return [handleMoveStart, handleKeyDown];
+    return [handleMoveStart, handleKeyDown, toggleDocumentEvents];
   }, []);
+  useEffect(() => toggleDocumentEvents, []);
 
   return (
     <div
