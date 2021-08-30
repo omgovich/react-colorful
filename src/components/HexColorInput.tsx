@@ -4,17 +4,17 @@ import { ColorInputBaseProps } from "../types";
 import { validHex } from "../utils/validate";
 import { ColorInput } from "./common/ColorInput";
 
-interface HexColorPickerProps extends ColorInputBaseProps {
-  /** Enable "#" prefix displaying */
+interface HexColorInputProps extends ColorInputBaseProps {
+  /** Enables `#` prefix displaying */
   prefixed?: boolean;
-  /** Enable "#rrggbbaa" and "#rgba" notations */
+  /** Allows `#rgba` and `#rrggbbaa` color formats */
   alpha?: boolean;
 }
 
 /** Adds "#" symbol to the beginning of the string */
 const prefix = (value: string) => "#" + value;
 
-export const HexColorInput = (props: HexColorPickerProps): JSX.Element => {
+export const HexColorInput = (props: HexColorInputProps): JSX.Element => {
   const { prefixed, alpha, ...rest } = props;
 
   /** Escapes all non-hexadecimal characters including "#" */
