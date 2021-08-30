@@ -28,7 +28,7 @@ export function PickerPreview<T extends AnyColor>({
         <PickerComponent color={color} onChange={handleChange} />
         {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
         {/* @ts-ignore */}
-        {title === "HEX" && <HexColorInput color={color} onChange={handleChange} prefixed />}
+        {title === "HEX" && <HexColorInput color={color} onChange={handleChange} prefixed alpha />}
       </PreviewDemo>
       <PreviewOutput>{JSON.stringify(color)}</PreviewOutput>
     </PreviewContainer>

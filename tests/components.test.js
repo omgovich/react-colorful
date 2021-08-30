@@ -354,3 +354,12 @@ it("Displays `#` prefix in `HexColorInput` if `prefixed` is turned on", () => {
   fireEvent.change(input, { target: { value: "112233" } });
   expect(input.value).toBe("#112233");
 });
+
+it("Allows to enter `#rrggbbaa` in `HexColorInput` if `alpha` is turned on", () => {
+  const result = render(<HexColorInput color="112233" alpha />);
+  const input = result.container.firstChild;
+  expect(input.value).toBe("112233");
+
+  fireEvent.change(input, { target: { value: "11223344" } });
+  expect(input.value).toBe("11223344");
+});

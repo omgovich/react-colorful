@@ -50,3 +50,13 @@ export interface ColorPickerBaseProps<T extends AnyColor> extends ColorPickerHTM
   color: T;
   onChange: (newColor: T) => void;
 }
+
+type ColorInputHTMLAttributes = Omit<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  "onChange" | "value"
+>;
+
+export interface ColorInputBaseProps extends ColorInputHTMLAttributes {
+  color?: string;
+  onChange?: (newColor: string) => void;
+}

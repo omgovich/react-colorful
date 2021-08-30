@@ -164,12 +164,15 @@ const YourComponent = () => {
 
 [Live demo →](https://codesandbox.io/s/react-colorful-hex-input-demo-0k2fx)
 
-`HexColorInput` does not have any default styles, but accepts all properties that a regular `input` tag does (such as `className`, `placeholder` and `autoFocus`). That means you can place and modify this component as you like. Also, that allows you to combine the color picker and input in different ways.
+| Property   | Default | Description                                  |
+| ---------- | ------- | -------------------------------------------- |
+| `alpha`    | `false` | Allows `#rgba` and `#rrggbbaa` color formats |
+| `prefixed` | `false` | Enables `#` prefix displaying                |
 
-`#` prefix is not displayed in the input by default, but you can turn it on by adding `prefixed` property.
+`HexColorInput` does not have any default styles, but it also accepts all properties that a regular `input` tag does (such as `className`, `placeholder` and `autoFocus`). That means you can place and modify this component as you like. Also, that allows you to combine the color picker and input in different ways:
 
 ```jsx
-<HexColorInput color={color} onChange={setColor} prefixed />
+<HexColorInput color={color} onChange={setColor} placeholder="Type a color" prefixed alpha />
 ```
 
 </details>
