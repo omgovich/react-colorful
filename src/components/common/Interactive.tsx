@@ -32,8 +32,9 @@ const preventDefaultMove = (event: MouseEvent | TouchEvent): void => {
 
 // Prevent mobile browsers from handling mouse events (conflicting with touch ones).
 // If we detected a touch interaction before, we prefer reacting to touch events only.
-const isInvalid = (event: MouseEvent | TouchEvent, hasTouch: boolean): boolean =>
-  hasTouch && !isTouch(event);
+const isInvalid = (event: MouseEvent | TouchEvent, hasTouch: boolean): boolean => {
+  return hasTouch && !isTouch(event);
+};
 
 interface Props {
   onMove: (interaction: Interaction) => void;
@@ -50,9 +51,7 @@ const InteractiveBase = ({ onMove, onKey, ...rest }: Props) => {
   const [handleMoveStart, handleKeyDown, toggleDocumentEvents] = useMemo(() => {
     const handleMoveStart = ({ nativeEvent }: React.MouseEvent | React.TouchEvent) => {
       const el = container.current;
-      if (!el) {
-        return;
-      }
+      if (!el) return;
 
       // Prevent text selection
       preventDefaultMove(nativeEvent);
@@ -112,8 +111,10 @@ const InteractiveBase = ({ onMove, onKey, ...rest }: Props) => {
     }
 
     return [handleMoveStart, handleKeyDown, toggleDocumentEvents];
-  }, []);
-  useEffect(() => toggleDocumentEvents, []);
+  }, [onKeyCallback, onMoveCallback]);
+
+  // Remove window event listeners before unmounting
+  useEffect(() => toggleDocumentEvents, [toggleDocumentEvents]);
 
   return (
     <div
