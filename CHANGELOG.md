@@ -1,3 +1,7 @@
+### 5.3.1
+
+- Fix potential memory leaks and improve the performance. Thanks to @xnimorz (via #151)
+
 ### 5.3.0
 
 - Add new `prefixed` property for `HexColorInput` to display "#" prefix
