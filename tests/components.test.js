@@ -355,11 +355,23 @@ it("Displays `#` prefix in `HexColorInput` if `prefixed` is turned on", () => {
   expect(input.value).toBe("#112233");
 });
 
-it("Allows to enter `#rrggbbaa` in `HexColorInput` if `alpha` is turned on", () => {
+it("Allows to enter `#rgba` and `#rrggbbaa` in `HexColorInput` if `alpha` is turned on", () => {
   const result = render(<HexColorInput color="112233" alpha />);
   const input = result.container.firstChild;
   expect(input.value).toBe("112233");
 
   fireEvent.change(input, { target: { value: "11223344" } });
   expect(input.value).toBe("11223344");
+
+  fireEvent.change(input, { target: { value: "abcd" } });
+  expect(input.value).toBe("abcd");
+});
+
+it("Does not allow to enter `#rrggbbaa` in `HexColorInput` if `alpha` is turned off", () => {
+  const result = render(<HexColorInput color="aabbcc" />);
+  const input = result.container.firstChild;
+  expect(input.value).toBe("aabbcc");
+
+  fireEvent.change(input, { target: { value: "11223344" } });
+  expect(input.value).toBe("112233");
 });
