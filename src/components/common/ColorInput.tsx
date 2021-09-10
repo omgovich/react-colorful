@@ -14,8 +14,21 @@ interface Props extends ColorInputBaseProps {
   process?: (value: string) => string;
 }
 
+// Default callback values
+const noop = (value: string): string => value;
+
 export const ColorInput = (props: Props): JSX.Element => {
-  const { color = "", onChange, onBlur, escape, validate, format, process, ...rest } = props;
+  const {
+    color = "",
+    onChange,
+    onBlur,
+    validate,
+    escape,
+    format = noop,
+    process = noop,
+    ...rest
+  } = props;
+
   const [value, setValue] = useState(() => escape(color));
   const onChangeCallback = useEventCallback<string>(onChange);
   const onBlurCallback = useEventCallback<React.FocusEvent<HTMLInputElement>>(onBlur);
@@ -25,7 +38,7 @@ export const ColorInput = (props: Props): JSX.Element => {
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const inputValue = escape(e.target.value);
       setValue(inputValue);
-      if (validate(inputValue)) onChangeCallback(process ? process(inputValue) : inputValue);
+      if (validate(inputValue)) onChangeCallback(process(inputValue));
     },
     [escape, process, validate, onChangeCallback]
   );
@@ -47,7 +60,7 @@ export const ColorInput = (props: Props): JSX.Element => {
   return (
     <input
       {...rest}
-      value={format ? format(value) : value}
+      value={format(value)}
       spellCheck="false" // the element should not be checked for spelling errors
       onChange={handleChange}
       onBlur={handleBlur}

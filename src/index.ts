@@ -15,6 +15,7 @@ export { RgbStringColorPicker } from "./components/RgbStringColorPicker";
 
 // Additional components
 export { HexColorInput } from "./components/HexColorInput";
+export { RgbStringColorInput } from "./components/RgbStringColorInput";
 
 // Color model types
 export { RgbColor, RgbaColor, HslColor, HslaColor, HsvColor, HsvaColor } from "./types";

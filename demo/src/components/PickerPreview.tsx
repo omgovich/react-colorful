@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import React, { useState } from "react";
-import { HexColorInput } from "../../../src";
+import { HexColorInput, RgbStringColorInput } from "../../../src";
 import { ColorPickerBaseProps, AnyColor } from "../../../src/types";
 import { PreviewContainer, PreviewDemo, PreviewOutput, PreviewTitle } from "../styles";
 
@@ -26,9 +27,12 @@ export function PickerPreview<T extends AnyColor>({
       <PreviewTitle>{title}</PreviewTitle>
       <PreviewDemo>
         <PickerComponent color={color} onChange={handleChange} />
-        {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
         {/* @ts-ignore */}
         {title === "HEX" && <HexColorInput color={color} onChange={handleChange} prefixed alpha />}
+        {/* @ts-ignore */}
+        {title === "RGB String" && <RgbStringColorInput color={color} onChange={handleChange} />}
+        {/* @ts-ignore */}
+        {title === "RGBA String" && <RgbStringColorInput color={color} onChange={handleChange} />}
       </PreviewDemo>
       <PreviewOutput>{JSON.stringify(color)}</PreviewOutput>
     </PreviewContainer>

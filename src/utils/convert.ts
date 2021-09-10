@@ -1,6 +1,9 @@
 import { round } from "./round";
 import { RgbaColor, RgbColor, HslaColor, HslColor, HsvaColor, HsvColor } from "../types";
 
+export const hexMatcher = /^#?([0-9A-F]{3,8})$/i;
+export const rgbStringMatcher = /rgba?\(\s*(-?\d*\.?\d+)(%)?[,\s]+(-?\d*\.?\d+)(%)?[,\s]+(-?\d*\.?\d+)(%)?,?\s*[/\s]*(-?\d*\.?\d+)?(%)?\s*\)/i;
+
 /**
  * Valid CSS <angle> units.
  * https://developer.mozilla.org/en-US/docs/Web/CSS/angle
@@ -143,8 +146,7 @@ export const hsvaStringToHsva = (hsvString: string): HsvaColor => {
 export const hsvStringToHsva = hsvaStringToHsva;
 
 export const rgbaStringToHsva = (rgbaString: string): HsvaColor => {
-  const matcher = /rgba?\(?\s*(-?\d*\.?\d+)(%)?[,\s]+(-?\d*\.?\d+)(%)?[,\s]+(-?\d*\.?\d+)(%)?,?\s*[/\s]*(-?\d*\.?\d+)?(%)?\s*\)?/i;
-  const match = matcher.exec(rgbaString);
+  const match = rgbStringMatcher.exec(rgbaString);
 
   if (!match) return { h: 0, s: 0, v: 0, a: 1 };
 
