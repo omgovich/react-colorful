@@ -10,11 +10,10 @@ export interface Interaction {
 // Check if an event was triggered by touch
 const isTouch = (event: MouseEvent | TouchEvent): event is TouchEvent => "touches" in event;
 
-const getPoint = (touches: TouchList, touchId: null | number): Touch => {
+// Finds a proper touch point by its identifier
+const getTouchPoint = (touches: TouchList, touchId: null | number): Touch => {
   for (let i = 0; i < touches.length; i++) {
-    if (touches[i].identifier === touchId) {
-      return touches[i];
-    }
+    if (touches[i].identifier === touchId) return touches[i];
   }
   return touches[0];
 };
@@ -28,7 +27,7 @@ const getRelativePosition = (
   const rect = node.getBoundingClientRect();
 
   // Get user's pointer position from `touches` array if it's a `TouchEvent`
-  const pointer = isTouch(event) ? getPoint(event.touches, touchId) : (event as MouseEvent);
+  const pointer = isTouch(event) ? getTouchPoint(event.touches, touchId) : (event as MouseEvent);
 
   return {
     left: clamp((pointer.pageX - (rect.left + window.pageXOffset)) / rect.width),
@@ -71,13 +70,12 @@ const InteractiveBase = ({ onMove, onKey, ...rest }: Props) => {
       preventDefaultMove(nativeEvent);
 
       if (isInvalid(nativeEvent, hasTouch.current) || !el) return;
+
       if (isTouch(nativeEvent)) {
         hasTouch.current = true;
         touchId.current = nativeEvent.changedTouches[0].identifier;
       }
 
-      // The node/ref must actually exist when user start an interaction.
-      // We won't suppress the ESLint warning though, as it should probably be something to be aware of.
       el.focus();
       onMoveCallback(getRelativePosition(el, nativeEvent, touchId.current));
       toggleDocumentEvents(true);
