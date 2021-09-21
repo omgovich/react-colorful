@@ -92,7 +92,6 @@ it("Doesn't call `onChange` when user changes a hue of a grayscale color", () =>
   const hue = container.querySelector(".react-colorful__hue .react-colorful__interactive");
 
   fireEvent.touchStart(hue, {
-    changedTouches: [{ pageX: 0, pageY: 0 }],
     touches: [{ pageX: 0, pageY: 0 }],
   });
   fireEvent.touchMove(hue, { touches: [{ pageX: 100, pageY: 0 }] });
