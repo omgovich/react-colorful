@@ -319,6 +319,14 @@ To show you the problem that **react-colorful** is trying to solve, we have perf
   </a>
 </details>
 
+<details>
+  <summary><a href="https://www.composable.art">Composable</a> — online tool for creating custom vector illustrations</summary>
+
+  <a href="https://www.composable.art">
+    <img src="demo/src/assets/composable.png" width="745" alt="composable.art" />
+  </a>
+</details>
+
 ## Backers and sponsors
 
 <a href="https://opencollective.com/react-colorful"><img src="https://opencollective.com/react-colorful/individuals.svg?width=890"></a>
