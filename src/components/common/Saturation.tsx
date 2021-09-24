@@ -33,19 +33,25 @@ const SaturationBase = ({ hsva, onChange }: Props) => {
 
   return (
     <div className="react-colorful__saturation" style={containerStyle}>
-      <Interactive
-        onMove={handleMove}
-        onKey={handleKey}
-        aria-label="Color"
-        aria-valuetext={`Saturation ${round(hsva.s)}%, Brightness ${round(hsva.v)}%`}
-      >
-        <Pointer
-          className="react-colorful__saturation-pointer"
-          top={1 - hsva.v / 100}
-          left={hsva.s / 100}
-          color={hsvaToHslString(hsva)}
-        />
-      </Interactive>
+      <div role="grid" aria-rowcount={100} aria-label="Saturation and Brightness">
+        <div role="row" aria-rowindex={round(hsva.v)} aria-label={`Brightness ${round(hsva.v)}%`}>
+          <Interactive
+            onMove={handleMove}
+            onKey={handleKey}
+            role="gridcell"
+            aria-colcount={100}
+            aria-colindex={round(hsva.s)}
+            aria-label={`Saturation ${round(hsva.s)}%`}
+          >
+            <Pointer
+              className="react-colorful__saturation-pointer"
+              top={1 - hsva.v / 100}
+              left={hsva.s / 100}
+              color={hsvaToHslString(hsva)}
+            />
+          </Interactive>
+        </div>
+      </div>
     </div>
   );
 };
