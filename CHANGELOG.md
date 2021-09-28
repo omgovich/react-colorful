@@ -1,3 +1,7 @@
+### 5.5.0
+
+- Multitouch! ✌️ Thanks to @xnimorz (via #158)
+
 ### 5.4.0
 
 - Add new `alpha` property for `HexColorInput` to allow "#rgba" and "#rrggbbaa" formats (via #155)
