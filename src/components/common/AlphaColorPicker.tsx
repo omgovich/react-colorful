@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 
 import { Hue } from "./Hue";
 import { Saturation } from "./Saturation";
@@ -20,14 +20,15 @@ export const AlphaColorPicker = <T extends AnyColor>({
   onChange,
   ...rest
 }: Props<T>): JSX.Element => {
-  useStyleSheet();
+  const containerRef = useRef<HTMLDivElement>(null);
+  useStyleSheet(containerRef);
 
   const [hsva, updateHsva] = useColorManipulation<T>(colorModel, color, onChange);
 
   const nodeClassName = formatClassName(["react-colorful", className]);
 
   return (
-    <div {...rest} className={nodeClassName}>
+    <div {...rest} ref={containerRef} className={nodeClassName}>
       <Saturation hsva={hsva} onChange={updateHsva} />
       <Hue hue={hsva.h} onChange={updateHsva} />
       <Alpha hsva={hsva} onChange={updateHsva} className="react-colorful__last-control" />

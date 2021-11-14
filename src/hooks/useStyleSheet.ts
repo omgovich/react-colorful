@@ -3,23 +3,27 @@ import { getNonce } from "../utils/nonce";
 
 // Bundler is configured to load this as a processed minified CSS-string
 import styles from "../css/styles.css";
+import { RefObject } from "react";
 
-let styleElement: HTMLStyleElement | undefined;
+const styleElementMap: Map<Document, HTMLStyleElement> = new Map();
 
 /**
  * Injects CSS code into the document's <head>
  */
-export const useStyleSheet = (): void => {
+export const useStyleSheet = (containerRef?: RefObject<HTMLDivElement>): void => {
   useIsomorphicLayoutEffect(() => {
-    if (typeof document !== "undefined" && !styleElement) {
-      styleElement = document.createElement("style");
+    const containerDocument =
+      containerRef && containerRef.current ? containerRef.current.ownerDocument : document;
+    if (typeof containerDocument !== "undefined" && !styleElementMap.has(containerDocument)) {
+      const styleElement = containerDocument.createElement("style");
       styleElement.innerHTML = styles;
+      styleElementMap.set(containerDocument, styleElement);
 
       // Conform to CSP rules by setting `nonce` attribute to the inline styles
       const nonce = getNonce();
       if (nonce) styleElement.setAttribute("nonce", nonce);
 
-      document.head.appendChild(styleElement);
+      containerDocument.head.appendChild(styleElement);
     }
   }, []);
 };
