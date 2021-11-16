@@ -2,6 +2,7 @@ import React, { useRef, useMemo, useEffect } from "react";
 
 import { useEventCallback } from "../../hooks/useEventCallback";
 import { clamp } from "../../utils/clamp";
+
 export interface Interaction {
   left: number;
   top: number;
@@ -18,6 +19,11 @@ const getTouchPoint = (touches: TouchList, touchId: null | number): Touch => {
   return touches[0];
 };
 
+// Finds the proper window object to fix iframe embedding issues
+const getParentWindow = (node?: HTMLDivElement | null): Window => {
+  return (node && node.ownerDocument.defaultView) || self;
+};
+
 // Returns a relative position of the pointer inside the node's bounding box
 const getRelativePosition = (
   node: HTMLDivElement,
@@ -28,11 +34,10 @@ const getRelativePosition = (
 
   // Get user's pointer position from `touches` array if it's a `TouchEvent`
   const pointer = isTouch(event) ? getTouchPoint(event.touches, touchId) : (event as MouseEvent);
-  const nodeWindow = node.ownerDocument.defaultView || window;
 
   return {
-    left: clamp((pointer.pageX - (rect.left + nodeWindow.pageXOffset)) / rect.width),
-    top: clamp((pointer.pageY - (rect.top + nodeWindow.pageYOffset)) / rect.height),
+    left: clamp((pointer.pageX - (rect.left + getParentWindow(node).pageXOffset)) / rect.width),
+    top: clamp((pointer.pageY - (rect.top + getParentWindow(node).pageYOffset)) / rect.height),
   };
 };
 
@@ -122,12 +127,10 @@ const InteractiveBase = ({ onMove, onKey, ...rest }: Props) => {
     function toggleDocumentEvents(state?: boolean) {
       const touch = hasTouch.current;
       const el = container.current;
-      const containerWindow = (el && el.ownerDocument.defaultView) || self;
+      const parentWindow = getParentWindow(el);
 
-      // add or remove additional pointer event listeners
-      const toggleEvent = state
-        ? containerWindow.addEventListener
-        : containerWindow.removeEventListener;
+      // Add or remove additional pointer event listeners
+      const toggleEvent = state ? parentWindow.addEventListener : parentWindow.removeEventListener;
       toggleEvent(touch ? "touchmove" : "mousemove", handleMove);
       toggleEvent(touch ? "touchend" : "mouseup", handleMoveEnd);
     }

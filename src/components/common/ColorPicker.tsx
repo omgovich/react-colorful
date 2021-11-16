@@ -19,15 +19,15 @@ export const ColorPicker = <T extends AnyColor>({
   onChange,
   ...rest
 }: Props<T>): JSX.Element => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  useStyleSheet(containerRef);
+  const nodeRef = useRef<HTMLDivElement>(null);
+  useStyleSheet(nodeRef);
 
   const [hsva, updateHsva] = useColorManipulation<T>(colorModel, color, onChange);
 
   const nodeClassName = formatClassName(["react-colorful", className]);
 
   return (
-    <div {...rest} ref={containerRef} className={nodeClassName}>
+    <div {...rest} ref={nodeRef} className={nodeClassName}>
       <Saturation hsva={hsva} onChange={updateHsva} />
       <Hue hue={hsva.h} onChange={updateHsva} className="react-colorful__last-control" />
     </div>
