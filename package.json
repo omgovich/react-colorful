@@ -1,7 +1,7 @@
 {
   "name": "react-colorful",
-  "version": "5.5.0",
-  "description": "🎨 A tiny (2,5 KB) color picker component for React and Preact apps. Fast, well-tested, dependency-free, mobile-friendly and accessible",
+  "version": "5.5.1",
+  "description": "🎨 A tiny (2,8 KB) color picker component for React and Preact apps. Fast, well-tested, dependency-free, mobile-friendly and accessible",
   "source": "src/index.ts",
   "main": "dist/index.js",
   "module": "dist/index.module.js",

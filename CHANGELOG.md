@@ -1,3 +1,7 @@
+### 5.5.1
+
+- Fix embedding into `<iframe>`. The component is rendered correctly by libraries like `react-frame-component`. Thanks to @leoc4e (via #166)
+
 ### 5.5.0
 
 - Multitouch! ✌️ Thanks to @xnimorz (via #158)
