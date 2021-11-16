@@ -93,6 +93,13 @@ export const DevTools = (): JSX.Element => {
         PickerComponent={HsvaStringColorPicker}
         initialColor="hsva(200, 25%, 50%, 0.5)"
       />
+
+      <PickerPreview<RgbColor>
+        frame
+        title="RGB"
+        PickerComponent={RgbColorPicker}
+        initialColor={{ r: 60, g: 80, b: 120 }}
+      />
     </div>
   );
 };

@@ -1,16 +1,19 @@
 import React, { useState } from "react";
+import Frame from "react-frame-component";
 import { HexColorInput } from "../../../src";
 import { ColorPickerBaseProps, AnyColor } from "../../../src/types";
 import { PreviewContainer, PreviewDemo, PreviewOutput, PreviewTitle } from "../styles";
 
 interface Props<T extends AnyColor> {
   title: string;
+  frame?: boolean;
   PickerComponent: React.ComponentType<Partial<ColorPickerBaseProps<T>>>;
   initialColor?: T;
 }
 
 export function PickerPreview<T extends AnyColor>({
   title,
+  frame,
   PickerComponent,
   initialColor,
 }: Props<T>): JSX.Element {
@@ -21,11 +24,15 @@ export function PickerPreview<T extends AnyColor>({
     setColor(color);
   };
 
+  const Wrapper = frame ? Frame : React.Fragment;
+
   return (
     <PreviewContainer>
       <PreviewTitle>{title}</PreviewTitle>
       <PreviewDemo>
-        <PickerComponent color={color} onChange={handleChange} />
+        <Wrapper>
+          <PickerComponent color={color} onChange={handleChange} />
+        </Wrapper>
         {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
         {/* @ts-ignore */}
         {title === "HEX" && <HexColorInput color={color} onChange={handleChange} prefixed alpha />}
