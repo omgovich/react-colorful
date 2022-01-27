@@ -36,7 +36,7 @@
 - 🚀 **Fast**: Built with hooks and functional components only.
 - 🛡 **Bulletproof**: Written in strict TypeScript and has 100% test coverage.
 - 🗂 **Typed**: Ships with [types included](#typescript-support)
-- 😍 **Simple**: The interface is straight forward and easy to use.
+- 😍 **Simple**: The interface is straightforward and easy to use.
 - 👫 **Cross-browser**: Works out-of-the-box for most browsers, regardless of version.
 - 📲 **Mobile-friendly**: Supports mobile devices and touch screens.
 - 💬 **Accessible**: Follows the [WAI-ARIA](https://www.w3.org/WAI/standards-guidelines/aria/) guidelines to support users of assistive technologies.
@@ -232,7 +232,7 @@ declare global {
 }
 ```
 
-This will correct the types an allow you to use **react-colorful** along with many other React + TS libraries in your Preact + TS application.
+This will correct the types and allow you to use **react-colorful** along with many other React + TS libraries in your Preact + TS application.
 
 </details>
 
