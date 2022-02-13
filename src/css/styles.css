@@ -21,13 +21,10 @@
 .react-colorful__pointer-fill,
 .react-colorful__alpha-gradient {
   content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
   pointer-events: none;
   border-radius: inherit;
+  width: 90%;
+  height: 90%;
 }
 
 /* Improve elements rendering on light backgrounds */
@@ -83,6 +80,9 @@
   border: 2px solid #fff;
   border-radius: 50%;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .react-colorful__interactive:focus .react-colorful__pointer {
