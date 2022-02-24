@@ -33,7 +33,9 @@ exports[`Accepts any valid \`div\` attributes 1`] = `
   >
     <div
       aria-label="Hue"
-      aria-valuetext="0"
+      aria-valuemax="360"
+      aria-valuemin="0"
+      aria-valuenow="0"
       class="react-colorful__interactive"
       role="slider"
       tabindex="0"
@@ -92,7 +94,9 @@ exports[`Renders proper alpha color picker markup 1`] = `
   >
     <div
       aria-label="Hue"
-      aria-valuetext="0"
+      aria-valuemax="360"
+      aria-valuemin="0"
+      aria-valuenow="0"
       class="react-colorful__interactive"
       role="slider"
       tabindex="0"
@@ -116,6 +120,9 @@ exports[`Renders proper alpha color picker markup 1`] = `
     />
     <div
       aria-label="Alpha"
+      aria-valuemax="100"
+      aria-valuemin="0"
+      aria-valuenow="50"
       aria-valuetext="50%"
       class="react-colorful__interactive"
       role="slider"
@@ -166,7 +173,9 @@ exports[`Renders proper color picker markup 1`] = `
   >
     <div
       aria-label="Hue"
-      aria-valuetext="0"
+      aria-valuemax="360"
+      aria-valuemin="0"
+      aria-valuenow="0"
       class="react-colorful__interactive"
       role="slider"
       tabindex="0"
@@ -216,7 +225,9 @@ exports[`Works with no props 1`] = `
   >
     <div
       aria-label="Hue"
-      aria-valuetext="0"
+      aria-valuemax="360"
+      aria-valuemin="0"
+      aria-valuenow="0"
       class="react-colorful__interactive"
       role="slider"
       tabindex="0"

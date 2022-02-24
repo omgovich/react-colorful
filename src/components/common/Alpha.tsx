@@ -35,6 +35,7 @@ export const Alpha = ({ className, hsva, onChange }: Props): JSX.Element => {
   };
 
   const nodeClassName = formatClassName(["react-colorful__alpha", className]);
+  const ariaValue = round(hsva.a * 100);
 
   return (
     <div className={nodeClassName}>
@@ -43,7 +44,10 @@ export const Alpha = ({ className, hsva, onChange }: Props): JSX.Element => {
         onMove={handleMove}
         onKey={handleKey}
         aria-label="Alpha"
-        aria-valuetext={`${round(hsva.a * 100)}%`}
+        aria-valuetext={`${ariaValue}%`}
+        aria-valuenow={ariaValue}
+        aria-valuemin="0"
+        aria-valuemax="100"
       >
         <Pointer
           className="react-colorful__alpha-pointer"
