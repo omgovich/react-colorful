@@ -32,10 +32,18 @@ export function useColorManipulation<T extends AnyColor>(
   // Trigger `onChange` callback only if an updated color is different from cached one;
   // save the new color to the ref to prevent unnecessary updates
   useEffect(() => {
-    let newColor;
+    const { a, ...hsv } = hsva;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { a: _, ...cacheHsv } = cache.current.hsva;
+
+    // When alpha channel is changed, use cached RGB values to prevent rounding errors
+    const newColor = equalColorObjects(hsv, cacheHsv)
+      ? Object.assign({}, cache.current.color, { a })
+      : colorModel.fromHsva(hsva);
+
     if (
       !equalColorObjects(hsva, cache.current.hsva) &&
-      !colorModel.equal((newColor = colorModel.fromHsva(hsva)), cache.current.color)
+      !colorModel.equal(newColor, cache.current.color)
     ) {
       cache.current = { hsva, color: newColor };
       onChangeCallback(newColor);
