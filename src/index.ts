@@ -1,5 +1,6 @@
 // Color picker components
 export { HexColorPicker } from "./components/HexColorPicker";
+export { HexAlphaColorPicker } from "./components/HexAlphaColorPicker";
 export { HslaColorPicker } from "./components/HslaColorPicker";
 export { HslaStringColorPicker } from "./components/HslaStringColorPicker";
 export { HslColorPicker } from "./components/HslColorPicker";
