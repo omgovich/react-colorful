@@ -340,7 +340,7 @@ it("Sets proper `aria-valuetext` attribute value", async () => {
 });
 
 it("Accepts any valid `div` attributes", () => {
-  const result = render(<HexColorPicker id="my-id" aria-hidden="false" />);
+  const result = render(<RgbStringColorPicker id="my-id" aria-hidden="false" />);
 
   expect(result.container.firstChild).toMatchSnapshot();
 });
