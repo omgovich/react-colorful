@@ -39,6 +39,9 @@ export interface ColorModel<T extends AnyColor> {
   toHsva: (defaultColor: T) => HsvaColor;
   fromHsva: (hsva: HsvaColor) => T;
   equal: (first: T, second: T) => boolean;
+  updateAlpha?:
+    | ((color: string, alpha: number) => string)
+    | ((color: ObjectColor, alpha: number) => ObjectColor);
 }
 
 type ColorPickerHTMLAttributes = Omit<

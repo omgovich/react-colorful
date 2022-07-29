@@ -36,9 +36,13 @@ export function useColorManipulation<T extends AnyColor>(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { a: _, ...cacheHsv } = cache.current.hsva;
 
+    const isSupportAlpha = "updateAlpha" in colorModel;
+
     // When alpha channel is changed, use cached RGB values to prevent rounding errors
     const newColor = equalColorObjects(hsv, cacheHsv)
-      ? Object.assign({}, cache.current.color, { a })
+      ? isSupportAlpha
+        ? colorModel.updateAlpha(cache.current.color, a)
+        : cache.current.color
       : colorModel.fromHsva(hsva);
 
     if (
