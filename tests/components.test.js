@@ -319,21 +319,28 @@ it("Ignores keyboard commands if the pointer is already on a alpha edge", async 
 
 it("Sets proper `aria-valuetext` attribute value", async () => {
   const handleChange = jest.fn();
-  const result = render(<RgbStringColorPicker color="rgb(0, 0, 0)" onChange={handleChange} />);
+  const result = render(<RgbaStringColorPicker color="rgb(0, 0, 0, 0)" onChange={handleChange} />);
   const saturation = result.container.querySelector(
     ".react-colorful__saturation .react-colorful__interactive"
   );
+  const alpha = result.container.querySelector(
+    ".react-colorful__alpha .react-colorful__interactive"
+  );
 
   expect(saturation.getAttribute("aria-valuetext")).toBe("Saturation 0%, Brightness 0%");
+  expect(alpha.getAttribute("aria-valuetext")).toBe("0%");
 
   fireEvent(saturation, new FakeMouseEvent("mousedown", { pageX: 0, pageY: 0 }));
   fireEvent(saturation, new FakeMouseEvent("mousemove", { pageX: 500, pageY: 0 })); // '#ff0000'
+  fireEvent(alpha, new FakeMouseEvent("mousedown", { pageX: 0, pageY: 0 }));
+  fireEvent(alpha, new FakeMouseEvent("mousemove", { pageX: 500, pageY: 0 }));
 
   expect(saturation.getAttribute("aria-valuetext")).toBe("Saturation 100%, Brightness 100%");
+  expect(alpha.getAttribute("aria-valuetext")).toBe("100%");
 });
 
 it("Accepts any valid `div` attributes", () => {
-  const result = render(<HexColorPicker id="my-id" aria-hidden="false" />);
+  const result = render(<RgbStringColorPicker id="my-id" aria-hidden="false" />);
 
   expect(result.container.firstChild).toMatchSnapshot();
 });
