@@ -89,6 +89,7 @@ We provide 12 additional color picker components for different color models, unl
 | Import                      | Value example                      |
 | --------------------------- | ---------------------------------- |
 | `{ HexColorPicker }`        | `"#ffffff"`                        |
+| `{ HexAlphaColorPicker }`   | `"#ffffff88"`                      |
 | `{ RgbColorPicker }`        | `{ r: 255, g: 255, b: 255 }`       |
 | `{ RgbaColorPicker }`       | `{ r: 255, g: 255, b: 255, a: 1 }` |
 | `{ RgbStringColorPicker }`  | `"rgb(255, 255, 255)"`             |

@@ -15,6 +15,7 @@ import {
   HsvStringColorPicker,
   HsvaColorPicker,
   HsvaStringColorPicker,
+  HexAlphaColorPicker,
 } from "../src";
 
 afterEach(cleanup);
@@ -186,6 +187,19 @@ it("Changes alpha channel value after an interaction", async () => {
   fireEvent(alpha, new FakeMouseEvent("mousemove", { pageX: 105, pageY: 0 }));
 
   expect(handleChange).toHaveReturnedWith({ h: 100, s: 0, l: 0, a: 1 });
+});
+
+it("Uses #rrggbbaa format if alpha channel value is less than 1", async () => {
+  const handleChange = jest.fn((hex) => hex);
+  const result = render(<HexAlphaColorPicker color="#112233" onChange={handleChange} />);
+  const alpha = result.container.querySelector(
+    ".react-colorful__alpha .react-colorful__interactive"
+  );
+
+  fireEvent(alpha, new FakeMouseEvent("mousedown", { pageX: 100, pageY: 0 }));
+  fireEvent(alpha, new FakeMouseEvent("mousemove", { pageX: 0, pageY: 0 }));
+
+  expect(handleChange).toHaveReturnedWith("#11223300");
 });
 
 // Fast clicks on mobile devices
