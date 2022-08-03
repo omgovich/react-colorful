@@ -14,7 +14,8 @@
       "umd": "./dist/index.umd.js",
       "import": "./dist/index.mjs",
       "require": "./dist/index.js",
-      "default": "./dist/index.module.js"
+      "default": "./dist/index.module.js",
+      "types": "./dist/index.d.ts"
     }
   },
   "scripts": {
