@@ -209,14 +209,9 @@ export const updateAlphaFromString = (color: string, alpha: number): string => {
   return color.replace(/\d+\.\d+\)/, `${alpha})`);
 };
 
-export const updateAlphaFromHsla = (color: HslaColor, alpha: number): HslaColor => {
-  return Object.assign({}, color, { a: alpha });
-};
-
-export const updateAlphaFromHsva = (color: HsvaColor, alpha: number): HsvaColor => {
-  return Object.assign({}, color, { a: alpha });
-};
-
-export const updateAlphaFromRgba = (color: RgbaColor, alpha: number): RgbaColor => {
+export const updateAlphaFromObject = <T extends RgbaColor | HslaColor | HsvaColor>(
+  color: T,
+  alpha: number
+): T => {
   return Object.assign({}, color, { a: alpha });
 };
