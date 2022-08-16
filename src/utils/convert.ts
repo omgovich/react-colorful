@@ -1,13 +1,5 @@
 import { round } from "./round";
-import {
-  RgbaColor,
-  RgbColor,
-  HslaColor,
-  HslColor,
-  HsvaColor,
-  HsvColor,
-  ObjectColor,
-} from "../types";
+import { RgbaColor, RgbColor, HslaColor, HslColor, HsvaColor, HsvColor } from "../types";
 
 /**
  * Valid CSS <angle> units.
@@ -217,6 +209,14 @@ export const updateAlphaFromString = (color: string, alpha: number): string => {
   return color.replace(/\d+\.\d+\)/, `${alpha})`);
 };
 
-export const updateAlphaFromObject = (color: ObjectColor, alpha: number): ObjectColor => {
+export const updateAlphaFromHsla = (color: HslaColor, alpha: number): HslaColor => {
+  return Object.assign({}, color, { a: alpha });
+};
+
+export const updateAlphaFromHsva = (color: HsvaColor, alpha: number): HsvaColor => {
+  return Object.assign({}, color, { a: alpha });
+};
+
+export const updateAlphaFromRgba = (color: RgbaColor, alpha: number): RgbaColor => {
   return Object.assign({}, color, { a: alpha });
 };

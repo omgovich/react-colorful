@@ -3,14 +3,14 @@ import React from "react";
 import { AlphaColorPicker } from "./common/AlphaColorPicker";
 import { ColorModel, ColorPickerBaseProps, RgbaColor } from "../types";
 import { equalColorObjects } from "../utils/compare";
-import { rgbaToHsva, hsvaToRgba, updateAlphaFromObject } from "../utils/convert";
+import { rgbaToHsva, hsvaToRgba, updateAlphaFromRgba } from "../utils/convert";
 
 const colorModel: ColorModel<RgbaColor> = {
   defaultColor: { r: 0, g: 0, b: 0, a: 1 },
   toHsva: rgbaToHsva,
   fromHsva: hsvaToRgba,
   equal: equalColorObjects,
-  updateAlpha: updateAlphaFromObject,
+  updateAlpha: updateAlphaFromRgba,
 };
 
 export const RgbaColorPicker = (props: Partial<ColorPickerBaseProps<RgbaColor>>): JSX.Element => (
