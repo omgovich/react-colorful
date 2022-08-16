@@ -15,6 +15,7 @@ import {
   HsvStringColorPicker,
   HsvaColorPicker,
   HsvaStringColorPicker,
+  HexAlphaColorPicker,
 } from "../src";
 
 afterEach(cleanup);
@@ -188,6 +189,19 @@ it("Changes alpha channel value after an interaction", async () => {
   expect(handleChange).toHaveReturnedWith({ h: 100, s: 0, l: 0, a: 1 });
 });
 
+it("Uses #rrggbbaa format if alpha channel value is less than 1", async () => {
+  const handleChange = jest.fn((hex) => hex);
+  const result = render(<HexAlphaColorPicker color="#112233" onChange={handleChange} />);
+  const alpha = result.container.querySelector(
+    ".react-colorful__alpha .react-colorful__interactive"
+  );
+
+  fireEvent(alpha, new FakeMouseEvent("mousedown", { pageX: 100, pageY: 0 }));
+  fireEvent(alpha, new FakeMouseEvent("mousemove", { pageX: 0, pageY: 0 }));
+
+  expect(handleChange).toHaveReturnedWith("#11223300");
+});
+
 // Fast clicks on mobile devices
 // See https://github.com/omgovich/react-colorful/issues/55
 it("Doesn't react on mouse events after a touch interaction", () => {
@@ -319,21 +333,28 @@ it("Ignores keyboard commands if the pointer is already on a alpha edge", async 
 
 it("Sets proper `aria-valuetext` attribute value", async () => {
   const handleChange = jest.fn();
-  const result = render(<RgbStringColorPicker color="rgb(0, 0, 0)" onChange={handleChange} />);
+  const result = render(<RgbaStringColorPicker color="rgb(0, 0, 0, 0)" onChange={handleChange} />);
   const saturation = result.container.querySelector(
     ".react-colorful__saturation .react-colorful__interactive"
   );
+  const alpha = result.container.querySelector(
+    ".react-colorful__alpha .react-colorful__interactive"
+  );
 
   expect(saturation.getAttribute("aria-valuetext")).toBe("Saturation 0%, Brightness 0%");
+  expect(alpha.getAttribute("aria-valuetext")).toBe("0%");
 
   fireEvent(saturation, new FakeMouseEvent("mousedown", { pageX: 0, pageY: 0 }));
   fireEvent(saturation, new FakeMouseEvent("mousemove", { pageX: 500, pageY: 0 })); // '#ff0000'
+  fireEvent(alpha, new FakeMouseEvent("mousedown", { pageX: 0, pageY: 0 }));
+  fireEvent(alpha, new FakeMouseEvent("mousemove", { pageX: 500, pageY: 0 }));
 
   expect(saturation.getAttribute("aria-valuetext")).toBe("Saturation 100%, Brightness 100%");
+  expect(alpha.getAttribute("aria-valuetext")).toBe("100%");
 });
 
 it("Accepts any valid `div` attributes", () => {
-  const result = render(<HexColorPicker id="my-id" aria-hidden="false" />);
+  const result = render(<RgbStringColorPicker id="my-id" aria-hidden="false" />);
 
   expect(result.container.firstChild).toMatchSnapshot();
 });

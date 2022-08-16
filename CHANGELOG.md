@@ -1,3 +1,9 @@
+### 5.6.0
+
+- Add new `HexAlphaColorPicker` component (via #186)
+- Fix types export for TYpeScript 4.7. Thanks to @AnotherHermit (via #189)
+- Improve ARIA attribute values for sliders. Thanks to @aitchiss (via #177)
+
 ### 5.5.1
 
 - Fix embedding into `<iframe>`. The component is rendered correctly by libraries like `react-frame-component`. Thanks to @leoc4e (via #166)
