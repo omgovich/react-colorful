@@ -10,7 +10,6 @@
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
-      "browser": "./dist/index.module.js",
       "umd": "./dist/index.umd.js",
       "import": "./dist/index.mjs",
       "require": "./dist/index.js",
