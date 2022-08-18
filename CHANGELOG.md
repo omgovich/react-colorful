@@ -1,3 +1,7 @@
+### 5.6.1
+
+- Update export settings to fix Jet 28 issues (via #191)
+
 ### 5.6.0
 
 - Add new `HexAlphaColorPicker` component (via #186)
