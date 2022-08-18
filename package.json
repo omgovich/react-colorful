@@ -10,11 +10,11 @@
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "umd": "./dist/index.umd.js",
       "import": "./dist/index.mjs",
       "require": "./dist/index.js",
-      "default": "./dist/index.module.js",
-      "types": "./dist/index.d.ts"
+      "default": "./dist/index.module.js"
     }
   },
   "scripts": {
