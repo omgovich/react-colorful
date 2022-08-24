@@ -54,7 +54,7 @@ const isInvalid = (event: MouseEvent | TouchEvent, hasTouch: boolean): boolean =
   return hasTouch && !isTouch(event);
 };
 
-interface Props {
+interface Props extends React.HTMLAttributes<HTMLDivElement> {
   onMove: (interaction: Interaction) => void;
   onKey: (offset: Interaction) => void;
   children: React.ReactNode;
@@ -143,7 +143,6 @@ const InteractiveBase = ({ onMove, onKey, ...rest }: Props) => {
 
   return (
     <div
-      {...rest}
       onTouchStart={handleMoveStart}
       onMouseDown={handleMoveStart}
       className="react-colorful__interactive"
@@ -151,6 +150,7 @@ const InteractiveBase = ({ onMove, onKey, ...rest }: Props) => {
       onKeyDown={handleKeyDown}
       tabIndex={0}
       role="slider"
+      {...rest}
     />
   );
 };
