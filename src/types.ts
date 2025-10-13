@@ -47,10 +47,17 @@ type ColorPickerHTMLAttributes = Omit<
   "color" | "onChange" | "onChangeCapture"
 >;
 
+export interface ContrastInfo {
+  ratio: number;
+  level: string;
+  pass: boolean;
+}
+
 export interface ColorPickerBaseProps<T extends AnyColor> extends ColorPickerHTMLAttributes {
   color: T;
   backgroundColor: T;
   onChange: (newColor: T) => void;
+  onContrastChange?: (contrastInfo: ContrastInfo) => void;
 }
 
 type ColorInputHTMLAttributes = Omit<
@@ -63,7 +70,8 @@ export interface ColorInputBaseProps extends ColorInputHTMLAttributes {
   onChange?: (newColor: string) => void;
 }
 
-export interface ObjectColorInputBaseProps<T extends ObjectColor> extends ColorPickerHTMLAttributes {
+export interface ObjectColorInputBaseProps<T extends ObjectColor>
+  extends ColorPickerHTMLAttributes {
   color: T;
   onChange: (newColor: T) => void;
 }
