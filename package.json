@@ -1,6 +1,6 @@
 {
   "name": "@test-party/contrast-color-picker",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "🎨 @test-party/contrast-color-picker is a lightweight, customizable color contrast picker designed for React applications. Built with accessibility in mind, it helps developers ensure compliance with WCAG color contrast standards by offering real-time feedback and an intuitive interface.",
   "source": "src/index.ts",
   "main": "dist/index.js",
