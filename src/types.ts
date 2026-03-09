@@ -60,3 +60,19 @@ export interface ColorInputBaseProps extends ColorInputHTMLAttributes {
   color?: string;
   onChange?: (newColor: string) => void;
 }
+
+// Type aliases for ColorPicker component props (useful for creating wrappers)
+export type HexColorPickerProps = Partial<ColorPickerBaseProps<string>>;
+export type HexAlphaColorPickerProps = Partial<ColorPickerBaseProps<string>>;
+export type HslColorPickerProps = Partial<ColorPickerBaseProps<HslColor>>;
+export type HslStringColorPickerProps = Partial<ColorPickerBaseProps<string>>;
+export type HslaColorPickerProps = Partial<ColorPickerBaseProps<HslaColor>>;
+export type HslaStringColorPickerProps = Partial<ColorPickerBaseProps<string>>;
+export type HsvColorPickerProps = Partial<ColorPickerBaseProps<HsvColor>>;
+export type HsvStringColorPickerProps = Partial<ColorPickerBaseProps<string>>;
+export type HsvaColorPickerProps = Partial<ColorPickerBaseProps<HsvaColor>>;
+export type HsvaStringColorPickerProps = Partial<ColorPickerBaseProps<string>>;
+export type RgbColorPickerProps = Partial<ColorPickerBaseProps<RgbColor>>;
+export type RgbStringColorPickerProps = Partial<ColorPickerBaseProps<string>>;
+export type RgbaColorPickerProps = Partial<ColorPickerBaseProps<RgbaColor>>;
+export type RgbaStringColorPickerProps = Partial<ColorPickerBaseProps<string>>;

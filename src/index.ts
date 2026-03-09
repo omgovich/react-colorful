@@ -20,5 +20,23 @@ export { HexColorInput } from "./components/HexColorInput";
 // Color model types
 export { RgbColor, RgbaColor, HslColor, HslaColor, HsvColor, HsvaColor } from "./types";
 
+// ColorPicker props types (useful for creating wrapper components)
+export {
+  HexColorPickerProps,
+  HexAlphaColorPickerProps,
+  HslColorPickerProps,
+  HslStringColorPickerProps,
+  HslaColorPickerProps,
+  HslaStringColorPickerProps,
+  HsvColorPickerProps,
+  HsvStringColorPickerProps,
+  HsvaColorPickerProps,
+  HsvaStringColorPickerProps,
+  RgbColorPickerProps,
+  RgbStringColorPickerProps,
+  RgbaColorPickerProps,
+  RgbaStringColorPickerProps,
+} from "./types";
+
 // Tooling
 export { setNonce } from "./utils/nonce";
