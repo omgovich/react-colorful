@@ -45,6 +45,10 @@ const Demo = () => {
     setColor(color);
   };
 
+  const handleChangeEnd = (color: RgbaColor) => {
+    console.log("🎨", color, "end");
+  };
+
   const colorString = `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a}`;
 
   useBodyBackground(colorString);
@@ -56,7 +60,7 @@ const Demo = () => {
 
       <Header style={{ color: textColor }}>
         <HeaderDemo>
-          <HeaderDemoPicker color={color} onChange={handleChange} />
+          <HeaderDemoPicker color={color} onChange={handleChange} onChangeEnd={handleChangeEnd} />
         </HeaderDemo>
         <HeaderContent>
           <HeaderTitle>React Colorful 🎨</HeaderTitle>

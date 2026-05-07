@@ -13,9 +13,10 @@ interface Props {
   className?: string;
   hsva: HsvaColor;
   onChange: (newAlpha: { a: number }) => void;
+  onChangeEnd?: () => void;
 }
 
-export const Alpha = ({ className, hsva, onChange }: Props): React.ReactElement => {
+export const Alpha = ({ className, hsva, onChange, onChangeEnd }: Props): React.ReactElement => {
   const handleMove = (interaction: Interaction) => {
     onChange({ a: interaction.left });
   };
@@ -43,6 +44,7 @@ export const Alpha = ({ className, hsva, onChange }: Props): React.ReactElement 
       <Interactive
         onMove={handleMove}
         onKey={handleKey}
+        onEnd={onChangeEnd}
         aria-label="Alpha"
         aria-valuetext={`${ariaValue}%`}
         aria-valuenow={ariaValue}
