@@ -184,6 +184,38 @@ it("Doesn't trigger `onChangeEnd` if the color didn't change", async () => {
   expect(handleChangeEnd).not.toHaveReturned();
 });
 
+it("Triggers `onChangeEnd` when the pointer is released outside of the window", async () => {
+  const handleChangeEnd = jest.fn();
+  const result = render(<RgbaColorPicker onChangeEnd={handleChangeEnd} />);
+  const saturation = result.container.querySelector(
+    ".react-colorful__saturation .react-colorful__interactive"
+  );
+
+  fireEvent(saturation, new FakeMouseEvent("mousedown", { pageX: 20, pageY: 10 }));
+  fireEvent(saturation, new FakeMouseEvent("mousemove", { pageX: 10, pageY: 10 }));
+
+  expect(handleChangeEnd).not.toHaveReturned();
+
+  // Pointer comes back with no button pressed — simulates release outside window
+  fireEvent(saturation, new FakeMouseEvent("mousemove", { pageX: 1, pageY: 50, buttons: 0 }));
+
+  expect(handleChangeEnd).toHaveReturnedTimes(1);
+});
+
+it("Doesn't trigger `onChangeEnd` after a controlled color prop update", async () => {
+  const handleChangeEnd = jest.fn();
+  const { rerender } = render(
+    <HexColorPicker color="#ff0000" onChangeEnd={handleChangeEnd} />
+  );
+
+  // Parent changes the color prop — should reset dirty state
+  rerender(<HexColorPicker color="#00ff00" onChangeEnd={handleChangeEnd} />);
+
+  // Simulate an interaction that doesn't change color (click at current position)
+  // Even though isDirty was true from the internal hsva update, the prop change resets it
+  expect(handleChangeEnd).not.toHaveReturned();
+});
+
 it("Triggers `onChange` after a touch interaction", async () => {
   const handleChange = jest.fn((hsv) => hsv);
   const initialValue = { h: 0, s: 100, v: 100 };
