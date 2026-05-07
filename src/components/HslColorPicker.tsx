@@ -12,6 +12,6 @@ const colorModel: ColorModel<HslColor> = {
   equal: equalColorObjects,
 };
 
-export const HslColorPicker = (props: Partial<ColorPickerBaseProps<HslColor>>): JSX.Element => (
-  <ColorPicker {...props} colorModel={colorModel} />
-);
+export const HslColorPicker = (
+  props: Partial<ColorPickerBaseProps<HslColor>>
+): React.ReactElement => <ColorPicker {...props} colorModel={colorModel} />;
