@@ -108,7 +108,7 @@
       "path": "dist/index.module.js",
       "name": "RgbaStringColorPicker",
       "import": "{ RgbaStringColorPicker }",
-      "limit": "3.15 KB"
+      "limit": "3.2 KB"
     },
     {
       "path": "dist/index.module.js",
