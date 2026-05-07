@@ -210,6 +210,7 @@ const YourComponent = () => {
 - [Picker that accepts any color input](https://codesandbox.io/s/6fp23?file=/src/CustomPicker.js)
 - [Text field to be able to type/copy/paste a color](https://codesandbox.io/s/0k2fx?file=/src/App.js)
 - [Custom styles and layout](https://codesandbox.io/s/mq85z?file=/src/styles.css)
+- [Value debouncing](https://codesandbox.io/s/dgqn0?file=/src/DebouncedPicker.js) (consider using `onChangeEnd` instead for many use cases)
 
 ## TypeScript Support
 
