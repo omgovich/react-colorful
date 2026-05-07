@@ -202,17 +202,34 @@ it("Triggers `onChangeEnd` when the pointer is released outside of the window", 
   expect(handleChangeEnd).toHaveReturnedTimes(1);
 });
 
-it("Doesn't trigger `onChangeEnd` after a controlled color prop update", async () => {
+it("Doesn't trigger `onChangeEnd` if the color prop was updated mid-drag", async () => {
+  const handleChange = jest.fn();
   const handleChangeEnd = jest.fn();
-  const { rerender } = render(
-    <HexColorPicker color="#ff0000" onChangeEnd={handleChangeEnd} />
+  const { container, rerender } = render(
+    <RgbaColorPicker onChangeEnd={handleChangeEnd} onChange={handleChange} />
+  );
+  const saturation = container.querySelector(
+    ".react-colorful__saturation .react-colorful__interactive"
   );
 
-  // Parent changes the color prop — should reset dirty state
-  rerender(<HexColorPicker color="#00ff00" onChangeEnd={handleChangeEnd} />);
+  // Start drag — isDirty becomes true
+  fireEvent(saturation, new FakeMouseEvent("mousedown", { pageX: 0, pageY: 0 }));
+  fireEvent(saturation, new FakeMouseEvent("mousemove", { pageX: 10, pageY: 10 }));
 
-  // Simulate an interaction that doesn't change color (click at current position)
-  // Even though isDirty was true from the internal hsva update, the prop change resets it
+  expect(handleChange).toHaveReturned();
+
+  // Parent overrides color mid-drag — resets isDirty
+  rerender(
+    <RgbaColorPicker
+      color={{ r: 0, g: 255, b: 0, a: 1 }}
+      onChangeEnd={handleChangeEnd}
+      onChange={handleChange}
+    />
+  );
+
+  // Release mouse — onChangeEnd should NOT fire since parent took over
+  fireEvent(document, new FakeMouseEvent("mouseup"));
+
   expect(handleChangeEnd).not.toHaveReturned();
 });
 
