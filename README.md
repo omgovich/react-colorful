@@ -328,6 +328,14 @@ To show you the problem that **react-colorful** is trying to solve, we have perf
   </a>
 </details>
 
+<details>
+  <summary><a href="https://snappify.io">snappify.io</a> — powerful design tool to create and manage beautiful images of your code snippets</summary>
+
+  <a href="https://snappify.io">
+    <img src="demo/src/assets/snappify.png" width="745" alt="snappify.io" />
+  </a>
+</details>
+
 ## Backers and sponsors
 
 <a href="https://opencollective.com/react-colorful"><img src="https://opencollective.com/react-colorful/individuals.svg?width=890"></a>
