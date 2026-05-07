@@ -77,6 +77,31 @@ const YourComponent = () => {
 };
 ```
 
+### Supported props
+
+| Prop           | Type                      | Default   | Description                                                      |
+| -------------- | ------------------------- | --------- | ---------------------------------------------------------------- |
+| `color`        | `string` or `object`      | —         | The current color value                                          |
+| `onChange`      | `(color) => void`        | —         | Called on every color change (during dragging, on each key press) |
+| `onChangeEnd`  | `(color) => void`        | —         | Called when the user finishes changing a color (mouseup, touchend, or keyup) |
+
+The `onChangeEnd` callback is useful for undo/redo, saving to a database, or other expensive operations you don't want to run on every intermediate value:
+
+```js
+const YourComponent = () => {
+  const [color, setColor] = useState("#aabbcc");
+  return (
+    <HexColorPicker
+      color={color}
+      onChange={setColor}
+      onChangeEnd={(color) => saveToDatabase(color)}
+    />
+  );
+};
+```
+
+All pickers also accept every property that a regular `div` tag does (`className`, `style`, `aria-label`, etc.).
+
 ## Supported Color Models
 
 We provide 12 additional color picker components for different color models, unless your app needs a HEX string as an input/output format.
@@ -180,7 +205,7 @@ const YourComponent = () => {
 
 ## Code Recipes
 
-- [Value debouncing](https://codesandbox.io/s/dgqn0?file=/src/DebouncedPicker.js)
+- [Value debouncing](https://codesandbox.io/s/dgqn0?file=/src/DebouncedPicker.js) (consider using `onChangeEnd` instead for many use cases)
 - [Popover picker](https://codesandbox.io/s/opmco?file=/src/PopoverPicker.js)
 - [Preset colors (color squares)](https://codesandbox.io/s/bekry?file=/src/SwatchesPicker.js)
 - [Picker that accepts any color input](https://codesandbox.io/s/6fp23?file=/src/CustomPicker.js)
