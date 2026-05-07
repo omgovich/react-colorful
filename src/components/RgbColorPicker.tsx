@@ -12,6 +12,6 @@ const colorModel: ColorModel<RgbColor> = {
   equal: equalColorObjects,
 };
 
-export const RgbColorPicker = (props: Partial<ColorPickerBaseProps<RgbColor>>): JSX.Element => (
-  <ColorPicker {...props} colorModel={colorModel} />
-);
+export const RgbColorPicker = (
+  props: Partial<ColorPickerBaseProps<RgbColor>>
+): React.ReactElement => <ColorPicker {...props} colorModel={colorModel} />;

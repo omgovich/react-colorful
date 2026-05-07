@@ -14,7 +14,7 @@ interface Props extends ColorInputBaseProps {
   process?: (value: string) => string;
 }
 
-export const ColorInput = (props: Props): JSX.Element => {
+export const ColorInput = (props: Props): React.ReactElement => {
   const { color = "", onChange, onBlur, escape, validate, format, process, ...rest } = props;
   const [value, setValue] = useState(() => escape(color));
   const onChangeCallback = useEventCallback<string>(onChange);

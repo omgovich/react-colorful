@@ -14,7 +14,7 @@ interface HexColorInputProps extends ColorInputBaseProps {
 /** Adds "#" symbol to the beginning of the string */
 const prefix = (value: string) => "#" + value;
 
-export const HexColorInput = (props: HexColorInputProps): JSX.Element => {
+export const HexColorInput = (props: HexColorInputProps): React.ReactElement => {
   const { prefixed, alpha, ...rest } = props;
 
   /** Escapes all non-hexadecimal characters including "#" */

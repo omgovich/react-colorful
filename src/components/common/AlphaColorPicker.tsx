@@ -19,7 +19,7 @@ export const AlphaColorPicker = <T extends AnyColor>({
   color = colorModel.defaultColor,
   onChange,
   ...rest
-}: Props<T>): JSX.Element => {
+}: Props<T>): React.ReactElement => {
   const nodeRef = useRef<HTMLDivElement>(null);
   useStyleSheet(nodeRef);
 

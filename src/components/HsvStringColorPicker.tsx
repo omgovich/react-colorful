@@ -12,6 +12,6 @@ const colorModel: ColorModel<string> = {
   equal: equalColorString,
 };
 
-export const HsvStringColorPicker = (props: Partial<ColorPickerBaseProps<string>>): JSX.Element => (
-  <ColorPicker {...props} colorModel={colorModel} />
-);
+export const HsvStringColorPicker = (
+  props: Partial<ColorPickerBaseProps<string>>
+): React.ReactElement => <ColorPicker {...props} colorModel={colorModel} />;

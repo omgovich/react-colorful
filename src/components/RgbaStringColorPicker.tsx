@@ -14,4 +14,4 @@ const colorModel: ColorModel<string> = {
 
 export const RgbaStringColorPicker = (
   props: Partial<ColorPickerBaseProps<string>>
-): JSX.Element => <AlphaColorPicker {...props} colorModel={colorModel} />;
+): React.ReactElement => <AlphaColorPicker {...props} colorModel={colorModel} />;

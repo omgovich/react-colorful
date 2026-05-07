@@ -12,6 +12,6 @@ const colorModel: ColorModel<HsvaColor> = {
   equal: equalColorObjects,
 };
 
-export const HsvaColorPicker = (props: Partial<ColorPickerBaseProps<HsvaColor>>): JSX.Element => (
-  <AlphaColorPicker {...props} colorModel={colorModel} />
-);
+export const HsvaColorPicker = (
+  props: Partial<ColorPickerBaseProps<HsvaColor>>
+): React.ReactElement => <AlphaColorPicker {...props} colorModel={colorModel} />;
