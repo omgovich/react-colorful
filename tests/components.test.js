@@ -111,6 +111,79 @@ it("Triggers `onChange` after a mouse interaction", async () => {
   expect(handleChange).toHaveReturned();
 });
 
+it("Triggers `onChangeEnd` after a mouse interaction", async () => {
+  const handleChangeEnd = jest.fn((rgba) => rgba);
+  const result = render(<RgbaColorPicker onChangeEnd={handleChangeEnd} />);
+  const saturation = result.container.querySelector(
+    ".react-colorful__saturation .react-colorful__interactive"
+  );
+
+  fireEvent(saturation, new FakeMouseEvent("mousedown", { pageX: 0, pageY: 0 }));
+  fireEvent(saturation, new FakeMouseEvent("mousemove", { pageX: 10, pageY: 10 }));
+
+  expect(handleChangeEnd).not.toHaveReturned();
+
+  fireEvent(document, new FakeMouseEvent("mouseup"));
+
+  expect(handleChangeEnd).toHaveReturnedTimes(1);
+});
+
+it("Triggers `onChangeEnd` after a touch interaction", async () => {
+  const handleChangeEnd = jest.fn((hsv) => hsv);
+  const initialValue = { h: 0, s: 100, v: 100 };
+  const result = render(
+    <HsvColorPicker color={initialValue} onChangeEnd={handleChangeEnd} />
+  );
+  const hue = result.container.querySelector(".react-colorful__hue .react-colorful__interactive");
+
+  fireEvent.touchStart(hue, { touches: [{ pageX: 0, pageY: 0, bubbles: true }] });
+  fireEvent.touchMove(hue, { touches: [{ pageX: 55, pageY: 0, bubbles: true }] });
+
+  expect(handleChangeEnd).not.toHaveReturned();
+
+  fireEvent.touchEnd(hue, { touches: [] });
+
+  expect(handleChangeEnd).toHaveReturnedWith({ h: 180, s: 100, v: 100 });
+});
+
+it("Triggers `onChangeEnd` after a keyboard interaction", async () => {
+  const handleChangeEnd = jest.fn((hex) => hex);
+  const initialValue = "#ff0000";
+  const result = render(
+    <HexColorPicker color={initialValue} onChangeEnd={handleChangeEnd} />
+  );
+  const hue = result.container.querySelector(".react-colorful__hue .react-colorful__interactive");
+
+  hue.focus();
+  const node = document.activeElement || document.body;
+  fireEvent.keyDown(node, { keyCode: 39 });
+
+  expect(handleChangeEnd).not.toHaveReturned();
+
+  fireEvent.keyUp(node, { keyCode: 39 });
+
+  expect(handleChangeEnd).toHaveReturnedTimes(1);
+});
+
+it("Doesn't trigger `onChangeEnd` if the color didn't change", async () => {
+  const handleChange = jest.fn();
+  const handleChangeEnd = jest.fn();
+  // White is at saturation's top-left corner (s=0, v=100)
+  const result = render(
+    <HexColorPicker color="#ffffff" onChange={handleChange} onChangeEnd={handleChangeEnd} />
+  );
+  const saturation = result.container.querySelector(
+    ".react-colorful__saturation .react-colorful__interactive"
+  );
+
+  // Click at top-left corner where white already is — no color change
+  fireEvent(saturation, new FakeMouseEvent("mousedown", { pageX: 0, pageY: 0 }));
+  fireEvent(document, new FakeMouseEvent("mouseup"));
+
+  expect(handleChange).not.toHaveReturned();
+  expect(handleChangeEnd).not.toHaveReturned();
+});
+
 it("Triggers `onChange` after a touch interaction", async () => {
   const handleChange = jest.fn((hsv) => hsv);
   const initialValue = { h: 0, s: 100, v: 100 };

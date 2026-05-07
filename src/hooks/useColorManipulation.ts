@@ -6,10 +6,12 @@ import { useEventCallback } from "./useEventCallback";
 export function useColorManipulation<T extends AnyColor>(
   colorModel: ColorModel<T>,
   color: T,
-  onChange?: (color: T) => void
-): [HsvaColor, (color: Partial<HsvaColor>) => void] {
+  onChange?: (color: T) => void,
+  onChangeEnd?: (color: T) => void
+): [HsvaColor, (color: Partial<HsvaColor>) => void, () => void] {
   // Save onChange callback in the ref for avoiding "useCallback hell"
   const onChangeCallback = useEventCallback<T>(onChange);
+  const onChangeEndCallback = useEventCallback<T>(onChangeEnd);
 
   // No matter which color model is used (HEX, RGB(A) or HSL(A)),
   // all internal calculations are based on HSVA model
@@ -18,6 +20,7 @@ export function useColorManipulation<T extends AnyColor>(
   // By using this ref we're able to prevent extra updates
   // and the effects recursion during the color conversion
   const cache = useRef({ color, hsva });
+  const isDirty = useRef(false);
 
   // Update local HSVA-value if `color` property value is changed,
   // but only if that's not the same color that we just sent to the parent
@@ -26,6 +29,7 @@ export function useColorManipulation<T extends AnyColor>(
       const newHsva = colorModel.toHsva(color);
       cache.current = { hsva: newHsva, color };
       updateHsva(newHsva);
+      isDirty.current = false;
     }
   }, [color, colorModel]);
 
@@ -39,6 +43,7 @@ export function useColorManipulation<T extends AnyColor>(
     ) {
       cache.current = { hsva, color: newColor };
       onChangeCallback(newColor);
+      isDirty.current = true;
     }
   }, [hsva, colorModel, onChangeCallback]);
 
@@ -48,5 +53,12 @@ export function useColorManipulation<T extends AnyColor>(
     updateHsva((current) => Object.assign({}, current, params));
   }, []);
 
-  return [hsva, handleChange];
+  const commitChange = useCallback(() => {
+    if (isDirty.current) {
+      isDirty.current = false;
+      onChangeEndCallback(cache.current.color);
+    }
+  }, [onChangeEndCallback]);
+
+  return [hsva, handleChange, commitChange];
 }

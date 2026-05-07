@@ -49,6 +49,7 @@ type ColorPickerHTMLAttributes = Omit<
 export interface ColorPickerBaseProps<T extends AnyColor> extends ColorPickerHTMLAttributes {
   color: T;
   onChange: (newColor: T) => void;
+  onChangeEnd: (newColor: T) => void;
 }
 
 type ColorInputHTMLAttributes = Omit<

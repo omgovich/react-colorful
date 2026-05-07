@@ -18,20 +18,31 @@ export const AlphaColorPicker = <T extends AnyColor>({
   colorModel,
   color = colorModel.defaultColor,
   onChange,
+  onChangeEnd,
   ...rest
 }: Props<T>): React.ReactElement => {
   const nodeRef = useRef<HTMLDivElement>(null);
   useStyleSheet(nodeRef);
 
-  const [hsva, updateHsva] = useColorManipulation<T>(colorModel, color, onChange);
+  const [hsva, updateHsva, commitChange] = useColorManipulation<T>(
+    colorModel,
+    color,
+    onChange,
+    onChangeEnd
+  );
 
   const nodeClassName = formatClassName(["react-colorful", className]);
 
   return (
     <div {...rest} ref={nodeRef} className={nodeClassName}>
-      <Saturation hsva={hsva} onChange={updateHsva} />
-      <Hue hue={hsva.h} onChange={updateHsva} />
-      <Alpha hsva={hsva} onChange={updateHsva} className="react-colorful__last-control" />
+      <Saturation hsva={hsva} onChange={updateHsva} onChangeEnd={commitChange} />
+      <Hue hue={hsva.h} onChange={updateHsva} onChangeEnd={commitChange} />
+      <Alpha
+        hsva={hsva}
+        onChange={updateHsva}
+        onChangeEnd={commitChange}
+        className="react-colorful__last-control"
+      />
     </div>
   );
 };

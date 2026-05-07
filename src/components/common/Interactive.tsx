@@ -57,17 +57,19 @@ const isInvalid = (event: MouseEvent | TouchEvent, hasTouch: boolean): boolean =
 interface Props {
   onMove: (interaction: Interaction) => void;
   onKey: (offset: Interaction) => void;
+  onEnd?: () => void;
   children: React.ReactNode;
 }
 
-const InteractiveBase = ({ onMove, onKey, ...rest }: Props) => {
+const InteractiveBase = ({ onMove, onKey, onEnd, ...rest }: Props) => {
   const container = useRef<HTMLDivElement>(null);
   const onMoveCallback = useEventCallback<Interaction>(onMove);
   const onKeyCallback = useEventCallback<Interaction>(onKey);
+  const onEndCallback = useEventCallback<void>(onEnd);
   const touchId = useRef<null | number>(null);
   const hasTouch = useRef(false);
 
-  const [handleMoveStart, handleKeyDown, toggleDocumentEvents] = useMemo(() => {
+  const [handleMoveStart, handleKeyDown, handleKeyUp, toggleDocumentEvents] = useMemo(() => {
     const handleMoveStart = ({ nativeEvent }: React.MouseEvent | React.TouchEvent) => {
       const el = container.current;
       if (!el) return;
@@ -103,10 +105,14 @@ const InteractiveBase = ({ onMove, onKey, ...rest }: Props) => {
         onMoveCallback(getRelativePosition(container.current, event, touchId.current));
       } else {
         toggleDocumentEvents(false);
+        onEndCallback();
       }
     };
 
-    const handleMoveEnd = () => toggleDocumentEvents(false);
+    const handleMoveEnd = () => {
+      toggleDocumentEvents(false);
+      onEndCallback();
+    };
 
     const handleKeyDown = (event: React.KeyboardEvent) => {
       const keyCode = event.which || event.keyCode;
@@ -124,6 +130,11 @@ const InteractiveBase = ({ onMove, onKey, ...rest }: Props) => {
       });
     };
 
+    const handleKeyUp = (event: React.KeyboardEvent) => {
+      const keyCode = event.which || event.keyCode;
+      if (keyCode >= 37 && keyCode <= 40) onEndCallback();
+    };
+
     function toggleDocumentEvents(state?: boolean) {
       const touch = hasTouch.current;
       const el = container.current;
@@ -135,8 +146,8 @@ const InteractiveBase = ({ onMove, onKey, ...rest }: Props) => {
       toggleEvent(touch ? "touchend" : "mouseup", handleMoveEnd);
     }
 
-    return [handleMoveStart, handleKeyDown, toggleDocumentEvents];
-  }, [onKeyCallback, onMoveCallback]);
+    return [handleMoveStart, handleKeyDown, handleKeyUp, toggleDocumentEvents];
+  }, [onKeyCallback, onMoveCallback, onEndCallback]);
 
   // Remove window event listeners before unmounting
   useEffect(() => toggleDocumentEvents, [toggleDocumentEvents]);
@@ -149,6 +160,7 @@ const InteractiveBase = ({ onMove, onKey, ...rest }: Props) => {
       className="react-colorful__interactive"
       ref={container}
       onKeyDown={handleKeyDown}
+      onKeyUp={handleKeyUp}
       tabIndex={0}
       role="slider"
     />

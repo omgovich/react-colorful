@@ -12,9 +12,10 @@ interface Props {
   className?: string;
   hue: number;
   onChange: (newHue: { h: number }) => void;
+  onChangeEnd?: () => void;
 }
 
-const HueBase = ({ className, hue, onChange }: Props) => {
+const HueBase = ({ className, hue, onChange, onChangeEnd }: Props) => {
   const handleMove = (interaction: Interaction) => {
     onChange({ h: 360 * interaction.left });
   };
@@ -33,6 +34,7 @@ const HueBase = ({ className, hue, onChange }: Props) => {
       <Interactive
         onMove={handleMove}
         onKey={handleKey}
+        onEnd={onChangeEnd}
         aria-label="Hue"
         aria-valuenow={round(hue)}
         aria-valuemax="360"

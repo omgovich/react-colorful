@@ -9,9 +9,10 @@ import { round } from "../../utils/round";
 interface Props {
   hsva: HsvaColor;
   onChange: (newColor: { s: number; v: number }) => void;
+  onChangeEnd?: () => void;
 }
 
-const SaturationBase = ({ hsva, onChange }: Props) => {
+const SaturationBase = ({ hsva, onChange, onChangeEnd }: Props) => {
   const handleMove = (interaction: Interaction) => {
     onChange({
       s: interaction.left * 100,
@@ -36,6 +37,7 @@ const SaturationBase = ({ hsva, onChange }: Props) => {
       <Interactive
         onMove={handleMove}
         onKey={handleKey}
+        onEnd={onChangeEnd}
         aria-label="Color"
         aria-valuetext={`Saturation ${round(hsva.s)}%, Brightness ${round(hsva.v)}%`}
       >
