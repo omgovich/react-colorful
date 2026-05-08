@@ -13,7 +13,7 @@
 
 ## Key constraint: bundle size
 
-Every picker must stay under 3 KB gzipped (enforced by `size-limit` in package.json). This shapes all code decisions: `Object.assign` over spread (smaller output), keyCodes over key strings, no dependencies, manually optimized algorithms. Always run `npm run size` after changes that add code.
+Every picker must stay under ~3.2 KB gzipped (enforced by `size-limit` in package.json). This shapes all code decisions: `Object.assign` over spread (smaller output), keyCodes over key strings, no dependencies, manually optimized algorithms. Always run `npm run size` after changes that add code.
 
 ## Architecture
 
@@ -45,7 +45,7 @@ Styles are inlined in JS (no external CSS files). `useStyleSheet` injects a `<st
 
 ### Build
 
-Microbundle produces CJS, ESM, UMD, and `.mjs` outputs. The library is tree-shakeable (`sideEffects: false`). CSS is inlined at build time via `--css inline`.
+tsdown (rolldown-based) produces CJS and ESM outputs. The library is tree-shakeable (`sideEffects: false`). CSS is inlined at build time via a custom rolldown plugin that reads `.css` files and exports them as minified text strings (see `tsdown.config.ts`).
 
 ## Testing
 
