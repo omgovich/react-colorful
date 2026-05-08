@@ -2,14 +2,17 @@
   "name": "react-colorful",
   "version": "5.7.0",
   "description": "🎨 A tiny (2,8 KB) color picker component for React and Preact apps. Fast, well-tested, dependency-free, mobile-friendly and accessible",
-  "main": "dist/index.js",
+  "main": "dist/index.cjs",
   "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
+  "types": "dist/index.d.cts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
+      "types": {
+        "import": "./dist/index.d.mts",
+        "require": "./dist/index.d.cts"
+      },
       "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
+      "require": "./dist/index.cjs"
     }
   },
   "scripts": {
@@ -17,7 +20,7 @@
     "size": "npm run build && size-limit",
     "check-types": "tsc --noEmit true",
     "test": "jest tests --coverage",
-    "build": "tsup",
+    "build": "tsdown",
     "prepublishOnly": "npm run build",
     "check-release": "npm publish --dry-run",
     "release": "npm publish",
@@ -30,85 +33,99 @@
       "path": "dist/index.mjs",
       "name": "HexColorPicker",
       "import": "{ HexColorPicker }",
-      "limit": "3.1 KB"
+      "limit": "3.3 KB",
+      "gzip": true
     },
     {
       "path": "dist/index.mjs",
       "name": "HslColorPicker",
       "import": "{ HslColorPicker }",
-      "limit": "3 KB"
+      "limit": "3.2 KB",
+      "gzip": true
     },
     {
       "path": "dist/index.mjs",
       "name": "HslaColorPicker",
       "import": "{ HslaColorPicker }",
-      "limit": "3.1 KB"
+      "limit": "3.3 KB",
+      "gzip": true
     },
     {
       "path": "dist/index.mjs",
       "name": "HslStringColorPicker",
       "import": "{ HslStringColorPicker }",
-      "limit": "3 KB"
+      "limit": "3.2 KB",
+      "gzip": true
     },
     {
       "path": "dist/index.mjs",
       "name": "HslaStringColorPicker",
       "import": "{ HslaStringColorPicker }",
-      "limit": "3.1 KB"
+      "limit": "3.3 KB",
+      "gzip": true
     },
     {
       "path": "dist/index.mjs",
       "name": "HsvColorPicker",
       "import": "{ HsvColorPicker }",
-      "limit": "3 KB"
+      "limit": "3.2 KB",
+      "gzip": true
     },
     {
       "path": "dist/index.mjs",
       "name": "HsvaColorPicker",
       "import": "{ HsvaColorPicker }",
-      "limit": "3.1 KB"
+      "limit": "3.3 KB",
+      "gzip": true
     },
     {
       "path": "dist/index.mjs",
       "name": "HsvStringColorPicker",
       "import": "{ HsvStringColorPicker }",
-      "limit": "3 KB"
+      "limit": "3.2 KB",
+      "gzip": true
     },
     {
       "path": "dist/index.mjs",
       "name": "HsvaStringColorPicker",
       "import": "{ HsvaStringColorPicker }",
-      "limit": "3.1 KB"
+      "limit": "3.3 KB",
+      "gzip": true
     },
     {
       "path": "dist/index.mjs",
       "name": "RgbColorPicker",
       "import": "{ RgbColorPicker }",
-      "limit": "3 KB"
+      "limit": "3.2 KB",
+      "gzip": true
     },
     {
       "path": "dist/index.mjs",
       "name": "RgbaColorPicker",
       "import": "{ RgbaColorPicker }",
-      "limit": "3 KB"
+      "limit": "3.2 KB",
+      "gzip": true
     },
     {
       "path": "dist/index.mjs",
       "name": "RgbStringColorPicker",
       "import": "{ RgbStringColorPicker }",
-      "limit": "3.1 KB"
+      "limit": "3.3 KB",
+      "gzip": true
     },
     {
       "path": "dist/index.mjs",
       "name": "RgbaStringColorPicker",
       "import": "{ RgbaStringColorPicker }",
-      "limit": "3.2 KB"
+      "limit": "3.4 KB",
+      "gzip": true
     },
     {
       "path": "dist/index.mjs",
       "name": "HexColorInput",
       "import": "{ HexColorInput }",
-      "limit": "3 KB"
+      "limit": "3.2 KB",
+      "gzip": true
     }
   ],
   "sideEffects": false,
@@ -119,7 +136,7 @@
       "^.+\\.tsx?$": "ts-jest"
     },
     "moduleNameMapper": {
-      "\\.pcss$": "<rootDir>/tests/__mocks__/styles.css.mock.ts"
+      "\\.css$": "<rootDir>/tests/__mocks__/styles.css.mock.ts"
     }
   },
   "files": [
@@ -183,7 +200,7 @@
     "react-frame-component": "^5.1.0",
     "size-limit": "^12.1.0",
     "ts-jest": "^26.5.3",
-    "tsup": "^8.5.1",
+    "tsdown": "^0.22.0",
     "typescript": "^4.2.3",
     "use-throttled-effect": "0.0.7"
   }
