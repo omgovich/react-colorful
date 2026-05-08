@@ -4,7 +4,7 @@ import { useIsomorphicLayoutEffect } from "./useIsomorphicLayoutEffect";
 import { getNonce } from "../utils/nonce";
 
 // Bundler is configured to load this as a processed minified CSS-string
-import styles from "../css/styles.css";
+import styles from "../css/styles.pcss";
 
 const styleElementMap: Map<Document, HTMLStyleElement> = new Map();
 

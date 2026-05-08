@@ -45,7 +45,7 @@ Styles are inlined in JS (no external CSS files). `useStyleSheet` injects a `<st
 
 ### Build
 
-Microbundle produces CJS, ESM, UMD, and `.mjs` outputs. The library is tree-shakeable (`sideEffects: false`). CSS is inlined at build time via `--css inline`.
+tsup (esbuild-based) produces CJS and ESM outputs. The library is tree-shakeable (`sideEffects: false`). CSS is inlined at build time via a custom esbuild plugin that loads `.pcss` files as minified text strings (see `tsup.config.ts`).
 
 ## Testing
 
