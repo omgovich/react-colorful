@@ -204,3 +204,14 @@ export const hsvaToHsv = (hsva: HsvaColor): HsvColor => {
   const { h, s, v } = roundHsva(hsva);
   return { h, s, v };
 };
+
+export const updateAlphaFromString = (color: string, alpha: number): string => {
+  return color.replace(/\d+\.\d+\)/, `${alpha})`);
+};
+
+export const updateAlphaFromObject = <T extends RgbaColor | HslaColor | HsvaColor>(
+  color: T,
+  alpha: number
+): T => {
+  return Object.assign({}, color, { a: alpha });
+};
