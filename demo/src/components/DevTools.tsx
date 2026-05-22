@@ -106,6 +106,13 @@ export const DevTools = (): JSX.Element => {
         PickerComponent={RgbColorPicker}
         initialColor={{ r: 60, g: 80, b: 120 }}
       />
+
+      <PickerPreview<RgbColor>
+        shadow
+        title="RGB (Shadow DOM)"
+        PickerComponent={RgbColorPicker}
+        initialColor={{ r: 60, g: 80, b: 120 }}
+      />
     </div>
   );
 };

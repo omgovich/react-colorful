@@ -4,10 +4,12 @@ import Frame from "react-frame-component";
 import { HexColorInput } from "../../../src";
 import { ColorPickerBaseProps, AnyColor } from "../../../src/types";
 import { PreviewContainer, PreviewDemo, PreviewOutput, PreviewTitle } from "../styles";
+import { ShadowDom } from "./ShadowDom";
 
 interface Props<T extends AnyColor> {
   title: string;
   frame?: boolean;
+  shadow?: boolean;
   PickerComponent: React.ComponentType<Partial<ColorPickerBaseProps<T>>>;
   initialColor?: T;
 }
@@ -15,6 +17,7 @@ interface Props<T extends AnyColor> {
 export function PickerPreview<T extends AnyColor>({
   title,
   frame,
+  shadow,
   PickerComponent,
   initialColor,
 }: Props<T>): JSX.Element {
@@ -25,7 +28,7 @@ export function PickerPreview<T extends AnyColor>({
     setColor(color);
   };
 
-  const Wrapper = frame ? Frame : React.Fragment;
+  const Wrapper = frame ? Frame : shadow ? ShadowDom : React.Fragment;
 
   return (
     <PreviewContainer>
