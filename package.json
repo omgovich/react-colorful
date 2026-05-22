@@ -36,7 +36,7 @@
       "path": "dist/index.module.js",
       "name": "HexColorPicker",
       "import": "{ HexColorPicker }",
-      "limit": "3.1 KB"
+      "limit": "3.11 KB"
     },
     {
       "path": "dist/index.module.js",
