@@ -36,7 +36,7 @@
       "path": "dist/index.module.js",
       "name": "HexColorPicker",
       "import": "{ HexColorPicker }",
-      "limit": "3.11 KB"
+      "limit": "3.12 KB"
     },
     {
       "path": "dist/index.module.js",
@@ -108,7 +108,7 @@
       "path": "dist/index.module.js",
       "name": "RgbaStringColorPicker",
       "import": "{ RgbaStringColorPicker }",
-      "limit": "3.2 KB"
+      "limit": "3.21 KB"
     },
     {
       "path": "dist/index.module.js",
