@@ -1,15 +1,9 @@
 import { defineConfig } from "tsdown";
 import { readFileSync } from "fs";
 import { resolve, dirname } from "path";
-
-function minifyCss(css: string): string {
-  return css
-    .replace(/\/\*[^]*?\*\//g, "")
-    .replace(/\s*([{}:;,])\s*/g, "$1")
-    .replace(/;\}/g, "}")
-    .replace(/\s+/g, " ")
-    .trim();
-}
+import { browserslistToTargets, transform } from "lightningcss";
+import browserslist from "browserslist";
+import * as terser from "terser";
 
 export default defineConfig({
   entry: ["src/index.ts"],
@@ -19,7 +13,7 @@ export default defineConfig({
   clean: true,
   deps: { neverBundle: ["react", "react-dom"] },
   target: "es2018",
-  minify: true,
+  minify: false,
   treeshake: true,
   plugins: [
     {
@@ -33,8 +27,27 @@ export default defineConfig({
       load(id) {
         if (!id.startsWith("\0inline-styles:")) return;
         const filePath = Buffer.from(id.slice("\0inline-styles:".length), "base64").toString();
-        const css = readFileSync(filePath, "utf8");
-        return `export default ${JSON.stringify(minifyCss(css))}`;
+        const raw = readFileSync(filePath);
+        const targets = browserslistToTargets(browserslist());
+        const { code } = transform({ filename: filePath, code: raw, minify: true, targets });
+        return `export default ${JSON.stringify(code.toString())}`;
+      },
+    },
+    {
+      name: "terser",
+      async renderChunk(code, chunk) {
+        if (chunk.fileName.endsWith(".d.ts") || chunk.fileName.endsWith(".d.cts") || chunk.fileName.endsWith(".d.mts")) {
+          return;
+        }
+        const isCjs = chunk.fileName.endsWith(".cjs");
+        const result = await terser.minify(code, {
+          ecma: 2018,
+          module: !isCjs,
+          toplevel: true,
+          compress: { passes: 2 },
+          sourceMap: true,
+        });
+        return { code: result.code!, map: result.map as string };
       },
     },
   ],
