@@ -20,9 +20,13 @@ export const useStyleSheet = (nodeRef: RefObject<HTMLDivElement>): void => {
     const node = nodeRef.current;
     if (typeof document === "undefined" || !node) return;
 
-    // ShadowRoot.getRootNode() returns the shadow root; otherwise we get the document.
-    // Falls back to `ownerDocument` for IE11, which lacks `getRootNode` and Shadow DOM.
-    const root = (node.getRootNode ? node.getRootNode() : node.ownerDocument) as Root;
+    // `getRootNode()` returns the closest ShadowRoot if the picker lives in one,
+    // otherwise the owning Document. Falls back to `ownerDocument` for IE11,
+    // which has neither `getRootNode` nor Shadow DOM. For disconnected nodes
+    // `getRootNode()` can return an arbitrary ancestor (e.g. an Element), so
+    // we discriminate via `head`/`host` and fall back to `ownerDocument`.
+    const raw = node.getRootNode ? node.getRootNode() : node.ownerDocument;
+    const root = (raw && ("head" in raw || "host" in raw) ? raw : node.ownerDocument) as Root;
     if (styleElementMap.has(root)) return;
 
     // Document has `head`; ShadowRoot doesn't — use it to pick the injection target.
