@@ -8,7 +8,10 @@ import styles from "../css/styles.css";
 
 type Root = Document | ShadowRoot;
 
-const styleElementMap: Map<Root, HTMLStyleElement> = new Map();
+// `WeakMap` lets detached shadow roots / iframe documents be garbage-collected
+// once nothing else references them. Available in IE11 for the operations we use
+// (`has`, `set` as a statement — we don't chain or pass an iterable constructor).
+const styleElementMap: WeakMap<Root, HTMLStyleElement> = new WeakMap();
 
 /**
  * Injects CSS code into the closest root node (Document or ShadowRoot)
