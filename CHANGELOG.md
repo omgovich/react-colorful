@@ -1,3 +1,15 @@
+### 5.8.0
+
+- Shadow DOM support: the picker now injects its styles into the closest `ShadowRoot` when rendered inside one (via #232)
+
+### 5.7.0
+
+- Add `onChangeEnd` callback that fires when the user finishes changing a color (on mouse up, touch end, or arrow key up). Useful for undo/redo, saving to a database, or other expensive operations (via #230)
+
+### 5.6.2
+
+- Fix React 19 TypeScript compatibility (via #229)
+
 ### 5.6.1
 
 - Update export settings to fix Jet 28 issues (via #191)
