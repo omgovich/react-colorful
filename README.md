@@ -31,7 +31,7 @@
 
 ## Features
 
-- 🗜 **Small**: Just 2,8 KB gzipped ([13x lighter](#why-react-colorful) than **react-color**).
+- 🗜 **Small**: Just 3,1 KB gzipped ([12x lighter](#why-react-colorful) than **react-color**).
 - 🌳 **Tree-shakeable**: Only the parts you use will be imported into your app's bundle.
 - 🚀 **Fast**: Built with hooks and functional components only.
 - 🛡 **Bulletproof**: Written in strict TypeScript and has 100% test coverage.

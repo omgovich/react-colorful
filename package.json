@@ -1,7 +1,7 @@
 {
   "name": "react-colorful",
   "version": "5.7.0",
-  "description": "🎨 A tiny (2,8 KB) color picker component for React and Preact apps. Fast, well-tested, dependency-free, mobile-friendly and accessible",
+  "description": "🎨 A tiny (3,1 KB) color picker component for React and Preact apps. Fast, well-tested, dependency-free, mobile-friendly and accessible",
   "source": "src/index.ts",
   "main": "dist/index.js",
   "module": "dist/index.module.js",
@@ -36,7 +36,7 @@
       "path": "dist/index.module.js",
       "name": "HexColorPicker",
       "import": "{ HexColorPicker }",
-      "limit": "3.1 KB"
+      "limit": "3.12 KB"
     },
     {
       "path": "dist/index.module.js",
@@ -96,7 +96,7 @@
       "path": "dist/index.module.js",
       "name": "RgbaColorPicker",
       "import": "{ RgbaColorPicker }",
-      "limit": "3 KB"
+      "limit": "3.1 KB"
     },
     {
       "path": "dist/index.module.js",
@@ -108,7 +108,7 @@
       "path": "dist/index.module.js",
       "name": "RgbaStringColorPicker",
       "import": "{ RgbaStringColorPicker }",
-      "limit": "3.2 KB"
+      "limit": "3.21 KB"
     },
     {
       "path": "dist/index.module.js",

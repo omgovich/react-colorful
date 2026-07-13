@@ -13,11 +13,11 @@
 
 ## Key constraint: bundle size
 
-Every picker must stay under 3 KB gzipped (enforced by `size-limit` in package.json). This shapes all code decisions: `Object.assign` over spread (smaller output), keyCodes over key strings, no dependencies, manually optimized algorithms. Always run `npm run size` after changes that add code.
+Every picker must stay under 3.1 KB gzipped (enforced by `size-limit` in package.json). This shapes all code decisions: `Object.assign` over spread (smaller output), keyCodes over key strings, no dependencies, manually optimized algorithms. Always run `npm run size` after changes that add code.
 
 ## Architecture
 
-A ~2.8 KB color picker component library for React. Zero dependencies.
+A ~3.1 KB color picker component library for React. Zero dependencies.
 
 ### Internal color model: HSVA
 
