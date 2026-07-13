@@ -137,7 +137,10 @@
     "README.md",
     "package.json"
   ],
-  "repository": "omgovich/react-colorful",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/omgovich/react-colorful.git"
+  },
   "keywords": [
     "react",
     "color picker",
