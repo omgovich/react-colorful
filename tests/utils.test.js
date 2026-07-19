@@ -30,19 +30,25 @@ import { formatClassName } from "../src/utils/format";
 import { clamp } from "../src/utils/clamp";
 import { round } from "../src/utils/round";
 
+const expectColorCloseTo = (actual, expected) => {
+  Object.keys(expected).forEach((key) => {
+    expect(actual[key]).toBeCloseTo(expected[key]);
+  });
+};
+
 it("Converts HEX to HSVA", () => {
   expect(hexToHsva("#ffffff")).toMatchObject({ h: 0, s: 0, v: 100, a: 1 });
   expect(hexToHsva("#ffff00")).toMatchObject({ h: 60, s: 100, v: 100, a: 1 });
   expect(hexToHsva("#ff0000")).toMatchObject({ h: 0, s: 100, v: 100, a: 1 });
   expect(hexToHsva("#000000")).toMatchObject({ h: 0, s: 0, v: 0, a: 1 });
-  expect(hexToHsva("#c62182")).toMatchObject({ h: 325, s: 83, v: 78, a: 1 });
+  expectColorCloseTo(hexToHsva("#c62182"), { h: 324.73, s: 83.33, v: 77.65, a: 1 });
 });
 
 it("Converts shorthand HEX to HSVA", () => {
   expect(hexToHsva("#FFF")).toMatchObject({ h: 0, s: 0, v: 100, a: 1 });
   expect(hexToHsva("#FF0")).toMatchObject({ h: 60, s: 100, v: 100, a: 1 });
   expect(hexToHsva("#F00")).toMatchObject({ h: 0, s: 100, v: 100, a: 1 });
-  expect(hexToHsva("#ABC")).toMatchObject({ h: 210, s: 17, v: 80, a: 1 });
+  expectColorCloseTo(hexToHsva("#ABC"), { h: 210, s: 16.67, v: 80, a: 1 });
 });
 
 it("Converts HSVA to HEX", () => {
@@ -110,7 +116,7 @@ it("Converts RGB string to HSVA", () => {
   expect(rgbStringToHsva("rgb(255, 255, 255)")).toMatchObject({ h: 0, s: 0, v: 100, a: 1 });
   expect(rgbStringToHsva("rgb(0,0,0)")).toMatchObject({ h: 0, s: 0, v: 0, a: 1 });
   expect(rgbStringToHsva("rgb(100% 100% 100%)")).toMatchObject({ h: 0, s: 0, v: 100, a: 1 });
-  expect(rgbStringToHsva("rgb(50% 45.9% 25%)")).toMatchObject({ h: 50, s: 50, v: 50, a: 1 });
+  expectColorCloseTo(rgbStringToHsva("rgb(50% 45.9% 25%)"), { h: 50.16, s: 50, v: 50, a: 1 });
 });
 
 it("Converts HSVA to RGB string", () => {
@@ -124,9 +130,9 @@ it("Converts HSVA to RGBA string", () => {
 });
 
 it("Converts RGBA string to HSVA", () => {
-  let test = (input, output) => expect(rgbaStringToHsva(input)).toMatchObject(output);
-  test("rgba(61, 88, 102, 0.5)", { h: 200, s: 40, v: 40, a: 0.5 });
-  test("rgba(23.9% 34.5% 40% / 99%)", { h: 200, s: 40, v: 40, a: 0.99 });
+  let test = (input, output) => expectColorCloseTo(rgbaStringToHsva(input), output);
+  test("rgba(61, 88, 102, 0.5)", { h: 200.49, s: 40.2, v: 40, a: 0.5 });
+  test("rgba(23.9% 34.5% 40% / 99%)", { h: 200.5, s: 40.25, v: 40, a: 0.99 });
 });
 
 it("Converts HSVA to HSVA string", () => {
