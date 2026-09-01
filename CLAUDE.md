@@ -8,12 +8,12 @@
 - **Test (with coverage):** `npm run test`
 - **Test single file:** `npx jest tests/utils.test.js`
 - **Test single case:** `npx jest tests/components.test.js -t "HexColorPicker"`
-- **Bundle size check:** `npm run size` (pickers must stay under 3.1 KB)
+- **Bundle size check:** `npm run size` (per-picker budgets live in the `size-limit` section of package.json)
 - **Demo dev server:** `npm run start-demo`
 
 ## Key constraint: bundle size
 
-Every picker must stay under 3.1 KB gzipped (enforced by `size-limit` in package.json). This shapes all code decisions: `Object.assign` over spread (smaller output), keyCodes over key strings, no dependencies, manually optimized algorithms. Always run `npm run size` after changes that add code.
+Every picker has a hard budget (3–3.3 KB depending on the picker) enforced by the `size-limit` section of package.json. Since size-limit v11 the metric is minified + **brotli** of an esbuild bundle — don't compare these numbers against gzip figures from older tooling. This shapes all code decisions: `Object.assign` over spread (smaller output), keyCodes over key strings, no dependencies, manually optimized algorithms. Always run `npm run size` after changes that add code.
 
 ## Architecture
 
