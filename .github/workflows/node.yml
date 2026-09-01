@@ -8,20 +8,25 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x, 14.x]
+        node-version: [18.x, 20.x, 22.x]
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-      - run: npm install
+          cache: npm
+      - run: npm ci
       - run: npm run lint
       - run: npm run size
+        env:
+          # size-limit@4 relies on webpack@4 which uses hash algorithms
+          # that OpenSSL 3 (Node 17+) removed from the default provider
+          NODE_OPTIONS: --openssl-legacy-provider
       - run: npm run test
 
       - name: Code coverage report
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v4
