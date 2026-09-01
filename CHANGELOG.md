@@ -1,3 +1,7 @@
+### 5.8.1
+
+- Fix RGB channels drifting when only the alpha channel is changed: `{ r: 200, g: 120, b: 35 }` no longer becomes `{ r: 199, g: 119, b: 34 }` after moving the alpha slider. Thanks to @t-hamano for the investigation (via #234, fixes #163)
+
 ### 5.8.0
 
 - Shadow DOM support: the picker now injects its styles into the closest `ShadowRoot` when rendered inside one (via #232)
