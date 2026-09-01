@@ -311,6 +311,49 @@ it("Changes alpha channel value after an interaction", async () => {
   expect(handleChange).toHaveReturnedWith({ h: 100, s: 0, l: 0, a: 1 });
 });
 
+it("Doesn't change RGB channels when only alpha is changed", async () => {
+  const handleChange = jest.fn((rgba) => rgba);
+  const initialValue = { r: 200, g: 120, b: 35, a: 0.5 };
+
+  const result = render(<RgbaColorPicker color={initialValue} onChange={handleChange} />);
+  const alpha = result.container.querySelector(
+    ".react-colorful__alpha .react-colorful__interactive"
+  );
+
+  fireEvent(alpha, new FakeMouseEvent("mousedown", { pageX: 0, pageY: 0 }));
+  fireEvent(alpha, new FakeMouseEvent("mousemove", { pageX: 105, pageY: 0 }));
+
+  expect(handleChange).toHaveLastReturnedWith({ r: 200, g: 120, b: 35, a: 1 });
+});
+
+it("Doesn't change RGB string channels when only alpha is changed", async () => {
+  const handleChange = jest.fn((rgbaString) => rgbaString);
+
+  const result = render(
+    <RgbaStringColorPicker color="rgba(200, 120, 35, 1)" onChange={handleChange} />
+  );
+  const alpha = result.container.querySelector(
+    ".react-colorful__alpha .react-colorful__interactive"
+  );
+
+  fireEvent(alpha, new FakeMouseEvent("mousedown", { pageX: 55, pageY: 0 }));
+
+  expect(handleChange).toHaveLastReturnedWith("rgba(200, 120, 35, 0.5)");
+});
+
+it("Doesn't change HEX color channels when only alpha is changed", async () => {
+  const handleChange = jest.fn((hex) => hex);
+
+  const result = render(<HexAlphaColorPicker color="#c87823" onChange={handleChange} />);
+  const alpha = result.container.querySelector(
+    ".react-colorful__alpha .react-colorful__interactive"
+  );
+
+  fireEvent(alpha, new FakeMouseEvent("mousedown", { pageX: 55, pageY: 0 }));
+
+  expect(handleChange).toHaveLastReturnedWith("#c8782380");
+});
+
 it("Uses #rrggbbaa format if alpha channel value is less than 1", async () => {
   const handleChange = jest.fn((hex) => hex);
   const result = render(<HexAlphaColorPicker color="#112233" onChange={handleChange} />);
