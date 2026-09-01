@@ -100,6 +100,16 @@ it("Converts HSVA to RGBA", () => {
   test({ h: 0, s: 100, v: 100, a: 0.567 }, { r: 255, g: 0, b: 0, a: 0.57 });
 });
 
+it("Converts RGBA to HSVA and back without losing precision", () => {
+  // `rgbaToHsva` must not round the result, otherwise the RGB values drift
+  // after a roundtrip (e.g. when the user changes only the alpha channel)
+  const test = (rgba) => expect(hsvaToRgba(rgbaToHsva(rgba))).toMatchObject(rgba);
+  test({ r: 200, g: 120, b: 35, a: 0.5 }); // https://github.com/omgovich/react-colorful/issues/163
+  test({ r: 239, g: 239, b: 239, a: 1 }); // grayscale (delta = 0)
+  test({ r: 3, g: 22, b: 252, a: 0.75 });
+  test({ r: 255, g: 254, b: 253, a: 1 });
+});
+
 it("Converts RGBA to HSVA", () => {
   expect(rgbaToHsva({ r: 255, g: 255, b: 255, a: 1 })).toMatchObject({ h: 0, s: 0, v: 100, a: 1 });
   expect(rgbaToHsva({ r: 0, g: 255, b: 0, a: 1 })).toMatchObject({ h: 120, s: 100, v: 100, a: 1 });
