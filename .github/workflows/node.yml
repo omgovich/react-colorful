@@ -22,10 +22,6 @@ jobs:
       - run: npm ci
       - run: npm run lint
       - run: npm run size
-        env:
-          # size-limit@4 relies on webpack@4 which uses hash algorithms
-          # that OpenSSL 3 (Node 17+) removed from the default provider
-          NODE_OPTIONS: --openssl-legacy-provider
       - run: npm run test
 
       - name: Code coverage report
