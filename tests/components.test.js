@@ -131,9 +131,7 @@ it("Triggers `onChangeEnd` after a mouse interaction", async () => {
 it("Triggers `onChangeEnd` after a touch interaction", async () => {
   const handleChangeEnd = jest.fn((hsv) => hsv);
   const initialValue = { h: 0, s: 100, v: 100 };
-  const result = render(
-    <HsvColorPicker color={initialValue} onChangeEnd={handleChangeEnd} />
-  );
+  const result = render(<HsvColorPicker color={initialValue} onChangeEnd={handleChangeEnd} />);
   const hue = result.container.querySelector(".react-colorful__hue .react-colorful__interactive");
 
   fireEvent.touchStart(hue, { touches: [{ pageX: 0, pageY: 0, bubbles: true }] });
@@ -149,9 +147,7 @@ it("Triggers `onChangeEnd` after a touch interaction", async () => {
 it("Triggers `onChangeEnd` after a keyboard interaction", async () => {
   const handleChangeEnd = jest.fn((hex) => hex);
   const initialValue = "#ff0000";
-  const result = render(
-    <HexColorPicker color={initialValue} onChangeEnd={handleChangeEnd} />
-  );
+  const result = render(<HexColorPicker color={initialValue} onChangeEnd={handleChangeEnd} />);
   const hue = result.container.querySelector(".react-colorful__hue .react-colorful__interactive");
 
   hue.focus();
@@ -588,4 +584,74 @@ it("Does not allow to enter `#rrggbbaa` in `HexColorInput` if `alpha` is turned 
 
   fireEvent.change(input, { target: { value: "11223344" } });
   expect(input.value).toBe("112233");
+});
+
+describe("switching between touch and mouse", () => {
+  let now;
+  let clock;
+  beforeEach(() => {
+    now = 10000;
+    clock = jest.spyOn(Date, "now").mockImplementation(() => now);
+  });
+  afterEach(() => clock.mockRestore());
+
+  it.each(["saturation", "hue", "alpha"])("allows mouse input after touch on %s", (channel) => {
+    const onChange = jest.fn();
+    const onChangeEnd = jest.fn();
+    const { container } = render(
+      <HsvaColorPicker
+        color={{ h: 120, s: 50, v: 50, a: 0.5 }}
+        onChange={onChange}
+        onChangeEnd={onChangeEnd}
+      />
+    );
+    const slider = container.querySelector(
+      `.react-colorful__${channel} .react-colorful__interactive`
+    );
+    const touch = { pageX: 25, pageY: 25, identifier: 1 };
+    fireEvent.touchStart(slider, { touches: [touch], changedTouches: [touch] });
+    fireEvent.touchEnd(slider, { touches: [], changedTouches: [touch] });
+    onChange.mockClear();
+    fireEvent(slider, new FakeMouseEvent("mousedown", { pageX: 85, pageY: 85 }));
+    expect(onChange).not.toHaveBeenCalled(); // Compatibility events immediately after touch.
+    now += 2000;
+    fireEvent(slider, new FakeMouseEvent("mousedown", { pageX: 85, pageY: 85 }));
+    expect(onChange).toHaveBeenCalledTimes(1);
+    fireEvent(window, new FakeMouseEvent("mousemove", { pageX: 65, pageY: 65 }));
+    expect(onChange).toHaveBeenCalledTimes(2);
+    fireEvent(window, new FakeMouseEvent("mouseup"));
+    expect(onChangeEnd).toHaveBeenCalledTimes(2);
+    onChange.mockClear();
+    fireEvent(window, new FakeMouseEvent("mousemove", { pageX: 95, pageY: 95 }));
+    expect(onChange).not.toHaveBeenCalled();
+  });
+});
+
+it("accepts identified real mouse input immediately after touch", () => {
+  const onChange = jest.fn();
+  const { container } = render(
+    <HsvColorPicker color={{ h: 0, s: 100, v: 100 }} onChange={onChange} />
+  );
+  const hue = container.querySelector(".react-colorful__hue .react-colorful__interactive");
+  const touch = { pageX: 25, pageY: 5, identifier: 1 };
+  fireEvent.touchStart(hue, { touches: [touch], changedTouches: [touch] });
+  fireEvent.touchEnd(hue, { touches: [], changedTouches: [touch] });
+  onChange.mockClear();
+  const mouse = new FakeMouseEvent("mousedown", { pageX: 55, pageY: 5 });
+  Object.defineProperty(mouse, "sourceCapabilities", { value: { firesTouchEvents: false } });
+  fireEvent(hue, mouse);
+  expect(onChange).toHaveBeenLastCalledWith({ h: 180, s: 100, v: 100 });
+  fireEvent(window, new FakeMouseEvent("mouseup"));
+});
+
+it("ignores identified compatibility mouse input even after the fallback delay", () => {
+  const onChange = jest.fn();
+  const { container } = render(
+    <HsvColorPicker color={{ h: 0, s: 100, v: 100 }} onChange={onChange} />
+  );
+  const hue = container.querySelector(".react-colorful__hue .react-colorful__interactive");
+  const mouse = new FakeMouseEvent("mousedown", { pageX: 55, pageY: 5 });
+  Object.defineProperty(mouse, "sourceCapabilities", { value: { firesTouchEvents: true } });
+  fireEvent(hue, mouse);
+  expect(onChange).not.toHaveBeenCalled();
 });

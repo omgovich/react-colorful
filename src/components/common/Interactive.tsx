@@ -48,10 +48,13 @@ const preventDefaultMove = (event: MouseEvent | TouchEvent): void => {
   !isTouch(event) && event.preventDefault();
 };
 
-// Prevent mobile browsers from handling mouse events (conflicting with touch ones).
-// If we detected a touch interaction before, we prefer reacting to touch events only.
-const isInvalid = (event: MouseEvent | TouchEvent, hasTouch: boolean): boolean => {
-  return hasTouch && !isTouch(event);
+// Ignore compatibility mouse events without permanently disabling a real mouse.
+const isInvalid = (event: MouseEvent | TouchEvent, lastTouch: number): boolean => {
+  if (isTouch(event)) return false;
+  const capabilities = (event as MouseEvent & {
+    sourceCapabilities?: { firesTouchEvents: boolean };
+  }).sourceCapabilities;
+  return capabilities ? capabilities.firesTouchEvents : Date.now() - lastTouch < 800;
 };
 
 interface Props {
@@ -67,9 +70,11 @@ const InteractiveBase = ({ onMove, onKey, onEnd, ...rest }: Props) => {
   const onKeyCallback = useEventCallback<Interaction>(onKey);
   const onEndCallback = useEventCallback<void>(onEnd);
   const touchId = useRef<null | number>(null);
-  const hasTouch = useRef(false);
 
   const [handleMoveStart, handleKeyDown, handleKeyUp, toggleDocumentEvents] = useMemo(() => {
+    let hasTouch = false;
+    let lastTouch = -Infinity;
+
     const handleMoveStart = ({ nativeEvent }: React.MouseEvent | React.TouchEvent) => {
       const el = container.current;
       if (!el) return;
@@ -77,10 +82,14 @@ const InteractiveBase = ({ onMove, onKey, onEnd, ...rest }: Props) => {
       // Prevent text selection
       preventDefaultMove(nativeEvent);
 
-      if (isInvalid(nativeEvent, hasTouch.current) || !el) return;
+      if (isInvalid(nativeEvent, lastTouch) || !el) return;
+
+      // Remove the previous gesture listeners before changing input type.
+      toggleDocumentEvents(false);
+      hasTouch = isTouch(nativeEvent);
 
       if (isTouch(nativeEvent)) {
-        hasTouch.current = true;
+        lastTouch = Date.now();
         const changedTouches = nativeEvent.changedTouches || [];
         if (changedTouches.length) touchId.current = changedTouches[0].identifier;
       }
@@ -91,6 +100,7 @@ const InteractiveBase = ({ onMove, onKey, onEnd, ...rest }: Props) => {
     };
 
     const handleMove = (event: MouseEvent | TouchEvent) => {
+      if (isTouch(event)) lastTouch = Date.now();
       // Prevent text selection
       preventDefaultMove(event);
 
@@ -110,6 +120,7 @@ const InteractiveBase = ({ onMove, onKey, onEnd, ...rest }: Props) => {
     };
 
     const handleMoveEnd = () => {
+      if (hasTouch) lastTouch = Date.now();
       toggleDocumentEvents(false);
       onEndCallback();
     };
@@ -136,7 +147,7 @@ const InteractiveBase = ({ onMove, onKey, onEnd, ...rest }: Props) => {
     };
 
     function toggleDocumentEvents(state?: boolean) {
-      const touch = hasTouch.current;
+      const touch = hasTouch;
       const el = container.current;
       const parentWindow = getParentWindow(el);
 
@@ -144,6 +155,7 @@ const InteractiveBase = ({ onMove, onKey, onEnd, ...rest }: Props) => {
       const toggleEvent = state ? parentWindow.addEventListener : parentWindow.removeEventListener;
       toggleEvent(touch ? "touchmove" : "mousemove", handleMove);
       toggleEvent(touch ? "touchend" : "mouseup", handleMoveEnd);
+      if (touch) toggleEvent("touchcancel", handleMoveEnd);
     }
 
     return [handleMoveStart, handleKeyDown, handleKeyUp, toggleDocumentEvents];
