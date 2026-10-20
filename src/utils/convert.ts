@@ -34,7 +34,7 @@ export const hexToRgba = (hex: string): RgbaColor => {
 };
 
 export const parseHue = (value: string, unit = "deg"): number => {
-  return Number(value) * (angleUnits[unit] || 1);
+  return Number(value) * (angleUnits[unit.toLowerCase()] || 1);
 };
 
 export const hslaStringToHsva = (hslString: string): HsvaColor => {
