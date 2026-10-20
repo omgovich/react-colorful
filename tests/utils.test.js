@@ -85,6 +85,43 @@ it("Converts HSL string to HSVA", () => {
   expect(hslStringToHsva("hsl(0, 100%, 50%)")).toMatchObject({ h: 0, s: 100, v: 100, a: 1 });
 });
 
+it.each(["100GRAD", "0.25TURN", "1.5708RAD", "100gRaD", "0.25TuRn", "1.5708RaD"])(
+  "Converts case-insensitive hue unit %s in HSL and HSV strings",
+  (hue) => {
+    expect(roundHsva(hslStringToHsva(`hsl(${hue.toLowerCase()} 100% 50%)`))).toEqual({
+      h: 90,
+      s: 100,
+      v: 100,
+      a: 1,
+    });
+    expect(hsvStringToHsva(`hsv(${hue.toLowerCase()} 100% 100%)`)).toEqual({
+      h: 90,
+      s: 100,
+      v: 100,
+      a: 1,
+    });
+    expect(roundHsva(hslStringToHsva(`hsl(${hue} 100% 50%)`))).toEqual({
+      h: 90,
+      s: 100,
+      v: 100,
+      a: 1,
+    });
+    expect(hsvStringToHsva(`hsv(${hue} 100% 100%)`)).toEqual({
+      h: 90,
+      s: 100,
+      v: 100,
+      a: 1,
+    });
+  }
+);
+
+it("Preserves signed and full-turn hue values", () => {
+  expect(hslStringToHsva("hsl(-90 100% 50%)").h).toBe(-90);
+  expect(hsvStringToHsva("hsv(-0.25turn 100% 100%)").h).toBe(-90);
+  expect(hslStringToHsva("hsl(1turn 100% 50%)").h).toBe(360);
+  expect(hsvStringToHsva("hsv(360deg 100% 100%)").h).toBe(360);
+});
+
 it("Converts HSLA string to HSVA", () => {
   let test = (input, output) => expect(hslaStringToHsva(input)).toMatchObject(output);
 
