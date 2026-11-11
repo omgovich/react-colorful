@@ -47,6 +47,13 @@ Styles are inlined in JS (no external CSS files). `useStyleSheet` injects a `<st
 
 Microbundle produces CJS, ESM, UMD, and `.mjs` outputs. The library is tree-shakeable (`sideEffects: false`). CSS is inlined at build time via `--css inline`.
 
+## Releases
+
+Releases are automated with [Changesets](https://changesets.dev) and `.github/workflows/release.yml`. **Never run `npm run release` (or `npm publish`) locally**: CI publishes through npm trusted publishing (OIDC), with no npm token. Use `npm run check-release` (a dry run) to verify packaging.
+
+- A PR that changes the published package adds a changeset (`npx changeset`, or a `.changeset/<name>.md` file by hand). Its summary is the CHANGELOG.md line: `Fix ... Thanks to @user (via #123)`, crediting the code contributor. Keep entries compact; the details live in the PR. Docs, demo, tests and CI changes need no changeset.
+- On push to `master`, the workflow opens or updates a "chore: release" PR that bumps the version, writes CHANGELOG.md and syncs package-lock.json. Merging it publishes to npm and creates a `v<version>` git tag and a GitHub Release for every release, patches included.
+
 ## Testing
 
 Tests use `@testing-library/react` with `jest-esm-jsx-transform` for JSX in `.js` test files. The test setup mocks `HTMLElement.getBoundingClientRect` (jsdom doesn't support layout) and uses a custom `FakeMouseEvent` class to provide `pageX`/`pageY` (not supported by `fireEvent`). See the top of `tests/components.test.js` for both.
