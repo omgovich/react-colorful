@@ -6,16 +6,14 @@ interface Props {
 }
 
 export const ShadowDom = ({ children }: Props): JSX.Element => {
-  const [root, setRoot] = useState<ShadowRoot | null>(null);
+  const [container, setContainer] = useState<HTMLDivElement | null>(null);
 
   const hostRef = useCallback((host: HTMLDivElement | null) => {
     if (host && !host.shadowRoot) {
-      setRoot(host.attachShadow({ mode: "open" }));
+      const root = host.attachShadow({ mode: "open" });
+      setContainer(root.appendChild(document.createElement("div")));
     }
   }, []);
 
-  // @types/react-dom 17 types the portal container as Element, though React accepts a ShadowRoot
-  return (
-    <div ref={hostRef}>{root && ReactDOM.createPortal(children, (root as unknown) as Element)}</div>
-  );
+  return <div ref={hostRef}>{container && ReactDOM.createPortal(children, container)}</div>;
 };
