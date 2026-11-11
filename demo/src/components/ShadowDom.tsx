@@ -14,5 +14,8 @@ export const ShadowDom = ({ children }: Props): JSX.Element => {
     }
   }, []);
 
-  return <div ref={hostRef}>{root && ReactDOM.createPortal(children, root)}</div>;
+  // @types/react-dom 17 types the portal container as Element, though React accepts a ShadowRoot
+  return (
+    <div ref={hostRef}>{root && ReactDOM.createPortal(children, (root as unknown) as Element)}</div>
+  );
 };
