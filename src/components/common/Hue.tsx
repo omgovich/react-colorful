@@ -16,6 +16,10 @@ interface Props {
 }
 
 const HueBase = ({ className, hue, onChange, onChangeEnd }: Props) => {
+  if (hue < 0 || hue > 360) {
+    hue = ((hue % 360) + 360) % 360;
+  }
+
   const handleMove = (interaction: Interaction) => {
     onChange({ h: 360 * interaction.left });
   };
