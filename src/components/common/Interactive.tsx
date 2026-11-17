@@ -67,7 +67,7 @@ const InteractiveBase = ({ onMove, onKey, onEnd, ...rest }: Props) => {
     // Browsers fire compatibility mouse events right after a tap, so mouse input is ignored
     // for a short while after a touch instead of permanently.
     let hasTouch = false;
-    let lastTouch = -Infinity;
+    let lastTouch = 0;
 
     const handleMoveStart = ({ nativeEvent }: React.MouseEvent | React.TouchEvent) => {
       const el = container.current;
@@ -142,15 +142,14 @@ const InteractiveBase = ({ onMove, onKey, onEnd, ...rest }: Props) => {
     };
 
     function toggleDocumentEvents(state?: boolean) {
-      const touch = hasTouch;
       const el = container.current;
       const parentWindow = getParentWindow(el);
 
       // Add or remove additional pointer event listeners
       const toggleEvent = state ? parentWindow.addEventListener : parentWindow.removeEventListener;
-      toggleEvent(touch ? "touchmove" : "mousemove", handleMove);
-      toggleEvent(touch ? "touchend" : "mouseup", handleMoveEnd);
-      if (touch) toggleEvent("touchcancel", handleMoveEnd);
+      toggleEvent(hasTouch ? "touchmove" : "mousemove", handleMove);
+      toggleEvent(hasTouch ? "touchend" : "mouseup", handleMoveEnd);
+      if (hasTouch) toggleEvent("touchcancel", handleMoveEnd);
     }
 
     return [handleMoveStart, handleKeyDown, handleKeyUp, toggleDocumentEvents];
