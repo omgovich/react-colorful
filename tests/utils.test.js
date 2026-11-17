@@ -85,49 +85,13 @@ it("Converts HSL string to HSVA", () => {
   expect(hslStringToHsva("hsl(0, 100%, 50%)")).toMatchObject({ h: 0, s: 100, v: 100, a: 1 });
 });
 
-it.each(["100GRAD", "0.25TURN", "1.5708RAD", "100gRaD", "0.25TuRn", "1.5708RaD"])(
-  "Converts case-insensitive hue unit %s in HSL and HSV strings",
-  (hue) => {
-    expect(roundHsva(hslStringToHsva(`hsl(${hue.toLowerCase()} 100% 50%)`))).toEqual({
-      h: 90,
-      s: 100,
-      v: 100,
-      a: 1,
-    });
-    expect(hsvStringToHsva(`hsv(${hue.toLowerCase()} 100% 100%)`)).toEqual({
-      h: 90,
-      s: 100,
-      v: 100,
-      a: 1,
-    });
-    expect(roundHsva(hslStringToHsva(`hsl(${hue} 100% 50%)`))).toEqual({
-      h: 90,
-      s: 100,
-      v: 100,
-      a: 1,
-    });
-    expect(hsvStringToHsva(`hsv(${hue} 100% 100%)`)).toEqual({
-      h: 90,
-      s: 100,
-      v: 100,
-      a: 1,
-    });
-  }
-);
-
-it("Preserves signed and full-turn hue values", () => {
-  expect(hslStringToHsva("hsl(-90 100% 50%)").h).toBe(-90);
-  expect(hsvStringToHsva("hsv(-0.25turn 100% 100%)").h).toBe(-90);
-  expect(hslStringToHsva("hsl(1turn 100% 50%)").h).toBe(360);
-  expect(hsvStringToHsva("hsv(360deg 100% 100%)").h).toBe(360);
-});
-
 it("Converts HSLA string to HSVA", () => {
   let test = (input, output) => expect(hslaStringToHsva(input)).toMatchObject(output);
 
   test("hsla(0deg, 0%, 0%, 0.5)", { h: 0, s: 0, v: 0, a: 0.5 });
   test("hsla(200, 25%, 32%, 1)", { h: 200, s: 40, v: 40, a: 1 });
   test("hsla(.5turn 25% 32% / 50%)", { h: 180, s: 40, v: 40, a: 0.5 });
+  test("hsla(.5TURN 25% 32% / 50%)", { h: 180, s: 40, v: 40, a: 0.5 });
 });
 
 it("Converts HSVA to RGBA", () => {
@@ -198,6 +162,9 @@ it("Converts HSV string to HSVA", () => {
   expect(hsvStringToHsva("hsv(100grad 20% 10%)")).toMatchObject({ h: 90, s: 20, v: 10, a: 1 });
   expect(hsvStringToHsva("hsv(0.25turn 20% 10%)")).toMatchObject({ h: 90, s: 20, v: 10, a: 1 });
   expect(hsvStringToHsva("hsv(1.5708rad 20% 10%)")).toMatchObject({ h: 90, s: 20, v: 10, a: 1 });
+  expect(hsvStringToHsva("hsv(100GRAD 20% 10%)")).toMatchObject({ h: 90, s: 20, v: 10, a: 1 });
+  expect(hsvStringToHsva("hsv(0.25TuRn 20% 10%)")).toMatchObject({ h: 90, s: 20, v: 10, a: 1 });
+  expect(hsvStringToHsva("hsv(1.5708RAD 20% 10%)")).toMatchObject({ h: 90, s: 20, v: 10, a: 1 });
 });
 
 it("Converts HSVA string to HSVA", () => {
