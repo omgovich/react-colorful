@@ -83,7 +83,7 @@ const YourComponent = () => {
 | ------------- | -------------------- | ------- | ---------------------------------------------------------------------------- |
 | `color`       | `string` or `object` | —       | The current color value                                                      |
 | `onChange`    | `(color) => void`    | —       | Called on every color change (during dragging, on each key press)            |
-| `onChangeEnd` | `(color) => void`    | —       | Called when the user finishes changing a color (mouseup, touchend, or keyup) |
+| `onChangeEnd` | `(color) => void`    | —       | Called when the user finishes changing a color (mouseup, touchend, touchcancel, or keyup) |
 
 The `onChangeEnd` callback is useful for undo/redo, saving to a database, or other expensive operations you don't want to run on every intermediate value:
 

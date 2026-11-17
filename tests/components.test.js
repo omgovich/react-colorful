@@ -698,3 +698,23 @@ describe("switching between touch and mouse", () => {
     expect(onChange).not.toHaveBeenCalled();
   });
 });
+it("Ends a touch interaction on `touchcancel`", () => {
+  const onChange = jest.fn();
+  const onChangeEnd = jest.fn();
+  const { container } = render(
+    <HsvColorPicker
+      color={{ h: 0, s: 100, v: 100 }}
+      onChange={onChange}
+      onChangeEnd={onChangeEnd}
+    />
+  );
+  const hue = container.querySelector(".react-colorful__hue .react-colorful__interactive");
+  const touch = { pageX: 25, pageY: 5, identifier: 1 };
+  fireEvent.touchStart(hue, { touches: [touch], changedTouches: [touch] });
+  fireEvent.touchCancel(window, { touches: [], changedTouches: [touch] });
+  expect(onChangeEnd).toHaveBeenCalledTimes(1);
+
+  onChange.mockClear();
+  fireEvent.touchMove(window, { touches: [{ pageX: 55, pageY: 5, identifier: 2 }] });
+  expect(onChange).not.toHaveBeenCalled();
+});
