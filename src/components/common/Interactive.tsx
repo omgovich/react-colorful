@@ -48,15 +48,6 @@ const preventDefaultMove = (event: MouseEvent | TouchEvent): void => {
   !isTouch(event) && event.preventDefault();
 };
 
-// Ignore compatibility mouse events without permanently disabling a real mouse.
-const isInvalid = (event: MouseEvent | TouchEvent, lastTouch: number): boolean => {
-  if (isTouch(event)) return false;
-  const capabilities = (event as MouseEvent & {
-    sourceCapabilities?: { firesTouchEvents: boolean };
-  }).sourceCapabilities;
-  return capabilities ? capabilities.firesTouchEvents : Date.now() - lastTouch < 800;
-};
-
 interface Props {
   onMove: (interaction: Interaction) => void;
   onKey: (offset: Interaction) => void;
@@ -81,10 +72,7 @@ const InteractiveBase = ({ onMove, onKey, onEnd, ...rest }: Props) => {
     const handleMoveStart = ({ nativeEvent }: React.MouseEvent | React.TouchEvent) => {
       const el = container.current;
       // Ignore non-primary buttons and emulated mouse events right after touch interactions.
-      if (
-        !el ||
-        (!isTouch(nativeEvent) && (nativeEvent.button || isInvalid(nativeEvent, lastTouch)))
-      ) {
+      if (!el || (!isTouch(nativeEvent) && (nativeEvent.button || Date.now() - lastTouch < 800))) {
         return;
       }
 

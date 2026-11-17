@@ -698,31 +698,3 @@ describe("switching between touch and mouse", () => {
     expect(onChange).not.toHaveBeenCalled();
   });
 });
-it("accepts identified real mouse input immediately after touch", () => {
-  const onChange = jest.fn();
-  const { container } = render(
-    <HsvColorPicker color={{ h: 0, s: 100, v: 100 }} onChange={onChange} />
-  );
-  const hue = container.querySelector(".react-colorful__hue .react-colorful__interactive");
-  const touch = { pageX: 25, pageY: 5, identifier: 1 };
-  fireEvent.touchStart(hue, { touches: [touch], changedTouches: [touch] });
-  fireEvent.touchEnd(hue, { touches: [], changedTouches: [touch] });
-  onChange.mockClear();
-  const mouse = new FakeMouseEvent("mousedown", { pageX: 55, pageY: 5 });
-  Object.defineProperty(mouse, "sourceCapabilities", { value: { firesTouchEvents: false } });
-  fireEvent(hue, mouse);
-  expect(onChange).toHaveBeenLastCalledWith({ h: 180, s: 100, v: 100 });
-  fireEvent(window, new FakeMouseEvent("mouseup"));
-});
-
-it("ignores identified compatibility mouse input even after the fallback delay", () => {
-  const onChange = jest.fn();
-  const { container } = render(
-    <HsvColorPicker color={{ h: 0, s: 100, v: 100 }} onChange={onChange} />
-  );
-  const hue = container.querySelector(".react-colorful__hue .react-colorful__interactive");
-  const mouse = new FakeMouseEvent("mousedown", { pageX: 55, pageY: 5 });
-  Object.defineProperty(mouse, "sourceCapabilities", { value: { firesTouchEvents: true } });
-  fireEvent(hue, mouse);
-  expect(onChange).not.toHaveBeenCalled();
-});
