@@ -82,6 +82,7 @@ it("Converts HSL string to HSVA", () => {
   expect(hslStringToHsva("hsl(0, 0%, 100%)")).toMatchObject({ h: 0, s: 0, v: 100, a: 1 });
   expect(hslStringToHsva("hsl(0,0,100)")).toMatchObject({ h: 0, s: 0, v: 100, a: 1 });
   expect(hslStringToHsva("hsl(60, 100%, 50%)")).toMatchObject({ h: 60, s: 100, v: 100, a: 1 });
+  expect(hslStringToHsva("hsl(-90, 100%, 50%)")).toMatchObject({ h: 270, s: 100, v: 100, a: 1 });
   expect(hslStringToHsva("hsl(0, 100%, 50%)")).toMatchObject({ h: 0, s: 100, v: 100, a: 1 });
 });
 

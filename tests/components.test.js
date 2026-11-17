@@ -589,3 +589,31 @@ it("Does not allow to enter `#rrggbbaa` in `HexColorInput` if `alpha` is turned 
   fireEvent.change(input, { target: { value: "11223344" } });
   expect(input.value).toBe("112233");
 });
+
+it.each([
+  [-90, 270, 75],
+  [450, 90, 25],
+  [720, 0, 0],
+  [360, 360, 100],
+])("Displays hue %s within the slider range", (input, expected, percent) => {
+  const result = render(<HslStringColorPicker color={`hsl(${input}, 100%, 50%)`} />);
+  const slider = result.getByRole("slider", { name: "Hue" });
+  const pointer = result.container.querySelector(".react-colorful__hue-pointer");
+
+  expect(slider.getAttribute("aria-valuenow")).toBe(String(expected));
+  expect(pointer.style.left).toBe(`${percent}%`);
+});
+
+it.each([
+  [-90, 288],
+  [450, 108],
+  [720, 18],
+])("Adjusts hue %s from its equivalent position with arrow keys", (input, expected) => {
+  const onChange = jest.fn();
+  const result = render(
+    <HslStringColorPicker color={`hsl(${input}, 100%, 50%)`} onChange={onChange} />
+  );
+
+  fireEvent.keyDown(result.getByRole("slider", { name: "Hue" }), { keyCode: 39 });
+  expect(onChange).toHaveBeenCalledWith(`hsl(${expected}, 100%, 50%)`);
+});
