@@ -34,7 +34,9 @@ export const hexToRgba = (hex: string): RgbaColor => {
 };
 
 export const parseHue = (value: string, unit = "deg"): number => {
-  return Number(value) * (angleUnits[unit] || 1);
+  const hue = Number(value) * (angleUnits[unit.toLowerCase()] || 1);
+  // Wrap out-of-range angles (`-90deg`, `1.5turn`), but keep 360 as the slider's right end
+  return hue < 0 || hue > 360 ? ((hue % 360) + 360) % 360 : hue;
 };
 
 export const hslaStringToHsva = (hslString: string): HsvaColor => {

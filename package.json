@@ -1,7 +1,7 @@
 {
   "name": "react-colorful",
   "version": "5.8.1",
-  "description": "\ud83c\udfa8 A tiny (3,1 KB) color picker component for React and Preact apps. Fast, well-tested, dependency-free, mobile-friendly and accessible",
+  "description": "🎨 A tiny (3,1 KB) color picker component for React and Preact apps. Fast, well-tested, dependency-free, mobile-friendly and accessible",
   "source": "src/index.ts",
   "main": "dist/index.js",
   "module": "dist/index.module.js",
@@ -29,86 +29,88 @@
     "release": "npm publish",
     "start-demo": "parcel demo/src/index.html --out-dir demo/dist --open",
     "build-demo": "del-cli 'demo/dist/*' && parcel build demo/src/index.html --out-dir demo/dist --public-url https://omgovich.github.io/react-colorful/",
-    "deploy-demo": "npm run build-demo && gh-pages -d demo/dist"
+    "deploy-demo": "npm run build-demo && gh-pages -d demo/dist",
+    "changeset:version": "changeset version && npm install --package-lock-only --ignore-scripts",
+    "changeset:publish": "(npm view react-colorful@$npm_package_version version >/dev/null 2>&1 || npm run release) && changeset git-tag"
   },
   "size-limit": [
     {
       "path": "dist/index.module.js",
       "name": "HexColorPicker",
       "import": "{ HexColorPicker }",
-      "limit": "3.25 KB"
+      "limit": "3.2 KB"
     },
     {
       "path": "dist/index.module.js",
       "name": "HslColorPicker",
       "import": "{ HslColorPicker }",
-      "limit": "3.1 KB"
+      "limit": "3 KB"
     },
     {
       "path": "dist/index.module.js",
       "name": "HslaColorPicker",
       "import": "{ HslaColorPicker }",
-      "limit": "3.2 KB"
+      "limit": "3.1 KB"
     },
     {
       "path": "dist/index.module.js",
       "name": "HslStringColorPicker",
       "import": "{ HslStringColorPicker }",
-      "limit": "3.1 KB"
+      "limit": "3.06 KB"
     },
     {
       "path": "dist/index.module.js",
       "name": "HslaStringColorPicker",
       "import": "{ HslaStringColorPicker }",
-      "limit": "3.25 KB"
+      "limit": "3.2 KB"
     },
     {
       "path": "dist/index.module.js",
       "name": "HsvColorPicker",
       "import": "{ HsvColorPicker }",
-      "limit": "3.1 KB"
+      "limit": "3 KB"
     },
     {
       "path": "dist/index.module.js",
       "name": "HsvaColorPicker",
       "import": "{ HsvaColorPicker }",
-      "limit": "3.2 KB"
+      "limit": "3.1 KB"
     },
     {
       "path": "dist/index.module.js",
       "name": "HsvStringColorPicker",
       "import": "{ HsvStringColorPicker }",
-      "limit": "3.1 KB"
+      "limit": "3.06 KB"
     },
     {
       "path": "dist/index.module.js",
       "name": "HsvaStringColorPicker",
       "import": "{ HsvaStringColorPicker }",
-      "limit": "3.25 KB"
+      "limit": "3.2 KB"
     },
     {
       "path": "dist/index.module.js",
       "name": "RgbColorPicker",
       "import": "{ RgbColorPicker }",
-      "limit": "3.1 KB"
+      "limit": "3.05 KB"
     },
     {
       "path": "dist/index.module.js",
       "name": "RgbaColorPicker",
       "import": "{ RgbaColorPicker }",
-      "limit": "3.2 KB"
+      "limit": "3.15 KB"
     },
     {
       "path": "dist/index.module.js",
       "name": "RgbStringColorPicker",
       "import": "{ RgbStringColorPicker }",
-      "limit": "3.25 KB"
+      "limit": "3.2 KB"
     },
     {
       "path": "dist/index.module.js",
       "name": "RgbaStringColorPicker",
       "import": "{ RgbaStringColorPicker }",
-      "limit": "3.4 KB"
+      "limit": "3.3 KB"
     },
     {
       "path": "dist/index.module.js",
@@ -169,6 +171,7 @@
     "react-dom": ">=16.8.0"
   },
   "devDependencies": {
+    "@changesets/cli": "^3.0.3",
     "@size-limit/preset-small-lib": "^11.2.0",
     "@testing-library/react": "^11.2.5",
     "@types/jest": "^26.0.20",

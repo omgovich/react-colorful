@@ -72,17 +72,24 @@ const InteractiveBase = ({ onMove, onKey, onEnd, ...rest }: Props) => {
   const touchId = useRef<null | number>(null);
 
   const [handleMoveStart, handleKeyDown, handleKeyUp, toggleDocumentEvents] = useMemo(() => {
+    // Whether the current gesture is a touch one, and when touch activity was last seen.
+    // Browsers fire compatibility mouse events right after a tap, so mouse input is ignored
+    // for a short while after a touch instead of permanently.
     let hasTouch = false;
     let lastTouch = -Infinity;
 
     const handleMoveStart = ({ nativeEvent }: React.MouseEvent | React.TouchEvent) => {
       const el = container.current;
-      if (!el) return;
+      // Ignore non-primary buttons and emulated mouse events right after touch interactions.
+      if (
+        !el ||
+        (!isTouch(nativeEvent) && (nativeEvent.button || isInvalid(nativeEvent, lastTouch)))
+      ) {
+        return;
+      }
 
       // Prevent text selection
       preventDefaultMove(nativeEvent);
-
-      if (isInvalid(nativeEvent, lastTouch) || !el) return;
 
       // Remove the previous gesture listeners before changing input type.
       toggleDocumentEvents(false);
