@@ -92,6 +92,7 @@ it("Converts HSLA string to HSVA", () => {
   test("hsla(0deg, 0%, 0%, 0.5)", { h: 0, s: 0, v: 0, a: 0.5 });
   test("hsla(200, 25%, 32%, 1)", { h: 200, s: 40, v: 40, a: 1 });
   test("hsla(.5turn 25% 32% / 50%)", { h: 180, s: 40, v: 40, a: 0.5 });
+  test("hsla(.5TURN 25% 32% / 50%)", { h: 180, s: 40, v: 40, a: 0.5 });
 });
 
 it("Converts HSVA to RGBA", () => {
@@ -162,6 +163,9 @@ it("Converts HSV string to HSVA", () => {
   expect(hsvStringToHsva("hsv(100grad 20% 10%)")).toMatchObject({ h: 90, s: 20, v: 10, a: 1 });
   expect(hsvStringToHsva("hsv(0.25turn 20% 10%)")).toMatchObject({ h: 90, s: 20, v: 10, a: 1 });
   expect(hsvStringToHsva("hsv(1.5708rad 20% 10%)")).toMatchObject({ h: 90, s: 20, v: 10, a: 1 });
+  expect(hsvStringToHsva("hsv(100GRAD 20% 10%)")).toMatchObject({ h: 90, s: 20, v: 10, a: 1 });
+  expect(hsvStringToHsva("hsv(0.25TuRn 20% 10%)")).toMatchObject({ h: 90, s: 20, v: 10, a: 1 });
+  expect(hsvStringToHsva("hsv(1.5708RAD 20% 10%)")).toMatchObject({ h: 90, s: 20, v: 10, a: 1 });
 });
 
 it("Converts HSVA string to HSVA", () => {
