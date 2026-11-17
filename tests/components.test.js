@@ -660,7 +660,7 @@ it.each([
   expect(onChange).toHaveBeenCalledWith(`hsl(${expected}, 100%, 50%)`);
 });
 
-describe("switching between touch and mouse", () => {
+describe("Switching between touch and mouse", () => {
   let now;
   let clock;
   beforeEach(() => {
@@ -669,7 +669,7 @@ describe("switching between touch and mouse", () => {
   });
   afterEach(() => clock.mockRestore());
 
-  it.each(["saturation", "hue", "alpha"])("allows mouse input after touch on %s", (channel) => {
+  it.each(["saturation", "hue", "alpha"])("Allows mouse input after touch on %s", (channel) => {
     const onChange = jest.fn();
     const onChangeEnd = jest.fn();
     const { container } = render(
