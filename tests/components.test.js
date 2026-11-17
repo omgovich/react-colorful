@@ -111,6 +111,48 @@ it("Triggers `onChange` after a mouse interaction", async () => {
   expect(handleChange).toHaveReturned();
 });
 
+it.each([
+  ["saturation", 1, 4],
+  ["saturation", 2, 2],
+  ["hue", 1, 4],
+  ["hue", 2, 2],
+  ["alpha", 1, 4],
+  ["alpha", 2, 2],
+])("Ignores mouse button %s/%s when starting an interaction", (control, button, buttons) => {
+  const handleChange = jest.fn();
+  const handleChangeEnd = jest.fn();
+  const { container } = render(
+    <RgbaColorPicker
+      color={{ r: 255, g: 0, b: 0, a: 1 }}
+      onChange={handleChange}
+      onChangeEnd={handleChangeEnd}
+    />
+  );
+  const slider = container.querySelector(`.react-colorful__${control} .react-colorful__interactive`);
+  const event = new FakeMouseEvent("mousedown", {
+    button,
+    buttons,
+    pageX: 55,
+    pageY: 55,
+    cancelable: true,
+  });
+
+  fireEvent(slider, event);
+  fireEvent(window, new FakeMouseEvent("mousemove", { buttons, pageX: 80, pageY: 80 }));
+  fireEvent(window, new FakeMouseEvent("mouseup", { button, buttons: 0 }));
+
+  expect(handleChange).not.toHaveBeenCalled();
+  expect(handleChangeEnd).not.toHaveBeenCalled();
+  expect(event.defaultPrevented).toBe(false);
+  expect(document.activeElement).not.toBe(slider);
+
+  // Ignoring another button must not disable the next primary-button interaction.
+  fireEvent(slider, new FakeMouseEvent("mousedown", { pageX: 55, pageY: 55 }));
+  fireEvent(window, new FakeMouseEvent("mouseup", { buttons: 0 }));
+  expect(handleChange).toHaveBeenCalledTimes(1);
+  expect(handleChangeEnd).toHaveBeenCalledTimes(1);
+});
+
 it("Triggers `onChangeEnd` after a mouse interaction", async () => {
   const handleChangeEnd = jest.fn((rgba) => rgba);
   const result = render(<RgbaColorPicker onChangeEnd={handleChangeEnd} />);
