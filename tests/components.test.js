@@ -128,9 +128,7 @@ it.each([
       onChangeEnd={handleChangeEnd}
     />
   );
-  const slider = container.querySelector(
-    `.react-colorful__${control} .react-colorful__interactive`
-  );
+  const slider = container.querySelector(`.react-colorful__${control} .react-colorful__interactive`);
   const event = new FakeMouseEvent("mousedown", {
     button,
     buttons,
@@ -175,7 +173,9 @@ it("Triggers `onChangeEnd` after a mouse interaction", async () => {
 it("Triggers `onChangeEnd` after a touch interaction", async () => {
   const handleChangeEnd = jest.fn((hsv) => hsv);
   const initialValue = { h: 0, s: 100, v: 100 };
-  const result = render(<HsvColorPicker color={initialValue} onChangeEnd={handleChangeEnd} />);
+  const result = render(
+    <HsvColorPicker color={initialValue} onChangeEnd={handleChangeEnd} />
+  );
   const hue = result.container.querySelector(".react-colorful__hue .react-colorful__interactive");
 
   fireEvent.touchStart(hue, { touches: [{ pageX: 0, pageY: 0, bubbles: true }] });
@@ -191,7 +191,9 @@ it("Triggers `onChangeEnd` after a touch interaction", async () => {
 it("Triggers `onChangeEnd` after a keyboard interaction", async () => {
   const handleChangeEnd = jest.fn((hex) => hex);
   const initialValue = "#ff0000";
-  const result = render(<HexColorPicker color={initialValue} onChangeEnd={handleChangeEnd} />);
+  const result = render(
+    <HexColorPicker color={initialValue} onChangeEnd={handleChangeEnd} />
+  );
   const hue = result.container.querySelector(".react-colorful__hue .react-colorful__interactive");
 
   hue.focus();
