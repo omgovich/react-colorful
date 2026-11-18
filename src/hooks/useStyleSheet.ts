@@ -33,9 +33,11 @@ export const useStyleSheet = (nodeRef: RefObject<HTMLDivElement>): void => {
     if (styleElementMap.has(root)) return;
 
     // Document has `head`; ShadowRoot doesn't — use it to pick the injection target.
-    const target = "head" in root ? root.head : root;
+    // Some documents (e.g. in Zotero) have no <head>, so fall back to the root element.
+    const target = "head" in root ? root.head || root.documentElement : root;
     const styleElement = (target.ownerDocument || document).createElement("style");
-    styleElement.innerHTML = styles;
+    // `innerHTML` would parse the SVG inside the CSS as markup in XHTML documents
+    styleElement.textContent = styles;
 
     // Conform to CSP rules by setting `nonce` attribute to the inline styles
     const nonce = getNonce();
