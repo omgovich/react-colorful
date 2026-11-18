@@ -61,19 +61,30 @@ const InteractiveBase = ({ onMove, onKey, onEnd, ...rest }: Props) => {
   const onKeyCallback = useEventCallback<Interaction>(onKey);
   const onEndCallback = useEventCallback<void>(onEnd);
   const touchId = useRef<null | number>(null);
-  const hasTouch = useRef(false);
 
   const [handleMoveStart, handleKeyDown, handleKeyUp, toggleDocumentEvents] = useMemo(() => {
+    // Whether the current gesture is a touch one, and when touch activity was last seen.
+    // Browsers fire compatibility mouse events right after a tap, so mouse input is ignored
+    // for a short while after a touch instead of permanently.
+    let hasTouch = false;
+    let lastTouch = 0;
+
     const handleMoveStart = ({ nativeEvent }: React.MouseEvent | React.TouchEvent) => {
       const el = container.current;
-      // Ignore non-primary buttons and emulated mouse events after touch interactions.
-      if (!el || (!isTouch(nativeEvent) && (hasTouch.current || nativeEvent.button))) return;
+      // Ignore non-primary buttons and emulated mouse events right after touch interactions.
+      if (!el || (!isTouch(nativeEvent) && (nativeEvent.button || Date.now() - lastTouch < 800))) {
+        return;
+      }
 
       // Prevent text selection
       preventDefaultMove(nativeEvent);
 
+      // Remove the previous gesture listeners before changing input type.
+      toggleDocumentEvents(false);
+      hasTouch = isTouch(nativeEvent);
+
       if (isTouch(nativeEvent)) {
-        hasTouch.current = true;
+        lastTouch = Date.now();
         const changedTouches = nativeEvent.changedTouches || [];
         if (changedTouches.length) touchId.current = changedTouches[0].identifier;
       }
@@ -84,6 +95,7 @@ const InteractiveBase = ({ onMove, onKey, onEnd, ...rest }: Props) => {
     };
 
     const handleMove = (event: MouseEvent | TouchEvent) => {
+      if (isTouch(event)) lastTouch = Date.now();
       // Prevent text selection
       preventDefaultMove(event);
 
@@ -103,6 +115,7 @@ const InteractiveBase = ({ onMove, onKey, onEnd, ...rest }: Props) => {
     };
 
     const handleMoveEnd = () => {
+      if (hasTouch) lastTouch = Date.now();
       toggleDocumentEvents(false);
       onEndCallback();
     };
@@ -129,14 +142,14 @@ const InteractiveBase = ({ onMove, onKey, onEnd, ...rest }: Props) => {
     };
 
     function toggleDocumentEvents(state?: boolean) {
-      const touch = hasTouch.current;
       const el = container.current;
       const parentWindow = getParentWindow(el);
 
       // Add or remove additional pointer event listeners
       const toggleEvent = state ? parentWindow.addEventListener : parentWindow.removeEventListener;
-      toggleEvent(touch ? "touchmove" : "mousemove", handleMove);
-      toggleEvent(touch ? "touchend" : "mouseup", handleMoveEnd);
+      toggleEvent(hasTouch ? "touchmove" : "mousemove", handleMove);
+      toggleEvent(hasTouch ? "touchend" : "mouseup", handleMoveEnd);
+      if (hasTouch) toggleEvent("touchcancel", handleMoveEnd);
     }
 
     return [handleMoveStart, handleKeyDown, handleKeyUp, toggleDocumentEvents];
