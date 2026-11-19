@@ -415,8 +415,7 @@ it("Keeps a HEX opaque when the alpha slider is moved to the last byte with the 
     ".react-colorful__alpha .react-colorful__interactive"
   );
 
-  alpha.focus();
-  fireEvent.keyDown(document.activeElement || document.body, { keyCode: 39 });
+  fireEvent.keyDown(alpha, { keyCode: 39 });
 
   expect(handleChange).toHaveLastReturnedWith("#3366cc");
 });
@@ -429,9 +428,8 @@ it("Doesn't let float noise change the alpha byte after ten keyboard steps", asy
     ".react-colorful__alpha .react-colorful__interactive"
   );
 
-  alpha.focus();
   for (let i = 0; i < 10; i++) {
-    fireEvent.keyDown(document.activeElement || document.body, { keyCode: 39 });
+    fireEvent.keyDown(alpha, { keyCode: 39 });
   }
 
   expect(handleChange).toHaveLastReturnedWith("#11223380");

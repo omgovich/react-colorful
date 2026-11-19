@@ -164,7 +164,7 @@ const format = (number: number) => {
 };
 
 // The alpha of a HEX is a whole byte: take the exact alpha, not the 2 decimals of `hsvaToRgba`.
-// The inner `round` drops float noise (0.05 * 10 = 0.49999999999999994) before picking the byte
+// The inner `round` drops float noise (0.05 added ten times is 0.49999999999999994) before picking the byte
 export const hsvaToHex = (hsva: HsvaColor): string => {
   const { r, g, b } = hsvaToRgba(hsva);
   const byte = round(round(hsva.a * 255, 12));
