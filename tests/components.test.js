@@ -1,5 +1,5 @@
 import React from "react";
-import { render, cleanup, fireEvent } from "@testing-library/react";
+import { render, cleanup, fireEvent, act } from "@testing-library/react";
 import {
   HexColorInput,
   HexColorPicker,
@@ -242,6 +242,31 @@ it("Triggers `onChangeEnd` when the pointer is released outside of the window", 
   fireEvent(saturation, new FakeMouseEvent("mousemove", { pageX: 1, pageY: 50, buttons: 0 }));
 
   expect(handleChangeEnd).toHaveReturnedTimes(1);
+});
+
+it("Sends the last move's color to `onChangeEnd` when released before the move renders", async () => {
+  const handleChange = jest.fn((hex) => hex);
+  const handleChangeEnd = jest.fn((hex) => hex);
+  const result = render(
+    <HexColorPicker color="#ffffff" onChange={handleChange} onChangeEnd={handleChangeEnd} />
+  );
+  const saturation = result.container.querySelector(
+    ".react-colorful__saturation .react-colorful__interactive"
+  );
+
+  fireEvent(saturation, new FakeMouseEvent("mousedown", { pageX: 55, pageY: 55 }));
+
+  // Browsers deliver a move made just before the release back to back with it, so React
+  // hasn't rendered the move when `mouseup` fires
+  act(() => {
+    window.dispatchEvent(new FakeMouseEvent("mousemove", { pageX: 0, pageY: 200 }));
+    window.dispatchEvent(new FakeMouseEvent("mouseup", { buttons: 0 }));
+  });
+
+  expect(handleChangeEnd).toHaveReturnedTimes(1);
+  expect(handleChangeEnd).toHaveReturnedWith("#000000");
+  expect(handleChange).toHaveReturnedTimes(2);
+  expect(handleChange).toHaveLastReturnedWith("#000000");
 });
 
 it("Doesn't trigger `onChangeEnd` if the color prop was updated mid-drag", async () => {
