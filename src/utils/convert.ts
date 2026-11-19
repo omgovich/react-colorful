@@ -40,7 +40,9 @@ export const parseHue = (value: string, unit = "deg"): number => {
 };
 
 export const hslaStringToHsva = (hslString: string): HsvaColor => {
-  const matcher = /hsla?\(?\s*(-?\d*\.?\d+)(deg|rad|grad|turn)?[,\s]+(-?\d*\.?\d+)%?[,\s]+(-?\d*\.?\d+)%?,?\s*[/\s]*(-?\d*\.?\d+)?(%)?\s*\)?/i;
+  // A number is `(?:\d+\.|\.)?\d+` and not `\d*\.?\d+`: both can take the same digits, so a failed match
+  // tried every split of a long run of digits, which made it quadratic
+  const matcher = /hsla?\(?\s*(-?(?:\d+\.|\.)?\d+)(deg|rad|grad|turn)?[,\s]+(-?(?:\d+\.|\.)?\d+)%?[,\s]+(-?(?:\d+\.|\.)?\d+)%?,?\s*[/\s]*(-?(?:\d+\.|\.)?\d+)?(%)?\s*\)?/i;
   const match = matcher.exec(hslString);
 
   if (!match) return { h: 0, s: 0, v: 0, a: 1 };
@@ -129,7 +131,7 @@ export const hsvaToRgbaString = (hsva: HsvaColor): string => {
 };
 
 export const hsvaStringToHsva = (hsvString: string): HsvaColor => {
-  const matcher = /hsva?\(?\s*(-?\d*\.?\d+)(deg|rad|grad|turn)?[,\s]+(-?\d*\.?\d+)%?[,\s]+(-?\d*\.?\d+)%?,?\s*[/\s]*(-?\d*\.?\d+)?(%)?\s*\)?/i;
+  const matcher = /hsva?\(?\s*(-?(?:\d+\.|\.)?\d+)(deg|rad|grad|turn)?[,\s]+(-?(?:\d+\.|\.)?\d+)%?[,\s]+(-?(?:\d+\.|\.)?\d+)%?,?\s*[/\s]*(-?(?:\d+\.|\.)?\d+)?(%)?\s*\)?/i;
   const match = matcher.exec(hsvString);
 
   if (!match) return { h: 0, s: 0, v: 0, a: 1 };
@@ -145,7 +147,7 @@ export const hsvaStringToHsva = (hsvString: string): HsvaColor => {
 export const hsvStringToHsva = hsvaStringToHsva;
 
 export const rgbaStringToHsva = (rgbaString: string): HsvaColor => {
-  const matcher = /rgba?\(?\s*(-?\d*\.?\d+)(%)?[,\s]+(-?\d*\.?\d+)(%)?[,\s]+(-?\d*\.?\d+)(%)?,?\s*[/\s]*(-?\d*\.?\d+)?(%)?\s*\)?/i;
+  const matcher = /rgba?\(?\s*(-?(?:\d+\.|\.)?\d+)(%)?[,\s]+(-?(?:\d+\.|\.)?\d+)(%)?[,\s]+(-?(?:\d+\.|\.)?\d+)(%)?,?\s*[/\s]*(-?(?:\d+\.|\.)?\d+)?(%)?\s*\)?/i;
   const match = matcher.exec(rgbaString);
 
   if (!match) return { h: 0, s: 0, v: 0, a: 1 };
