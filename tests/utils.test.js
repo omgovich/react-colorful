@@ -175,8 +175,8 @@ it("Converts HSVA string to HSVA", () => {
 
 it("Parses a long string of digits in no time", () => {
   // `-?\d*\.?\d+` can split a run of digits in many ways, so a failed match took quadratic time:
-  // 20,000 digits took about 2 seconds, and 100,000 about a minute
-  const digits = "1".repeat(20000);
+  // 100,000 digits took seconds, now they take about a millisecond
+  const digits = "1".repeat(100000);
 
   for (const [name, parse] of [
     ["hsl", hslStringToHsva],

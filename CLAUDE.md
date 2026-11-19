@@ -62,5 +62,6 @@ Tests use `@testing-library/react` with `jest-esm-jsx-transform` for JSX in `.js
 
 - Prettier with 100 char line width
 - Strict TypeScript, no `any`
+- In a parsing regex, spell a number as `-?(?:\d+\.|\.)?\d+`, never `-?\d*\.?\d+`: both accept the same strings, but the short form backtracks in O(n²) on a long run of digits. The "Parses a long string of digits" test in `tests/utils.test.js` catches it; add new string parsers there
 - Do not add "Co-Authored-By" lines to commits or "Generated with Claude Code" to PR descriptions
 - Update README.md when public API changes (new props, new components, changed behavior)
