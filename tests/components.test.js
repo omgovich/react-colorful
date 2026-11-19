@@ -407,6 +407,36 @@ it("Doesn't change the alpha of a HEX color when only hue is changed", async () 
   expect(handleChange).toHaveLastReturnedWith("#23c8c881");
 });
 
+it("Keeps a HEX opaque when the alpha slider is moved to the last byte with the keyboard", async () => {
+  const handleChange = jest.fn((hex) => hex);
+
+  const result = render(<HexAlphaColorPicker color="#3366ccf2" onChange={handleChange} />);
+  const alpha = result.container.querySelector(
+    ".react-colorful__alpha .react-colorful__interactive"
+  );
+
+  alpha.focus();
+  fireEvent.keyDown(document.activeElement || document.body, { keyCode: 39 });
+
+  expect(handleChange).toHaveLastReturnedWith("#3366cc");
+});
+
+it("Doesn't let float noise change the alpha byte after ten keyboard steps", async () => {
+  const handleChange = jest.fn((hex) => hex);
+
+  const result = render(<HexAlphaColorPicker color="#11223300" onChange={handleChange} />);
+  const alpha = result.container.querySelector(
+    ".react-colorful__alpha .react-colorful__interactive"
+  );
+
+  alpha.focus();
+  for (let i = 0; i < 10; i++) {
+    fireEvent.keyDown(document.activeElement || document.body, { keyCode: 39 });
+  }
+
+  expect(handleChange).toHaveLastReturnedWith("#11223380");
+});
+
 it("Uses #rrggbbaa format if alpha channel value is less than 1", async () => {
   const handleChange = jest.fn((hex) => hex);
   const result = render(<HexAlphaColorPicker color="#112233" onChange={handleChange} />);

@@ -66,10 +66,6 @@ export const hslaToHsva = ({ h, s, l, a }: HslaColor): HsvaColor => {
   };
 };
 
-// The alpha of a HEX is a whole byte, so it skips the two digits that `hsvaToRgba` keeps
-export const hsvaToHex = (hsva: HsvaColor): string =>
-  rgbaToHex(Object.assign(hsvaToRgba(hsva), { a: hsva.a }));
-
 export const hsvaToHsla = ({ h, s, v, a }: HsvaColor): HslaColor => {
   const hh = ((200 - s) * v) / 100;
 
@@ -167,8 +163,12 @@ const format = (number: number) => {
   return hex.length < 2 ? "0" + hex : hex;
 };
 
-export const rgbaToHex = ({ r, g, b, a }: RgbaColor): string => {
-  const alphaHex = a < 1 ? format(round(a * 255)) : "";
+// The alpha of a HEX is a whole byte: take the exact alpha, not the 2 decimals of `hsvaToRgba`.
+// The inner `round` drops float noise (0.05 * 10 = 0.49999999999999994) before picking the byte
+export const hsvaToHex = (hsva: HsvaColor): string => {
+  const { r, g, b } = hsvaToRgba(hsva);
+  const byte = round(round(hsva.a * 255, 12));
+  const alphaHex = byte < 255 ? format(byte) : "";
   return "#" + format(r) + format(g) + format(b) + alphaHex;
 };
 

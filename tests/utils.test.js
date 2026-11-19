@@ -68,6 +68,10 @@ it("Keeps every HEX alpha byte when converting to HSVA and back", () => {
   expect(hsvaToHex(hexToHsva("#36c8"))).toBe("#3366cc88");
   expect(hsvaToHex(hexToHsva("#36cf"))).toBe("#3366cc");
   expect(hsvaToHex(hexToHsva("#3366ccff"))).toBe("#3366cc");
+
+  // An alpha that rounds to the last byte is opaque, and float noise doesn't pick the byte below
+  expect(hsvaToHex({ h: 0, s: 0, v: 100, a: 0.999 })).toBe("#ffffff");
+  expect(hsvaToHex({ h: 0, s: 0, v: 100, a: 0.49999999999999994 })).toBe("#ffffff80");
 });
 
 it("Converts HSVA to HSLA", () => {
