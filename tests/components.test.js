@@ -396,6 +396,17 @@ it("Doesn't change HEX color channels when only alpha is changed", async () => {
   expect(handleChange).toHaveLastReturnedWith("#c8782380");
 });
 
+it("Doesn't change the alpha of a HEX color when only hue is changed", async () => {
+  const handleChange = jest.fn((hex) => hex);
+
+  const result = render(<HexAlphaColorPicker color="#c8782381" onChange={handleChange} />);
+  const hue = result.container.querySelector(".react-colorful__hue .react-colorful__interactive");
+
+  fireEvent(hue, new FakeMouseEvent("mousedown", { pageX: 55, pageY: 0 }));
+
+  expect(handleChange).toHaveLastReturnedWith("#23c8c881");
+});
+
 it("Uses #rrggbbaa format if alpha channel value is less than 1", async () => {
   const handleChange = jest.fn((hex) => hex);
   const result = render(<HexAlphaColorPicker color="#112233" onChange={handleChange} />);

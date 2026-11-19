@@ -21,7 +21,7 @@ export const hexToRgba = (hex: string): RgbaColor => {
       r: parseInt(hex[0] + hex[0], 16),
       g: parseInt(hex[1] + hex[1], 16),
       b: parseInt(hex[2] + hex[2], 16),
-      a: hex.length === 4 ? round(parseInt(hex[3] + hex[3], 16) / 255, 2) : 1,
+      a: hex.length === 4 ? parseInt(hex[3] + hex[3], 16) / 255 : 1,
     };
   }
 
@@ -29,7 +29,7 @@ export const hexToRgba = (hex: string): RgbaColor => {
     r: parseInt(hex.substring(0, 2), 16),
     g: parseInt(hex.substring(2, 4), 16),
     b: parseInt(hex.substring(4, 6), 16),
-    a: hex.length === 8 ? round(parseInt(hex.substring(6, 8), 16) / 255, 2) : 1,
+    a: hex.length === 8 ? parseInt(hex.substring(6, 8), 16) / 255 : 1,
   };
 };
 
@@ -66,7 +66,9 @@ export const hslaToHsva = ({ h, s, l, a }: HslaColor): HsvaColor => {
   };
 };
 
-export const hsvaToHex = (hsva: HsvaColor): string => rgbaToHex(hsvaToRgba(hsva));
+// The alpha of a HEX is a whole byte, so it skips the two digits that `hsvaToRgba` keeps
+export const hsvaToHex = (hsva: HsvaColor): string =>
+  rgbaToHex(Object.assign(hsvaToRgba(hsva), { a: hsva.a }));
 
 export const hsvaToHsla = ({ h, s, v, a }: HsvaColor): HslaColor => {
   const hh = ((200 - s) * v) / 100;
