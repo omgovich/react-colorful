@@ -51,8 +51,8 @@ export function useColorManipulation<T extends AnyColor>(
         !colorModel.equal((newColor = colorModel.fromHsva(newHsva)), cache.current.color)
       ) {
         cache.current = { hsva: newHsva, color: newColor };
-        onChangeCallback(newColor);
         isDirty.current = true;
+        onChangeCallback(newColor);
       }
     },
     [colorModel, onChangeCallback]

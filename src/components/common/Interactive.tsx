@@ -90,8 +90,8 @@ const InteractiveBase = ({ onMove, onKey, onEnd, ...rest }: Props) => {
       }
 
       el.focus();
-      onMoveCallback(getRelativePosition(el, nativeEvent, touchId.current));
       toggleDocumentEvents(true);
+      onMoveCallback(getRelativePosition(el, nativeEvent, touchId.current));
     };
 
     const handleMove = (event: MouseEvent | TouchEvent) => {
