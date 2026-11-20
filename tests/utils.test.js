@@ -53,6 +53,27 @@ it("Converts HSVA to HEX", () => {
   expect(hsvaToHex({ h: 284, s: 93, v: 73, a: 1 })).toBe("#8c0dba");
 });
 
+it("Keeps every HEX alpha byte when converting to HSVA and back", () => {
+  // The alpha of a HEX is an exact 8 bit value, two digits of precision lose it
+  const wrong = [];
+  for (let byte = 0; byte < 255; byte++) {
+    const hex = "#3366cc" + byte.toString(16).padStart(2, "0");
+    const back = hsvaToHex(hexToHsva(hex));
+    if (back !== hex) wrong.push(`${hex} came back as ${back}`);
+  }
+  expect(wrong.slice(0, 10)).toEqual([]);
+
+  // The example of the README, the #rgba form and an opaque alpha
+  expect(hsvaToHex(hexToHsva("#ffffff88"))).toBe("#ffffff88");
+  expect(hsvaToHex(hexToHsva("#36c8"))).toBe("#3366cc88");
+  expect(hsvaToHex(hexToHsva("#36cf"))).toBe("#3366cc");
+  expect(hsvaToHex(hexToHsva("#3366ccff"))).toBe("#3366cc");
+
+  // An alpha that rounds to the last byte is opaque, and float noise doesn't pick the byte below
+  expect(hsvaToHex({ h: 0, s: 0, v: 100, a: 0.999 })).toBe("#ffffff");
+  expect(hsvaToHex({ h: 0, s: 0, v: 100, a: 0.49999999999999994 })).toBe("#ffffff80");
+});
+
 it("Converts HSVA to HSLA", () => {
   let test = (input, output) => expect(hsvaToHsla(input)).toMatchObject(output);
 
@@ -207,6 +228,13 @@ it("Compares two HEX colors", () => {
   expect(equalHex("#FFFFFF", "#ffffff")).toBe(true);
   expect(equalHex("#ABC", "#aabbcc")).toBe(true);
   expect(equalHex("#abcdef", "#fedcbd")).toBe(false);
+});
+
+it("Compares two HEX colors with an alpha channel", () => {
+  expect(equalHex("#3366CC88", "#3366cc88")).toBe(true);
+  expect(equalHex("#36c8", "#3366cc88")).toBe(true);
+  expect(equalHex("#3366cc88", "#3366cc87")).toBe(false);
+  expect(equalHex("#3366cc00", "#3366cc01")).toBe(false);
 });
 
 it("Compares two object colors", () => {
