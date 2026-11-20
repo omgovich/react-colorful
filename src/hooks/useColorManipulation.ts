@@ -21,6 +21,8 @@ export function useColorManipulation<T extends AnyColor>(
   // and the effects recursion during the color conversion
   const cache = useRef({ color, hsva });
   const isDirty = useRef(false);
+  // The HSVA value as of the user's latest input, which `hsva` only reaches on the next render
+  const latest = useRef(hsva);
 
   // Update local HSVA-value if `color` property value is changed,
   // but only if that's not the same color that we just sent to the parent
@@ -28,30 +30,33 @@ export function useColorManipulation<T extends AnyColor>(
     if (!colorModel.equal(color, cache.current.color)) {
       const newHsva = colorModel.toHsva(color);
       cache.current = { hsva: newHsva, color };
-      updateHsva(newHsva);
+      updateHsva((latest.current = newHsva));
       isDirty.current = false;
     }
   }, [color, colorModel]);
 
-  // Trigger `onChange` callback only if an updated color is different from cached one;
-  // save the new color to the ref to prevent unnecessary updates
-  useEffect(() => {
-    let newColor;
-    if (
-      !equalColorObjects(hsva, cache.current.hsva) &&
-      !colorModel.equal((newColor = colorModel.fromHsva(hsva)), cache.current.color)
-    ) {
-      cache.current = { hsva, color: newColor };
-      onChangeCallback(newColor);
-      isDirty.current = true;
-    }
-  }, [hsva, colorModel, onChangeCallback]);
-
   // Merge the current HSVA color object with updated params.
-  // For example, when a child component sends `h` or `s` only
-  const handleChange = useCallback((params: Partial<HsvaColor>) => {
-    updateHsva((current) => Object.assign({}, current, params));
-  }, []);
+  // For example, when a child component sends `h` or `s` only.
+  // Trigger `onChange` callback only if an updated color is different from cached one;
+  // save the new color to the ref to prevent unnecessary updates.
+  // This runs in the event handler rather than in an effect: browsers can deliver the release
+  // right after the last move, before React renders it, and `onChangeEnd` must send its color
+  const handleChange = useCallback(
+    (params: Partial<HsvaColor>) => {
+      const newHsva = (latest.current = Object.assign({}, latest.current, params));
+      let newColor;
+      updateHsva(newHsva);
+      if (
+        !equalColorObjects(newHsva, cache.current.hsva) &&
+        !colorModel.equal((newColor = colorModel.fromHsva(newHsva)), cache.current.color)
+      ) {
+        cache.current = { hsva: newHsva, color: newColor };
+        isDirty.current = true;
+        onChangeCallback(newColor);
+      }
+    },
+    [colorModel, onChangeCallback]
+  );
 
   const commitChange = useCallback(() => {
     if (isDirty.current) {
