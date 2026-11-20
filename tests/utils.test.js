@@ -173,6 +173,22 @@ it("Converts HSVA string to HSVA", () => {
   expect(hsvStringToHsva("hsv(5deg 9% 7% / 40%)")).toMatchObject({ h: 5, s: 9, v: 7, a: 0.4 });
 });
 
+it("Parses a long string of digits in no time", () => {
+  // `-?\d*\.?\d+` can split a run of digits in many ways, so a failed match took quadratic time:
+  // 100,000 digits took seconds, now they take about a millisecond
+  const digits = "1".repeat(100000);
+
+  for (const [name, parse] of [
+    ["hsl", hslStringToHsva],
+    ["hsv", hsvStringToHsva],
+    ["rgb", rgbStringToHsva],
+  ]) {
+    const start = Date.now();
+    expect(parse(`${name}(${digits}`)).toMatchObject({ h: 0, s: 0, v: 0, a: 1 });
+    expect(Date.now() - start).toBeLessThan(250);
+  }
+});
+
 it("Rounds HSVA", () => {
   let test = (input, output) => expect(roundHsva(input)).toMatchObject(output);
 
