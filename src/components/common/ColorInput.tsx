@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 
 import { useEventCallback } from "../../hooks/useEventCallback";
+import { useIsomorphicLayoutEffect } from "../../hooks/useIsomorphicLayoutEffect";
 import { ColorInputBaseProps } from "../../types";
 
 interface Props extends ColorInputBaseProps {
@@ -17,18 +18,33 @@ interface Props extends ColorInputBaseProps {
 export const ColorInput = (props: Props): React.ReactElement => {
   const { color = "", onChange, onBlur, escape, validate, format, process, ...rest } = props;
   const [value, setValue] = useState(() => escape(color));
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [selection, setSelection] = useState<[number, number] | null>(null);
   const onChangeCallback = useEventCallback<string>(onChange);
   const onBlurCallback = useEventCallback<React.FocusEvent<HTMLInputElement>>(onBlur);
 
   // Trigger `onChange` handler only if the input value is a valid color
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      const inputValue = escape(e.target.value);
+      const input = e.target;
+      const inputValue = escape(input.value);
+      const { selectionStart, selectionEnd } = input;
+      if (selectionStart !== null && selectionEnd !== null) {
+        const getPosition = (position: number) => {
+          const beforeCursor = escape(input.value.slice(0, position));
+          return format ? format(beforeCursor).length : beforeCursor.length;
+        };
+        setSelection([getPosition(selectionStart), getPosition(selectionEnd)]);
+      }
       setValue(inputValue);
       if (validate(inputValue)) onChangeCallback(process ? process(inputValue) : inputValue);
     },
-    [escape, process, validate, onChangeCallback]
+    [escape, format, process, validate, onChangeCallback]
   );
+
+  useIsomorphicLayoutEffect(() => {
+    if (selection) inputRef.current?.setSelectionRange(...selection);
+  }, [selection]);
 
   // Take the color from props if the last typed color (in local state) is not valid
   const handleBlur = useCallback(
@@ -47,6 +63,7 @@ export const ColorInput = (props: Props): React.ReactElement => {
   return (
     <input
       {...rest}
+      ref={inputRef}
       value={format ? format(value) : value}
       spellCheck="false" // the element should not be checked for spelling errors
       onChange={handleChange}
