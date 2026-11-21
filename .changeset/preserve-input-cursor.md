@@ -2,4 +2,4 @@
 "react-colorful": patch
 ---
 
-Preserve the text cursor position while editing `HexColorInput`.
+Fix the text cursor jumping to the end of `HexColorInput` when editing in the middle. Thanks to @blueDaydreaming725 (via #247, fixes #198)

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 import { useEventCallback } from "../../hooks/useEventCallback";
 import { useIsomorphicLayoutEffect } from "../../hooks/useIsomorphicLayoutEffect";
@@ -18,8 +18,8 @@ interface Props extends ColorInputBaseProps {
 export const ColorInput = (props: Props): React.ReactElement => {
   const { color = "", onChange, onBlur, escape, validate, format, process, ...rest } = props;
   const [value, setValue] = useState(() => escape(color));
-  const inputRef = useRef<HTMLInputElement>(null);
-  const [selection, setSelection] = useState<[number, number] | null>(null);
+  // A fresh tuple forces a render when escaping leaves the value unchanged and avoids stale selections
+  const [selection, setSelection] = useState<[HTMLInputElement, number, number] | null>(null);
   const onChangeCallback = useEventCallback<string>(onChange);
   const onBlurCallback = useEventCallback<React.FocusEvent<HTMLInputElement>>(onBlur);
 
@@ -34,7 +34,7 @@ export const ColorInput = (props: Props): React.ReactElement => {
           const beforeCursor = escape(input.value.slice(0, position));
           return format ? format(beforeCursor).length : beforeCursor.length;
         };
-        setSelection([getPosition(selectionStart), getPosition(selectionEnd)]);
+        setSelection([input, getPosition(selectionStart), getPosition(selectionEnd)]);
       }
       setValue(inputValue);
       if (validate(inputValue)) onChangeCallback(process ? process(inputValue) : inputValue);
@@ -43,7 +43,7 @@ export const ColorInput = (props: Props): React.ReactElement => {
   );
 
   useIsomorphicLayoutEffect(() => {
-    if (selection) inputRef.current?.setSelectionRange(...selection);
+    if (selection) selection[0].setSelectionRange(selection[1], selection[2]);
   }, [selection]);
 
   // Take the color from props if the last typed color (in local state) is not valid
@@ -63,7 +63,6 @@ export const ColorInput = (props: Props): React.ReactElement => {
   return (
     <input
       {...rest}
-      ref={inputRef}
       value={format ? format(value) : value}
       spellCheck="false" // the element should not be checked for spelling errors
       onChange={handleChange}
