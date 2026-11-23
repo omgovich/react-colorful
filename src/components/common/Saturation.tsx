@@ -40,6 +40,7 @@ const SaturationBase = ({ hsva, onChange, onChangeEnd }: Props) => {
         onEnd={onChangeEnd}
         aria-label="Color"
         aria-valuetext={`Saturation ${round(hsva.s)}%, Brightness ${round(hsva.v)}%`}
+        aria-valuenow={round(hsva.v)}
       >
         <Pointer
           className="react-colorful__saturation-pointer"

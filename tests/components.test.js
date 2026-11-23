@@ -602,7 +602,7 @@ it("Ignores keyboard commands if the pointer is already on a alpha edge", async 
   expect(handleChange).toHaveReturnedTimes(0);
 });
 
-it("Sets proper `aria-valuetext` attribute value", async () => {
+it("Sets proper ARIA value attributes", async () => {
   const handleChange = jest.fn();
   const result = render(<RgbaStringColorPicker color="rgb(0, 0, 0, 0)" onChange={handleChange} />);
   const saturation = result.container.querySelector(
@@ -613,6 +613,7 @@ it("Sets proper `aria-valuetext` attribute value", async () => {
   );
 
   expect(saturation.getAttribute("aria-valuetext")).toBe("Saturation 0%, Brightness 0%");
+  expect(saturation.getAttribute("aria-valuenow")).toBe("0");
   expect(alpha.getAttribute("aria-valuetext")).toBe("0%");
 
   fireEvent(saturation, new FakeMouseEvent("mousedown", { pageX: 0, pageY: 0 }));
@@ -621,6 +622,7 @@ it("Sets proper `aria-valuetext` attribute value", async () => {
   fireEvent(alpha, new FakeMouseEvent("mousemove", { pageX: 500, pageY: 0 }));
 
   expect(saturation.getAttribute("aria-valuetext")).toBe("Saturation 100%, Brightness 100%");
+  expect(saturation.getAttribute("aria-valuenow")).toBe("100");
   expect(alpha.getAttribute("aria-valuetext")).toBe("100%");
 });
 

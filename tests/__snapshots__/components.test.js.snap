@@ -12,6 +12,7 @@ exports[`Accepts any valid \`div\` attributes 1`] = `
   >
     <div
       aria-label="Color"
+      aria-valuenow="0"
       aria-valuetext="Saturation 0%, Brightness 0%"
       class="react-colorful__interactive"
       role="slider"
@@ -73,6 +74,7 @@ exports[`Renders proper alpha color picker markup 1`] = `
   >
     <div
       aria-label="Color"
+      aria-valuenow="100"
       aria-valuetext="Saturation 100%, Brightness 100%"
       class="react-colorful__interactive"
       role="slider"
@@ -152,6 +154,7 @@ exports[`Renders proper color picker markup 1`] = `
   >
     <div
       aria-label="Color"
+      aria-valuenow="100"
       aria-valuetext="Saturation 100%, Brightness 100%"
       class="react-colorful__interactive"
       role="slider"
@@ -204,6 +207,7 @@ exports[`Works with no props 1`] = `
   >
     <div
       aria-label="Color"
+      aria-valuenow="0"
       aria-valuetext="Saturation 0%, Brightness 0%"
       class="react-colorful__interactive"
       role="slider"
