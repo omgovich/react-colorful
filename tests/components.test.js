@@ -624,6 +624,11 @@ it("Sets proper ARIA value attributes", async () => {
   expect(saturation.getAttribute("aria-valuetext")).toBe("Saturation 100%, Brightness 100%");
   expect(saturation.getAttribute("aria-valuenow")).toBe("100");
   expect(alpha.getAttribute("aria-valuetext")).toBe("100%");
+
+  fireEvent.keyDown(saturation, { keyCode: 37 }); // left
+
+  expect(saturation.getAttribute("aria-valuetext")).toBe("Saturation 95%, Brightness 100%");
+  expect(saturation.getAttribute("aria-valuenow")).toBe("95");
 });
 
 it("Accepts any valid `div` attributes", () => {
