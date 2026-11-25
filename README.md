@@ -1,5 +1,5 @@
 <div align="center">
-  <a href="https://omgovich.github.io/react-colorful">
+  <a href="https://react-colorful.com">
     <img src="demo/src/assets/design.png" width="229" height="233" alt="react-colorful" />
   </a>
 </div>
@@ -44,7 +44,7 @@
 
 ## Live demos
 
-- [Website](https://omgovich.github.io/react-colorful)
+- [Website](https://react-colorful.com)
 - [HEX Color Picker (CodeSandbox)](https://codesandbox.io/s/react-colorful-demo-u5vwp)
 - [RGBA Color Picker (CodeSandbox)](https://codesandbox.io/s/react-colorful-rgb-o9q0t)
 
