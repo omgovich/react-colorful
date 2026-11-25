@@ -1,28 +1,14 @@
 <div align="center">
-  <a href="https://react-colorful.com">
-    <img src="demo/src/assets/design.png" width="229" height="233" alt="react-colorful" />
-  </a>
+  <a href="https://react-colorful.com"><img src="demo/src/assets/design.png" width="229" height="233" alt="react-colorful" /></a>
 </div>
 
 <div align="center">
-  <a href="https://npmjs.org/package/react-colorful">
-    <img alt="npm" src="https://img.shields.io/npm/v/react-colorful.svg?labelColor=da248d&color=6ead0a" />
-  </a>
-  <a href="https://github.com/omgovich/react-colorful/actions">
-    <img alt="build" src="https://img.shields.io/github/workflow/status/omgovich/react-colorful/Node.js%20CI/master.svg?labelColor=da248d&color=6ead0a" />
-  </a>
-  <a href="https://codecov.io/gh/omgovich/react-colorful">
-    <img alt="coverage" src="https://img.shields.io/codecov/c/github/omgovich/react-colorful.svg?labelColor=da248d&color=6ead0a" />
-  </a>
-  <a href="https://npmjs.org/package/react-colorful">
-    <img alt="no dependencies" src="https://badgen.net/bundlephobia/dependency-count/react-colorful?labelColor=da248d&color=6ead0a" />
-  </a>
-  <a href="https://bundlephobia.com/result?p=react-colorful">
-    <img alt="tree-shakeable" src="https://badgen.net/bundlephobia/tree-shaking/react-colorful?labelColor=da248d&color=6ead0a" />
-  </a>
-  <a href="https://npmjs.org/package/react-colorful">
-    <img alt="types included" src="https://badgen.net/npm/types/react-colorful?labelColor=da248d&color=6ead0a" />
-  </a>
+  <a href="https://npmjs.org/package/react-colorful"><img alt="npm" src="https://img.shields.io/npm/v/react-colorful.svg?labelColor=da248d&color=6ead0a" /></a>
+  <a href="https://github.com/omgovich/react-colorful/actions"><img alt="build" src="https://img.shields.io/github/actions/workflow/status/omgovich/react-colorful/node.yml?branch=master&labelColor=da248d&color=6ead0a" /></a>
+  <a href="https://codecov.io/gh/omgovich/react-colorful"><img alt="coverage" src="https://img.shields.io/codecov/c/github/omgovich/react-colorful.svg?labelColor=da248d&color=6ead0a" /></a>
+  <a href="https://npmjs.org/package/react-colorful"><img alt="no dependencies" src="https://img.shields.io/badge/dependencies-0-6ead0a?labelColor=da248d" /></a>
+  <a href="https://bundlephobia.com/result?p=react-colorful"><img alt="tree-shakeable" src="https://img.shields.io/badge/tree--shakeable-yes-6ead0a?labelColor=da248d" /></a>
+  <a href="https://npmjs.org/package/react-colorful"><img alt="types included" src="https://badgen.net/npm/types/react-colorful?labelColor=da248d&color=6ead0a" /></a>
 </div>
 
 <div align="center">
@@ -278,14 +264,16 @@ Today each dependency drags more dependencies and increases your project’s bun
 - built with hooks and functional components only (no classes and polyfills for them);
 - ships only a minimal amount of manually optimized color conversion algorithms (while most of the popular pickers import entire color manipulation libraries that increase the bundle size by more than 10 KB and make your app slower).
 
-To show you the problem that **react-colorful** is trying to solve, we have performed a simple benchmark (using [bundlephobia.com](https://bundlephobia.com)) against popular React color picker libraries:
+To show you the problem that **react-colorful** is trying to solve, we have compared the bundle size of popular React color picker libraries:
 
-| Name               | Bundle size                                                                                                                        | Bundle size (gzip)                                                                                                                    | Dependencies                                                                                                                                    |
-| ------------------ | ---------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| **react-colorful** | [![](https://badgen.net/bundlephobia/min/react-colorful?color=6ead0a&label=)](https://bundlephobia.com/result?p=react-colorful)    | [![](https://badgen.net/bundlephobia/minzip/react-colorful?color=6ead0a&label=)](https://bundlephobia.com/result?p=react-colorful)    | [![](https://badgen.net/bundlephobia/dependency-count/react-colorful?color=6ead0a&label=)](https://bundlephobia.com/result?p=react-colorful)    |
-| react-color        | [![](https://badgen.net/bundlephobia/min/react-color?color=red&label=)](https://bundlephobia.com/result?p=react-color)             | [![](https://badgen.net/bundlephobia/minzip/react-color?color=red&label=)](https://bundlephobia.com/result?p=react-color)             | [![](https://badgen.net/bundlephobia/dependency-count/react-color?color=red&label=)](https://bundlephobia.com/result?p=react-color)             |
-| react-input-color  | [![](https://badgen.net/bundlephobia/min/react-input-color?color=red&label=)](https://bundlephobia.com/result?p=react-input-color) | [![](https://badgen.net/bundlephobia/minzip/react-input-color?color=red&label=)](https://bundlephobia.com/result?p=react-input-color) | [![](https://badgen.net/bundlephobia/dependency-count/react-input-color?color=red&label=)](https://bundlephobia.com/result?p=react-input-color) |
-| rc-color-picker    | [![](https://badgen.net/bundlephobia/min/rc-color-picker?color=red&label=)](https://bundlephobia.com/result?p=rc-color-picker)     | [![](https://badgen.net/bundlephobia/minzip/rc-color-picker?color=red&label=)](https://bundlephobia.com/result?p=rc-color-picker)     | [![](https://badgen.net/bundlephobia/dependency-count/rc-color-picker?color=red&label=)](https://bundlephobia.com/result?p=rc-color-picker)     |
+| Name               | Bundle size | Bundle size (gzip) | Dependencies |
+| ------------------ | ----------: | -----------------: | -----------: |
+| **react-colorful** | **14.1 KB** |         **4.8 KB** |        **0** |
+| react-color        |    151.2 KB |            44.3 KB |            7 |
+| react-input-color  |     56.2 KB |            20.5 KB |            6 |
+| rc-color-picker    |    121.0 KB |            37.2 KB |            5 |
+
+Measured in November 2026 for the latest version of each package: the whole package bundled with esbuild, minified and gzipped, with React excluded. A single tree-shaken `HexColorPicker` is 3.4 KB gzipped, while react-color is not tree-shakeable: importing only its `ChromePicker` still adds 44.1 KB.
 
 ## Projects using react-colorful
 
