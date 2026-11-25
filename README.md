@@ -1,28 +1,14 @@
 <div align="center">
-  <a href="https://react-colorful.com">
-    <img src="demo/src/assets/design.png" width="229" height="233" alt="react-colorful" />
-  </a>
+  <a href="https://react-colorful.com"><img src="demo/src/assets/design.png" width="229" height="233" alt="react-colorful" /></a>
 </div>
 
 <div align="center">
-  <a href="https://npmjs.org/package/react-colorful">
-    <img alt="npm" src="https://img.shields.io/npm/v/react-colorful.svg?labelColor=da248d&color=6ead0a" />
-  </a>
-  <a href="https://github.com/omgovich/react-colorful/actions">
-    <img alt="build" src="https://img.shields.io/github/actions/workflow/status/omgovich/react-colorful/node.yml?branch=master&labelColor=da248d&color=6ead0a" />
-  </a>
-  <a href="https://codecov.io/gh/omgovich/react-colorful">
-    <img alt="coverage" src="https://img.shields.io/codecov/c/github/omgovich/react-colorful.svg?labelColor=da248d&color=6ead0a" />
-  </a>
-  <a href="https://npmjs.org/package/react-colorful">
-    <img alt="no dependencies" src="https://img.shields.io/badge/dependencies-0-6ead0a?labelColor=da248d" />
-  </a>
-  <a href="https://bundlephobia.com/result?p=react-colorful">
-    <img alt="tree-shakeable" src="https://img.shields.io/badge/tree--shakeable-yes-6ead0a?labelColor=da248d" />
-  </a>
-  <a href="https://npmjs.org/package/react-colorful">
-    <img alt="types included" src="https://badgen.net/npm/types/react-colorful?labelColor=da248d&color=6ead0a" />
-  </a>
+  <a href="https://npmjs.org/package/react-colorful"><img alt="npm" src="https://img.shields.io/npm/v/react-colorful.svg?labelColor=da248d&color=6ead0a" /></a>
+  <a href="https://github.com/omgovich/react-colorful/actions"><img alt="build" src="https://img.shields.io/github/actions/workflow/status/omgovich/react-colorful/node.yml?branch=master&labelColor=da248d&color=6ead0a" /></a>
+  <a href="https://codecov.io/gh/omgovich/react-colorful"><img alt="coverage" src="https://img.shields.io/codecov/c/github/omgovich/react-colorful.svg?labelColor=da248d&color=6ead0a" /></a>
+  <a href="https://npmjs.org/package/react-colorful"><img alt="no dependencies" src="https://img.shields.io/badge/dependencies-0-6ead0a?labelColor=da248d" /></a>
+  <a href="https://bundlephobia.com/result?p=react-colorful"><img alt="tree-shakeable" src="https://img.shields.io/badge/tree--shakeable-yes-6ead0a?labelColor=da248d" /></a>
+  <a href="https://npmjs.org/package/react-colorful"><img alt="types included" src="https://badgen.net/npm/types/react-colorful?labelColor=da248d&color=6ead0a" /></a>
 </div>
 
 <div align="center">
