@@ -25,15 +25,19 @@ export function useColorManipulation<T extends AnyColor, I extends InternalColor
   // The internal value as of the user's latest input, which `internal` only reaches on the next render
   const latest = useRef(internal);
 
-  // Update the internal value if `color` property value is changed,
-  // but only if that's not the same color that we just sent to the parent.
-  // A new color model redraws the color with it. Only a new color drops the `onChangeEnd` a
-  // gesture still owes: a model can change mid-drag, and the drag's color is still the one sent
+  // The `color` prop as of the last render: tells a new prop from a new color model
+  const prop = useRef(color);
+
   useEffect(() => {
-    const isNewColor = !colorModel.equal(color, cache.current.color);
-    if (isNewColor || cache.current.colorModel !== colorModel) {
-      const newInternal = colorModel.toInternal(color);
-      cache.current = { internal: newInternal, color, colorModel };
+    // A `color` prop that isn't the color we just sent to the parent: show it. The gesture in
+    // progress is overridden, so it owes no `onChangeEnd`. A new color model alone redraws the
+    // current color with it, and the gesture goes on
+    const isNewColor = color !== prop.current && !colorModel.equal(color, cache.current.color);
+    prop.current = color;
+    if (isNewColor || colorModel !== cache.current.colorModel) {
+      const newColor = isNewColor ? color : cache.current.color;
+      const newInternal = colorModel.toInternal(newColor);
+      cache.current = { internal: newInternal, color: newColor, colorModel };
       updateInternal((latest.current = newInternal));
       if (isNewColor) isDirty.current = false;
     }
