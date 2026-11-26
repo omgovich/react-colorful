@@ -23,7 +23,7 @@ A ~3.1 KB color picker component library for React. Zero dependencies.
 
 All pickers but the OKLCH ones convert to/from HSVA (Hue/Saturation/Value/Alpha) internally. The external API varies by component (hex string, RGB object, HSL string, etc.) but the internal representation is HSVA. Conversions live in `src/utils/convert.ts`.
 
-The OKLCH pickers keep `{ l, x, h, a }` instead (`OklchState`), where `x` is the chroma as a share of the highest one the gamut allows at that lightness and hue: the square's horizontal axis. `ColorModel` and `useColorManipulation` take the state type as a second parameter (still with the `toHsva`/`fromHsva` names). The OKLCH math, gamut edge and gradients live in `src/utils/oklch.ts`; the components in `src/components/common/Oklch*.tsx`. Don't call functions (including `React.memo`) at the top level of OKLCH modules: the bundler keeps such calls, and the OKLCH code then lands in every picker's bundle.
+The OKLCH pickers keep `{ l, x, h, a }` instead (`OklchState`), where `x` is the chroma as a share of the highest one the gamut allows at that lightness and hue: the square's horizontal axis. `ColorModel` and `useColorManipulation` take the internal type as a second parameter. The OKLCH math, gamut edge and gradients live in `src/utils/oklch.ts`; the components in `src/components/common/Oklch*.tsx`. Don't call functions (including `React.memo`) at the top level of OKLCH modules: the bundler keeps such calls, and the OKLCH code then lands in every picker's bundle.
 
 ### ColorModel pattern
 

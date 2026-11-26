@@ -17,7 +17,7 @@ export const oklchModel = <T extends AnyColor>(
   models[gamut] ||
   (models[gamut] = {
     defaultColor,
-    toHsva: (color) => oklchaToState(toOklcha(color), gamut),
-    fromHsva: (state) => fromOklcha(stateToOklcha(state, gamut)),
+    toInternal: (color) => oklchaToState(toOklcha(color), gamut),
+    fromInternal: (state) => fromOklcha(stateToOklcha(state, gamut)),
     equal,
   });

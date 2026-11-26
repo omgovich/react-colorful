@@ -3,39 +3,40 @@ import { ColorModel, AnyColor, HsvaColor, ObjectColor, OklchState } from "../typ
 import { equalColorObjects } from "../utils/compare";
 import { useEventCallback } from "./useEventCallback";
 
-// `S` is the picker's internal state: HSVA for every picker but the OKLCH ones
+// `I` is the picker's internal representation of the color: HSVA for every picker but the
+// OKLCH ones
 export function useColorManipulation<
   T extends AnyColor,
-  S extends ObjectColor | OklchState = HsvaColor
+  I extends ObjectColor | OklchState = HsvaColor
 >(
-  colorModel: ColorModel<T, S>,
+  colorModel: ColorModel<T, I>,
   color: T,
   onChange?: (color: T) => void,
   onChangeEnd?: (color: T) => void
-): [S, (color: Partial<S>) => void, () => void] {
+): [I, (color: Partial<I>) => void, () => void] {
   // Save onChange callback in the ref for avoiding "useCallback hell"
   const onChangeCallback = useEventCallback<T>(onChange);
   const onChangeEndCallback = useEventCallback<T>(onChangeEnd);
 
-  // No matter which color model is used (HEX, RGB(A) or HSL(A)),
-  // all internal calculations are based on HSVA model
-  const [hsva, updateHsva] = useState<S>(() => colorModel.toHsva(color));
+  // No matter which color format the picker takes (HEX, RGB(A), HSL(A), …),
+  // all internal calculations work on its internal representation (HSVA for most pickers)
+  const [internal, updateInternal] = useState<I>(() => colorModel.toInternal(color));
 
   // By using this ref we're able to prevent extra updates
   // and the effects recursion during the color conversion
-  const cache = useRef({ color, hsva, colorModel });
+  const cache = useRef({ color, internal, colorModel });
   const isDirty = useRef(false);
   // The internal value as of the user's latest input, which `internal` only reaches on the next render
   const latest = useRef(internal);
 
-  // Update local HSVA-value if `color` property value is changed,
+  // Update the internal value if `color` property value is changed,
   // but only if that's not the same color that we just sent to the parent.
   // A new color model (the gamut of an OKLCH picker) redraws the color with it
   useEffect(() => {
     if (cache.current.colorModel !== colorModel || !colorModel.equal(color, cache.current.color)) {
-      const newHsva = colorModel.toHsva(color);
-      cache.current = { hsva: newHsva, color, colorModel };
-      updateHsva((latest.current = newHsva));
+      const newInternal = colorModel.toInternal(color);
+      cache.current = { internal: newInternal, color, colorModel };
+      updateInternal((latest.current = newInternal));
       isDirty.current = false;
     }
   }, [color, colorModel]);
@@ -47,15 +48,15 @@ export function useColorManipulation<
   // This runs in the event handler rather than in an effect: browsers can deliver the release
   // right after the last move, before React renders it, and `onChangeEnd` must send its color
   const handleChange = useCallback(
-    (params: Partial<S>) => {
-      const newHsva = (latest.current = Object.assign({}, latest.current, params));
+    (params: Partial<I>) => {
+      const newInternal = (latest.current = Object.assign({}, latest.current, params));
       let newColor;
       updateInternal(newInternal);
       if (
-        !equalColorObjects(newHsva as ObjectColor, cache.current.hsva as ObjectColor) &&
-        !colorModel.equal((newColor = colorModel.fromHsva(newHsva)), cache.current.color)
+        !equalColorObjects(newInternal as ObjectColor, cache.current.internal as ObjectColor) &&
+        !colorModel.equal((newColor = colorModel.fromInternal(newInternal)), cache.current.color)
       ) {
-        cache.current = { hsva: newHsva, color: newColor, colorModel };
+        cache.current = { internal: newInternal, color: newColor, colorModel };
         isDirty.current = true;
         onChangeCallback(newColor);
       }
