@@ -291,16 +291,49 @@ export const layerMask = (i: number): string | undefined =>
 
 const toLab = ([l, c, h]: number[]) => [l, c * Math.cos(h * RAD), c * Math.sin(h * RAD)];
 
+// The hue bar's lightness at every 4° (see `hueColor`), per gamut
+const hueLightness: Partial<Record<OklchGamut, number[]>> = {};
+
+/**
+ * The color of a hue on the hue bar. Not the most vivid color of the hue (its cusp): at the
+ * corners of the gamut (pure red, green, blue) the cusp changes so fast that the bar shows a
+ * hard step. Instead the lightness stays near 0.6 and moves 70% of the way towards the cusp's
+ * lightness smoothed over ±28° of hue, so yellow and cyan still look light. The chroma is the
+ * highest one at that lightness. The bar is free of steps and every color on it is vivid.
+ */
+export const hueColor = (h: number, gamut: OklchGamut): [number, number] => {
+  let table = hueLightness[gamut];
+  if (!table) {
+    const cusps: number[] = [];
+    for (let i = 0; i < 90; i++) cusps.push(cusp(i * 4, gamut)[0]);
+    // A triangular window over ±28° (±7 samples), wrapping around the hue circle
+    table = hueLightness[gamut] = cusps.map((_, i) => {
+      let sum = 0;
+      let weights = 0;
+      for (let j = -7; j <= 7; j++) {
+        const weight = 8 - Math.abs(j);
+        sum += cusps[(i + j + 90) % 90] * weight;
+        weights += weight;
+      }
+      return 0.6 + 0.7 * (sum / weights - 0.6);
+    });
+  }
+  const t = (((h % 360) + 360) % 360) / 4;
+  const i = Math.floor(t);
+  const l = lerpNumber(table[i], table[(i + 1) % 90], t - i);
+  return [l, maxChroma(l, h, gamut)];
+};
+
 const hueCache: Record<string, string> = {};
 
 /**
- * The hue bar: the most vivid color of every hue. Stops are placed so that the bar is within
- * ΔE_OK 0.004 of each hue's actual cusp color
+ * The hue bar: `hueColor` of every hue, with stops placed so that the bar is within ΔE_OK 0.004
+ * of it everywhere
  */
 export const hueGradient = (gamut: OklchGamut): string => {
   if (!hueCache[gamut]) {
     const [points, colors] = splitByCurvature(
-      (t) => toLab([...cusp(t * 360, gamut), t * 360]),
+      (t) => toLab([...hueColor(t * 360, gamut), t * 360]),
       (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]),
       (a, b, t) => a.map((v, i) => lerpNumber(v, b[i], t)),
       0.004

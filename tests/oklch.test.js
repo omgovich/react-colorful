@@ -10,6 +10,7 @@ import {
   cusp,
   formatOklch,
   formatOklcha,
+  hueColor,
   hueGradient,
   inGamut,
   layerMask,
@@ -219,9 +220,32 @@ describe("drawing", () => {
     expect(layerMask(5)).toBe("linear-gradient(to right, transparent 96%, #000 100%)");
   });
 
-  it("Draws the hue bar from cusp colors", () => {
-    expect(hueGradient("srgb")).toMatch(/^linear-gradient\(to right in oklab, oklab\(/);
-    expect(hueGradient("p3")).not.toBe(hueGradient("srgb"));
+  it("Draws the hue bar without steps", () => {
+    const toLab = (l, c, h) => [
+      l,
+      c * Math.cos((h * Math.PI) / 180),
+      c * Math.sin((h * Math.PI) / 180),
+    ];
+    for (const gamut of ["srgb", "p3"]) {
+      const bar = hueGradient(gamut);
+      expect(bar).toMatch(/^linear-gradient\(to right in oklab, oklab\(/);
+      // Each stop is the hue's bar color
+      const stops = [...bar.matchAll(/oklab\((-?[\d.]+) (-?[\d.]+) (-?[\d.]+)\) ([\d.]+)%/g)];
+      for (const [, l, a, b, t] of stops) {
+        const h = t * 3.6;
+        const expected = toLab(...hueColor(h, gamut), h);
+        expect(Math.hypot(l - expected[0], a - expected[1], b - expected[2])).toBeLessThan(1e-4);
+      }
+      // No hard steps, not even at pure red, green or blue
+      let previous = toLab(...hueColor(0, gamut), 0);
+      for (let h = 0.25; h <= 360; h += 0.25) {
+        const color = toLab(...hueColor(h, gamut), h);
+        expect(Math.hypot(...color.map((v, i) => v - previous[i]))).toBeLessThan(0.01);
+        previous = color;
+      }
+    }
+    // Yellow stays light enough to look yellow
+    expect(hueColor(110, "srgb")[0]).toBeGreaterThan(0.8);
   });
 });
 

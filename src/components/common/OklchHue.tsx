@@ -4,7 +4,7 @@ import { Interactive, Interaction } from "./Interactive";
 import { Pointer } from "./Pointer";
 
 import { OklchGamut } from "../../types";
-import { cusp, hueGradient, oklchString } from "../../utils/oklch";
+import { hueColor, hueGradient, oklchString } from "../../utils/oklch";
 import { formatClassName } from "../../utils/format";
 import { clamp } from "../../utils/clamp";
 import { round } from "../../utils/round";
@@ -17,7 +17,7 @@ interface Props {
   onChangeEnd?: () => void;
 }
 
-// The hue slider of OKLCH pickers: the most vivid color of every OKLCH hue
+// The hue slider of OKLCH pickers: a vivid color of every OKLCH hue, see `hueColor`
 // No `React.memo`: a top-level call would stay in the bundle of every other picker
 export const OklchHue = ({
   className,
@@ -34,7 +34,7 @@ export const OklchHue = ({
     onChange({ h: clamp(hue + offset.left * 360, 0, 360) });
   };
 
-  const [l, c] = cusp(hue, gamut);
+  const [l, c] = hueColor(hue, gamut);
 
   return (
     <div
