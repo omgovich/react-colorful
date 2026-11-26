@@ -135,7 +135,7 @@ const YourComponent = () => {
 
 ### OKLCH
 
-[OKLCH](https://oklch.com) is a perceptual color space: equal steps of lightness look equal at every hue, so a yellow and a blue of the same `l` look equally light. The OKLCH pickers keep the familiar layout, a square and a hue slider, but the square shows **lightness** from top to bottom and **chroma as a share of the highest one possible** at that lightness and hue from left to right. The right edge is always the most vivid color available, and every point of the square is a color the gamut can show. (For a few sRGB blues around `#0000ff` the edge steps over a dip below 0 in the red channel of under 0.2%, so that pure blue stays reachable.)
+[OKLCH](https://oklch.com) is a perceptual color space: equal steps of lightness look equal at every hue, so a yellow and a blue of the same `l` look equally light. The OKLCH pickers keep the familiar layout, a square and a hue slider, but the square shows **lightness** from top to bottom and **chroma as a share of the highest one possible** at that lightness and hue from left to right. The right edge is always the most vivid color available, and every point of the square is a color the gamut can show. (For a few sRGB blues around `#0000ff` the edge steps over a dip where the red channel goes slightly below 0, up to ~4 of 255 steps, so that pure blue stays reachable.)
 
 ```js
 import { OklchColorPicker } from "react-colorful";
@@ -149,7 +149,7 @@ const YourComponent = () => {
 - `l` is 0..1, `c` is the absolute chroma of CSS `oklch()` (0..~0.37), `h` is in degrees.
 - The `gamut` prop picks the range of colors: `"srgb"` (default) or `"p3"` for wide-gamut [Display P3](https://webkit.org/blog/10042/wide-gamut-color-in-css-with-display-p3/) colors. The output is an OKLCH color either way. A color outside the gamut is shown at the edge of the square and is sent back unchanged until the user changes it.
 - String pickers accept `oklch(L C H)` and `oklch(L C H / A)` with percentages, angle units and `none`, and emit `oklch(0.6 0.15 250)`.
-- These pickers need `oklch()` colors, gradients `in oklab` and CSS masks: Chrome 111, Safari 16.2 and Firefox 127 or newer (about 94.5% of users, see [Browser Support](#browser-support)). They are about 5 KB (minified and brotlied) instead of 3 KB.
+- These pickers need `oklch()` colors, gradients `in oklab` and CSS masks: Chrome 111, Safari 16.2 and Firefox 127 or newer (about 94.5% of users, see [Browser Support](#browser-support)). They are about 5.6–5.8 KB (minified and brotlied) instead of 3 KB.
 
 ## Customization
 

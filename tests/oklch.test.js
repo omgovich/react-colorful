@@ -20,6 +20,7 @@ import {
   parseOklcha,
   squareLayers,
   stateToOklcha,
+  equalOklchString,
 } from "../src/utils/oklch";
 
 afterEach(cleanup);
@@ -94,6 +95,28 @@ describe("gamut", () => {
           const [l, c, h] = fromRgb(r, g, b);
           if (l > 0 && l < 1) expect(maxChroma(l, h, "srgb")).toBeGreaterThan(c - 2e-4);
         }
+  });
+
+  it("Puts known sRGB colors inside the gamut, and its corners on the edge", () => {
+    // Pairs from colord's tests: oklch() → HEX
+    for (const [l, c, h] of [
+      [1, 0, 0], // #ffffff
+      [0.2684, 0.0383, 64.93], // #332211
+      [0.51975, 0.17686, 142.495], // #008000
+    ]) {
+      expect(inGamut(l, c, h, "srgb", 1e-3)).toBe(true);
+    }
+    // colord clips this one to #0069c7: it's past the sRGB edge (0.1145 at this l and h)
+    expect(inGamut(0.5, 0.2, 240, "srgb")).toBe(false);
+    // #ff0000 is a corner of the RGB cube, so it sits right on the edge
+    expect(maxChroma(0.62796, 29.234, "srgb")).toBeCloseTo(0.25768, 3);
+  });
+
+  it("Keeps the edge of dark cyans on the gamut", () => {
+    // A dark color's channels are tiny: nothing of the gamut lies past the first exit here
+    const edge = maxChroma(0.07, 212, "srgb");
+    expect(inGamut(0.07, edge, 212, "srgb")).toBe(true);
+    expect(inGamut(0.07, edge + 1e-4, 212, "srgb")).toBe(false);
   });
 
   it("Moves the edge smoothly with the hue, even by the blue dip", () => {
@@ -184,6 +207,13 @@ describe("strings", () => {
     test("oklch(0.6 0.15 none)", { l: 0.6, c: 0.15, h: 0, a: 1 });
     test("oklch(+0.6 1.5e-1 2e1)", { l: 0.6, c: 0.15, h: 20, a: 1 });
     test("rgb(0, 0, 0)", { l: 0, c: 0, h: 0, a: 1 });
+  });
+
+  it("Compares OKLCH strings by their values", () => {
+    expect(equalOklchString("oklch(0.7 0.1 20)", "oklch(0.7 0.12 0)")).toBe(false);
+    expect(equalOklchString("oklch(0.6 0.15 260)", "oklch(60% 0.15 260deg)")).toBe(true);
+    expect(equalOklchString("oklch(0.6 0.15 260 / 1)", "oklch(0.6 0.15 260)")).toBe(true);
+    expect(equalOklchString("oklch(0.6 0.15 260 / 0.5)", "oklch(0.6 0.15 260)")).toBe(false);
   });
 
   it("Formats OKLCH strings", () => {
@@ -338,7 +368,7 @@ describe("pickers", () => {
     expect(handleChange).toHaveBeenCalledTimes(1);
     expect(handleChange.mock.calls[0][0]).toEqual({
       l: 0.6,
-      c: Math.round(share * maxChroma(0.6, 180, "srgb") * 1e4) / 1e4,
+      c: Math.round(share * maxChroma(0.6, 180, "srgb") * 1e5) / 1e5,
       h: 180,
     });
   });

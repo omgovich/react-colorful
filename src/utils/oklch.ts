@@ -11,16 +11,18 @@ import { OklchaColor, OklchGamut, OklchState } from "../types";
 // π / 180 as a literal: a top-level `Math.PI / 180` would stay in every picker's bundle
 const RAD = 0.017453292519943295;
 
-// OKLab → LMS (cube roots) and LMS → linear sRGB
+// OKLab → LMS (cube roots) and LMS → linear sRGB, at full precision: derived from the CSS Color 4
+// matrices (https://www.w3.org/TR/css-color-4/#color-conversion-code), as in colord. The 10-digit
+// tables from the original OKLab post differ by ~1e-7, enough to move the gamut edge of some blues
 const LAB_TO_LMS = [
-  [0.3963377774, 0.2158037573],
-  [-0.1055613458, -0.0638541728],
-  [-0.0894841775, -1.291485548],
+  [0.3963377773761749, 0.2158037573099136],
+  [-0.1055613458156586, -0.0638541728258133],
+  [-0.0894841775298119, -1.2914855480194092],
 ];
 const LMS_TO_RGB = [
-  [4.0767416621, -3.3077115913, 0.2309699292],
-  [-1.2684380046, 2.6097574011, -0.3413193965],
-  [-0.0041960863, -0.7034186147, 1.707614701],
+  [4.0767416360759583, -3.3077115392580616, 0.2309699031821043],
+  [-1.2684379732850317, 2.6097573492876887, -0.3413193760026573],
+  [-0.0041960761386756, -0.7034186179359363, 1.7076146940746117],
 ];
 // Linear sRGB → linear Display P3, derived from both primaries and the shared D65 white point
 // so that white maps to white exactly (rounded tables put it at 1.0000001, outside the gamut)
@@ -124,31 +126,36 @@ const firstExit = (rgb: Cubic[], from: number): number => {
   return edge;
 };
 
-// How deep a dip past the first exit the square's edge steps over, in a linear RGB channel:
-// fully up to `GAP`, fading out up to `2 * GAP` so that the edge never jumps
+// How deep a dip past the first exit the square's edge steps over, in a linear RGB channel, at
+// most: fully up to the gap, fading out up to twice the gap so that the edge never jumps
 const GAP = 1e-3;
+// The blue dip deepens with lightness as l³ (0.0007 at #0000ff, l = 0.452), so the gap follows
+// l³ too: a fixed gap would step over the far deeper-looking dips of dark colors, where nothing
+// of the gamut lies behind them
+const gapAt = (l: number) => Math.min(GAP, 0.011 * l * l * l);
 
 /**
  * The right edge of the square: the chroma where the color leaves the gamut, walking out from
  * grey at this lightness and hue.
  *
  * For some sRGB blues (hues near 264°, including `#0000ff` and the whole `#0000xx` axis) the
- * red channel dips below 0 just past the first exit and then comes back: by at most 0.0007, far
- * less than one of 255 steps. Stopping at the first exit would make pure blue unreachable. So
+ * red channel dips below 0 just past the first exit and then comes back, by at most 0.0007 in
+ * linear light (up to ~3 of 255 steps after gamma). Stopping at the first exit would make pure
+ * blue unreachable. So
  * the edge looks past it: the closer the color comes back to the gamut after the dip, the
  * further the edge moves from the first exit towards the point where it comes back. The move is
  * gradual, so the edge doesn't jump as the hue changes. Colors in such a dip are outside sRGB by
- * less than `2 * GAP` (by under 0.0007 for the colors of the sRGB cube); everything else is
- * inside.
+ * less than twice the gap (`gapAt`); everything else is inside.
  */
 export const maxChroma = (l: number, h: number, gamut: OklchGamut): number => {
   if (l <= 0 || l >= 1) return 0;
 
   const rgb = channels(l, h, gamut);
+  const gap = gapAt(l);
   let edge = firstExit(rgb, 0);
 
   while (edge < MAX_CHROMA) {
-    // Walk past the edge while the color stays within `GAP` of the gamut, noting the deepest
+    // Walk past the edge while the color stays within the gap of the gamut, noting the deepest
     // point (`peak`) and the lowest point after it (`low` at chroma `back`)
     let c = edge;
     let depth;
@@ -161,15 +168,15 @@ export const maxChroma = (l: number, h: number, gamut: OklchGamut): number => {
       // The first rise sets the peak; after that only the lowest point matters
       if (low === Infinity && depth >= peak) peak = depth;
       else if (depth <= low) [low, back] = [depth, c];
-    } while (depth && depth <= 2 * GAP && c < MAX_CHROMA);
+    } while (depth && depth <= 2 * gap && c < MAX_CHROMA);
     // Back inside: go on to the end of the next range
     if (!depth && c < MAX_CHROMA) {
       edge = firstExit(rgb, c);
       continue;
     }
     // How far the color came back after the dip (0 not at all, 1 all the way to the gamut) and
-    // how shallow the dip was (1 up to `GAP`, 0 from `2 * GAP`) move the edge towards `back`
-    const weight = clamp((0.75 - low / peak) / 0.5) * clamp(2 - peak / GAP);
+    // how shallow the dip was (1 up to the gap, 0 from twice the gap) move the edge towards `back`
+    const weight = clamp((0.75 - low / peak) / 0.5) * clamp(2 - peak / gap);
     if (!weight) return edge;
     // `back` is on a 1e-4 grid: find the lowest point between its neighbours
     let lo = back - 1e-4;
@@ -362,16 +369,16 @@ export const oklchaToState = ({ l, c, h, a }: OklchaColor, gamut: OklchGamut): O
  * the edge for the ROUNDED lightness and hue: the color always reopens at the same spot. (Near
  * 264.2° in sRGB rounding the hue alone can move the edge from a far branch of blue to the near
  * one.) C is rounded to the nearest step, not down: `c → x → c` drifts by float noise, and
- * 0.1 must come back as 0.1, not 0.0999. Only a step past the edge is taken back.
+ * 0.1 must come back as 0.1, not 0.09999. Only a step past the edge is taken back.
  */
 export const stateToOklcha = ({ l, x, h, a }: OklchState, gamut: OklchGamut): OklchaColor => {
   const lr = round(l, 4);
   const hr = round(h, 2);
   const edge = maxChroma(lr, hr, gamut);
-  const c = round(Math.min(x * maxChroma(l, h, gamut), edge), 4);
+  const c = round(Math.min(x * maxChroma(l, h, gamut), edge), 5);
   return {
     l: lr,
-    c: c > edge ? round(c - 1e-4, 4) : c,
+    c: c > edge ? round(c - 1e-5, 5) : c,
     h: hr,
     a: round(a, 2),
   };
@@ -400,6 +407,16 @@ export const parseOklcha = (value: string): OklchaColor => {
     h: parseHue(String(number(match[5])), match[6]),
     a: match[7] === undefined ? 1 : clamp(number(match[7]) / (match[8] ? 100 : 1)),
   };
+};
+
+/**
+ * Whether two OKLCH strings are the same color. Comparing the parsed values, not the text:
+ * removing spaces to compare would merge `oklch(0.7 0.1 20)` and `oklch(0.7 0.12 0)`
+ */
+export const equalOklchString = (first: string, second: string): boolean => {
+  const a = parseOklcha(first);
+  const b = parseOklcha(second);
+  return a.l === b.l && a.c === b.c && a.h === b.h && a.a === b.a;
 };
 
 export const formatOklch = ({ l, c, h }: OklchaColor): string => oklchString(l, c, h);
