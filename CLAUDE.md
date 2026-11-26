@@ -13,7 +13,7 @@
 
 ## Key constraint: bundle size
 
-Every picker has a hard budget (3–3.5 KB depending on the picker) enforced by the `size-limit` section of package.json. Since size-limit v11 the metric is minified + **brotli** of an esbuild bundle — don't compare these numbers against gzip figures from older tooling. This shapes all code decisions: `Object.assign` over spread (smaller output), keyCodes over key strings, no dependencies, manually optimized algorithms. Always run `npm run size` after changes that add code.
+Every picker has a hard budget (3–3.5 KB depending on the picker; about 6 KB for the OKLCH ones, which have their own gamut math and gradients) enforced by the `size-limit` section of package.json. Since size-limit v11 the metric is minified + **brotli** of an esbuild bundle — don't compare these numbers against gzip figures from older tooling. This shapes all code decisions in the classic pickers: `Object.assign` over spread (smaller output), keyCodes over key strings, no dependencies, manually optimized algorithms. The OKLCH code favours readability over the last bytes (object spread is fine there), as long as it stays within its budget and out of the classic pickers' bundles. Always run `npm run size` after changes that add code.
 
 ## Architecture
 

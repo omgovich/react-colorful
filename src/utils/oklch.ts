@@ -15,14 +15,22 @@ export const oklchString = (l: number, c: number, h: number, a?: number): string
   return `oklch(${round(l, 5)} ${round(c, 5)} ${round(h, 3)}${alpha})`;
 };
 
-/** Turns a color into the picker's state; a color outside the gamut is shown at the edge */
-export const oklchaToState = (color: OklchaColor, gamut: OklchGamut): OklchState => {
+/**
+ * Turns a color into the picker's state; a color outside the gamut is shown at the edge. Black and
+ * white have no chroma share (the edge is 0 there): they keep the one of the `previous` state, so
+ * the pointer doesn't jump to the left on a gamut switch
+ */
+export const oklchaToState = (
+  color: OklchaColor,
+  gamut: OklchGamut,
+  previous?: OklchState
+): OklchState => {
   // `|| 0` turns NaN (a broken prop) into 0 instead of letting it into the state and styles
   const l = clamp(color.l || 0);
   const h = parseHue(color.h) || 0;
-  // The chroma as a share of the edge; at black and white the edge is 0
+  // The chroma as a share of the edge
   const edge = maxChroma(l, h, gamut);
-  const x = edge ? clamp(color.c / edge || 0) : 0;
+  const x = edge ? clamp(color.c / edge || 0) : previous ? previous.x : 0;
   return { l, x, h, a: color.a };
 };
 

@@ -28,12 +28,15 @@ export const OklchPicker = <T extends AnyColor>({
   const nodeRef = useRef<HTMLDivElement>(null);
   useStyleSheet(nodeRef);
 
+  // The picker's current state, for what a new color can't tell (see `GamutColorModel`)
+  const current = useRef<OklchState>();
+
   // The picker's model bound to its gamut. A new gamut makes a new model, and the hook redraws
   // the current color with it
   const colorModel = useMemo<ColorModel<T, OklchState>>(
     () => ({
       ...model,
-      toInternal: (color: T) => model.toInternal(color, gamut),
+      toInternal: (color: T) => model.toInternal(color, gamut, current.current),
       fromInternal: (internal: OklchState) => model.fromInternal(internal, gamut),
     }),
     [model, gamut]
@@ -45,6 +48,7 @@ export const OklchPicker = <T extends AnyColor>({
     onChange,
     onChangeEnd
   );
+  current.current = state;
 
   return (
     <div {...rest} ref={nodeRef} className={formatClassName(["react-colorful", className])}>

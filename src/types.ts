@@ -86,7 +86,9 @@ export interface ColorModel<T extends AnyColor, I extends InternalColor = HsvaCo
 // A color model whose conversions also get the gamut, so one model serves both gamuts
 export interface GamutColorModel<T extends AnyColor> {
   defaultColor: T;
-  toInternal: (color: T, gamut: OklchGamut) => OklchState;
+  // `previous` is the picker's current state: what a color can't tell (the chroma share of black
+  // and white, the hue of a grey written as OKLab) is kept from it
+  toInternal: (color: T, gamut: OklchGamut, previous?: OklchState) => OklchState;
   fromInternal: (internal: OklchState, gamut: OklchGamut) => T;
   equal: (first: T, second: T) => boolean;
 }

@@ -12,7 +12,7 @@ import {
 
 const colorModel: GamutColorModel<string> = {
   defaultColor: "oklch(0 0 0 / 1)",
-  toInternal: (color, gamut) => oklchaToState(parseOklcha(color), gamut),
+  toInternal: (color, gamut, previous) => oklchaToState(parseOklcha(color), gamut, previous),
   fromInternal: (internal, gamut) => formatOklcha(stateToOklcha(internal, gamut)),
   equal: equalOklchString,
 };

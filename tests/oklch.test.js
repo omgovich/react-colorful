@@ -450,6 +450,22 @@ describe("pickers", () => {
     expect(handleChange).toHaveLastReturnedWith("oklch(0.6 0 163 / 0.95)");
   });
 
+  it("Keeps the chroma share of white on a gamut switch", () => {
+    const handleChange = jest.fn((color) => color);
+    const { container, rerender } = render(
+      <OklchColorPicker color={{ l: 0.6, c: 0.1, h: 145 }} onChange={handleChange} />
+    );
+    const pointer = () => container.querySelector(".react-colorful__saturation-pointer");
+
+    // To the top of the square, 60% across: white, which has no chroma to tell the share by
+    fireEvent(square(container), new FakeMouseEvent("mousedown", { pageX: 65, pageY: 5 }));
+    const white = handleChange.mock.results[0].value;
+    expect(white).toEqual({ l: 1, c: 0, h: 145 });
+
+    rerender(<OklchColorPicker color={white} onChange={handleChange} gamut="p3" />);
+    expect(pointer().style.left).toBe("60%");
+  });
+
   it("Writes the right end of the hue slider as 0 and keeps the pointer there", () => {
     const handleChange = jest.fn((color) => color);
     const { container, rerender } = render(

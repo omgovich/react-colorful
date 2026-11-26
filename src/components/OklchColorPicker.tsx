@@ -7,7 +7,7 @@ import { oklchaToState, stateToOklcha } from "../utils/oklch";
 
 const colorModel: GamutColorModel<OklchColor> = {
   defaultColor: { l: 0, c: 0, h: 0 },
-  toInternal: (color, gamut) => oklchaToState({ ...color, a: 1 }, gamut),
+  toInternal: (color, gamut, previous) => oklchaToState({ ...color, a: 1 }, gamut, previous),
   fromInternal: (internal, gamut) => {
     const { l, c, h } = stateToOklcha(internal, gamut);
     return { l, c, h };
