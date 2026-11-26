@@ -295,11 +295,11 @@ const toLab = ([l, c, h]: number[]) => [l, c * Math.cos(h * RAD), c * Math.sin(h
 const hueLightness: Partial<Record<OklchGamut, number[]>> = {};
 
 /**
- * The color of a hue on the hue bar. Not the most vivid color of the hue (its cusp): at the
- * corners of the gamut (pure red, green, blue) the cusp changes so fast that the bar shows a
- * hard step. Instead the lightness stays near 0.6 and moves 70% of the way towards the cusp's
- * lightness smoothed over ±28° of hue, so yellow and cyan still look light. The chroma is the
- * highest one at that lightness. The bar is free of steps and every color on it is vivid.
+ * The color of a hue on the hue bar. Not exactly the most vivid color of the hue (its cusp): at
+ * the corners of the gamut (pure red, green, blue) the cusp's lightness changes so fast that the
+ * bar shows a hard step. So the lightness is the cusp's lightness smoothed over ±28° of hue, and
+ * the chroma is the highest one at that lightness. The bar is free of steps and nearly as vivid
+ * as the cusps themselves.
  */
 export const hueColor = (h: number, gamut: OklchGamut): [number, number] => {
   let table = hueLightness[gamut];
@@ -315,7 +315,7 @@ export const hueColor = (h: number, gamut: OklchGamut): [number, number] => {
         sum += cusps[(i + j + 90) % 90] * weight;
         weights += weight;
       }
-      return 0.6 + 0.7 * (sum / weights - 0.6);
+      return sum / weights;
     });
   }
   const t = (((h % 360) + 360) % 360) / 4;
