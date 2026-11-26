@@ -7,8 +7,8 @@ import { hsvaToHsv } from "../utils/convert";
 
 const colorModel: ColorModel<HsvColor> = {
   defaultColor: { h: 0, s: 0, v: 0 },
-  toHsva: ({ h, s, v }) => ({ h, s, v, a: 1 }),
-  fromHsva: hsvaToHsv,
+  toInternal: ({ h, s, v }) => ({ h, s, v, a: 1 }),
+  fromInternal: hsvaToHsv,
   equal: equalColorObjects,
 };
 

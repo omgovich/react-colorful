@@ -7,8 +7,8 @@ import { hslaToHsva, hsvaToHsla, hslaToHsl } from "../utils/convert";
 
 const colorModel: ColorModel<HslColor> = {
   defaultColor: { h: 0, s: 0, l: 0 },
-  toHsva: ({ h, s, l }) => hslaToHsva({ h, s, l, a: 1 }),
-  fromHsva: (hsva) => hslaToHsl(hsvaToHsla(hsva)),
+  toInternal: ({ h, s, l }) => hslaToHsva({ h, s, l, a: 1 }),
+  fromInternal: (hsva) => hslaToHsl(hsvaToHsla(hsva)),
   equal: equalColorObjects,
 };
 

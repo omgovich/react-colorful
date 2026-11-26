@@ -7,8 +7,8 @@ import { rgbStringToHsva, hsvaToRgbString } from "../utils/convert";
 
 const colorModel: ColorModel<string> = {
   defaultColor: "rgb(0, 0, 0)",
-  toHsva: rgbStringToHsva,
-  fromHsva: hsvaToRgbString,
+  toInternal: rgbStringToHsva,
+  fromInternal: hsvaToRgbString,
   equal: equalColorString,
 };
 

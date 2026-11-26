@@ -34,10 +34,14 @@ export type ObjectColor = RgbColor | HslColor | HsvColor | RgbaColor | HslaColor
 
 export type AnyColor = string | ObjectColor;
 
+/**
+ * Converts between a picker's color format `T` (a HEX string, an RGB object, …) and the
+ * picker's internal representation of the color, HSVA
+ */
 export interface ColorModel<T extends AnyColor> {
   defaultColor: T;
-  toHsva: (defaultColor: T) => HsvaColor;
-  fromHsva: (hsva: HsvaColor) => T;
+  toInternal: (color: T) => HsvaColor;
+  fromInternal: (hsva: HsvaColor) => T;
   equal: (first: T, second: T) => boolean;
 }
 

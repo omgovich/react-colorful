@@ -7,8 +7,8 @@ import { hexToHsva, hsvaToHex } from "../utils/convert";
 
 const colorModel: ColorModel<string> = {
   defaultColor: "000",
-  toHsva: hexToHsva,
-  fromHsva: ({ h, s, v }) => hsvaToHex({ h, s, v, a: 1 }),
+  toInternal: hexToHsva,
+  fromInternal: ({ h, s, v }) => hsvaToHex({ h, s, v, a: 1 }),
   equal: equalHex,
 };
 
