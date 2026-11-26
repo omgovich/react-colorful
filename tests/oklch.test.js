@@ -1,5 +1,6 @@
 import React from "react";
 import { render, cleanup, fireEvent } from "@testing-library/react";
+import * as manipulation from "../src/hooks/useColorManipulation";
 import {
   OklchColorPicker,
   OklchaColorPicker,
@@ -252,6 +253,22 @@ describe("drawing", () => {
 describe("pickers", () => {
   const square = (container) =>
     container.querySelector(".react-colorful__saturation .react-colorful__interactive");
+
+  it("Gives the hook the same color model on every render", () => {
+    // A new model is a new gamut to the hook: it would redraw the color on every render
+    const spy = jest.spyOn(manipulation, "useColorManipulation");
+    const color = { l: 0.6, c: 0.1, h: 145 };
+    const { rerender } = render(<OklchColorPicker color={color} />);
+    rerender(<OklchColorPicker color={{ ...color }} />);
+    rerender(<OklchColorPicker color={{ ...color }} gamut="p3" />);
+    rerender(<OklchColorPicker color={{ ...color }} gamut="p3" />);
+    rerender(<OklchColorPicker color={{ ...color }} />);
+
+    const models = spy.mock.calls.map(([model]) => model);
+    spy.mockRestore();
+    expect(new Set(models).size).toBe(2);
+    expect(models[0]).toBe(models[4]);
+  });
 
   it("Renders the square, the hue and the alpha sliders", () => {
     const { container } = render(<OklchaColorPicker />);
