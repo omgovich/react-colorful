@@ -83,8 +83,8 @@ export interface ColorModel<T extends AnyColor, I extends InternalColor = HsvaCo
   equal: (first: T, second: T) => boolean;
 }
 
-// An OKLCH picker's model: the conversions also get the gamut, so one model serves both gamuts
-export interface OklchColorModel<T extends AnyColor> {
+// A color model whose conversions also get the gamut, so one model serves both gamuts
+export interface GamutColorModel<T extends AnyColor> {
   defaultColor: T;
   toInternal: (color: T, gamut: OklchGamut) => OklchState;
   fromInternal: (internal: OklchState, gamut: OklchGamut) => T;

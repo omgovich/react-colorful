@@ -4,13 +4,13 @@ import { OklchSquare } from "./OklchSquare";
 import { OklchHue } from "./OklchHue";
 import { OklchAlpha } from "./OklchAlpha";
 
-import { AnyColor, ColorModel, OklchColorModel, OklchPickerProps, OklchState } from "../../types";
+import { AnyColor, ColorModel, GamutColorModel, OklchPickerProps, OklchState } from "../../types";
 import { useColorManipulation } from "../../hooks/useColorManipulation";
 import { useStyleSheet } from "../../hooks/useStyleSheet";
 import { formatClassName } from "../../utils/format";
 
 interface Props<T extends AnyColor> extends OklchPickerProps<T> {
-  colorModel: OklchColorModel<T>;
+  colorModel: GamutColorModel<T>;
   alpha?: boolean;
 }
 

@@ -1,7 +1,7 @@
 import React from "react";
 
 import { OklchPicker } from "./common/OklchPicker";
-import { OklchColorModel, OklchPickerProps } from "../types";
+import { GamutColorModel, OklchPickerProps } from "../types";
 import {
   equalOklchString,
   formatOklcha,
@@ -10,7 +10,7 @@ import {
   stateToOklcha,
 } from "../utils/oklch";
 
-const colorModel: OklchColorModel<string> = {
+const colorModel: GamutColorModel<string> = {
   defaultColor: "oklch(0 0 0 / 1)",
   toInternal: (color, gamut) => oklchaToState(parseOklcha(color), gamut),
   fromInternal: (internal, gamut) => formatOklcha(stateToOklcha(internal, gamut)),
