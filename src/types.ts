@@ -30,7 +30,42 @@ export interface HsvaColor extends HsvColor {
   a: number;
 }
 
-export type ObjectColor = RgbColor | HslColor | HsvColor | RgbaColor | HslaColor | HsvaColor;
+export interface OklchColor {
+  /** Lightness, 0..1 */
+  l: number;
+  /** Chroma, 0..~0.37 (absolute, as in CSS `oklch()`) */
+  c: number;
+  /** Hue in degrees, 0..360 */
+  h: number;
+}
+
+export interface OklchaColor extends OklchColor {
+  a: number;
+}
+
+/** The gamut an OKLCH picker lets the user pick from */
+export type OklchGamut = "srgb" | "p3";
+
+/**
+ * Internal state of OKLCH pickers. `x` is the chroma as a share (0..1) of the highest chroma
+ * this lightness and hue reach in the picker's gamut: the horizontal axis of the square
+ */
+export interface OklchState {
+  l: number;
+  x: number;
+  h: number;
+  a: number;
+}
+
+export type ObjectColor =
+  | RgbColor
+  | HslColor
+  | HsvColor
+  | RgbaColor
+  | HslaColor
+  | HsvaColor
+  | OklchColor
+  | OklchaColor;
 
 export type AnyColor = string | ObjectColor;
 
@@ -38,13 +73,13 @@ export type AnyColor = string | ObjectColor;
 export type InternalColor = HsvaColor;
 
 /**
- * Converts between a picker's color format `T` (a HEX string, an RGB object, …) and the
- * picker's internal representation of the color `I`, HSVA by default
+ * Converts between a picker's color format `T` and its internal state `S`.
+ * Every picker but the OKLCH ones keeps its state in HSVA, hence the method names
  */
-export interface ColorModel<T extends AnyColor, I extends InternalColor = HsvaColor> {
+export interface ColorModel<T extends AnyColor, S extends ObjectColor | OklchState = HsvaColor> {
   defaultColor: T;
-  toInternal: (color: T) => I;
-  fromInternal: (internal: I) => T;
+  toHsva: (defaultColor: T) => S;
+  fromHsva: (hsva: S) => T;
   equal: (first: T, second: T) => boolean;
 }
 
@@ -57,6 +92,14 @@ export interface ColorPickerBaseProps<T extends AnyColor> extends ColorPickerHTM
   color: T;
   onChange: (newColor: T) => void;
   onChangeEnd?: (newColor: T) => void;
+}
+
+export interface OklchPickerProps<T extends AnyColor> extends Partial<ColorPickerBaseProps<T>> {
+  /**
+   * The gamut the picker lets the user pick from: `"srgb"` (default) or `"p3"`.
+   * The output stays an OKLCH color either way
+   */
+  gamut?: OklchGamut;
 }
 
 type ColorInputHTMLAttributes = Omit<

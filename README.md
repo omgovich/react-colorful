@@ -90,29 +90,33 @@ All pickers also accept every property that a regular `div` tag does (`className
 
 ## Supported Color Models
 
-We provide 12 additional color picker components for different color models, unless your app needs a HEX string as an input/output format.
+We provide more color picker components for different color models, including [OKLCH](#oklch), unless your app needs a HEX string as an input/output format.
 
 <details>
   <summary>How to use another color model</summary>
 
 #### Available pickers
 
-| Import                      | Value example                      |
-| --------------------------- | ---------------------------------- |
-| `{ HexColorPicker }`        | `"#ffffff"`                        |
-| `{ HexAlphaColorPicker }`   | `"#ffffff88"`                      |
-| `{ RgbColorPicker }`        | `{ r: 255, g: 255, b: 255 }`       |
-| `{ RgbaColorPicker }`       | `{ r: 255, g: 255, b: 255, a: 1 }` |
-| `{ RgbStringColorPicker }`  | `"rgb(255, 255, 255)"`             |
-| `{ RgbaStringColorPicker }` | `"rgba(255, 255, 255, 1)"`         |
-| `{ HslColorPicker }`        | `{ h: 0, s: 0, l: 100 }`           |
-| `{ HslaColorPicker }`       | `{ h: 0, s: 0, l: 100, a: 1 }`     |
-| `{ HslStringColorPicker }`  | `"hsl(0, 0%, 100%)"`               |
-| `{ HslaStringColorPicker }` | `"hsla(0, 0%, 100%, 1)"`           |
-| `{ HsvColorPicker }`        | `{ h: 0, s: 0, v: 100 }`           |
-| `{ HsvaColorPicker }`       | `{ h: 0, s: 0, v: 100, a: 1 }`     |
-| `{ HsvStringColorPicker }`  | `"hsv(0, 0%, 100%)"`               |
-| `{ HsvaStringColorPicker }` | `"hsva(0, 0%, 100%, 1)"`           |
+| Import                        | Value example                      |
+| ----------------------------- | ---------------------------------- |
+| `{ HexColorPicker }`          | `"#ffffff"`                        |
+| `{ HexAlphaColorPicker }`     | `"#ffffff88"`                      |
+| `{ RgbColorPicker }`          | `{ r: 255, g: 255, b: 255 }`       |
+| `{ RgbaColorPicker }`         | `{ r: 255, g: 255, b: 255, a: 1 }` |
+| `{ RgbStringColorPicker }`    | `"rgb(255, 255, 255)"`             |
+| `{ RgbaStringColorPicker }`   | `"rgba(255, 255, 255, 1)"`         |
+| `{ HslColorPicker }`          | `{ h: 0, s: 0, l: 100 }`           |
+| `{ HslaColorPicker }`         | `{ h: 0, s: 0, l: 100, a: 1 }`     |
+| `{ HslStringColorPicker }`    | `"hsl(0, 0%, 100%)"`               |
+| `{ HslaStringColorPicker }`   | `"hsla(0, 0%, 100%, 1)"`           |
+| `{ HsvColorPicker }`          | `{ h: 0, s: 0, v: 100 }`           |
+| `{ HsvaColorPicker }`         | `{ h: 0, s: 0, v: 100, a: 1 }`     |
+| `{ HsvStringColorPicker }`    | `"hsv(0, 0%, 100%)"`               |
+| `{ HsvaStringColorPicker }`   | `"hsva(0, 0%, 100%, 1)"`           |
+| `{ OklchColorPicker }`        | `{ l: 1, c: 0, h: 0 }`             |
+| `{ OklchaColorPicker }`       | `{ l: 1, c: 0, h: 0, a: 1 }`       |
+| `{ OklchStringColorPicker }`  | `"oklch(1 0 0)"`                   |
+| `{ OklchaStringColorPicker }` | `"oklch(1 0 0 / 1)"`               |
 
 #### Code example
 
@@ -128,6 +132,24 @@ const YourComponent = () => {
 [Live demo →](https://codesandbox.io/s/react-colorful-rgb-o9q0t)
 
 </details>
+
+### OKLCH
+
+[OKLCH](https://oklch.com) is a perceptual color space: equal steps of lightness look equal at every hue, so a yellow and a blue of the same `l` look equally light. The OKLCH pickers keep the familiar layout, a square and a hue slider, but the square shows **lightness** from top to bottom and **chroma as a share of the highest one possible** at that lightness and hue from left to right. The right edge is always the most vivid color available, and every point of the square is a color the gamut can show.
+
+```js
+import { OklchColorPicker } from "react-colorful";
+
+const YourComponent = () => {
+  const [color, setColor] = useState({ l: 0.6, c: 0.15, h: 250 });
+  return <OklchColorPicker color={color} onChange={setColor} />;
+};
+```
+
+- `l` is 0..1, `c` is the absolute chroma of CSS `oklch()` (0..~0.37), `h` is in degrees.
+- The `gamut` prop picks the range of colors: `"srgb"` (default) or `"p3"` for wide-gamut [Display P3](https://webkit.org/blog/10042/wide-gamut-color-in-css-with-display-p3/) colors. The output is an OKLCH color either way. A color outside the gamut is shown at the edge of the square and stays unchanged until the user moves the pointer.
+- String pickers accept `oklch(L C H)` and `oklch(L C H / A)` with percentages and angle units, and emit `oklch(0.6 0.15 250)`.
+- These pickers need `oklch()` colors, gradients `in oklab` and CSS masks: Chrome 111, Safari 16.2 and Firefox 127 or newer. They are about 5 KB (minified and brotlied) instead of 3 KB.
 
 ## Customization
 
@@ -253,6 +275,8 @@ This will correct the types and allow you to use **react-colorful** along with m
 It would be an easier task to list all of the browsers and versions that **react-colorful** does not support! We regularly test against browser versions going all the way back to 2013 and this includes IE11.
 
 **react-colorful** works out-of-the-box for most browsers, regardless of version, and only requires an `Object.assign` polyfill be provided for full IE11 support.
+
+The [OKLCH pickers](#oklch) are the exception: they need Chrome 111, Safari 16.2, Firefox 127 or newer.
 
 ## Why react-colorful?
 

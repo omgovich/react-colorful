@@ -118,6 +118,30 @@
     },
     {
       "path": "dist/index.module.js",
+      "name": "OklchColorPicker",
+      "import": "{ OklchColorPicker }",
+      "limit": "5.1 KB"
+    },
+    {
+      "path": "dist/index.module.js",
+      "name": "OklchaColorPicker",
+      "import": "{ OklchaColorPicker }",
+      "limit": "5.1 KB"
+    },
+    {
+      "path": "dist/index.module.js",
+      "name": "OklchStringColorPicker",
+      "import": "{ OklchStringColorPicker }",
+      "limit": "5.3 KB"
+    },
+    {
+      "path": "dist/index.module.js",
+      "name": "OklchaStringColorPicker",
+      "import": "{ OklchaStringColorPicker }",
+      "limit": "5.3 KB"
+    },
+    {
+      "path": "dist/index.module.js",
       "name": "HexColorInput",
       "import": "{ HexColorInput }",
       "limit": "3 KB"
