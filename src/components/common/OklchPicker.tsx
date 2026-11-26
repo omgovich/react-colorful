@@ -1,33 +1,43 @@
-import React, { useRef } from "react";
+import React, { useMemo, useRef } from "react";
 
 import { OklchSquare } from "./OklchSquare";
 import { OklchHue } from "./OklchHue";
 import { OklchAlpha } from "./OklchAlpha";
 
-import { AnyColor, ColorModel, OklchGamut, OklchPickerProps, OklchState } from "../../types";
+import { AnyColor, ColorModel, OklchColorModel, OklchPickerProps, OklchState } from "../../types";
 import { useColorManipulation } from "../../hooks/useColorManipulation";
 import { useStyleSheet } from "../../hooks/useStyleSheet";
 import { formatClassName } from "../../utils/format";
 
 interface Props<T extends AnyColor> extends OklchPickerProps<T> {
-  colorModel: ColorModel<T, OklchState>;
-  gamut: OklchGamut;
+  colorModel: OklchColorModel<T>;
   alpha?: boolean;
 }
 
 // The base of every OKLCH picker: the square, the hue slider and, optionally, the alpha one
 export const OklchPicker = <T extends AnyColor>({
   className,
-  colorModel,
-  gamut,
+  colorModel: model,
+  gamut = "srgb",
   alpha,
-  color = colorModel.defaultColor,
+  color = model.defaultColor,
   onChange,
   onChangeEnd,
   ...rest
 }: Props<T>): React.ReactElement => {
   const nodeRef = useRef<HTMLDivElement>(null);
   useStyleSheet(nodeRef);
+
+  // The picker's model bound to its gamut. A new gamut makes a new model, and the hook redraws
+  // the current color with it
+  const colorModel = useMemo<ColorModel<T, OklchState>>(
+    () =>
+      Object.assign({}, model, {
+        toInternal: (color: T) => model.toInternal(color, gamut),
+        fromInternal: (internal: OklchState) => model.fromInternal(internal, gamut),
+      }),
+    [model, gamut]
+  );
 
   const [state, updateState, commitChange] = useColorManipulation<T, OklchState>(
     colorModel,
