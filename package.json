@@ -40,6 +40,12 @@
     },
     {
       "path": "dist/index.module.js",
+      "name": "HexAlphaColorPicker",
+      "import": "{ HexAlphaColorPicker }",
+      "limit": "3.4 KB"
+    },
+    {
+      "path": "dist/index.module.js",
       "name": "HslColorPicker",
       "import": "{ HslColorPicker }",
       "limit": "3 KB"

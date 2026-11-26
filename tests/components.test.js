@@ -822,3 +822,39 @@ it("Redraws the color with a new color model, without calling `onChange`", () =>
   expect(hue(container)).toBe(50);
   expect(handleChange).not.toHaveBeenCalled();
 });
+
+it("Calls `onChangeEnd` when the color model changes mid-drag", () => {
+  const { ColorPicker } = require("../src/components/common/ColorPicker");
+  const { hexToHsva, hsvaToHex } = require("../src/utils/convert");
+  const { equalHex } = require("../src/utils/compare");
+  const plain = {
+    defaultColor: "000",
+    toInternal: hexToHsva,
+    fromInternal: hsvaToHex,
+    equal: equalHex,
+  };
+  const other = Object.assign({}, plain);
+  const handleChangeEnd = jest.fn();
+  // A controlled picker: the parent passes back every color it gets
+  const Parent = ({ model }) => {
+    const [color, setColor] = React.useState("#f00");
+    return (
+      <ColorPicker
+        colorModel={model}
+        color={color}
+        onChange={setColor}
+        onChangeEnd={handleChangeEnd}
+      />
+    );
+  };
+  const { container, rerender } = render(<Parent model={plain} />);
+  const saturation = container.querySelector(
+    ".react-colorful__saturation .react-colorful__interactive"
+  );
+
+  fireEvent(saturation, new FakeMouseEvent("mousedown", { pageX: 30, pageY: 30 }));
+  rerender(<Parent model={other} />);
+  fireEvent(saturation, new FakeMouseEvent("mouseup", { pageX: 30, pageY: 30 }));
+
+  expect(handleChangeEnd).toHaveBeenCalledTimes(1);
+});

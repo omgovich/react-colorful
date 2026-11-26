@@ -13,7 +13,7 @@
 
 ## Key constraint: bundle size
 
-Every picker has a hard budget (3–3.3 KB depending on the picker) enforced by the `size-limit` section of package.json. Since size-limit v11 the metric is minified + **brotli** of an esbuild bundle — don't compare these numbers against gzip figures from older tooling. This shapes all code decisions: `Object.assign` over spread (smaller output), keyCodes over key strings, no dependencies, manually optimized algorithms. Always run `npm run size` after changes that add code.
+Every picker has a hard budget (3–3.4 KB depending on the picker) enforced by the `size-limit` section of package.json. Since size-limit v11 the metric is minified + **brotli** of an esbuild bundle — don't compare these numbers against gzip figures from older tooling. This shapes all code decisions: `Object.assign` over spread (smaller output), keyCodes over key strings, no dependencies, manually optimized algorithms. Always run `npm run size` after changes that add code.
 
 ## Architecture
 
@@ -37,7 +37,7 @@ Every picker is a thin wrapper that passes a `ColorModel<T>` to a shared base co
 
 ### State management
 
-`useColorManipulation` is the central hook. It holds HSVA state, converts between HSVA and the picker's external format via the `ColorModel`, and fires `onChange`/`onChangeEnd` callbacks. `onChange` fires on every pointer move; `onChangeEnd` fires on pointer-up or key-up. The hook preserves hue/saturation when brightness goes to 0 or 1 (a common color picker UX issue). A new `colorModel` redraws the current color with it, without firing `onChange`; `ColorModel` and the hook take the internal type as a second parameter, HSVA by default.
+`useColorManipulation` is the central hook. It holds HSVA state, converts between HSVA and the picker's external format via the `ColorModel`, and fires `onChange`/`onChangeEnd` callbacks. `onChange` fires on every pointer move; `onChangeEnd` fires on pointer-up or key-up. The hook preserves hue/saturation when brightness goes to 0 or 1 (a common color picker UX issue). A new `colorModel` redraws the current color with it, without firing `onChange`, so a picker's model has to be stable: a module-level constant, never an object built in render (every render would redraw). `ColorModel` and the hook take the internal type as a second parameter, HSVA by default.
 
 ### CSS
 
