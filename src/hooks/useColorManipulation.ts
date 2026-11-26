@@ -1,14 +1,10 @@
 import { useState, useEffect, useCallback, useRef } from "react";
-import { ColorModel, AnyColor, HsvaColor, ObjectColor, OklchState } from "../types";
+import { ColorModel, AnyColor, HsvaColor, InternalColor } from "../types";
 import { equalColorObjects } from "../utils/compare";
 import { useEventCallback } from "./useEventCallback";
 
-// `I` is the picker's internal representation of the color: HSVA for every picker but the
-// OKLCH ones
-export function useColorManipulation<
-  T extends AnyColor,
-  I extends ObjectColor | OklchState = HsvaColor
->(
+// `I` is the picker's internal representation of the color, HSVA by default
+export function useColorManipulation<T extends AnyColor, I extends InternalColor = HsvaColor>(
   colorModel: ColorModel<T, I>,
   color: T,
   onChange?: (color: T) => void,
@@ -19,7 +15,7 @@ export function useColorManipulation<
   const onChangeEndCallback = useEventCallback<T>(onChangeEnd);
 
   // No matter which color format the picker takes (HEX, RGB(A), HSL(A), …),
-  // all internal calculations work on its internal representation (HSVA for most pickers)
+  // all internal calculations work on its internal representation (HSVA by default)
   const [internal, updateInternal] = useState<I>(() => colorModel.toInternal(color));
 
   // By using this ref we're able to prevent extra updates
@@ -31,7 +27,7 @@ export function useColorManipulation<
 
   // Update the internal value if `color` property value is changed,
   // but only if that's not the same color that we just sent to the parent.
-  // A new color model (the gamut of an OKLCH picker) redraws the color with it
+  // A new color model redraws the color with it
   useEffect(() => {
     if (cache.current.colorModel !== colorModel || !colorModel.equal(color, cache.current.color)) {
       const newInternal = colorModel.toInternal(color);
@@ -53,7 +49,7 @@ export function useColorManipulation<
       let newColor;
       updateInternal(newInternal);
       if (
-        !equalColorObjects(newInternal as ObjectColor, cache.current.internal as ObjectColor) &&
+        !equalColorObjects(newInternal, cache.current.internal) &&
         !colorModel.equal((newColor = colorModel.fromInternal(newInternal)), cache.current.color)
       ) {
         cache.current = { internal: newInternal, color: newColor, colorModel };

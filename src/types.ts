@@ -70,13 +70,13 @@ export type ObjectColor =
 export type AnyColor = string | ObjectColor;
 
 /** The ways a picker can represent a color internally: see `ColorModel` */
-export type InternalColor = HsvaColor;
+export type InternalColor = HsvaColor | OklchState;
 
 /**
  * Converts between a picker's color format `T` (a HEX string, an RGB object, …) and the
- * picker's internal representation of the color `I`: HSVA for every picker but the OKLCH ones
+ * picker's internal representation of the color `I`, HSVA by default
  */
-export interface ColorModel<T extends AnyColor, I extends ObjectColor | OklchState = HsvaColor> {
+export interface ColorModel<T extends AnyColor, I extends InternalColor = HsvaColor> {
   defaultColor: T;
   toInternal: (color: T) => I;
   fromInternal: (internal: I) => T;
