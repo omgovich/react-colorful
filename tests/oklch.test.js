@@ -314,6 +314,18 @@ describe("pickers", () => {
     }
   });
 
+  it("Keeps the picked color of an object picker with no `color` prop on a gamut switch", () => {
+    const handleChange = jest.fn();
+    const { container, rerender } = render(<OklchColorPicker onChange={handleChange} />);
+    fireEvent(square(container), new FakeMouseEvent("mousedown", { pageX: 30, pageY: 30 }));
+    const picked = handleChange.mock.calls[0][0];
+
+    rerender(<OklchColorPicker gamut="p3" onChange={handleChange} />);
+    // Still at the picked lightness, not back at the default black
+    expect(parseFloat(pointer(container, "saturation").top)).toBeCloseTo(100 * (1 - picked.l), 3);
+    expect(handleChange).toHaveBeenCalledTimes(1);
+  });
+
   it("Keeps lightness and the share of chroma when the hue moves", () => {
     const handleChange = jest.fn();
     const color = { l: 0.6, c: 0.1, h: 145 };

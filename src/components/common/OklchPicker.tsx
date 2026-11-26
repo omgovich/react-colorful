@@ -63,8 +63,8 @@ const OklchAlpha = ({ state, gamut, onChange, onChangeEnd }: AlphaProps) => {
   );
 };
 
-// The square, the hue slider and, optionally, the alpha one
-const OklchPickerBase = <T extends AnyColor>({
+// The base of every OKLCH picker: the square, the hue slider and, optionally, the alpha one
+export const OklchPicker = <T extends AnyColor>({
   className,
   colorModel,
   gamut,
@@ -99,26 +99,4 @@ const OklchPickerBase = <T extends AnyColor>({
       )}
     </div>
   );
-};
-
-/**
- * The base of every OKLCH picker. A new gamut is a new color model, and `useColorManipulation`
- * redraws the `color` it gets with it. So that color has to be the one the user sees: the last
- * `color` prop or, after that, the last color sent to `onChange` — otherwise a parent that
- * doesn't pass the picked color back (or passes no `color` at all) would lose it.
- */
-export const OklchPicker = <T extends AnyColor>(props: Props<T>): React.ReactElement => {
-  const { color = props.colorModel.defaultColor, onChange } = props;
-  const prop = useRef(color);
-  const last = useRef(color);
-
-  // A new `color` prop wins over the last emitted color
-  if (color !== prop.current) prop.current = last.current = color;
-
-  const handleChange = (newColor: T) => {
-    last.current = newColor;
-    onChange && onChange(newColor);
-  };
-
-  return <OklchPickerBase {...props} color={last.current} onChange={handleChange} />;
 };
