@@ -38,8 +38,19 @@ import {
   OklchPickerProps,
 } from "../../../src";
 
-const OklchP3ColorPicker = (props: OklchPickerProps<string>) => (
-  <OklchStringColorPicker {...props} gamut="p3" />
+// The same color in an sRGB and a P3 picker, side by side: on a P3 screen the right edge of
+// the P3 square is visibly more vivid (greens most of all)
+const OklchGamutsColorPicker = (props: OklchPickerProps<string>) => (
+  <div style={{ display: "flex", gap: 24, textAlign: "center" }}>
+    <div>
+      <OklchStringColorPicker {...props} />
+      sRGB
+    </div>
+    <div>
+      <OklchStringColorPicker {...props} gamut="p3" />
+      P3
+    </div>
+  </div>
 );
 
 export const DevTools = (): JSX.Element => {
@@ -133,9 +144,9 @@ export const DevTools = (): JSX.Element => {
         initialColor="oklch(0.6 0.15 250 / 0.5)"
       />
       <PickerPreview<string>
-        title="OKLCH String (P3)"
-        PickerComponent={OklchP3ColorPicker}
-        initialColor="oklch(0.7 0.25 145)"
+        title="OKLCH sRGB vs P3"
+        PickerComponent={OklchGamutsColorPicker}
+        initialColor="oklch(0.85 0.2 145)"
       />
 
       <PickerPreview<RgbColor>
