@@ -120,25 +120,25 @@
       "path": "dist/index.module.js",
       "name": "OklchColorPicker",
       "import": "{ OklchColorPicker }",
-      "limit": "5.2 KB"
+      "limit": "5.5 KB"
     },
     {
       "path": "dist/index.module.js",
       "name": "OklchaColorPicker",
       "import": "{ OklchaColorPicker }",
-      "limit": "5.2 KB"
+      "limit": "5.5 KB"
     },
     {
       "path": "dist/index.module.js",
       "name": "OklchStringColorPicker",
       "import": "{ OklchStringColorPicker }",
-      "limit": "5.35 KB"
+      "limit": "5.7 KB"
     },
     {
       "path": "dist/index.module.js",
       "name": "OklchaStringColorPicker",
       "import": "{ OklchaStringColorPicker }",
-      "limit": "5.35 KB"
+      "limit": "5.7 KB"
     },
     {
       "path": "dist/index.module.js",

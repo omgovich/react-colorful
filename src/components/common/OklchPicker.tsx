@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 
 import { OklchSquare } from "./OklchSquare";
 import { OklchHue } from "./OklchHue";
@@ -72,9 +72,9 @@ const OklchPickerBase = <T extends AnyColor>({
   color = colorModel.defaultColor,
   onChange,
   onChangeEnd,
+  nodeRef,
   ...rest
-}: Props<T>): React.ReactElement => {
-  const nodeRef = useRef<HTMLDivElement>(null);
+}: Props<T> & { nodeRef: React.RefObject<HTMLDivElement> }): React.ReactElement => {
   useStyleSheet(nodeRef);
 
   const [state, updateState, commitChange] = useColorManipulation<T, OklchState>(
@@ -106,14 +106,42 @@ const OklchPickerBase = <T extends AnyColor>({
  * and moves the pointer to the color's spot in the new square. The color to rebuild from is
  * the last one the picker saw: a new `color` prop or the last one it sent to `onChange`. So
  * the color survives even when the parent doesn't pass it back (or passes no `color` at all).
+ *
+ * (Rebuilding the state inside `useColorManipulation` instead would avoid the remount, but it
+ * adds ~35 bytes to every other picker, and most of them have less than that left.)
  */
 export const OklchPicker = <T extends AnyColor>(props: Props<T>): React.ReactElement => {
-  const { color = props.colorModel.defaultColor, onChange } = props;
+  const { color = props.colorModel.defaultColor, onChange, gamut } = props;
+  const nodeRef = useRef<HTMLDivElement>(null);
   const prop = useRef(color);
   const last = useRef(color);
+  const shown = useRef(gamut);
+  // The control that had focus when the gamut changed: the remount must not lose it
+  const focused = useRef(-1);
 
   // A new `color` prop wins over the last emitted color
   if (color !== prop.current) prop.current = last.current = color;
+
+  if (gamut !== shown.current) {
+    shown.current = gamut;
+    const node = nodeRef.current;
+    focused.current = node
+      ? [].indexOf.call(
+          node.querySelectorAll(".react-colorful__interactive"),
+          node.ownerDocument.activeElement as never
+        )
+      : -1;
+  }
+
+  useEffect(() => {
+    const node = nodeRef.current;
+    if (node && focused.current >= 0) {
+      (node.querySelectorAll(".react-colorful__interactive")[
+        focused.current
+      ] as HTMLElement).focus();
+      focused.current = -1;
+    }
+  }, [gamut]);
 
   const handleChange = (newColor: T) => {
     last.current = newColor;
@@ -121,6 +149,12 @@ export const OklchPicker = <T extends AnyColor>(props: Props<T>): React.ReactEle
   };
 
   return (
-    <OklchPickerBase key={props.gamut} {...props} color={last.current} onChange={handleChange} />
+    <OklchPickerBase
+      key={gamut}
+      {...props}
+      color={last.current}
+      onChange={handleChange}
+      nodeRef={nodeRef}
+    />
   );
 };

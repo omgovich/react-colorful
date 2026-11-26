@@ -32,6 +32,7 @@ export {
   OklchColor,
   OklchaColor,
   OklchGamut,
+  OklchPickerProps,
 } from "./types";
 
 // Tooling

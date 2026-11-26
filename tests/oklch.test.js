@@ -63,12 +63,45 @@ describe("gamut", () => {
     expect(maxChroma(0.6, 145, "p3")).toBeGreaterThan(maxChroma(0.6, 145, "srgb"));
   });
 
-  it("Stops at the first exit from the gamut", () => {
-    // At this lightness and hue sRGB holds two ranges of chroma, [0, .2694] and [.3090, .3131];
-    // the edge of the square is the end of the first one
-    const edge = maxChroma(0.452013718, 264.1, "srgb");
-    expect(edge).toBeCloseTo(0.2694, 4);
-    expect(inGamut(0.452013718, 0.31, 264.1, "srgb")).toBe(true);
+  // The OKLCH coordinates of an sRGB color given as 0..255 channels
+  const fromRgb = (...rgb) => {
+    const [r, g, b] = rgb.map((x) =>
+      (x /= 255) <= 0.04045 ? x / 12.92 : ((x + 0.055) / 1.055) ** 2.4
+    );
+    const l_ = Math.cbrt(0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b);
+    const m_ = Math.cbrt(0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b);
+    const s_ = Math.cbrt(0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b);
+    const a = 1.9779984951 * l_ - 2.428592205 * m_ + 0.4505937099 * s_;
+    const bb = 0.0259040371 * l_ + 0.7827717662 * m_ - 0.808675766 * s_;
+    const l = 0.2104542553 * l_ + 0.793617785 * m_ - 0.0040720468 * s_;
+    return [l, Math.hypot(a, bb), ((Math.atan2(bb, a) * 180) / Math.PI + 360) % 360];
+  };
+
+  it("Reaches pure blue and the whole #0000xx axis", () => {
+    // Past the first exit the red channel dips below 0 by under 0.0007 and comes back
+    for (let blue = 8; blue <= 255; blue += 8) {
+      const [l, c, h] = fromRgb(0, 0, blue);
+      expect(maxChroma(l, h, "srgb")).toBeGreaterThan(c - 2e-4);
+    }
+  });
+
+  it("Reaches every color of the sRGB cube", () => {
+    for (let r = 0; r < 256; r += 15)
+      for (let g = 0; g < 256; g += 15)
+        for (let b = 0; b < 256; b += 15) {
+          const [l, c, h] = fromRgb(r, g, b);
+          if (l > 0 && l < 1) expect(maxChroma(l, h, "srgb")).toBeGreaterThan(c - 2e-4);
+        }
+  });
+
+  it("Moves the edge smoothly with the hue, even by the blue dip", () => {
+    for (const l of [0.1, 0.27, 0.452]) {
+      for (let h = 263.5; h < 264.8; h += 0.001) {
+        expect(Math.abs(maxChroma(l, h + 0.001, "srgb") - maxChroma(l, h, "srgb"))).toBeLessThan(
+          0.002
+        );
+      }
+    }
   });
 
   it("Keeps every chroma up to the edge in the gamut", () => {
@@ -76,10 +109,14 @@ describe("gamut", () => {
     for (let i = 0; i < 300; i++) {
       const gamut = i % 2 ? "p3" : "srgb";
       const l = next();
-      const h = next() * 360;
+      // Every tenth hue sits by the blue dip
+      const h = i % 10 ? next() * 360 : 263.5 + next();
       const edge = maxChroma(l, h, gamut);
-      for (let t = 0; t <= 1; t += 0.05) expect(inGamut(l, edge * t, h, gamut)).toBe(true);
-      if (edge > 0) expect(inGamut(l, edge + 1e-6, h, gamut)).toBe(false);
+      // Strictly inside, except for the blues of the dip: within 0.002 of a channel there
+      const tolerance = h > 263 && h < 265 && gamut === "srgb" ? 2e-3 : 0;
+      for (let t = 0; t <= 1; t += 0.05)
+        expect(inGamut(l, edge * t, h, gamut, tolerance)).toBe(true);
+      if (edge > 0 && !tolerance) expect(inGamut(l, edge + 1e-3, h, gamut)).toBe(false);
     }
   });
 });
@@ -89,14 +126,28 @@ describe("state", () => {
     const next = random(7);
     for (let i = 0; i < 1000; i++) {
       const gamut = i % 2 ? "p3" : "srgb";
-      // Every tenth hue sits by 264.2°, where the sRGB edge jumps between two branches of blue
-      const h = i % 10 ? next() * 360 : 264.15 + next() * 0.15;
+      // Every tenth hue sits by the blue dip of sRGB
+      const h = i % 10 ? next() * 360 : 263.5 + next();
       const color = stateToOklcha({ l: next(), x: next(), h, a: next() }, gamut);
 
-      expect(inGamut(color.l, color.c, color.h, gamut)).toBe(true);
+      expect(inGamut(color.l, color.c, color.h, gamut, 2e-3)).toBe(true);
       expect(color.c).toBeLessThanOrEqual(maxChroma(color.l, color.h, gamut));
       expect(stateToOklcha(oklchaToState(color, gamut), gamut)).toEqual(color);
     }
+  });
+
+  it("Keeps pure blue as it is", () => {
+    const color = { l: 0.452, c: 0.3132, h: 264.05, a: 1 };
+    expect(stateToOklcha(oklchaToState(color, "srgb"), "srgb")).toEqual(color);
+  });
+
+  it("Turns NaN into 0", () => {
+    expect(oklchaToState({ l: NaN, c: NaN, h: NaN, a: 1 }, "srgb")).toEqual({
+      l: 0,
+      x: 0,
+      h: 0,
+      a: 1,
+    });
   });
 
   it("Shows a color outside the gamut at the edge", () => {
@@ -128,6 +179,8 @@ describe("strings", () => {
     test("oklch(.6 .15 0.5turn / 0.5)", { l: 0.6, c: 0.15, h: 180, a: 0.5 });
     test("oklch(0.6 0.15 -90 / 50%)", { l: 0.6, c: 0.15, h: 270, a: 0.5 });
     test("oklch(1.5 -1 20)", { l: 1, c: 0, h: 20, a: 1 });
+    test("oklch(0.6 0.15 none)", { l: 0.6, c: 0.15, h: 0, a: 1 });
+    test("oklch(+0.6 1.5e-1 2e1)", { l: 0.6, c: 0.15, h: 20, a: 1 });
     test("rgb(0, 0, 0)", { l: 0, c: 0, h: 0, a: 1 });
   });
 
@@ -142,10 +195,27 @@ describe("strings", () => {
 
 describe("drawing", () => {
   it("Draws the square as six masked layers", () => {
-    const layers = squareLayers(260, "srgb");
-    expect(layers).toHaveLength(6);
-    for (const layer of layers) expect(layer).toMatch(/^linear-gradient\(to bottom in oklab, /);
+    const shares = [0, 0.36, 0.64, 0.84, 0.96, 1];
+    for (const [h, gamut] of [
+      [260, "srgb"],
+      [145, "p3"],
+    ]) {
+      const layers = squareLayers(h, gamut);
+      expect(layers).toHaveLength(6);
+      layers.forEach((layer, i) => {
+        expect(layer).toMatch(/^linear-gradient\(to bottom in oklab, /);
+        const stops = [...layer.matchAll(/oklch\(([\d.]+) ([\d.]+) ([\d.]+)\) ([\d.]+)%/g)];
+        expect(stops.length).toBeGreaterThan(10);
+        // Each stop is the layer's share of the edge at that lightness, top to bottom
+        for (const [, l, c, hue, y] of stops) {
+          expect(Number(l)).toBeCloseTo(1 - y / 100, 4);
+          expect(Number(c)).toBeCloseTo(shares[i] * maxChroma(Number(l), h, gamut), 4);
+          expect(Number(hue)).toBe(h);
+        }
+      });
+    }
     expect(layerMask(0)).toBeUndefined();
+    expect(layerMask(1)).toBe("linear-gradient(to right, transparent 0%, #000 36%)");
     expect(layerMask(5)).toBe("linear-gradient(to right, transparent 96%, #000 100%)");
   });
 
@@ -217,6 +287,53 @@ describe("pickers", () => {
       c: Math.round(share * maxChroma(0.6, 180, "srgb") * 1e4) / 1e4,
       h: 180,
     });
+  });
+
+  const pointer = (container, control) =>
+    container.querySelector(`.react-colorful__${control}-pointer`).style;
+
+  it("Places the pointers", () => {
+    const edge = maxChroma(0.75, 145, "srgb");
+    const { container } = render(
+      <OklchaColorPicker color={{ l: 0.75, c: edge / 2, h: 90, a: 0.3 }} />
+    );
+    // The hue moved to 90 only after the render: the pointer is at the color's own hue
+    const square = pointer(container, "saturation");
+    expect(parseFloat(square.top)).toBeCloseTo(25, 5);
+    expect(parseFloat(square.left)).toBeCloseTo((50 * edge) / maxChroma(0.75, 90, "srgb"), 3);
+    expect(parseFloat(pointer(container, "hue").left)).toBeCloseTo(25, 5);
+    expect(parseFloat(pointer(container, "alpha").left)).toBeCloseTo(30, 5);
+  });
+
+  it("Moves the pointer, keeps the chroma and the focus when the gamut changes", () => {
+    const color = { l: 0.6, c: 0.15, h: 145 };
+    const { container, rerender } = render(<OklchColorPicker color={color} />);
+    square(container).focus();
+
+    rerender(<OklchColorPicker color={color} gamut="p3" />);
+
+    expect(parseFloat(pointer(container, "saturation").left)).toBeCloseTo(
+      (100 * 0.15) / maxChroma(0.6, 145, "p3"),
+      3
+    );
+    expect(document.activeElement).toBe(square(container));
+  });
+
+  it("Changes hue and alpha with arrow keys", () => {
+    const handleChange = jest.fn((color) => color);
+    const { container } = render(
+      <OklchaStringColorPicker color="oklch(0.6 0 145 / 1)" onChange={handleChange} />
+    );
+    const control = (name) =>
+      container.querySelector(`.react-colorful__${name} .react-colorful__interactive`);
+
+    control("hue").focus();
+    fireEvent.keyDown(document.activeElement, { keyCode: 39 });
+    expect(handleChange).toHaveLastReturnedWith("oklch(0.6 0 163 / 1)");
+
+    control("alpha").focus();
+    fireEvent.keyDown(document.activeElement, { keyCode: 37 });
+    expect(handleChange).toHaveLastReturnedWith("oklch(0.6 0 163 / 0.95)");
   });
 
   it("Emits an OKLCH color in the gamut after a mouse interaction", () => {

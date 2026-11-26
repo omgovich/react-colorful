@@ -59,31 +59,42 @@ const channels = (l: number, h: number, gamut: OklchGamut): Cubic[] => {
 
 const evaluate = ([a, b, c, d]: Cubic, x: number) => a + x * (b + x * (c + x * d));
 
-// Absorbs float noise only: white comes out as 1.0000000000000002
-const outside = (value: number) => value < -1e-9 || value > 1 + 1e-9;
-
-/** Whether an OKLCH color fits the gamut */
-export const inGamut = (l: number, c: number, h: number, gamut: OklchGamut): boolean =>
-  !channels(l, h, gamut).some((channel) => outside(evaluate(channel, c)));
+// How far a color is from the gamut: 0 inside, else how far its worst channel is past 0 or 1.
+// Anything up to 1e-9 is float noise: white comes out as 1.0000000000000002
+const violation = (rgb: Cubic[], c: number) => {
+  let worst = 0;
+  for (const channel of rgb) {
+    const value = evaluate(channel, c);
+    worst = Math.max(worst, -value, value - 1);
+  }
+  return worst > 1e-9 ? worst : 0;
+};
 
 /**
- * The right edge of the square: the chroma where the color first leaves the gamut, walking
- * out from grey at this lightness and hue.
- *
- * It is the FIRST exit on purpose. For some blues the gamut at a fixed lightness and hue is
- * two separate ranges of chroma; going up to the far one would leave out-of-gamut colors
- * inside the square. So each channel's cubic is split at its turning points into monotonic
- * pieces, and the earliest piece that crosses 0 or 1 is bisected.
+ * Whether an OKLCH color fits the gamut. `tolerance` is how far a linear RGB channel may go past
+ * 0 or 1: the square's edge bridges a few shallow gaps in the sRGB gamut (see `maxChroma`)
  */
-export const maxChroma = (l: number, h: number, gamut: OklchGamut): number => {
-  if (l <= 0 || l >= 1) return 0;
+export const inGamut = (
+  l: number,
+  c: number,
+  h: number,
+  gamut: OklchGamut,
+  tolerance = 0
+): boolean => violation(channels(l, h, gamut), c) <= tolerance;
 
+/**
+ * The chroma, from `from` on, where the color first leaves the gamut. Each channel's cubic is
+ * split at its turning points into monotonic pieces, and the earliest piece that crosses 0 or 1
+ * is bisected.
+ */
+const firstExit = (rgb: Cubic[], from: number): number => {
   let edge = MAX_CHROMA;
 
-  for (const channel of channels(l, h, gamut)) {
+  for (const channel of rgb) {
     const [, b, c, d] = channel;
+    const outside = (x: number) => violation([channel], x) > 0;
     // Turning points: the roots of b + 2c·x + 3d·x² that lie before the current edge
-    const cuts = [0];
+    const cuts = [from];
     const disc = 4 * c * c - 12 * b * d;
     if (Math.abs(d) > 1e-12) {
       if (disc > 0) {
@@ -91,23 +102,84 @@ export const maxChroma = (l: number, h: number, gamut: OklchGamut): number => {
         cuts.push(...[(-2 * c - q) / (6 * d), (-2 * c + q) / (6 * d)].sort((x, y) => x - y));
       }
     } else if (Math.abs(c) > 1e-12) cuts.push(-b / (2 * c));
-    const pieces = cuts.filter((x) => x >= 0 && x < edge).concat(edge);
+    const pieces = cuts.filter((x) => x >= from && x < edge).concat(edge);
 
     for (let i = 0; i + 1 < pieces.length; i++) {
       let lo = pieces[i];
       let hi = pieces[i + 1];
-      if (outside(evaluate(channel, lo))) {
+      if (outside(lo)) {
         edge = lo;
         break;
       }
-      if (!outside(evaluate(channel, hi))) continue;
+      if (!outside(hi)) continue;
       for (let step = 0; step < 40; step++) {
         const mid = (lo + hi) / 2;
-        outside(evaluate(channel, mid)) ? (hi = mid) : (lo = mid);
+        outside(mid) ? (hi = mid) : (lo = mid);
       }
       edge = lo;
       break;
     }
+  }
+
+  return edge;
+};
+
+// How deep a dip past the first exit the square's edge steps over, in a linear RGB channel:
+// fully up to `GAP`, fading out up to `2 * GAP` so that the edge never jumps
+const GAP = 1e-3;
+
+/**
+ * The right edge of the square: the chroma where the color leaves the gamut, walking out from
+ * grey at this lightness and hue.
+ *
+ * For some sRGB blues (hues near 264°, including `#0000ff` and the whole `#0000xx` axis) the
+ * red channel dips below 0 just past the first exit and then comes back: by at most 0.0007, far
+ * less than one of 255 steps. Stopping at the first exit would make pure blue unreachable. So
+ * the edge looks past it: the closer the color comes back to the gamut after the dip, the
+ * further the edge moves from the first exit towards the point where it comes back. The move is
+ * gradual, so the edge doesn't jump as the hue changes. Colors in such a dip are outside sRGB by
+ * less than `2 * GAP` (by under 0.0007 for the colors of the sRGB cube); everything else is
+ * inside.
+ */
+export const maxChroma = (l: number, h: number, gamut: OklchGamut): number => {
+  if (l <= 0 || l >= 1) return 0;
+
+  const rgb = channels(l, h, gamut);
+  let edge = firstExit(rgb, 0);
+
+  while (edge < MAX_CHROMA) {
+    // Walk past the edge while the color stays within `GAP` of the gamut, noting the deepest
+    // point (`peak`) and the lowest point after it (`low` at chroma `back`)
+    let c = edge;
+    let depth;
+    let peak = 0;
+    let low = Infinity;
+    let back = edge;
+    do {
+      c += 1e-4;
+      depth = violation(rgb, c);
+      // The first rise sets the peak; after that only the lowest point matters
+      if (low === Infinity && depth >= peak) peak = depth;
+      else if (depth <= low) [low, back] = [depth, c];
+    } while (depth && depth <= 2 * GAP && c < MAX_CHROMA);
+    // Back inside: go on to the end of the next range
+    if (!depth && c < MAX_CHROMA) {
+      edge = firstExit(rgb, c);
+      continue;
+    }
+    // How far the color came back after the dip (0 not at all, 1 all the way to the gamut) and
+    // how shallow the dip was (1 up to `GAP`, 0 from `2 * GAP`) move the edge towards `back`
+    const weight = clamp((0.75 - low / peak) / 0.5) * clamp(2 - peak / GAP);
+    if (!weight) return edge;
+    // `back` is on a 1e-4 grid: find the lowest point between its neighbours
+    let lo = back - 1e-4;
+    let hi = back + 1e-4;
+    for (let step = 0; step < 30; step++) {
+      const a = lo + 0.381966 * (hi - lo);
+      const b = hi - 0.381966 * (hi - lo);
+      violation(rgb, a) < violation(rgb, b) ? (hi = b) : (lo = a);
+    }
+    return edge + ((lo + hi) / 2 - edge) * weight;
   }
 
   return edge;
@@ -245,8 +317,11 @@ export const hueGradient = (gamut: OklchGamut): string => {
 
 /** Turns a color into the picker's state; a color outside the gamut is shown at the edge */
 export const oklchaToState = ({ l, c, h, a }: OklchaColor, gamut: OklchGamut): OklchState => {
+  // `|| 0` turns NaN (a broken prop) into 0 instead of letting it into the state and styles
+  l = clamp(l || 0);
+  h = parseHue(String(h || 0));
   const edge = maxChroma(l, h, gamut);
-  return { l: clamp(l), x: edge ? clamp(c / edge) : 0, h: parseHue(String(h)), a };
+  return { l, x: edge ? clamp(c / edge || 0) : 0, h, a };
 };
 
 /**
@@ -276,18 +351,21 @@ export const stateToOklcha = ({ l, x, h, a }: OklchState, gamut: OklchGamut): Ok
  */
 export const parseOklcha = (value: string): OklchaColor => {
   // A number is `(?:\d+\.|\.)?\d+` and not `\d*\.?\d+`: both take the same digits, but the
-  // second one tries every split of a long run of digits and turns quadratic
-  const match = /oklch\(\s*(-?(?:\d+\.|\.)?\d+)(%)?\s+(-?(?:\d+\.|\.)?\d+)(%)?\s+(-?(?:\d+\.|\.)?\d+)(deg|rad|grad|turn)?\s*(?:\/\s*(-?(?:\d+\.|\.)?\d+)(%)?\s*)?\)/i.exec(
+  // second one tries every split of a long run of digits and turns quadratic.
+  // `none` is a missing component in CSS, which counts as 0
+  const match = /oklch\(\s*(none|[-+]?(?:\d+\.|\.)?\d+(?:e[-+]?\d+)?)(%)?\s+(none|[-+]?(?:\d+\.|\.)?\d+(?:e[-+]?\d+)?)(%)?\s+(none|[-+]?(?:\d+\.|\.)?\d+(?:e[-+]?\d+)?)(deg|rad|grad|turn)?\s*(?:\/\s*(none|[-+]?(?:\d+\.|\.)?\d+(?:e[-+]?\d+)?)(%)?\s*)?\)/i.exec(
     value
   );
 
   if (!match) return { l: 0, c: 0, h: 0, a: 1 };
 
+  const number = (value: string) => Number(value) || 0;
+
   return {
-    l: clamp(Number(match[1]) / (match[2] ? 100 : 1)),
-    c: Math.max(0, Number(match[3]) * (match[4] ? 0.004 : 1)),
-    h: parseHue(match[5], match[6]),
-    a: match[7] === undefined ? 1 : clamp(Number(match[7]) / (match[8] ? 100 : 1)),
+    l: clamp(number(match[1]) / (match[2] ? 100 : 1)),
+    c: Math.max(0, number(match[3]) * (match[4] ? 0.004 : 1)),
+    h: parseHue(String(number(match[5])), match[6]),
+    a: match[7] === undefined ? 1 : clamp(number(match[7]) / (match[8] ? 100 : 1)),
   };
 };
 
