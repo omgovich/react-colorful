@@ -27,13 +27,15 @@ export function useColorManipulation<T extends AnyColor, I extends InternalColor
 
   // Update the internal value if `color` property value is changed,
   // but only if that's not the same color that we just sent to the parent.
-  // A new color model redraws the color with it
+  // A new color model redraws the color with it. Only a new color drops the `onChangeEnd` a
+  // gesture still owes: a model can change mid-drag, and the drag's color is still the one sent
   useEffect(() => {
-    if (cache.current.colorModel !== colorModel || !colorModel.equal(color, cache.current.color)) {
+    const isNewColor = !colorModel.equal(color, cache.current.color);
+    if (isNewColor || cache.current.colorModel !== colorModel) {
       const newInternal = colorModel.toInternal(color);
       cache.current = { internal: newInternal, color, colorModel };
       updateInternal((latest.current = newInternal));
-      isDirty.current = false;
+      if (isNewColor) isDirty.current = false;
     }
   }, [color, colorModel]);
 

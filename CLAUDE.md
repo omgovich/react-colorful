@@ -39,7 +39,7 @@ Every picker is a thin wrapper that passes a `ColorModel<T>` to a shared base co
 
 ### State management
 
-`useColorManipulation` is the central hook. It holds HSVA state, converts between HSVA and the picker's external format via the `ColorModel`, and fires `onChange`/`onChangeEnd` callbacks. `onChange` fires on every pointer move; `onChangeEnd` fires on pointer-up or key-up. The hook preserves hue/saturation when brightness goes to 0 or 1 (a common color picker UX issue). A new `colorModel` (an OKLCH picker's `gamut`) redraws the current color with it, without firing `onChange`; `ColorModel` and the hook take the internal type as a second parameter, HSVA by default.
+`useColorManipulation` is the central hook. It holds HSVA state, converts between HSVA and the picker's external format via the `ColorModel`, and fires `onChange`/`onChangeEnd` callbacks. `onChange` fires on every pointer move; `onChangeEnd` fires on pointer-up or key-up. The hook preserves hue/saturation when brightness goes to 0 or 1 (a common color picker UX issue). A new `colorModel` (an OKLCH picker's `gamut`) redraws the current color with it, without firing `onChange`, so a picker's model has to be stable: a module-level constant, never an object built in render (every render would redraw). `ColorModel` and the hook take the internal type as a second parameter, HSVA by default.
 
 ### CSS
 

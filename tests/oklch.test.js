@@ -379,6 +379,18 @@ describe("pickers", () => {
     expect(handleChangeEnd).toHaveBeenCalledTimes(1);
   });
 
+  it("Calls `onChangeEnd` when the gamut changes right before the release", () => {
+    const handleChangeEnd = jest.fn();
+    const props = { color: "oklch(0.6 0.1 145)", onChangeEnd: handleChangeEnd };
+    const { container, rerender } = render(<OklchStringColorPicker {...props} />);
+
+    fireEvent(square(container), new FakeMouseEvent("mousedown", { pageX: 30, pageY: 30 }));
+    rerender(<OklchStringColorPicker {...props} gamut="p3" />);
+    fireEvent(square(container), new FakeMouseEvent("mouseup", { pageX: 30, pageY: 30 }));
+
+    expect(handleChangeEnd).toHaveBeenCalledTimes(1);
+  });
+
   it("Changes hue and alpha with arrow keys", () => {
     const handleChange = jest.fn((color) => color);
     const { container } = render(
