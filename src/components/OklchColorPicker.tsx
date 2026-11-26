@@ -7,13 +7,11 @@ import { equalColorObjects } from "../utils/compare";
 
 const models: Partial<Record<OklchGamut, ColorModel<OklchColor, OklchState>>> = {};
 
-// A new gamut remounts the picker, so that it keeps the color and moves the pointer instead
 export const OklchColorPicker = ({
   gamut = "srgb",
   ...props
 }: OklchPickerProps<OklchColor>): React.ReactElement => (
   <OklchPicker
-    key={gamut}
     {...props}
     gamut={gamut}
     colorModel={oklchModel<OklchColor>(

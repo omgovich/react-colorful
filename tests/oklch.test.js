@@ -136,9 +136,7 @@ describe("strings", () => {
     expect(formatOklcha({ l: 0.6, c: 0.1234, h: 260.5, a: 0.5 })).toBe(
       "oklch(0.6 0.1234 260.5 / 0.5)"
     );
-    expect(formatOklcha({ l: 0.6, c: 0.1234, h: 260.5, a: 1 })).toBe(
-      "oklch(0.6 0.1234 260.5 / 1)"
-    );
+    expect(formatOklcha({ l: 0.6, c: 0.1234, h: 260.5, a: 1 })).toBe("oklch(0.6 0.1234 260.5 / 1)");
   });
 });
 
@@ -183,6 +181,42 @@ describe("pickers", () => {
     const { rerender } = render(<OklchColorPicker color={color} onChange={handleChange} />);
     rerender(<OklchColorPicker color={color} gamut="p3" onChange={handleChange} />);
     expect(handleChange).not.toHaveBeenCalled();
+  });
+
+  it("Keeps the picked color when the gamut changes and the parent doesn't pass it back", () => {
+    for (const color of [undefined, "oklch(0.5 0.1 30)"]) {
+      const handleChange = jest.fn();
+      const { container, rerender } = render(
+        <OklchStringColorPicker color={color} onChange={handleChange} />
+      );
+      fireEvent(square(container), new FakeMouseEvent("mousedown", { pageX: 30, pageY: 30 }));
+      const picked = parseOklcha(handleChange.mock.calls[0][0]);
+
+      rerender(<OklchStringColorPicker color={color} gamut="p3" onChange={handleChange} />);
+      // Moving the hue keeps the lightness: the color wasn't reset to `color` or black
+      const hue = container.querySelector(".react-colorful__hue .react-colorful__interactive");
+      fireEvent(hue, new FakeMouseEvent("mousedown", { pageX: 55, pageY: 0 }));
+
+      expect(parseOklcha(handleChange.mock.calls[1][0]).l).toBe(picked.l);
+      cleanup();
+    }
+  });
+
+  it("Keeps lightness and the share of chroma when the hue moves", () => {
+    const handleChange = jest.fn();
+    const color = { l: 0.6, c: 0.1, h: 145 };
+    const { container } = render(<OklchColorPicker color={color} onChange={handleChange} />);
+    const hue = container.querySelector(".react-colorful__hue .react-colorful__interactive");
+
+    fireEvent(hue, new FakeMouseEvent("mousedown", { pageX: 55, pageY: 0 }));
+
+    const share = 0.1 / maxChroma(0.6, 145, "srgb");
+    expect(handleChange).toHaveBeenCalledTimes(1);
+    expect(handleChange.mock.calls[0][0]).toEqual({
+      l: 0.6,
+      c: Math.round(share * maxChroma(0.6, 180, "srgb") * 1e4) / 1e4,
+      h: 180,
+    });
   });
 
   it("Emits an OKLCH color in the gamut after a mouse interaction", () => {

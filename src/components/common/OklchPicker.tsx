@@ -63,8 +63,8 @@ const OklchAlpha = ({ state, gamut, onChange, onChangeEnd }: AlphaProps) => {
   );
 };
 
-// The base of every OKLCH picker: the square, the hue slider and, optionally, the alpha one
-export const OklchPicker = <T extends AnyColor>({
+// The square, the hue slider and, optionally, the alpha one
+const OklchPickerBase = <T extends AnyColor>({
   className,
   colorModel,
   gamut,
@@ -98,5 +98,29 @@ export const OklchPicker = <T extends AnyColor>({
         <OklchAlpha state={state} gamut={gamut} onChange={updateState} onChangeEnd={commitChange} />
       )}
     </div>
+  );
+};
+
+/**
+ * The base of every OKLCH picker. A new gamut remounts the picker, so that it keeps the color
+ * and moves the pointer to the color's spot in the new square. The color to rebuild from is
+ * the last one the picker saw: a new `color` prop or the last one it sent to `onChange`. So
+ * the color survives even when the parent doesn't pass it back (or passes no `color` at all).
+ */
+export const OklchPicker = <T extends AnyColor>(props: Props<T>): React.ReactElement => {
+  const { color = props.colorModel.defaultColor, onChange } = props;
+  const prop = useRef(color);
+  const last = useRef(color);
+
+  // A new `color` prop wins over the last emitted color
+  if (color !== prop.current) prop.current = last.current = color;
+
+  const handleChange = (newColor: T) => {
+    last.current = newColor;
+    onChange && onChange(newColor);
+  };
+
+  return (
+    <OklchPickerBase key={props.gamut} {...props} color={last.current} onChange={handleChange} />
   );
 };

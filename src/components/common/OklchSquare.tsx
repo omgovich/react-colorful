@@ -25,7 +25,7 @@ interface Props {
  * with CSS and keeps the `.react-colorful__saturation` styles.
  */
 // No `React.memo`: a top-level call would stay in the bundle of every other picker
-export const OklchSquare = ({ state, gamut, onChange, onChangeEnd }: Props) => {
+export const OklchSquare = ({ state, gamut, onChange, onChangeEnd }: Props): React.ReactElement => {
   const { l, x, h } = state;
 
   const handleMove = (interaction: Interaction) => {
@@ -74,4 +74,3 @@ export const OklchSquare = ({ state, gamut, onChange, onChangeEnd }: Props) => {
     </div>
   );
 };
-

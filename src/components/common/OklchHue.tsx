@@ -19,7 +19,13 @@ interface Props {
 
 // The hue slider of OKLCH pickers: the most vivid color of every OKLCH hue
 // No `React.memo`: a top-level call would stay in the bundle of every other picker
-export const OklchHue = ({ className, hue, gamut, onChange, onChangeEnd }: Props) => {
+export const OklchHue = ({
+  className,
+  hue,
+  gamut,
+  onChange,
+  onChangeEnd,
+}: Props): React.ReactElement => {
   const handleMove = (interaction: Interaction) => {
     onChange({ h: 360 * interaction.left });
   };
@@ -53,4 +59,3 @@ export const OklchHue = ({ className, hue, gamut, onChange, onChangeEnd }: Props
     </div>
   );
 };
-
