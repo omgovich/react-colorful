@@ -188,7 +188,7 @@ export const rgbaToHsva = ({ r, g, b, a }: RgbaColor): HsvaColor => {
     : 0;
 
   // Do not round the result: rounding the internal HSVA representation loses precision,
-  // making `fromHsva(toHsva(color))` drift (e.g. RGB channels change when only alpha does)
+  // making `fromInternal(toInternal(color))` drift (e.g. RGB channels change when only alpha does)
   return {
     h: 60 * (hh < 0 ? hh + 6 : hh),
     s: max ? (delta / max) * 100 : 0,

@@ -15,7 +15,7 @@ export function useColorManipulation<T extends AnyColor>(
 
   // No matter which color model is used (HEX, RGB(A) or HSL(A)),
   // all internal calculations are based on HSVA model
-  const [hsva, updateHsva] = useState<HsvaColor>(() => colorModel.toHsva(color));
+  const [hsva, updateHsva] = useState<HsvaColor>(() => colorModel.toInternal(color));
 
   // By using this ref we're able to prevent extra updates
   // and the effects recursion during the color conversion
@@ -28,7 +28,7 @@ export function useColorManipulation<T extends AnyColor>(
   // but only if that's not the same color that we just sent to the parent
   useEffect(() => {
     if (!colorModel.equal(color, cache.current.color)) {
-      const newHsva = colorModel.toHsva(color);
+      const newHsva = colorModel.toInternal(color);
       cache.current = { hsva: newHsva, color };
       updateHsva((latest.current = newHsva));
       isDirty.current = false;
@@ -48,7 +48,7 @@ export function useColorManipulation<T extends AnyColor>(
       updateHsva(newHsva);
       if (
         !equalColorObjects(newHsva, cache.current.hsva) &&
-        !colorModel.equal((newColor = colorModel.fromHsva(newHsva)), cache.current.color)
+        !colorModel.equal((newColor = colorModel.fromInternal(newHsva)), cache.current.color)
       ) {
         cache.current = { hsva: newHsva, color: newColor };
         isDirty.current = true;

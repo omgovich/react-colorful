@@ -7,8 +7,8 @@ import { roundHsva } from "../utils/convert";
 
 const colorModel: ColorModel<HsvaColor> = {
   defaultColor: { h: 0, s: 0, v: 0, a: 1 },
-  toHsva: (hsva) => hsva,
-  fromHsva: roundHsva,
+  toInternal: (hsva) => hsva,
+  fromInternal: roundHsva,
   equal: equalColorObjects,
 };
 

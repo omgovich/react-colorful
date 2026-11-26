@@ -25,7 +25,7 @@ All pickers convert to/from HSVA (Hue/Saturation/Value/Alpha) internally. The ex
 
 ### ColorModel pattern
 
-Every picker is a thin wrapper that passes a `ColorModel<T>` to a shared base component. A `ColorModel` defines four things: `defaultColor`, `toHsva()`, `fromHsva()`, `equal()`. To add a new color format, define a new `ColorModel` constant and wrap `ColorPicker` (or `AlphaColorPicker` for formats with opacity).
+Every picker is a thin wrapper that passes a `ColorModel<T>` to a shared base component. A `ColorModel` defines four things: `defaultColor`, `toInternal()` and `fromInternal()` (to and from the internal HSVA), `equal()`. To add a new color format, define a new `ColorModel` constant and wrap `ColorPicker` (or `AlphaColorPicker` for formats with opacity).
 
 ### Component hierarchy
 
