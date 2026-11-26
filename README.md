@@ -149,7 +149,7 @@ const YourComponent = () => {
 - `l` is 0..1, `c` is the absolute chroma of CSS `oklch()` (0..~0.37), `h` is in degrees.
 - The `gamut` prop picks the range of colors: `"srgb"` (default) or `"p3"` for wide-gamut [Display P3](https://webkit.org/blog/10042/wide-gamut-color-in-css-with-display-p3/) colors. The output is an OKLCH color either way. A color outside the gamut is shown at the edge of the square and is sent back unchanged until the user changes it.
 - String pickers accept `oklch(L C H)` and `oklch(L C H / A)` with percentages, angle units and `none`, and emit `oklch(0.6 0.15 250)`.
-- These pickers need `oklch()` colors, gradients `in oklab` and CSS masks: Chrome 111, Safari 16.2 and Firefox 127 or newer. They are about 5 KB (minified and brotlied) instead of 3 KB.
+- These pickers need `oklch()` colors, gradients `in oklab` and CSS masks: Chrome 111, Safari 16.2 and Firefox 127 or newer (about 94.5% of users, see [Browser Support](#browser-support)). They are about 5 KB (minified and brotlied) instead of 3 KB.
 
 ## Customization
 
@@ -276,7 +276,7 @@ It would be an easier task to list all of the browsers and versions that **react
 
 **react-colorful** works out-of-the-box for most browsers, regardless of version, and only requires an `Object.assign` polyfill be provided for full IE11 support.
 
-The [OKLCH pickers](#oklch) are the exception: they need Chrome 111, Safari 16.2, Firefox 127 or newer.
+The [OKLCH pickers](#oklch) are the exception: they need Chrome 111, Safari 16.2, Firefox 127 or newer, which is about 94.5% of users worldwide ([caniuse](https://caniuse.com/mdn-css_types_gradient_linear-gradient_interpolation_color_space), November 2026). The limit comes from gradients `in oklab`; `oklch()` colors and CSS masks are a little older.
 
 ## Why react-colorful?
 
