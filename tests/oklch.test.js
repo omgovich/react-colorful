@@ -267,7 +267,8 @@ describe("pickers", () => {
     const models = spy.mock.calls.map(([model]) => model);
     spy.mockRestore();
     expect(new Set(models).size).toBe(2);
-    expect(models[0]).toBe(models[4]);
+    // The redraw after a gamut change adds renders, so compare the first and the last one
+    expect(models[0]).toBe(models[models.length - 1]);
   });
 
   it("Renders the square, the hue and the alpha sliders", () => {
