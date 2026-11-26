@@ -791,3 +791,34 @@ it("Ends a touch interaction on `touchcancel`", () => {
   fireEvent.touchMove(window, { touches: [{ pageX: 55, pageY: 5, identifier: 2 }] });
   expect(onChange).not.toHaveBeenCalled();
 });
+
+it("Redraws the color with a new color model, without calling `onChange`", () => {
+  const { ColorPicker } = require("../src/components/common/ColorPicker");
+  const { hexToHsva, hsvaToHex } = require("../src/utils/convert");
+  const { equalHex } = require("../src/utils/compare");
+  // Two models for the same HEX format; the second one shows every hue turned by 180°
+  const plain = {
+    defaultColor: "000",
+    toInternal: hexToHsva,
+    fromInternal: hsvaToHex,
+    equal: equalHex,
+  };
+  const turned = Object.assign({}, plain, {
+    toInternal: (hex) => {
+      const hsva = hexToHsva(hex);
+      return Object.assign(hsva, { h: (hsva.h + 180) % 360 });
+    },
+  });
+  const handleChange = jest.fn();
+  const hue = (container) =>
+    parseFloat(container.querySelector(".react-colorful__hue-pointer").style.left);
+
+  const { container, rerender } = render(
+    <ColorPicker colorModel={plain} color="#f00" onChange={handleChange} />
+  );
+  expect(hue(container)).toBe(0);
+
+  rerender(<ColorPicker colorModel={turned} color="#f00" onChange={handleChange} />);
+  expect(hue(container)).toBe(50);
+  expect(handleChange).not.toHaveBeenCalled();
+});
