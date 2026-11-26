@@ -23,18 +23,18 @@ export function useColorManipulation<
 
   // By using this ref we're able to prevent extra updates
   // and the effects recursion during the color conversion
-  const cache = useRef({ color, internal, colorModel });
+  const cache = useRef({ color, hsva, colorModel });
   const isDirty = useRef(false);
   // The internal value as of the user's latest input, which `internal` only reaches on the next render
   const latest = useRef(internal);
 
-  // The `color` prop as of the last render: tells a new prop from a new color model
-  const prop = useRef(color);
-
+  // Update local HSVA-value if `color` property value is changed,
+  // but only if that's not the same color that we just sent to the parent.
+  // A new color model (the gamut of an OKLCH picker) redraws the color with it
   useEffect(() => {
-    if (!colorModel.equal(color, cache.current.color)) {
+    if (cache.current.colorModel !== colorModel || !colorModel.equal(color, cache.current.color)) {
       const newHsva = colorModel.toHsva(color);
-      cache.current = { hsva: newHsva, color };
+      cache.current = { hsva: newHsva, color, colorModel };
       updateHsva((latest.current = newHsva));
       isDirty.current = false;
     }
@@ -55,7 +55,7 @@ export function useColorManipulation<
         !equalColorObjects(newHsva as ObjectColor, cache.current.hsva as ObjectColor) &&
         !colorModel.equal((newColor = colorModel.fromHsva(newHsva)), cache.current.color)
       ) {
-        cache.current = { internal: newInternal, color: newColor, colorModel };
+        cache.current = { hsva: newHsva, color: newColor, colorModel };
         isDirty.current = true;
         onChangeCallback(newColor);
       }

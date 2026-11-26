@@ -343,6 +343,24 @@ describe("pickers", () => {
     expect(document.activeElement).toBe(square(container));
   });
 
+  it("Keeps dragging and calls `onChangeEnd` when the gamut changes mid-drag", () => {
+    const handleChange = jest.fn();
+    const handleChangeEnd = jest.fn();
+    const color = "oklch(0.6 0.1 145)";
+    const props = { color, onChange: handleChange, onChangeEnd: handleChangeEnd };
+    const { container, rerender } = render(<OklchStringColorPicker {...props} />);
+
+    fireEvent(square(container), new FakeMouseEvent("mousedown", { pageX: 30, pageY: 30 }));
+    rerender(<OklchStringColorPicker {...props} gamut="p3" />);
+    fireEvent(square(container), new FakeMouseEvent("mousemove", { pageX: 90, pageY: 30 }));
+    fireEvent(square(container), new FakeMouseEvent("mouseup", { pageX: 90, pageY: 30 }));
+
+    // The move after the switch still goes through, with the P3 edge
+    const last = parseOklcha(handleChange.mock.calls[handleChange.mock.calls.length - 1][0]);
+    expect(last.c).toBeCloseTo(0.85 * maxChroma(last.l, 145, "p3"), 3);
+    expect(handleChangeEnd).toHaveBeenCalledTimes(1);
+  });
+
   it("Changes hue and alpha with arrow keys", () => {
     const handleChange = jest.fn((color) => color);
     const { container } = render(
