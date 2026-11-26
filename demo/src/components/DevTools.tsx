@@ -35,6 +35,10 @@ import {
   OklchaColor,
   OklchaColorPicker,
   OklchaStringColorPicker,
+  // OKLab
+  OklabColor,
+  OklabColorPicker,
+  OklabaStringColorPicker,
 } from "../../../src";
 
 // The same color in an sRGB and a P3 picker, side by side: on a P3 screen the right edge of
@@ -141,6 +145,16 @@ export const DevTools = (): JSX.Element => {
         title="OKLCHA String"
         PickerComponent={OklchaStringColorPicker}
         initialColor="oklch(0.6 0.15 250 / 0.5)"
+      />
+      <PickerPreview<OklabColor>
+        title="OKLab"
+        PickerComponent={OklabColorPicker}
+        initialColor={{ l: 0.6, a: -0.05, b: -0.14 }}
+      />
+      <PickerPreview<string>
+        title="OKLab String"
+        PickerComponent={OklabaStringColorPicker}
+        initialColor="oklab(0.6 -0.05 -0.14 / 0.5)"
       />
       <PickerPreview<string>
         title="OKLCH sRGB vs P3"

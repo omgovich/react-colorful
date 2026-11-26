@@ -43,7 +43,21 @@ export interface OklchaColor extends OklchColor {
   a: number;
 }
 
-/** The gamut an OKLCH picker lets the user pick from */
+export interface OklabColor {
+  /** Lightness, 0..1 */
+  l: number;
+  /** Green (negative) to red (positive), about -0.4..0.4 */
+  a: number;
+  /** Blue (negative) to yellow (positive), about -0.4..0.4 */
+  b: number;
+}
+
+/** OKLab with alpha: `a` is already an axis, so the alpha channel is `alpha`, as in CSS */
+export interface OklabaColor extends OklabColor {
+  alpha: number;
+}
+
+/** The gamut an OKLCH or OKLab picker lets the user pick from */
 export type OklchGamut = "srgb" | "p3";
 
 /**
@@ -65,7 +79,9 @@ export type ObjectColor =
   | HslaColor
   | HsvaColor
   | OklchColor
-  | OklchaColor;
+  | OklchaColor
+  | OklabColor
+  | OklabaColor;
 
 export type AnyColor = string | ObjectColor;
 
@@ -87,7 +103,7 @@ export interface ColorModel<T extends AnyColor, I extends InternalColor = HsvaCo
 export interface GamutColorModel<T extends AnyColor> {
   defaultColor: T;
   // `previous` is the picker's current internal color: what a color can't tell (the chroma share
-  // of black and white) is kept from it
+  // of black and white, the hue of a grey written as OKLab) is kept from it
   toInternal: (color: T, gamut: OklchGamut, previous?: OklchInternal) => OklchInternal;
   fromInternal: (internal: OklchInternal, gamut: OklchGamut) => T;
   equal: (first: T, second: T) => boolean;
@@ -107,7 +123,7 @@ export interface ColorPickerBaseProps<T extends AnyColor> extends ColorPickerHTM
 export interface OklchPickerProps<T extends AnyColor> extends Partial<ColorPickerBaseProps<T>> {
   /**
    * The gamut the picker lets the user pick from: `"srgb"` (default) or `"p3"`.
-   * The output stays an OKLCH color either way
+   * The output keeps the picker's format either way
    */
   gamut?: OklchGamut;
 }
