@@ -53,15 +53,22 @@ const splitByCurvature = <V>(
 // bends the most. Max measured error: ΔE_OK ≈ 0.0044 in sRGB and P3
 const LAYER_SHARES = [0, 0.36, 0.64, 0.84, 0.96, 1];
 
+/** One layer of the square: its gradient, and the mask it fades in by (none for the first one) */
+export interface SquareLayer {
+  background: string;
+  mask?: string;
+}
+
 // The last hue drawn per gamut: dragging the hue slider asks for a new hue on every move
-const layerCache: Partial<Record<OklchGamut, { hue: number; layers: string[] }>> = {};
+const layerCache: Partial<Record<OklchGamut, { hue: number; layers: SquareLayer[] }>> = {};
 
 /**
- * Backgrounds of the square's layers at a hue: vertical gradients from white to black whose
- * stops follow the gamut edge closely enough that a straight line between two stops is never
- * more than 0.0004 of chroma off the edge
+ * The square's layers at a hue. Each one is a vertical gradient from white to black at a share
+ * of the edge's chroma, with stops that follow the gamut edge closely enough that a straight line
+ * between two stops is never more than 0.0004 of chroma off the edge. It fades in from the left
+ * where the previous layer is fully opaque
  */
-export const squareLayers = (h: number, gamut: OklchGamut): string[] => {
+export const squareLayers = (h: number, gamut: OklchGamut): SquareLayer[] => {
   const cached = layerCache[gamut];
   if (cached && cached.hue === h) return cached.layers;
 
@@ -73,23 +80,18 @@ export const squareLayers = (h: number, gamut: OklchGamut): string[] => {
     0.0004
   );
 
-  const layer = (share: number) => {
-    const stops = ys.map((y, i) => `${oklchString(1 - y, edges[i] * share, h)} ${percent(y)}`);
-    return `linear-gradient(to bottom in oklab, ${stops.join(", ")})`;
-  };
+  const layers = LAYER_SHARES.map((share, i) => {
+    const stops = ys.map((y, j) => `${oklchString(1 - y, edges[j] * share, h)} ${percent(y)}`);
+    const background = `linear-gradient(to bottom in oklab, ${stops.join(", ")})`;
+    if (!i) return { background };
 
-  const layers = LAYER_SHARES.map(layer);
+    const from = percent(LAYER_SHARES[i - 1]);
+    const mask = `linear-gradient(to right, transparent ${from}, #000 ${percent(share)})`;
+    return { background, mask };
+  });
+
   layerCache[gamut] = { hue: h, layers };
   return layers;
-};
-
-/** Where layer `i` of the square fades in (a function: top-level calls defeat tree-shaking) */
-export const layerMask = (i: number): string | undefined => {
-  if (!i) return undefined;
-
-  const from = percent(LAYER_SHARES[i - 1]);
-  const to = percent(LAYER_SHARES[i]);
-  return `linear-gradient(to right, transparent ${from}, #000 ${to})`;
 };
 
 // The hue bar's lightness is sampled every 4°: 90 samples around the circle

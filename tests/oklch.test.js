@@ -8,7 +8,7 @@ import {
   OklchaStringColorPicker,
 } from "../src";
 import { cusp, inGamut, maxChroma } from "../src/utils/oklchGamut";
-import { hueColor, hueGradient, layerMask, squareLayers } from "../src/utils/oklchGradients";
+import { hueColor, hueGradient, squareLayers } from "../src/utils/oklchGradients";
 import {
   equalOklchString,
   formatOklch,
@@ -233,7 +233,7 @@ describe("drawing", () => {
     ]) {
       const layers = squareLayers(h, gamut);
       expect(layers).toHaveLength(6);
-      layers.forEach((layer, i) => {
+      layers.forEach(({ background: layer }, i) => {
         expect(layer).toMatch(/^linear-gradient\(to bottom in oklab, /);
         const stops = [...layer.matchAll(/oklch\(([\d.]+) ([\d.]+) ([\d.]+)\) ([\d.]+)%/g)];
         expect(stops.length).toBeGreaterThan(10);
@@ -245,9 +245,11 @@ describe("drawing", () => {
         }
       });
     }
-    expect(layerMask(0)).toBeUndefined();
-    expect(layerMask(1)).toBe("linear-gradient(to right, transparent 0%, #000 36%)");
-    expect(layerMask(5)).toBe("linear-gradient(to right, transparent 96%, #000 100%)");
+    // Each layer fades in where the previous one is fully opaque
+    const masks = squareLayers(260, "srgb").map((layer) => layer.mask);
+    expect(masks[0]).toBeUndefined();
+    expect(masks[1]).toBe("linear-gradient(to right, transparent 0%, #000 36%)");
+    expect(masks[5]).toBe("linear-gradient(to right, transparent 96%, #000 100%)");
   });
 
   it("Draws the hue bar without steps", () => {
