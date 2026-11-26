@@ -1,7 +1,7 @@
 import React from "react";
 
 import { OklchGamut } from "../../types";
-import { layerMask, squareLayers } from "../../utils/oklch";
+import { layerMask, squareLayers } from "../../utils/oklchGradients";
 
 interface Props {
   hue: number;
@@ -26,17 +26,17 @@ const cover: React.CSSProperties = {
  * each fading in by a horizontal mask where the previous one ends (see `squareLayers`).
  * On top goes the square's own thin inset outline, which the layers would otherwise hide.
  */
-export const OklchSquareLayers = ({ hue, gamut }: Props): React.ReactElement => (
-  <React.Fragment>
-    {squareLayers(hue, gamut).map((background, i) => (
-      <div
-        key={i}
-        style={Object.assign(
-          { background, maskImage: layerMask(i), WebkitMaskImage: layerMask(i) },
-          cover
-        )}
-      />
-    ))}
-    <div style={Object.assign({ boxShadow: "inherit" }, cover)} />
-  </React.Fragment>
-);
+export const OklchSquareLayers = ({ hue, gamut }: Props): React.ReactElement => {
+  const layers = squareLayers(hue, gamut).map((background, i) => {
+    const mask = layerMask(i);
+    const style = { ...cover, background, maskImage: mask, WebkitMaskImage: mask };
+    return <div key={i} style={style} />;
+  });
+
+  return (
+    <React.Fragment>
+      {layers}
+      <div style={{ ...cover, boxShadow: "inherit" }} />
+    </React.Fragment>
+  );
+};

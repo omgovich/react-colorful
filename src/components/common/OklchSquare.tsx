@@ -5,7 +5,8 @@ import { Pointer } from "./Pointer";
 import { OklchSquareLayers } from "./OklchSquareLayers";
 
 import { OklchGamut, OklchState } from "../../types";
-import { maxChroma, oklchString } from "../../utils/oklch";
+import { maxChroma } from "../../utils/oklchGamut";
+import { oklchString } from "../../utils/oklch";
 import { clamp } from "../../utils/clamp";
 import { round } from "../../utils/round";
 

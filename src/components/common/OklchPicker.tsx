@@ -31,11 +31,11 @@ export const OklchPicker = <T extends AnyColor>({
   // The picker's model bound to its gamut. A new gamut makes a new model, and the hook redraws
   // the current color with it
   const colorModel = useMemo<ColorModel<T, OklchState>>(
-    () =>
-      Object.assign({}, model, {
-        toInternal: (color: T) => model.toInternal(color, gamut),
-        fromInternal: (internal: OklchState) => model.fromInternal(internal, gamut),
-      }),
+    () => ({
+      ...model,
+      toInternal: (color: T) => model.toInternal(color, gamut),
+      fromInternal: (internal: OklchState) => model.fromInternal(internal, gamut),
+    }),
     [model, gamut]
   );
 

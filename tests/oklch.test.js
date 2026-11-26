@@ -7,20 +7,15 @@ import {
   OklchStringColorPicker,
   OklchaStringColorPicker,
 } from "../src";
+import { cusp, inGamut, maxChroma } from "../src/utils/oklchGamut";
+import { hueColor, hueGradient, layerMask, squareLayers } from "../src/utils/oklchGradients";
 import {
-  cusp,
+  equalOklchString,
   formatOklch,
   formatOklcha,
-  hueColor,
-  hueGradient,
-  inGamut,
-  layerMask,
-  maxChroma,
   oklchaToState,
   parseOklcha,
-  squareLayers,
   stateToOklcha,
-  equalOklchString,
 } from "../src/utils/oklch";
 
 afterEach(cleanup);
@@ -207,6 +202,10 @@ describe("strings", () => {
     test("oklch(0.6 0.15 none)", { l: 0.6, c: 0.15, h: 0, a: 1 });
     test("oklch(+0.6 1.5e-1 2e1)", { l: 0.6, c: 0.15, h: 20, a: 1 });
     test("rgb(0, 0, 0)", { l: 0, c: 0, h: 0, a: 1 });
+    // A unit where CSS allows none: not a color
+    test("oklch(0.6deg 0.15 260)", { l: 0, c: 0, h: 0, a: 1 });
+    test("oklch(0.6 0.15 260%)", { l: 0, c: 0, h: 0, a: 1 });
+    test("oklch(0.6 0.15 260 / 0.5deg)", { l: 0, c: 0, h: 0, a: 1 });
   });
 
   it("Compares OKLCH strings by their values", () => {

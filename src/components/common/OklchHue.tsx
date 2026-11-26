@@ -4,7 +4,8 @@ import { Interactive, Interaction } from "./Interactive";
 import { Pointer } from "./Pointer";
 
 import { OklchGamut } from "../../types";
-import { hueColor, hueGradient, oklchString } from "../../utils/oklch";
+import { hueColor, hueGradient } from "../../utils/oklchGradients";
+import { oklchString } from "../../utils/oklch";
 import { formatClassName } from "../../utils/format";
 import { clamp } from "../../utils/clamp";
 import { round } from "../../utils/round";
