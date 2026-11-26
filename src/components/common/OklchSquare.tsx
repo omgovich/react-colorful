@@ -56,6 +56,19 @@ export const OklchSquare = ({ state, gamut, onChange, onChangeEnd }: Props): Rea
           }}
         />
       ))}
+      {/* The square's own inset outline is painted under the layers: repeat it on top of them */}
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: 0,
+          borderRadius: "inherit",
+          boxShadow: "inherit",
+          pointerEvents: "none",
+        }}
+      />
       <Interactive
         onMove={handleMove}
         onKey={handleKey}
