@@ -383,7 +383,9 @@ export const stateToOklcha = ({ l, x, h, a }: OklchState, gamut: OklchGamut): Ok
   return {
     l: lr,
     c: c > edge ? round(c - 1e-5, 5) : c,
-    h: hr,
+    // The right end of the hue slider is 360, and rounding can reach it too (359.996); written as 0,
+    // as colord and most tools do, so a parent that normalizes the hue gets back the same color
+    h: hr % 360,
     a: round(a, 2),
   };
 };

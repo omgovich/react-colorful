@@ -450,6 +450,23 @@ describe("pickers", () => {
     expect(handleChange).toHaveLastReturnedWith("oklch(0.6 0 163 / 0.95)");
   });
 
+  it("Writes the right end of the hue slider as 0 and keeps the pointer there", () => {
+    const handleChange = jest.fn((color) => color);
+    const { container, rerender } = render(
+      <OklchStringColorPicker color="oklch(0.6 0 350)" onChange={handleChange} />
+    );
+    const hue = container.querySelector(".react-colorful__hue .react-colorful__interactive");
+
+    hue.focus();
+    fireEvent.keyDown(document.activeElement, { keyCode: 39 });
+    expect(handleChange).toHaveLastReturnedWith("oklch(0.6 0 0)");
+
+    // The parent passes the color back: the same color, so the pointer stays at the right end
+    rerender(<OklchStringColorPicker color="oklch(0.6 0 0)" onChange={handleChange} />);
+    expect(container.querySelector(".react-colorful__hue-pointer").style.left).toBe("100%");
+    expect(stateToOklcha({ l: 0.6, x: 0.5, h: 359.996, a: 1 }, "srgb").h).toBe(0);
+  });
+
   it("Emits an OKLCH color in the gamut after a mouse interaction", () => {
     const handleChange = jest.fn();
     const { container } = render(
