@@ -104,26 +104,32 @@ const firstExit = (rgb: Cubic[], from: number): number => {
         cuts.push(...[(-2 * c - q) / (6 * d), (-2 * c + q) / (6 * d)].sort((x, y) => x - y));
       }
     } else if (Math.abs(c) > 1e-12) cuts.push(-b / (2 * c));
-    const pieces = cuts.filter((x) => x >= from && x < edge).concat(edge);
+    const bounds = cuts.filter((x) => x >= from && x < edge).concat(edge);
 
-    for (let i = 0; i + 1 < pieces.length; i++) {
-      let lo = pieces[i];
-      let hi = pieces[i + 1];
-      if (outside(lo)) {
-        edge = lo;
-        break;
-      }
-      if (!outside(hi)) continue;
+    // `from` is inside the gamut, so the first bound outside it closes the piece with the exit
+    const i = bounds.findIndex(outside);
+    if (i > 0) {
+      let lo = bounds[i - 1];
+      let hi = bounds[i];
       for (let step = 0; step < 40; step++) {
         const mid = (lo + hi) / 2;
         outside(mid) ? (hi = mid) : (lo = mid);
       }
       edge = lo;
-      break;
     }
   }
 
   return edge;
+};
+
+// Golden-section search: where a function with a single dip on `[lo, hi]` is the lowest
+const argMin = (f: (x: number) => number, lo: number, hi: number): number => {
+  for (let step = 0; step < 30; step++) {
+    const a = lo + 0.381966 * (hi - lo);
+    const b = hi - 0.381966 * (hi - lo);
+    f(a) < f(b) ? (hi = b) : (lo = a);
+  }
+  return (lo + hi) / 2;
 };
 
 // How deep a dip past the first exit the square's edge steps over, in a linear RGB channel, at
@@ -131,7 +137,8 @@ const firstExit = (rgb: Cubic[], from: number): number => {
 const GAP = 1e-3;
 // The blue dip deepens with lightness as l³ (0.0007 at #0000ff, l = 0.452), so the gap follows
 // l³ too: a fixed gap would step over the far deeper-looking dips of dark colors, where nothing
-// of the gamut lies behind them
+// of the gamut lies behind them. 0.011 ≈ GAP / 0.452³: the full gap from the lightness of
+// `#0000ff` up
 const gapAt = (l: number) => Math.min(GAP, 0.011 * l * l * l);
 
 /**
@@ -139,10 +146,10 @@ const gapAt = (l: number) => Math.min(GAP, 0.011 * l * l * l);
  * grey at this lightness and hue.
  *
  * For some sRGB blues (hues near 264°, including `#0000ff` and the whole `#0000xx` axis) the
- * red channel dips below 0 just past the first exit and then comes back, by at most 0.0007 in
- * linear light (up to ~3 of 255 steps after gamma). Stopping at the first exit would make pure
- * blue unreachable. So
- * the edge looks past it: the closer the color comes back to the gamut after the dip, the
+ * red channel dips below 0 just past the first exit and then comes back: by 0.0007 in linear
+ * light at `#0000ff`, and by up to 0.0012 (~4 of 255 steps after gamma) where the edge stops
+ * inside a dip. Stopping at the first exit would make pure blue unreachable. So the edge
+ * looks past it: the closer the color comes back to the gamut after the dip, the
  * further the edge moves from the first exit towards the point where it comes back. The move is
  * gradual, so the edge doesn't jump as the hue changes. Colors in such a dip are outside sRGB by
  * less than twice the gap (`gapAt`); everything else is inside.
@@ -155,8 +162,8 @@ export const maxChroma = (l: number, h: number, gamut: OklchGamut): number => {
   let edge = firstExit(rgb, 0);
 
   while (edge < MAX_CHROMA) {
-    // Walk past the edge while the color stays within the gap of the gamut, noting the deepest
-    // point (`peak`) and the lowest point after it (`low` at chroma `back`)
+    // Walk past the edge while the color stays within the gap of the gamut, noting how deep the
+    // dip gets (`peak`) and the lowest point after it (`low` at chroma `back`)
     let c = edge;
     let depth;
     let peak = 0;
@@ -174,19 +181,17 @@ export const maxChroma = (l: number, h: number, gamut: OklchGamut): number => {
       edge = firstExit(rgb, c);
       continue;
     }
-    // How far the color came back after the dip (0 not at all, 1 all the way to the gamut) and
-    // how shallow the dip was (1 up to the gap, 0 from twice the gap) move the edge towards `back`
-    const weight = clamp((0.75 - low / peak) / 0.5) * clamp(2 - peak / gap);
+    // How far the color came back after the dip: 1 once it is down to a quarter of the dip's
+    // depth, 0 while it is above three quarters (in between, the edge slides, so it never jumps)
+    const cameBack = clamp(1.5 - (2 * low) / peak);
+    // How shallow the dip was: 1 up to the gap, 0 from twice the gap
+    const shallow = clamp(2 - peak / gap);
+    // Both move the edge towards `back`
+    const weight = cameBack * shallow;
     if (!weight) return edge;
     // `back` is on a 1e-4 grid: find the lowest point between its neighbours
-    let lo = back - 1e-4;
-    let hi = back + 1e-4;
-    for (let step = 0; step < 30; step++) {
-      const a = lo + 0.381966 * (hi - lo);
-      const b = hi - 0.381966 * (hi - lo);
-      violation(rgb, a) < violation(rgb, b) ? (hi = b) : (lo = a);
-    }
-    return edge + ((lo + hi) / 2 - edge) * weight;
+    const lowest = argMin((x) => violation(rgb, x), back - 1e-4, back + 1e-4);
+    return edge + (lowest - edge) * weight;
   }
 
   return edge;
@@ -200,15 +205,12 @@ export const cusp = (h: number, gamut: OklchGamut): [number, number] => {
     const c = maxChroma(l, h, gamut);
     if (c > bestChroma) [best, bestChroma] = [l, c];
   }
-  // Golden-section search around the best sample
-  let lo = Math.max(0, best - 0.02);
-  let hi = Math.min(1, best + 0.02);
-  for (let step = 0; step < 30; step++) {
-    const a = lo + 0.381966 * (hi - lo);
-    const b = hi - 0.381966 * (hi - lo);
-    maxChroma(a, h, gamut) > maxChroma(b, h, gamut) ? (hi = b) : (lo = a);
-  }
-  const l = (lo + hi) / 2;
+  // The highest chroma around the best sample
+  const l = argMin(
+    (x) => -maxChroma(x, h, gamut),
+    Math.max(0, best - 0.02),
+    Math.min(1, best + 0.02)
+  );
   return [l, maxChroma(l, h, gamut)];
 };
 
@@ -236,6 +238,8 @@ const splitByCurvature = <V>(
     const bent = [0.25, 0.5, 0.75].some(
       (t) => distance(lerp(v0, v1, t), value(t0 + t * (t1 - t0))) > tolerance
     );
+    // At least 16 pieces, so that a corner between two straight stretches is not missed, and at
+    // most 2¹⁴
     if (depth < 4 || (depth < 14 && bent)) {
       const tm = (t0 + t1) / 2;
       const vm = value(tm);
@@ -260,7 +264,7 @@ const lerpNumber = (a: number, b: number, t: number) => a + t * (b - a);
 const LAYERS = [0, 0.36, 0.64, 0.84, 0.96, 1];
 
 // The last hue drawn per gamut: dragging the hue slider asks for a new hue on every move
-const layerCache: Record<string, [number, string[]]> = {};
+const layerCache: Partial<Record<OklchGamut, [number, string[]]>> = {};
 
 /**
  * Backgrounds of the square's layers at a hue: vertical gradients from white to black whose
@@ -268,16 +272,15 @@ const layerCache: Record<string, [number, string[]]> = {};
  * more than 0.0004 of chroma off the edge
  */
 export const squareLayers = (h: number, gamut: OklchGamut): string[] => {
-  const cached = layerCache[gamut];
-  if (cached && cached[0] === h) return cached[1];
-  {
+  let cached = layerCache[gamut];
+  if (!cached || cached[0] !== h) {
     const [points, chromas] = splitByCurvature(
       (y) => maxChroma(1 - y, h, gamut),
       (a, b) => Math.abs(a - b),
       lerpNumber,
       0.0004
     );
-    layerCache[gamut] = [
+    cached = layerCache[gamut] = [
       h,
       LAYERS.map(
         (share) =>
@@ -287,7 +290,7 @@ export const squareLayers = (h: number, gamut: OklchGamut): string[] => {
       ),
     ];
   }
-  return layerCache[gamut][1];
+  return cached[1];
 };
 
 /** Where layer `i` of the square fades in (a function: top-level calls defeat tree-shaking) */
@@ -331,35 +334,36 @@ export const hueColor = (h: number, gamut: OklchGamut): [number, number] => {
   return [l, maxChroma(l, h, gamut)];
 };
 
-const hueCache: Record<string, string> = {};
+const hueCache: Partial<Record<OklchGamut, string>> = {};
 
 /**
  * The hue bar: `hueColor` of every hue, with stops placed so that the bar is within ΔE_OK 0.004
  * of it everywhere
  */
 export const hueGradient = (gamut: OklchGamut): string => {
-  if (!hueCache[gamut]) {
+  let bar = hueCache[gamut];
+  if (!bar) {
     const [points, colors] = splitByCurvature(
       (t) => toLab([...hueColor(t * 360, gamut), t * 360]),
       (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]),
       (a, b, t) => a.map((v, i) => lerpNumber(v, b[i], t)),
       0.004
     );
-    hueCache[gamut] = `linear-gradient(to right in oklab, ${points
+    bar = hueCache[gamut] = `linear-gradient(to right in oklab, ${points
       .map((t, i) => {
         const [l, a, b] = colors[i];
         return `oklab(${round(l, 5)} ${round(a, 5)} ${round(b, 5)}) ${round(t * 100, 3)}%`;
       })
       .join(", ")})`;
   }
-  return hueCache[gamut];
+  return bar;
 };
 
 /** Turns a color into the picker's state; a color outside the gamut is shown at the edge */
 export const oklchaToState = ({ l, c, h, a }: OklchaColor, gamut: OklchGamut): OklchState => {
   // `|| 0` turns NaN (a broken prop) into 0 instead of letting it into the state and styles
   l = clamp(l || 0);
-  h = parseHue(String(h || 0));
+  h = parseHue(h) || 0;
   const edge = maxChroma(l, h, gamut);
   return { l, x: edge ? clamp(c / edge || 0) : 0, h, a };
 };
@@ -404,7 +408,7 @@ export const parseOklcha = (value: string): OklchaColor => {
   return {
     l: clamp(number(match[1]) / (match[2] ? 100 : 1)),
     c: Math.max(0, number(match[3]) * (match[4] ? 0.004 : 1)),
-    h: parseHue(String(number(match[5])), match[6]),
+    h: parseHue(match[5], match[6]) || 0,
     a: match[7] === undefined ? 1 : clamp(number(match[7]) / (match[8] ? 100 : 1)),
   };
 };
