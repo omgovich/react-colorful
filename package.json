@@ -36,7 +36,13 @@
       "path": "dist/index.module.js",
       "name": "HexColorPicker",
       "import": "{ HexColorPicker }",
-      "limit": "3.2 KB"
+      "limit": "3.3 KB"
+    },
+    {
+      "path": "dist/index.module.js",
+      "name": "HexAlphaColorPicker",
+      "import": "{ HexAlphaColorPicker }",
+      "limit": "3.5 KB"
     },
     {
       "path": "dist/index.module.js",
@@ -54,13 +60,13 @@
       "path": "dist/index.module.js",
       "name": "HslStringColorPicker",
       "import": "{ HslStringColorPicker }",
-      "limit": "3.06 KB"
+      "limit": "3.2 KB"
     },
     {
       "path": "dist/index.module.js",
       "name": "HslaStringColorPicker",
       "import": "{ HslaStringColorPicker }",
-      "limit": "3.2 KB"
+      "limit": "3.3 KB"
     },
     {
       "path": "dist/index.module.js",
@@ -78,37 +84,37 @@
       "path": "dist/index.module.js",
       "name": "HsvStringColorPicker",
       "import": "{ HsvStringColorPicker }",
-      "limit": "3.06 KB"
+      "limit": "3.2 KB"
     },
     {
       "path": "dist/index.module.js",
       "name": "HsvaStringColorPicker",
       "import": "{ HsvaStringColorPicker }",
-      "limit": "3.2 KB"
+      "limit": "3.3 KB"
     },
     {
       "path": "dist/index.module.js",
       "name": "RgbColorPicker",
       "import": "{ RgbColorPicker }",
-      "limit": "3.05 KB"
+      "limit": "3.1 KB"
     },
     {
       "path": "dist/index.module.js",
       "name": "RgbaColorPicker",
       "import": "{ RgbaColorPicker }",
-      "limit": "3.15 KB"
+      "limit": "3.2 KB"
     },
     {
       "path": "dist/index.module.js",
       "name": "RgbStringColorPicker",
       "import": "{ RgbStringColorPicker }",
-      "limit": "3.2 KB"
+      "limit": "3.3 KB"
     },
     {
       "path": "dist/index.module.js",
       "name": "RgbaStringColorPicker",
       "import": "{ RgbaStringColorPicker }",
-      "limit": "3.3 KB"
+      "limit": "3.4 KB"
     },
     {
       "path": "dist/index.module.js",

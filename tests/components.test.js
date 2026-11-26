@@ -791,3 +791,117 @@ it("Ends a touch interaction on `touchcancel`", () => {
   fireEvent.touchMove(window, { touches: [{ pageX: 55, pageY: 5, identifier: 2 }] });
   expect(onChange).not.toHaveBeenCalled();
 });
+
+it("Redraws the color with a new color model, without calling `onChange`", () => {
+  const { ColorPicker } = require("../src/components/common/ColorPicker");
+  const { hexToHsva, hsvaToHex } = require("../src/utils/convert");
+  const { equalHex } = require("../src/utils/compare");
+  // Two models for the same HEX format; the second one shows every hue turned by 180°
+  const plain = {
+    defaultColor: "000",
+    toInternal: hexToHsva,
+    fromInternal: hsvaToHex,
+    equal: equalHex,
+  };
+  const turned = Object.assign({}, plain, {
+    toInternal: (hex) => {
+      const hsva = hexToHsva(hex);
+      return Object.assign(hsva, { h: (hsva.h + 180) % 360 });
+    },
+  });
+  const handleChange = jest.fn();
+  const hue = (container) =>
+    parseFloat(container.querySelector(".react-colorful__hue-pointer").style.left);
+
+  const { container, rerender } = render(
+    <ColorPicker colorModel={plain} color="#f00" onChange={handleChange} />
+  );
+  expect(hue(container)).toBe(0);
+
+  rerender(<ColorPicker colorModel={turned} color="#f00" onChange={handleChange} />);
+  expect(hue(container)).toBe(50);
+  expect(handleChange).not.toHaveBeenCalled();
+});
+
+describe("A new color model", () => {
+  const { ColorPicker } = require("../src/components/common/ColorPicker");
+  const { hexToHsva, hsvaToHex } = require("../src/utils/convert");
+  const { equalHex } = require("../src/utils/compare");
+  const plain = {
+    defaultColor: "000",
+    toInternal: hexToHsva,
+    fromInternal: hsvaToHex,
+    equal: equalHex,
+  };
+  // The same conversions in a new object: only the model's identity changes
+  const other = Object.assign({}, plain);
+  const hue = (container) =>
+    parseFloat(container.querySelector(".react-colorful__hue-pointer").style.left);
+
+  it("Keeps the pending `onChangeEnd` of a drag, and sends it on release", () => {
+    const handleChange = jest.fn();
+    const handleChangeEnd = jest.fn();
+    // A controlled picker: the parent passes back every color it gets
+    const Parent = ({ model }) => {
+      const [color, setColor] = React.useState("#f00");
+      return (
+        <ColorPicker
+          colorModel={model}
+          color={color}
+          onChange={(newColor) => {
+            handleChange(newColor);
+            setColor(newColor);
+          }}
+          onChangeEnd={handleChangeEnd}
+        />
+      );
+    };
+    const { container, rerender } = render(<Parent model={plain} />);
+    const saturation = container.querySelector(
+      ".react-colorful__saturation .react-colorful__interactive"
+    );
+
+    fireEvent(saturation, new FakeMouseEvent("mousedown", { pageX: 30, pageY: 30 }));
+    rerender(<Parent model={other} />);
+    expect(handleChangeEnd).not.toHaveBeenCalled();
+
+    fireEvent(saturation, new FakeMouseEvent("mouseup", { pageX: 30, pageY: 30 }));
+    expect(handleChangeEnd).toHaveBeenCalledTimes(1);
+    expect(handleChangeEnd).toHaveBeenCalledWith(handleChange.mock.calls[0][0]);
+  });
+
+  it("Doesn't take a `color` prop the parent hasn't updated yet for a new color", () => {
+    const handleChangeEnd = jest.fn();
+    // The parent never passes the picked color back
+    const { container, rerender } = render(
+      <ColorPicker colorModel={plain} color="#f00" onChangeEnd={handleChangeEnd} />
+    );
+    const node = container.querySelector(".react-colorful__hue .react-colorful__interactive");
+    node.focus();
+
+    fireEvent.keyDown(node, { keyCode: 39 });
+    expect(hue(container)).toBe(5);
+    rerender(<ColorPicker colorModel={other} color="#f00" onChangeEnd={handleChangeEnd} />);
+    // Still where the user moved it (redrawn from #ff4d00, 18.1°), not back at the prop's red
+    expect(hue(container)).toBeCloseTo(5, 0);
+
+    fireEvent.keyUp(node, { keyCode: 39 });
+    expect(handleChangeEnd).toHaveBeenCalledTimes(1);
+    expect(handleChangeEnd).toHaveBeenCalledWith("#ff4d00");
+  });
+
+  it("Sends the color it picked to `onChangeEnd`, not an equal prop in another spelling", () => {
+    const handleChangeEnd = jest.fn();
+    const { container, rerender } = render(
+      <ColorPicker colorModel={plain} color="#f00" onChangeEnd={handleChangeEnd} />
+    );
+    const node = container.querySelector(".react-colorful__hue .react-colorful__interactive");
+    node.focus();
+
+    fireEvent.keyDown(node, { keyCode: 39 });
+    rerender(<ColorPicker colorModel={other} color="FF4D00" onChangeEnd={handleChangeEnd} />);
+    fireEvent.keyUp(node, { keyCode: 39 });
+
+    expect(handleChangeEnd).toHaveBeenCalledWith("#ff4d00");
+  });
+});
