@@ -36,7 +36,9 @@ export const OklchSquare = ({ state, gamut, onChange, onChangeEnd }: Props): Rea
   };
 
   return (
-    <div className="react-colorful__saturation">
+    // The layers cover the whole square: the HSV gradients of `.react-colorful__saturation` would be
+    // painted under them for nothing
+    <div className="react-colorful__saturation" style={{ backgroundImage: "none" }}>
       <OklchSquareLayers hue={h} gamut={gamut} />
       <Interactive
         onMove={handleMove}
