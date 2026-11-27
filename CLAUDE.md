@@ -13,7 +13,7 @@
 
 ## Key constraint: bundle size
 
-Every picker has a hard budget (3–3.5 KB depending on the picker) enforced by the `size-limit` section of package.json. Since size-limit v11 the metric is minified + **brotli** of an esbuild bundle — don't compare these numbers against gzip figures from older tooling. This shapes all code decisions: `Object.assign` over spread (smaller output), keyCodes over key strings, no dependencies, manually optimized algorithms. Always run `npm run size` after changes that add code.
+Every picker has a hard budget (3–3.5 KB depending on the picker; about 6 KB for the OKLCH ones, which have their own gamut math and gradients) enforced by the `size-limit` section of package.json. Since size-limit v11 the metric is minified + **brotli** of an esbuild bundle — don't compare these numbers against gzip figures from older tooling. This shapes all code decisions in the classic pickers: `Object.assign` over spread (smaller output), keyCodes over key strings, no dependencies, manually optimized algorithms. The OKLCH code favours readability over the last bytes (object spread is fine there), as long as it stays within its budget and out of the classic pickers' bundles. Always run `npm run size` after changes that add code.
 
 ## Architecture
 
@@ -21,7 +21,9 @@ A ~3.1 KB color picker component library for React. Zero dependencies.
 
 ### Internal color model: HSVA
 
-All pickers convert to/from HSVA (Hue/Saturation/Value/Alpha) internally. The external API varies by component (hex string, RGB object, HSL string, etc.) but the internal representation is always HSVA. Conversions live in `src/utils/convert.ts`.
+All pickers but the OKLCH ones convert to/from HSVA (Hue/Saturation/Value/Alpha) internally. The external API varies by component (hex string, RGB object, HSL string, etc.) but the internal representation is HSVA. Conversions live in `src/utils/convert.ts`.
+
+The OKLCH pickers keep `{ l, x, h, a }` instead (`OklchInternal`), where `x` is the chroma as a share of the highest one the gamut allows at that lightness and hue: the square's horizontal axis. The gamut edge lives in `src/utils/oklchGamut.ts`, the gradients of the square and the hue bar in `src/utils/oklchGradients.ts`, the conversions and strings in `src/utils/oklch.ts` (`oklch()` strings are read by `src/utils/colorFunction.ts`); the components in `src/components/common/Oklch*.tsx`. Their wrappers pass an `GamutColorModel`, whose conversions also take the gamut; `OklchPicker` binds it to the `gamut` prop for the hook. Don't call functions (including `React.memo`) at the top level of OKLCH modules: the bundler keeps such calls, and the OKLCH code then lands in every picker's bundle.
 
 ### ColorModel pattern
 
@@ -37,7 +39,7 @@ Every picker is a thin wrapper that passes a `ColorModel<T>` to a shared base co
 
 ### State management
 
-`useColorManipulation` is the central hook. It holds HSVA state, converts between HSVA and the picker's external format via the `ColorModel`, and fires `onChange`/`onChangeEnd` callbacks. `onChange` fires on every pointer move; `onChangeEnd` fires on pointer-up or key-up. The hook preserves hue/saturation when brightness goes to 0 or 1 (a common color picker UX issue). A new `colorModel` redraws the current color with it, without firing `onChange`, so a picker's model has to be stable: a module-level constant, never an object built in render (every render would redraw). `ColorModel` and the hook take the internal type as a second parameter, HSVA by default.
+`useColorManipulation` is the central hook. It holds HSVA state, converts between HSVA and the picker's external format via the `ColorModel`, and fires `onChange`/`onChangeEnd` callbacks. `onChange` fires on every pointer move; `onChangeEnd` fires on pointer-up or key-up. The hook preserves hue/saturation when brightness goes to 0 or 1 (a common color picker UX issue). A new `colorModel` (an OKLCH picker's `gamut`) redraws the current color with it, without firing `onChange`, so a picker's model has to be stable: a module-level constant, never an object built in render (every render would redraw). `ColorModel` and the hook take the internal type as a second parameter, HSVA by default.
 
 ### CSS
 

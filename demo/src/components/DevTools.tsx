@@ -28,7 +28,29 @@ import {
   HsvaColor,
   HsvaColorPicker,
   HsvaStringColorPicker,
+  // OKLCH
+  OklchColor,
+  OklchColorPicker,
+  OklchStringColorPicker,
+  OklchaColor,
+  OklchaColorPicker,
+  OklchaStringColorPicker,
 } from "../../../src";
+
+// The same color in an sRGB and a P3 picker, side by side: on a P3 screen the right edge of
+// the P3 square is visibly more vivid (greens most of all)
+const OklchGamutsColorPicker = (props: React.ComponentProps<typeof OklchStringColorPicker>) => (
+  <div style={{ display: "flex", gap: 24, textAlign: "center" }}>
+    <div>
+      <OklchStringColorPicker {...props} />
+      sRGB
+    </div>
+    <div>
+      <OklchStringColorPicker {...props} gamut="p3" />
+      P3
+    </div>
+  </div>
+);
 
 export const DevTools = (): JSX.Element => {
   return (
@@ -98,6 +120,32 @@ export const DevTools = (): JSX.Element => {
         title="HSVA String"
         PickerComponent={HsvaStringColorPicker}
         initialColor="hsva(200, 25%, 50%, 0.5)"
+      />
+
+      <PickerPreview<OklchColor>
+        title="OKLCH"
+        PickerComponent={OklchColorPicker}
+        initialColor={{ l: 0.6, c: 0.15, h: 250 }}
+      />
+      <PickerPreview<string>
+        title="OKLCH String"
+        PickerComponent={OklchStringColorPicker}
+        initialColor="oklch(0.6 0.15 250)"
+      />
+      <PickerPreview<OklchaColor>
+        title="OKLCHA"
+        PickerComponent={OklchaColorPicker}
+        initialColor={{ l: 0.6, c: 0.15, h: 250, a: 0.5 }}
+      />
+      <PickerPreview<string>
+        title="OKLCHA String"
+        PickerComponent={OklchaStringColorPicker}
+        initialColor="oklch(0.6 0.15 250 / 0.5)"
+      />
+      <PickerPreview<string>
+        title="OKLCH sRGB vs P3"
+        PickerComponent={OklchGamutsColorPicker}
+        initialColor="oklch(0.85 0.2 145)"
       />
 
       <PickerPreview<RgbColor>

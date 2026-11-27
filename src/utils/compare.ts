@@ -1,7 +1,11 @@
 import { hexToRgba } from "./convert";
-import { ObjectColor } from "../types";
+import { InternalColor, ObjectColor } from "../types";
 
-export const equalColorObjects = (first: ObjectColor, second: ObjectColor): boolean => {
+// Compares colors and internal representations alike (`useColorManipulation` does the latter)
+export const equalColorObjects = (
+  first: ObjectColor | InternalColor,
+  second: ObjectColor | InternalColor
+): boolean => {
   if (first === second) return true;
 
   for (const prop in first) {

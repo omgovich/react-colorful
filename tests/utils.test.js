@@ -28,6 +28,7 @@ import { hsvaToHsvString, hsvStringToHsva } from "../src/utils/convert";
 import { equalColorObjects, equalColorString } from "../src/utils/compare";
 import { formatClassName } from "../src/utils/format";
 import { clamp } from "../src/utils/clamp";
+import { parseOklcha } from "../src/utils/oklch";
 import { round } from "../src/utils/round";
 
 it("Converts HEX to HSVA", () => {
@@ -208,6 +209,10 @@ it("Parses a long string of digits in no time", () => {
     expect(parse(`${name}(${digits}`)).toMatchObject({ h: 0, s: 0, v: 0, a: 1 });
     expect(Date.now() - start).toBeLessThan(250);
   }
+
+  const start = Date.now();
+  expect(parseOklcha(`oklch(${digits}`)).toMatchObject({ l: 0, c: 0, h: 0, a: 1 });
+  expect(Date.now() - start).toBeLessThan(250);
 });
 
 it("Rounds HSVA", () => {

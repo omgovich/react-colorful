@@ -9,6 +9,10 @@ export { HsvaColorPicker } from "./components/HsvaColorPicker";
 export { HsvaStringColorPicker } from "./components/HsvaStringColorPicker";
 export { HsvColorPicker } from "./components/HsvColorPicker";
 export { HsvStringColorPicker } from "./components/HsvStringColorPicker";
+export { OklchColorPicker } from "./components/OklchColorPicker";
+export { OklchaColorPicker } from "./components/OklchaColorPicker";
+export { OklchStringColorPicker } from "./components/OklchStringColorPicker";
+export { OklchaStringColorPicker } from "./components/OklchaStringColorPicker";
 export { RgbaColorPicker } from "./components/RgbaColorPicker";
 export { RgbaStringColorPicker } from "./components/RgbaStringColorPicker";
 export { RgbColorPicker } from "./components/RgbColorPicker";
@@ -18,7 +22,16 @@ export { RgbStringColorPicker } from "./components/RgbStringColorPicker";
 export { HexColorInput } from "./components/HexColorInput";
 
 // Color model types
-export { RgbColor, RgbaColor, HslColor, HslaColor, HsvColor, HsvaColor } from "./types";
+export {
+  RgbColor,
+  RgbaColor,
+  HslColor,
+  HslaColor,
+  HsvColor,
+  HsvaColor,
+  OklchColor,
+  OklchaColor,
+} from "./types";
 
 // Tooling
 export { setNonce } from "./utils/nonce";
