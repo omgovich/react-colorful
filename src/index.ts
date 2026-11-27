@@ -13,6 +13,10 @@ export { OklchColorPicker } from "./components/OklchColorPicker";
 export { OklchaColorPicker } from "./components/OklchaColorPicker";
 export { OklchStringColorPicker } from "./components/OklchStringColorPicker";
 export { OklchaStringColorPicker } from "./components/OklchaStringColorPicker";
+export { OklabColorPicker } from "./components/OklabColorPicker";
+export { OklabaColorPicker } from "./components/OklabaColorPicker";
+export { OklabStringColorPicker } from "./components/OklabStringColorPicker";
+export { OklabaStringColorPicker } from "./components/OklabaStringColorPicker";
 export { RgbaColorPicker } from "./components/RgbaColorPicker";
 export { RgbaStringColorPicker } from "./components/RgbaStringColorPicker";
 export { RgbColorPicker } from "./components/RgbColorPicker";
@@ -31,6 +35,8 @@ export {
   HsvaColor,
   OklchColor,
   OklchaColor,
+  OklabColor,
+  OklabaColor,
 } from "./types";
 
 // Tooling

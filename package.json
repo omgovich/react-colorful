@@ -142,6 +142,30 @@
     },
     {
       "path": "dist/index.module.js",
+      "name": "OklabColorPicker",
+      "import": "{ OklabColorPicker }",
+      "limit": "5.8 KB"
+    },
+    {
+      "path": "dist/index.module.js",
+      "name": "OklabaColorPicker",
+      "import": "{ OklabaColorPicker }",
+      "limit": "5.8 KB"
+    },
+    {
+      "path": "dist/index.module.js",
+      "name": "OklabStringColorPicker",
+      "import": "{ OklabStringColorPicker }",
+      "limit": "6.2 KB"
+    },
+    {
+      "path": "dist/index.module.js",
+      "name": "OklabaStringColorPicker",
+      "import": "{ OklabaStringColorPicker }",
+      "limit": "6.2 KB"
+    },
+    {
+      "path": "dist/index.module.js",
       "name": "HexColorInput",
       "import": "{ HexColorInput }",
       "limit": "3 KB"
