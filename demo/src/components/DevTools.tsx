@@ -35,12 +35,11 @@ import {
   OklchaColor,
   OklchaColorPicker,
   OklchaStringColorPicker,
-  OklchPickerProps,
 } from "../../../src";
 
 // The same color in an sRGB and a P3 picker, side by side: on a P3 screen the right edge of
 // the P3 square is visibly more vivid (greens most of all)
-const OklchGamutsColorPicker = (props: OklchPickerProps<string>) => (
+const OklchGamutsColorPicker = (props: React.ComponentProps<typeof OklchStringColorPicker>) => (
   <div style={{ display: "flex", gap: 24, textAlign: "center" }}>
     <div>
       <OklchStringColorPicker {...props} />

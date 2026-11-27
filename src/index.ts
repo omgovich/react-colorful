@@ -31,8 +31,6 @@ export {
   HsvaColor,
   OklchColor,
   OklchaColor,
-  OklchGamut,
-  OklchPickerProps,
 } from "./types";
 
 // Tooling
