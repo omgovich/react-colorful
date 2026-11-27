@@ -10,9 +10,9 @@ export interface ColorComponent {
 export type ColorComponents = [ColorComponent, ColorComponent, ColorComponent, ColorComponent?];
 
 // A number with one of `units`. The number may have a sign, a fraction and an exponent, or be
-// `none` (a missing component, read as 0, and never with a unit). Its digits are `(?:\d+\.|\.)?\d+` and not `\d*\.?\d+`:
-// both take the same strings, but the second one tries every split of a long run of digits and
-// turns quadratic
+// `none` (a missing component, read as 0, and never with a unit). Its digits are
+// `(?:\d+\.|\.)?\d+` and not `\d*\.?\d+`: both take the same strings, but the second one tries
+// every split of a long run of digits and turns quadratic
 const component = (units: string) =>
   `(none(?![%a-z])|[-+]?(?:\\d+\\.|\\.)?\\d+(?:e[-+]?\\d+)?)(${units})?`;
 

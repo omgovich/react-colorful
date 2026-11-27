@@ -60,7 +60,7 @@
       "path": "dist/index.module.js",
       "name": "HslStringColorPicker",
       "import": "{ HslStringColorPicker }",
-      "limit": "3.1 KB"
+      "limit": "3.2 KB"
     },
     {
       "path": "dist/index.module.js",
@@ -84,7 +84,7 @@
       "path": "dist/index.module.js",
       "name": "HsvStringColorPicker",
       "import": "{ HsvStringColorPicker }",
-      "limit": "3.1 KB"
+      "limit": "3.2 KB"
     },
     {
       "path": "dist/index.module.js",

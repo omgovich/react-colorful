@@ -496,6 +496,10 @@ describe("pickers", () => {
     // The parent passes the color back: the same color, so the pointer stays at the right end
     rerender(<OklchStringColorPicker color="oklch(0.6 0 0)" onChange={handleChange} />);
     expect(container.querySelector(".react-colorful__hue-pointer").style.left).toBe("100%");
+
+    // A gamut switch redraws the color, and the pointer still stays there
+    rerender(<OklchStringColorPicker color="oklch(0.6 0 0)" onChange={handleChange} gamut="p3" />);
+    expect(container.querySelector(".react-colorful__hue-pointer").style.left).toBe("100%");
     expect(internalToOklcha({ l: 0.6, x: 0.5, h: 359.996, a: 1 }, "srgb").h).toBe(0);
   });
 

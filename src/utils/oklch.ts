@@ -6,10 +6,10 @@ import { maxChroma } from "./oklchGamut";
 import { OklchaColor, OklchGamut, OklchInternal } from "../types";
 
 // OKLCH pickers. The square shows lightness (top to bottom) against chroma as a share of the
-// highest chroma that lightness and hue reach in the gamut (left to right). That keeps the
-// square solid at every hue and every point in it inside the gamut, but for a hair past sRGB near
-// 264° (see `maxChroma`). The edge itself is in
-// `oklchGamut.ts`, the gradients that draw the square and the hue bar in `oklchGradients.ts`.
+// highest chroma that lightness and hue reach in the gamut (left to right). That keeps the square
+// solid at every hue and every point in it inside the gamut, but for a hair past sRGB near 264°
+// (see `maxChroma`). The edge itself is in `oklchGamut.ts`, the gradients that draw the square and
+// the hue bar in `oklchGradients.ts`.
 
 export const oklchString = (l: number, c: number, h: number, a?: number): string => {
   const alpha = a === undefined ? "" : ` / ${round(a, 3)}`;
@@ -17,9 +17,10 @@ export const oklchString = (l: number, c: number, h: number, a?: number): string
 };
 
 /**
- * Turns a color into the picker's internal color; a color outside the gamut is shown at the edge. Black and
- * white have no chroma share (the edge is 0 there): they keep the one of the `previous` internal color, so
- * the pointer doesn't jump to the left on a gamut switch
+ * Turns a color into the picker's internal color; a color outside the gamut is shown at the edge.
+ * What the color can't tell is kept from the `previous` internal color, so the pointers stay where
+ * they are on a gamut switch: the chroma share of black and white (the edge is 0 there), and 360°
+ * at the right end of the hue slider (written as 0°)
  */
 export const oklchaToInternal = (
   color: OklchaColor,
@@ -28,7 +29,8 @@ export const oklchaToInternal = (
 ): OklchInternal => {
   // `|| 0` turns NaN (a broken prop) into 0 instead of letting it into the picker and its styles
   const l = clamp(color.l || 0);
-  const h = parseHue(color.h) || 0;
+  const hue = parseHue(color.h) || 0;
+  const h = previous && previous.h % 360 === hue % 360 ? previous.h : hue;
   // The chroma as a share of the edge
   const edge = maxChroma(l, h, gamut);
   const x = edge ? clamp(color.c / edge || 0) : previous ? previous.x : 0;
@@ -36,11 +38,11 @@ export const oklchaToInternal = (
 };
 
 /**
- * Turns the picker's internal color into a color. L and H are rounded first, and C is then clamped to
- * the edge for the ROUNDED lightness and hue: the color always reopens at the same spot. (Near
+ * Turns the picker's internal color into a color. L and H are rounded first, and C is then clamped
+ * to the edge for the ROUNDED lightness and hue: the color always reopens at the same spot. (Near
  * 264.2° in sRGB rounding the hue alone can move the edge from a far branch of blue to the near
- * one.) C is rounded to the nearest step, not down: `c → x → c` drifts by float noise, and
- * 0.1 must come back as 0.1, not 0.09999. Only a step past the edge is taken back.
+ * one.) C is rounded to the nearest step, not down: `c → x → c` drifts by float noise, and 0.1
+ * must come back as 0.1, not 0.09999. Only a step past the edge is taken back.
  */
 export const internalToOklcha = ({ l, x, h, a }: OklchInternal, gamut: OklchGamut): OklchaColor => {
   const lightness = round(l, 4);
@@ -53,8 +55,9 @@ export const internalToOklcha = ({ l, x, h, a }: OklchInternal, gamut: OklchGamu
   return {
     l: lightness,
     c,
-    // The right end of the hue slider is 360, and rounding can reach it too (359.996); written as 0,
-    // as colord and most tools do, so a parent that normalizes the hue gets back the same color
+    // The right end of the hue slider is 360, and rounding can reach it too (359.996). It is
+    // written as 0, as colord and most tools do, so a parent that normalizes the hue gets back
+    // the same color
     h: hue % 360,
     a: round(a, 2),
   };

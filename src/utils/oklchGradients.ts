@@ -72,7 +72,7 @@ export const squareLayers = (h: number, gamut: OklchGamut): SquareLayer[] => {
   const cached = layerCache[gamut];
   if (cached && cached.hue === h) return cached.layers;
 
-  // `y` goes down the square, from white (0) to black (1); `edges` are the chromas of its right edge
+  // `y` goes down the square, from white (0) to black (1); `edges` are the chromas of the edge
   const [ys, edges] = splitByCurvature(
     (y) => maxChroma(1 - y, h, gamut),
     (a, b) => Math.abs(a - b),
