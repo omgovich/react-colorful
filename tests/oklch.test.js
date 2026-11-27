@@ -206,6 +206,9 @@ describe("strings", () => {
     test("oklch(0.6deg 0.15 260)", { l: 0, c: 0, h: 0, a: 1 });
     test("oklch(0.6 0.15 260%)", { l: 0, c: 0, h: 0, a: 1 });
     test("oklch(0.6 0.15 260 / 0.5deg)", { l: 0, c: 0, h: 0, a: 1 });
+    test("oklch(none% 0.15 260)", { l: 0, c: 0, h: 0, a: 1 });
+    test("oklch(0.6 0.15 nonedeg)", { l: 0, c: 0, h: 0, a: 1 });
+    test("oklch(0.6 0.15 260 / none%)", { l: 0, c: 0, h: 0, a: 1 });
   });
 
   it("Compares OKLCH strings by their values", () => {
