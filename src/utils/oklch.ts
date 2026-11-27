@@ -7,7 +7,8 @@ import { OklchaColor, OklchGamut, OklchInternal } from "../types";
 
 // OKLCH pickers. The square shows lightness (top to bottom) against chroma as a share of the
 // highest chroma that lightness and hue reach in the gamut (left to right). That keeps the
-// square solid at every hue and every point in it inside the gamut. The edge itself is in
+// square solid at every hue and every point in it inside the gamut, but for a hair past sRGB near
+// 264° (see `maxChroma`). The edge itself is in
 // `oklchGamut.ts`, the gradients that draw the square and the hue bar in `oklchGradients.ts`.
 
 export const oklchString = (l: number, c: number, h: number, a?: number): string => {

@@ -271,6 +271,19 @@ describe("drawing", () => {
         const expected = toLab(...hueColor(h, gamut), h);
         expect(Math.hypot(l - expected[0], a - expected[1], b - expected[2])).toBeLessThan(1e-4);
       }
+      // The stops cover the whole circle: between two of them the browser draws a straight line
+      // in OKLab, and it stays close to the bar color everywhere
+      const points = stops.map(([, l, a, b, t]) => [Number(t), [l, a, b].map(Number)]);
+      expect(points[0][0]).toBe(0);
+      expect(points[points.length - 1][0]).toBe(100);
+      for (let h = 0.5; h < 360; h += 0.5) {
+        const t = h / 3.6;
+        const i = points.findIndex(([position]) => position >= t);
+        const [[t0, from], [t1, to]] = [points[i - 1], points[i]];
+        const drawn = from.map((v, j) => v + ((t - t0) / (t1 - t0)) * (to[j] - v));
+        const expected = toLab(...hueColor(h, gamut), h);
+        expect(Math.hypot(...drawn.map((v, j) => v - expected[j]))).toBeLessThan(0.006);
+      }
       // No hard steps, not even at pure red, green or blue
       let previous = toLab(...hueColor(0, gamut), 0);
       for (let h = 0.25; h <= 360; h += 0.25) {

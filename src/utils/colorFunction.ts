@@ -17,9 +17,9 @@ const component = (units: string) =>
   `(none(?![%a-z])|[-+]?(?:\\d+\\.|\\.)?\\d+(?:e[-+]?\\d+)?)(${units})?`;
 
 /**
- * Reads the components of `name(x y z)` or `name(x y z / alpha)`. `units` are the units each of
- * x, y and z may have (as regex alternatives: `"deg|rad"`); the alpha may be a percentage.
- * Returns null if the string isn't one
+ * Reads the components of `name(x y z)` or `name(x y z / alpha)` found in a string, like the
+ * parsers of the other pickers do. `units` are the units each of x, y and z may have (as regex
+ * alternatives: `"deg|rad"`); the alpha may be a percentage. Returns null if there is none
  */
 export const parseColorFunction = (
   name: string,
