@@ -6,15 +6,15 @@ import {
   equalOklchString,
   formatOklch,
   parseOklcha,
-  oklchaToState,
-  stateToOklcha,
+  oklchaToInternal,
+  internalToOklcha,
 } from "../utils/oklch";
 
 const colorModel: GamutColorModel<string> = {
   defaultColor: "oklch(0 0 0)",
   toInternal: (color, gamut, previous) =>
-    oklchaToState({ ...parseOklcha(color), a: 1 }, gamut, previous),
-  fromInternal: (internal, gamut) => formatOklch(stateToOklcha(internal, gamut)),
+    oklchaToInternal({ ...parseOklcha(color), a: 1 }, gamut, previous),
+  fromInternal: (internal, gamut) => formatOklch(internalToOklcha(internal, gamut)),
   equal: equalOklchString,
 };
 

@@ -4,14 +4,14 @@ import { Interactive, Interaction } from "./Interactive";
 import { Pointer } from "./Pointer";
 import { OklchSquareLayers } from "./OklchSquareLayers";
 
-import { OklchGamut, OklchState } from "../../types";
+import { OklchGamut, OklchInternal } from "../../types";
 import { maxChroma } from "../../utils/oklchGamut";
 import { oklchString } from "../../utils/oklch";
 import { clamp } from "../../utils/clamp";
 import { round } from "../../utils/round";
 
 interface Props {
-  state: OklchState;
+  internal: OklchInternal;
   gamut: OklchGamut;
   onChange: (newState: { l: number; x: number }) => void;
   onChangeEnd?: () => void;
@@ -24,8 +24,13 @@ interface Props {
  * with CSS and keeps the `.react-colorful__saturation` styles.
  */
 // No `React.memo`: a top-level call would stay in the bundle of every other picker
-export const OklchSquare = ({ state, gamut, onChange, onChangeEnd }: Props): React.ReactElement => {
-  const { l, x, h } = state;
+export const OklchSquare = ({
+  internal,
+  gamut,
+  onChange,
+  onChangeEnd,
+}: Props): React.ReactElement => {
+  const { l, x, h } = internal;
 
   const handleMove = (interaction: Interaction) => {
     onChange({ x: interaction.left, l: 1 - interaction.top });

@@ -3,7 +3,7 @@ import { round } from "./round";
 import { parseHue } from "./convert";
 import { parseColorFunction, percentOf } from "./colorFunction";
 import { maxChroma } from "./oklchGamut";
-import { OklchaColor, OklchGamut, OklchState } from "../types";
+import { OklchaColor, OklchGamut, OklchInternal } from "../types";
 
 // OKLCH pickers. The square shows lightness (top to bottom) against chroma as a share of the
 // highest chroma that lightness and hue reach in the gamut (left to right). That keeps the
@@ -16,16 +16,16 @@ export const oklchString = (l: number, c: number, h: number, a?: number): string
 };
 
 /**
- * Turns a color into the picker's state; a color outside the gamut is shown at the edge. Black and
- * white have no chroma share (the edge is 0 there): they keep the one of the `previous` state, so
+ * Turns a color into the picker's internal color; a color outside the gamut is shown at the edge. Black and
+ * white have no chroma share (the edge is 0 there): they keep the one of the `previous` internal color, so
  * the pointer doesn't jump to the left on a gamut switch
  */
-export const oklchaToState = (
+export const oklchaToInternal = (
   color: OklchaColor,
   gamut: OklchGamut,
-  previous?: OklchState
-): OklchState => {
-  // `|| 0` turns NaN (a broken prop) into 0 instead of letting it into the state and styles
+  previous?: OklchInternal
+): OklchInternal => {
+  // `|| 0` turns NaN (a broken prop) into 0 instead of letting it into the picker and its styles
   const l = clamp(color.l || 0);
   const h = parseHue(color.h) || 0;
   // The chroma as a share of the edge
@@ -35,13 +35,13 @@ export const oklchaToState = (
 };
 
 /**
- * Turns the picker's state into a color. L and H are rounded first, and C is then clamped to
+ * Turns the picker's internal color into a color. L and H are rounded first, and C is then clamped to
  * the edge for the ROUNDED lightness and hue: the color always reopens at the same spot. (Near
  * 264.2° in sRGB rounding the hue alone can move the edge from a far branch of blue to the near
  * one.) C is rounded to the nearest step, not down: `c → x → c` drifts by float noise, and
  * 0.1 must come back as 0.1, not 0.09999. Only a step past the edge is taken back.
  */
-export const stateToOklcha = ({ l, x, h, a }: OklchState, gamut: OklchGamut): OklchaColor => {
+export const internalToOklcha = ({ l, x, h, a }: OklchInternal, gamut: OklchGamut): OklchaColor => {
   const lightness = round(l, 4);
   const hue = round(h, 2);
   const edge = maxChroma(lightness, hue, gamut);

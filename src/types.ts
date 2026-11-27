@@ -47,10 +47,10 @@ export interface OklchaColor extends OklchColor {
 export type OklchGamut = "srgb" | "p3";
 
 /**
- * Internal state of OKLCH pickers. `x` is the chroma as a share (0..1) of the highest chroma
+ * The internal color of OKLCH pickers. `x` is the chroma as a share (0..1) of the highest chroma
  * this lightness and hue reach in the picker's gamut: the horizontal axis of the square
  */
-export interface OklchState {
+export interface OklchInternal {
   l: number;
   x: number;
   h: number;
@@ -70,7 +70,7 @@ export type ObjectColor =
 export type AnyColor = string | ObjectColor;
 
 /** The ways a picker can represent a color internally: see `ColorModel` */
-export type InternalColor = HsvaColor | OklchState;
+export type InternalColor = HsvaColor | OklchInternal;
 
 /**
  * Converts between a picker's color format `T` (a HEX string, an RGB object, …) and the
@@ -86,10 +86,10 @@ export interface ColorModel<T extends AnyColor, I extends InternalColor = HsvaCo
 // A color model whose conversions also get the gamut, so one model serves both gamuts
 export interface GamutColorModel<T extends AnyColor> {
   defaultColor: T;
-  // `previous` is the picker's current state: what a color can't tell (the chroma share of black
+  // `previous` is the picker's current internal color: what a color can't tell (the chroma share of black
   // and white, the hue of a grey written as OKLab) is kept from it
-  toInternal: (color: T, gamut: OklchGamut, previous?: OklchState) => OklchState;
-  fromInternal: (internal: OklchState, gamut: OklchGamut) => T;
+  toInternal: (color: T, gamut: OklchGamut, previous?: OklchInternal) => OklchInternal;
+  fromInternal: (internal: OklchInternal, gamut: OklchGamut) => T;
   equal: (first: T, second: T) => boolean;
 }
 

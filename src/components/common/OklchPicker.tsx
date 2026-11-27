@@ -4,7 +4,13 @@ import { OklchSquare } from "./OklchSquare";
 import { OklchHue } from "./OklchHue";
 import { OklchAlpha } from "./OklchAlpha";
 
-import { AnyColor, ColorModel, GamutColorModel, OklchPickerProps, OklchState } from "../../types";
+import {
+  AnyColor,
+  ColorModel,
+  GamutColorModel,
+  OklchPickerProps,
+  OklchInternal,
+} from "../../types";
 import { useColorManipulation } from "../../hooks/useColorManipulation";
 import { useStyleSheet } from "../../hooks/useStyleSheet";
 import { formatClassName } from "../../utils/format";
@@ -28,40 +34,50 @@ export const OklchPicker = <T extends AnyColor>({
   const nodeRef = useRef<HTMLDivElement>(null);
   useStyleSheet(nodeRef);
 
-  // The picker's current state, for what a new color can't tell (see `GamutColorModel`)
-  const current = useRef<OklchState>();
+  // The picker's current internal color, for what a new color can't tell (see `GamutColorModel`)
+  const current = useRef<OklchInternal>();
 
   // The picker's model bound to its gamut. A new gamut makes a new model, and the hook redraws
   // the current color with it
-  const colorModel = useMemo<ColorModel<T, OklchState>>(
+  const colorModel = useMemo<ColorModel<T, OklchInternal>>(
     () => ({
       ...model,
       toInternal: (color: T) => model.toInternal(color, gamut, current.current),
-      fromInternal: (internal: OklchState) => model.fromInternal(internal, gamut),
+      fromInternal: (internal: OklchInternal) => model.fromInternal(internal, gamut),
     }),
     [model, gamut]
   );
 
-  const [state, updateState, commitChange] = useColorManipulation<T, OklchState>(
+  const [internal, updateInternal, commitChange] = useColorManipulation<T, OklchInternal>(
     colorModel,
     color,
     onChange,
     onChangeEnd
   );
-  current.current = state;
+  current.current = internal;
 
   return (
     <div {...rest} ref={nodeRef} className={formatClassName(["react-colorful", className])}>
-      <OklchSquare state={state} gamut={gamut} onChange={updateState} onChangeEnd={commitChange} />
-      <OklchHue
-        hue={state.h}
+      <OklchSquare
+        internal={internal}
         gamut={gamut}
-        onChange={updateState}
+        onChange={updateInternal}
+        onChangeEnd={commitChange}
+      />
+      <OklchHue
+        hue={internal.h}
+        gamut={gamut}
+        onChange={updateInternal}
         onChangeEnd={commitChange}
         className={alpha ? undefined : "react-colorful__last-control"}
       />
       {alpha && (
-        <OklchAlpha state={state} gamut={gamut} onChange={updateState} onChangeEnd={commitChange} />
+        <OklchAlpha
+          internal={internal}
+          gamut={gamut}
+          onChange={updateInternal}
+          onChangeEnd={commitChange}
+        />
       )}
     </div>
   );

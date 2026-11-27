@@ -3,14 +3,14 @@ import React from "react";
 import { Interactive, Interaction } from "./Interactive";
 import { Pointer } from "./Pointer";
 
-import { OklchGamut, OklchState } from "../../types";
+import { OklchGamut, OklchInternal } from "../../types";
 import { maxChroma } from "../../utils/oklchGamut";
 import { oklchString } from "../../utils/oklch";
 import { clamp } from "../../utils/clamp";
 import { round } from "../../utils/round";
 
 interface Props {
-  state: OklchState;
+  internal: OklchInternal;
   gamut: OklchGamut;
   onChange: (newAlpha: { a: number }) => void;
   onChangeEnd?: () => void;
@@ -18,8 +18,13 @@ interface Props {
 
 // The alpha slider of OKLCH pickers: from transparent to the current color
 // No `React.memo`: a top-level call would stay in the bundle of every other picker
-export const OklchAlpha = ({ state, gamut, onChange, onChangeEnd }: Props): React.ReactElement => {
-  const { l, x, h, a } = state;
+export const OklchAlpha = ({
+  internal,
+  gamut,
+  onChange,
+  onChangeEnd,
+}: Props): React.ReactElement => {
+  const { l, x, h, a } = internal;
 
   const handleMove = (interaction: Interaction) => {
     onChange({ a: interaction.left });

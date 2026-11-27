@@ -13,9 +13,9 @@ import {
   equalOklchString,
   formatOklch,
   formatOklcha,
-  oklchaToState,
+  oklchaToInternal,
   parseOklcha,
-  stateToOklcha,
+  internalToOklcha,
 } from "../src/utils/oklch";
 
 afterEach(cleanup);
@@ -141,28 +141,28 @@ describe("gamut", () => {
   });
 });
 
-describe("state", () => {
+describe("internal color", () => {
   it("Reopens every color it emits at the same spot", () => {
     const next = random(7);
     for (let i = 0; i < 1000; i++) {
       const gamut = i % 2 ? "p3" : "srgb";
       // Every tenth hue sits by the blue dip of sRGB
       const h = i % 10 ? next() * 360 : 263.5 + next();
-      const color = stateToOklcha({ l: next(), x: next(), h, a: next() }, gamut);
+      const color = internalToOklcha({ l: next(), x: next(), h, a: next() }, gamut);
 
       expect(inGamut(color.l, color.c, color.h, gamut, 2e-3)).toBe(true);
       expect(color.c).toBeLessThanOrEqual(maxChroma(color.l, color.h, gamut));
-      expect(stateToOklcha(oklchaToState(color, gamut), gamut)).toEqual(color);
+      expect(internalToOklcha(oklchaToInternal(color, gamut), gamut)).toEqual(color);
     }
   });
 
   it("Keeps pure blue as it is", () => {
     const color = { l: 0.452, c: 0.3132, h: 264.05, a: 1 };
-    expect(stateToOklcha(oklchaToState(color, "srgb"), "srgb")).toEqual(color);
+    expect(internalToOklcha(oklchaToInternal(color, "srgb"), "srgb")).toEqual(color);
   });
 
   it("Turns NaN into 0", () => {
-    expect(oklchaToState({ l: NaN, c: NaN, h: NaN, a: 1 }, "srgb")).toEqual({
+    expect(oklchaToInternal({ l: NaN, c: NaN, h: NaN, a: 1 }, "srgb")).toEqual({
       l: 0,
       x: 0,
       h: 0,
@@ -171,11 +171,11 @@ describe("state", () => {
   });
 
   it("Shows a color outside the gamut at the edge", () => {
-    expect(oklchaToState({ l: 0.6, c: 0.4, h: 145, a: 1 }, "srgb").x).toBe(1);
+    expect(oklchaToInternal({ l: 0.6, c: 0.4, h: 145, a: 1 }, "srgb").x).toBe(1);
   });
 
   it("Keeps the hue of a grey color", () => {
-    expect(oklchaToState({ l: 0.5, c: 0, h: 200, a: 1 }, "srgb")).toEqual({
+    expect(oklchaToInternal({ l: 0.5, c: 0, h: 200, a: 1 }, "srgb")).toEqual({
       l: 0.5,
       x: 0,
       h: 200,
@@ -184,8 +184,8 @@ describe("state", () => {
   });
 
   it("Emits no chroma at black and white", () => {
-    expect(stateToOklcha({ l: 1, x: 0.8, h: 30, a: 1 }, "srgb").c).toBe(0);
-    expect(stateToOklcha({ l: 0, x: 0.8, h: 30, a: 1 }, "p3").c).toBe(0);
+    expect(internalToOklcha({ l: 1, x: 0.8, h: 30, a: 1 }, "srgb").c).toBe(0);
+    expect(internalToOklcha({ l: 0, x: 0.8, h: 30, a: 1 }, "p3").c).toBe(0);
   });
 });
 
@@ -480,7 +480,7 @@ describe("pickers", () => {
     // The parent passes the color back: the same color, so the pointer stays at the right end
     rerender(<OklchStringColorPicker color="oklch(0.6 0 0)" onChange={handleChange} />);
     expect(container.querySelector(".react-colorful__hue-pointer").style.left).toBe("100%");
-    expect(stateToOklcha({ l: 0.6, x: 0.5, h: 359.996, a: 1 }, "srgb").h).toBe(0);
+    expect(internalToOklcha({ l: 0.6, x: 0.5, h: 359.996, a: 1 }, "srgb").h).toBe(0);
   });
 
   it("Emits an OKLCH color in the gamut after a mouse interaction", () => {
