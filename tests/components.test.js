@@ -682,6 +682,52 @@ it("Displays `#` prefix in `HexColorInput` if `prefixed` is turned on", () => {
   expect(input.value).toBe("#112233");
 });
 
+it("Preserves the cursor position when editing a prefixed `HexColorInput`", () => {
+  const result = render(<HexColorInput color="#123456" prefixed />);
+  const input = result.container.firstChild;
+  input.focus();
+  input.setSelectionRange(3, 3);
+
+  fireEvent.change(input, { target: { value: "#12A3456", selectionStart: 4, selectionEnd: 4 } });
+
+  expect(input.value).toBe("#12A345");
+  expect(input.selectionStart).toBe(4);
+  expect(input.selectionEnd).toBe(4);
+});
+
+it("Preserves the cursor when escaping leaves `HexColorInput` value unchanged", () => {
+  const result = render(<HexColorInput color="123456" />);
+  const input = result.container.firstChild;
+  input.focus();
+  input.setSelectionRange(2, 2);
+
+  fireEvent.change(input, { target: { value: "12!3456", selectionStart: 3, selectionEnd: 3 } });
+
+  expect(input.value).toBe("123456");
+  expect(input.selectionStart).toBe(2);
+  expect(input.selectionEnd).toBe(2);
+
+  input.setSelectionRange(5, 5);
+  result.rerender(<HexColorInput color="123456" className="rerendered" />);
+  expect(input.selectionStart).toBe(5);
+  expect(input.selectionEnd).toBe(5);
+});
+
+it("Does not move the caret during an IME composition in `HexColorInput`", () => {
+  const result = render(<HexColorInput color="123456" />);
+  const input = result.container.firstChild;
+  input.focus();
+  input.setSelectionRange(2, 2);
+  const setSelectionRange = jest.spyOn(input, "setSelectionRange");
+
+  fireEvent.input(input, {
+    target: { value: "12a3456", selectionStart: 3, selectionEnd: 3 },
+    isComposing: true,
+  });
+
+  expect(setSelectionRange).not.toHaveBeenCalled();
+});
+
 it("Allows to enter `#rgba` and `#rrggbbaa` in `HexColorInput` if `alpha` is turned on", () => {
   const result = render(<HexColorInput color="112233" alpha />);
   const input = result.container.firstChild;

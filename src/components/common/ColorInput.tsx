@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 
 import { useEventCallback } from "../../hooks/useEventCallback";
+import { useIsomorphicLayoutEffect } from "../../hooks/useIsomorphicLayoutEffect";
 import { ColorInputBaseProps } from "../../types";
 
 interface Props extends ColorInputBaseProps {
@@ -17,18 +18,40 @@ interface Props extends ColorInputBaseProps {
 export const ColorInput = (props: Props): React.ReactElement => {
   const { color = "", onChange, onBlur, escape, validate, format, process, ...rest } = props;
   const [value, setValue] = useState(() => escape(color));
+  // A fresh tuple forces a render when escaping leaves the value unchanged and avoids stale selections
+  const [selection, setSelection] = useState<[HTMLInputElement, number, number] | null>(null);
   const onChangeCallback = useEventCallback<string>(onChange);
   const onBlurCallback = useEventCallback<React.FocusEvent<HTMLInputElement>>(onBlur);
 
   // Trigger `onChange` handler only if the input value is a valid color
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      const inputValue = escape(e.target.value);
+      const input = e.target;
+      const inputValue = escape(input.value);
+      const { selectionStart, selectionEnd } = input;
+      const nativeEvent = e.nativeEvent as InputEvent | undefined;
+      // Fake events and IME composition must not restore the caret
+      if (
+        nativeEvent &&
+        !nativeEvent.isComposing &&
+        selectionStart != null &&
+        selectionEnd != null
+      ) {
+        const getPosition = (position: number) => {
+          const beforeCursor = escape(input.value.slice(0, position));
+          return format ? format(beforeCursor).length : beforeCursor.length;
+        };
+        setSelection([input, getPosition(selectionStart), getPosition(selectionEnd)]);
+      }
       setValue(inputValue);
       if (validate(inputValue)) onChangeCallback(process ? process(inputValue) : inputValue);
     },
-    [escape, process, validate, onChangeCallback]
+    [escape, format, process, validate, onChangeCallback]
   );
+
+  useIsomorphicLayoutEffect(() => {
+    if (selection) selection[0].setSelectionRange(selection[1], selection[2]);
+  }, [selection]);
 
   // Take the color from props if the last typed color (in local state) is not valid
   const handleBlur = useCallback(
