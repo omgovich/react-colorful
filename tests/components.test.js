@@ -642,6 +642,21 @@ it("Preserves the cursor when escaping leaves `HexColorInput` value unchanged", 
   expect(input.selectionEnd).toBe(5);
 });
 
+it("Does not move the caret during an IME composition in `HexColorInput`", () => {
+  const result = render(<HexColorInput color="123456" />);
+  const input = result.container.firstChild;
+  input.focus();
+  input.setSelectionRange(2, 2);
+  const setSelectionRange = jest.spyOn(input, "setSelectionRange");
+
+  fireEvent.input(input, {
+    target: { value: "12a3456", selectionStart: 3, selectionEnd: 3 },
+    isComposing: true,
+  });
+
+  expect(setSelectionRange).not.toHaveBeenCalled();
+});
+
 it("Allows to enter `#rgba` and `#rrggbbaa` in `HexColorInput` if `alpha` is turned on", () => {
   const result = render(<HexColorInput color="112233" alpha />);
   const input = result.container.firstChild;

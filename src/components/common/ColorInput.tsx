@@ -29,7 +29,14 @@ export const ColorInput = (props: Props): React.ReactElement => {
       const input = e.target;
       const inputValue = escape(input.value);
       const { selectionStart, selectionEnd } = input;
-      if (selectionStart !== null && selectionEnd !== null) {
+      const nativeEvent = e.nativeEvent as InputEvent | undefined;
+      // Fake events and IME composition must not restore the caret
+      if (
+        nativeEvent &&
+        !nativeEvent.isComposing &&
+        selectionStart != null &&
+        selectionEnd != null
+      ) {
         const getPosition = (position: number) => {
           const beforeCursor = escape(input.value.slice(0, position));
           return format ? format(beforeCursor).length : beforeCursor.length;
